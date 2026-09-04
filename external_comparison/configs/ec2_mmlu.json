@@ -1,0 +1,24 @@
+{
+  "experiment": "EC-2-legacy-debug-only",
+  "dataset": "mmlu",
+  "role": "native_external_communication_comparison",
+  "methods": ["vanilla", "rpas_no_selection", "gdesigner", "rpas"],
+  "search_seeds": [0, 1, 2],
+  "data_seed": 2026,
+  "subjects": "all_57_mmlu_subjects",
+  "search_source": "dev",
+  "test_source": "test",
+  "search_examples_per_subject": 5,
+  "test_examples_per_subject": 10,
+  "shared_conditions": {
+    "agent_count": 3,
+    "communication_rounds": 1,
+    "backbone": "Qwen3.5-9B",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "answer_parser": "strict_choice_a_b_c_d"
+  },
+  "metrics": ["accuracy", "active_edges", "messages_per_query", "inter_agent_tokens", "calls", "total_tokens", "latency_ms"],
+  "native_adapter_policy": "formal_runs_require_native_gdesigner_adapter_and_frozen_source_manifest",
+  "status": "legacy_development_debugging_only__not_eligible_for_ec2_v2_main_table"
+}

@@ -1,0 +1,245 @@
+{
+  "models": {
+    "qwen35_9b": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "api_base": "http://127.0.0.1:8004/v1",
+      "api_key_value": "EMPTY",
+      "completion_kwargs": {
+        "temperature": 0.0,
+        "max_tokens": 6144
+      }
+    },
+    "qwen35_9b_remote_profile": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "api_base": "http://127.0.0.1:8004/v1",
+      "api_key_value": "EMPTY",
+      "completion_kwargs": {
+        "temperature": 0.0,
+        "max_tokens": 6144
+      }
+    },
+    "qwen35_9b_gpu4": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "api_base": "http://127.0.0.1:8008/v1",
+      "api_key_value": "EMPTY",
+      "completion_kwargs": {
+        "temperature": 0.0,
+        "max_tokens": 6144
+      }
+    },
+    "qwen35_9b_gpu5": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "api_base": "http://127.0.0.1:8009/v1",
+      "api_key_value": "EMPTY",
+      "completion_kwargs": {
+        "temperature": 0.0,
+        "max_tokens": 6144
+      }
+    },
+    "qwen35_9b_gpu4_reuse": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "api_base": "http://127.0.0.1:8008/v1",
+      "api_key_value": "EMPTY",
+      "completion_kwargs": {
+        "temperature": 0.0,
+        "max_tokens": 6144
+      }
+    },
+    "qwen35_9b_gpu5_reuse": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "api_base": "http://127.0.0.1:8009/v1",
+      "api_key_value": "EMPTY",
+      "completion_kwargs": {
+        "temperature": 0.0,
+        "max_tokens": 6144
+      }
+    }
+  },
+  "sites": {
+    "center_a": {
+      "kind": "local_a100",
+      "compute_latency_ms": 0.0,
+      "notes": "Primary logical A100 center"
+    },
+    "center_b": {
+      "kind": "secondary_a100_profile",
+      "compute_latency_ms": 30.0,
+      "notes": "Secondary logical center backed by the same local Qwen3.5-9B service"
+    },
+    "center_c": {
+      "kind": "remote_profile_backed_by_local_vllm",
+      "compute_latency_ms": 120.0,
+      "notes": "Logical remote center for trace-driven WAN emulation; model call is backed by local vLLM"
+    }
+  },
+  "network_profiles": {
+    "lan_homogeneous": {
+      "default_rtt_ms": 4.0,
+      "default_bandwidth_mbps": 10000.0,
+      "default_failure_rate": 0.0,
+      "retry_backoff_ms": 100.0
+    },
+    "wan_normal": {
+      "default_rtt_ms": 70.0,
+      "default_bandwidth_mbps": 200.0,
+      "default_failure_rate": 0.005,
+      "retry_backoff_ms": 1000.0,
+      "edges": [
+        {"src": "center_a", "dst": "center_b", "rtt_ms": 20.0, "bandwidth_mbps": 1000.0, "failure_rate": 0.001},
+        {"src": "center_a", "dst": "center_c", "rtt_ms": 80.0, "bandwidth_mbps": 150.0, "failure_rate": 0.005},
+        {"src": "center_b", "dst": "center_c", "rtt_ms": 90.0, "bandwidth_mbps": 120.0, "failure_rate": 0.008}
+      ]
+    },
+    "wan_degraded": {
+      "default_rtt_ms": 180.0,
+      "default_bandwidth_mbps": 30.0,
+      "default_failure_rate": 0.03,
+      "retry_backoff_ms": 1500.0,
+      "edges": [
+        {"src": "center_a", "dst": "center_b", "rtt_ms": 60.0, "bandwidth_mbps": 200.0, "failure_rate": 0.01},
+        {"src": "center_a", "dst": "center_c", "rtt_ms": 220.0, "bandwidth_mbps": 25.0, "failure_rate": 0.03},
+        {"src": "center_b", "dst": "center_c", "rtt_ms": 260.0, "bandwidth_mbps": 20.0, "failure_rate": 0.04}
+      ]
+    },
+    "wan_bandwidth_limited": {
+      "default_rtt_ms": 90.0,
+      "default_bandwidth_mbps": 8.0,
+      "default_failure_rate": 0.01,
+      "retry_backoff_ms": 1200.0,
+      "edges": [
+        {"src": "center_a", "dst": "center_b", "rtt_ms": 60.0, "bandwidth_mbps": 10.0, "failure_rate": 0.008},
+        {"src": "center_a", "dst": "center_c", "rtt_ms": 100.0, "bandwidth_mbps": 6.0, "failure_rate": 0.012},
+        {"src": "center_b", "dst": "center_c", "rtt_ms": 110.0, "bandwidth_mbps": 5.0, "failure_rate": 0.015}
+      ]
+    },
+    "wan_edge_hub": {
+      "default_rtt_ms": 150.0,
+      "default_bandwidth_mbps": 50.0,
+      "default_failure_rate": 0.015,
+      "retry_backoff_ms": 1200.0,
+      "edges": [
+        {"src": "center_a", "dst": "center_b", "rtt_ms": 30.0, "bandwidth_mbps": 800.0, "failure_rate": 0.002},
+        {"src": "center_a", "dst": "center_c", "rtt_ms": 150.0, "bandwidth_mbps": 20.0, "failure_rate": 0.02},
+        {"src": "center_b", "dst": "center_c", "rtt_ms": 180.0, "bandwidth_mbps": 15.0, "failure_rate": 0.025}
+      ]
+    },
+    "wan_lossy_unstable": {
+      "default_rtt_ms": 200.0,
+      "default_bandwidth_mbps": 25.0,
+      "default_failure_rate": 0.06,
+      "retry_backoff_ms": 2000.0,
+      "max_expected_retries": 1.5,
+      "edges": [
+        {"src": "center_a", "dst": "center_b", "rtt_ms": 80.0, "bandwidth_mbps": 120.0, "failure_rate": 0.025},
+        {"src": "center_a", "dst": "center_c", "rtt_ms": 240.0, "bandwidth_mbps": 18.0, "failure_rate": 0.07},
+        {"src": "center_b", "dst": "center_c", "rtt_ms": 280.0, "bandwidth_mbps": 15.0, "failure_rate": 0.08}
+      ]
+    }
+  },
+  "defaults": {
+    "local_model": "qwen35_9b",
+    "cheap_model": "qwen35_9b",
+    "strong_model": "qwen35_9b_remote_profile",
+    "local_site": "center_a",
+    "secondary_site": "center_b",
+    "remote_site": "center_c",
+    "orchestrator_site": "center_a",
+    "dag_decomposer_model": "qwen35_9b_gpu4",
+    "dag_worker_models": [
+      "qwen35_9b_gpu4",
+      "qwen35_9b_gpu5",
+      "qwen35_9b_gpu4_reuse"
+    ],
+    "dag_aggregator_model": "qwen35_9b_gpu5_reuse",
+    "agent_max_tokens": {
+      "planner": 512,
+      "solver": 6144,
+      "verifier": 2048,
+      "decomposer": 1536,
+      "worker": 3072,
+      "aggregator": 2048
+    },
+    "topology_agent_max_tokens": {
+      "self_consistency": {
+        "solver": 4096
+      },
+      "solver_verifier": {
+        "solver": 4096
+      },
+      "planner_solver_verifier": {
+        "solver": 4096
+      },
+      "debate": {
+        "solver": 4096
+      },
+      "dag_decompose": {
+        "decomposer": 1536,
+        "worker": 3072,
+        "aggregator": 2048
+      }
+    }
+  },
+  "allowed_topologies": [
+    "single",
+    "self_consistency",
+    "solver_verifier",
+    "planner_solver_verifier",
+    "debate",
+    "dag_decompose"
+  ],
+  "reflection": {
+    "model": "qwen35_9b_remote_profile",
+    "max_tokens": 1024,
+    "children": 3,
+    "failure_examples": 3,
+    "max_attempts": 3,
+    "retry_backoff_seconds": 1.0,
+    "allow_rule_fallback": false,
+    "notes": "LLM reflector used only when --reflection-mode llm is enabled."
+  },
+  "search": {
+    "model_pool": [
+      "qwen35_9b",
+      "qwen35_9b_remote_profile"
+    ],
+    "site_pool": [
+      "center_a",
+      "center_b",
+      "center_c"
+    ],
+    "compression_pool": [
+      "full",
+      "summary",
+      "final_only",
+      "critic_brief"
+    ],
+    "max_tokens_pool": {
+      "planner": [256, 512, 1024],
+      "solver": [2048, 4096, 6144],
+      "verifier": [1024, 2048, 4096],
+      "decomposer": [512, 1024, 1536],
+      "worker": [1024, 2048, 3072, 4096],
+      "aggregator": [1024, 2048, 3072]
+    },
+    "topology_max_tokens_pool": {
+      "solver_verifier": {
+        "solver": [2048, 4096],
+        "verifier": [1024, 2048]
+      },
+      "planner_solver_verifier": {
+        "planner": [256, 512, 1024],
+        "solver": [2048, 4096],
+        "verifier": [1024, 2048]
+      },
+      "debate": {
+        "solver": [2048, 4096],
+        "verifier": [1024, 2048]
+      },
+      "dag_decompose": {
+        "decomposer": [512, 1024, 1536],
+        "worker": [1024, 2048, 3072],
+        "aggregator": [1024, 2048]
+      }
+    }
+  }
+}

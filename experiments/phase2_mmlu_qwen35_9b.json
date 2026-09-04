@@ -1,0 +1,42 @@
+{
+  "models": {
+    "qwen35_9b_local": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "api_base": "http://127.0.0.1:29500/v1",
+      "api_key_value": "EMPTY",
+      "completion_kwargs": {"temperature": 0.0, "max_tokens": 256}
+    }
+  },
+  "sites": {
+    "local_a100": {"kind": "local_a100", "compute_latency_ms": 0.0}
+  },
+  "network_profiles": {
+    "lan_homogeneous": {
+      "default_rtt_ms": 0.0,
+      "default_bandwidth_mbps": 10000.0,
+      "default_failure_rate": 0.0,
+      "retry_backoff_ms": 100.0
+    }
+  },
+  "defaults": {
+    "local_model": "qwen35_9b_local",
+    "cheap_model": "qwen35_9b_local",
+    "strong_model": "qwen35_9b_local",
+    "local_site": "local_a100",
+    "secondary_site": "local_a100",
+    "remote_site": "local_a100",
+    "orchestrator_site": "local_a100",
+    "dag_decomposer_model": "qwen35_9b_local",
+    "dag_worker_models": ["qwen35_9b_local", "qwen35_9b_local", "qwen35_9b_local"],
+    "dag_aggregator_model": "qwen35_9b_local",
+    "agent_max_tokens": {"planner": 256, "solver": 256, "verifier": 256, "decomposer": 256, "worker": 256, "aggregator": 256}
+  },
+  "allowed_topologies": ["single", "self_consistency", "solver_verifier", "planner_solver_verifier", "debate", "dag_decompose"],
+  "reflection": {"model": "qwen35_9b_local", "max_tokens": 256, "children": 3, "failure_examples": 3, "max_attempts": 3, "retry_backoff_seconds": 1.0, "allow_rule_fallback": false},
+  "search": {
+    "model_pool": ["qwen35_9b_local"],
+    "site_pool": ["local_a100"],
+    "compression_pool": ["full", "summary", "final_only", "critic_brief"],
+    "max_tokens_pool": {"planner": [256], "solver": [256], "verifier": [256], "decomposer": [256], "worker": [256], "aggregator": [256]}
+  }
+}

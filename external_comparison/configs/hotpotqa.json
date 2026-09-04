@@ -1,0 +1,58 @@
+{
+  "protocol_version": "EC3_HOTPOTQA_V3",
+  "experiment": "EC-3",
+  "dataset": "hotpotqa",
+  "dataset_setting": "HotpotQA distractor / provided-context",
+  "methods": ["single_agent", "aflow", "rpas"],
+  "official_aflow_commit": "3f457218fc716093fe53f6df8a5d5e6379d66346",
+  "data_seed": 2026,
+  "search_seeds": [0, 1, 2],
+  "splits": {
+    "calib": 40,
+    "search": 120,
+    "select": 80,
+    "test": 800
+  },
+  "shared_inference": {
+    "executor_model": "Qwen/Qwen3.5-9B",
+    "temperature": 0.0,
+    "initial_executor_max_new_tokens": 256,
+    "context_window_minimum": 32768,
+    "no_external_retrieval": true,
+    "prompt_policy": "provided_context_and_question_only"
+  },
+  "meta_model": {
+    "must_match_between_aflow_and_rpas": true,
+    "minimum_max_new_tokens": 2048,
+    "initial_max_new_tokens": 4096,
+    "calibration_gate": "aflow_workflow_executable_rate>=0.95"
+  },
+  "formal_gates": {
+    "context_truncation_rate": 0.0,
+    "executor_generation_truncation_rate_lt": 0.01,
+    "meta_generation_truncation_rate_lt": 0.01,
+    "valid_answer_rate_gte": 0.99,
+    "d_test_locked_until_all_six_final_states_hashed": true
+  },
+  "selection": {
+    "finalists_max": 5,
+    "d_search_highest_f1": 3,
+    "d_search_pareto_low_cost": 2,
+    "d_select_evaluations_per_finalist": 1,
+    "primary": "max_answer_f1",
+    "tie_break": ["min_inference_tokens_per_query", "min_calls_per_query", "lexicographic_candidate_id"]
+  },
+  "rpas": {
+    "deployment_profile": "lan_homogeneous",
+    "allowed_mutations": ["topology", "role_assignment", "per_agent_token_budget", "communication_policy", "inference_budget"],
+    "requires": ["candidate_evaluation", "trace_collection", "llm_reflection", "typed_mutation", "new_candidate", "pareto_archive"],
+    "forbid_fixed_seed_only_selection": true
+  },
+  "metrics": ["answer_em", "answer_f1", "inference_calls_per_query", "inference_tokens_per_query", "prompt_tokens_per_query", "completion_tokens_per_query", "pretest_optimization_tokens", "search_calls", "search_wall_clock_seconds", "valid_answer_rate"],
+  "statistics": {
+    "primary": "two_level_paired_bootstrap",
+    "outer_unit": "search_seed",
+    "inner_unit": "matched_d_test_item_id",
+    "repetitions": 10000
+  }
+}

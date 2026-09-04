@@ -1,0 +1,5 @@
+# Generated upstream workflow snapshots must remain byte-for-byte recoverable.
+# Their whitespace is part of the captured source, so do not apply Git's
+# whitespace checker or an automatic formatter to these files.
+*.py -whitespace
+*.json -whitespace

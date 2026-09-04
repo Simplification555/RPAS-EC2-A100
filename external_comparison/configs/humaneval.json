@@ -1,0 +1,30 @@
+{
+  "dataset": "humaneval",
+  "role": "controlled_search_study_proxy_only",
+  "formal_result_policy": "not_part_of_FROZEN_CORE_v1_until_protocol_amendment",
+  "split_policy": {
+    "search": "must be frozen before execution",
+    "select": "must be frozen before execution",
+    "test": "official HumanEval test evaluation only; never used during search"
+  },
+  "methods": ["random_as", "aflow_style", "adas_style", "rpas_quality", "rpas"],
+  "metrics": ["pass_at_1", "search_calls", "search_tokens", "inference_calls", "inference_tokens", "cost_at_matched_quality", "quality_at_matched_cost"],
+  "implementation_status": "common_space_runner_ready_formal_gate_pending",
+  "split_sizes": {"search": 80, "select": 40, "test": 44},
+  "data_seed": 2026,
+  "search_seeds": [0, 1, 2],
+  "seed_candidates": 9,
+  "new_candidate_budget": 24,
+  "selection_shortlist_size": 8,
+  "evaluator": {
+    "name": "humaneval_pass_at_1_subprocess",
+    "version": "v1",
+    "timeout_seconds": 10
+  },
+  "model_config": "experiments/phase2_wan_agent_config_qwen35_9b_homogeneous.json",
+  "native_external_methods": {
+    "status": "separate_track_not_implemented",
+    "methods": ["aflow", "maas", "gdesigner"]
+  },
+  "todo": ["freeze dataset checksum", "freeze model endpoint and decoding", "complete G1-G9 gates"]
+}

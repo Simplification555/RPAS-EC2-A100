@@ -1,0 +1,77 @@
+{
+  "models": {
+    "qwen35_9b": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "api_base": "${RPAS_EXTERNAL_API_BASE}",
+      "api_key_value": "EMPTY",
+      "completion_kwargs": {"temperature": 0.0, "max_tokens": 1024}
+    }
+  },
+  "sites": {
+    "center_a": {
+      "kind": "selected_gpu_service",
+      "compute_latency_ms": 0.0,
+      "notes": "All logical roles use one explicitly selected physical GPU: 4 or 5."
+    }
+  },
+  "network_profiles": {
+    "lan_homogeneous": {
+      "default_rtt_ms": 0.0,
+      "default_bandwidth_mbps": 10000.0,
+      "default_failure_rate": 0.0,
+      "retry_backoff_ms": 0.0
+    }
+  },
+  "defaults": {
+    "local_model": "qwen35_9b",
+    "cheap_model": "qwen35_9b",
+    "strong_model": "qwen35_9b",
+    "local_site": "center_a",
+    "secondary_site": "center_a",
+    "remote_site": "center_a",
+    "orchestrator_site": "center_a",
+    "dag_decomposer_model": "qwen35_9b",
+    "dag_worker_models": ["qwen35_9b", "qwen35_9b", "qwen35_9b"],
+    "dag_aggregator_model": "qwen35_9b",
+    "agent_max_tokens": {
+      "planner": 1024,
+      "solver": 1024,
+      "verifier": 1024,
+      "decomposer": 1024,
+      "worker": 1024,
+      "aggregator": 1024
+    },
+    "topology_agent_max_tokens": {
+      "self_consistency": {"solver": 1024},
+      "solver_verifier": {"solver": 1024, "verifier": 1024},
+      "planner_solver_verifier": {"planner": 1024, "solver": 1024, "verifier": 1024},
+      "debate": {"solver": 1024, "verifier": 1024},
+      "dag_decompose": {"decomposer": 1024, "worker": 1024, "aggregator": 1024}
+    }
+  },
+  "allowed_topologies": ["single", "self_consistency", "solver_verifier", "planner_solver_verifier", "debate", "dag_decompose"],
+  "reflection": {
+    "model": "qwen35_9b",
+    "max_tokens": 1024,
+    "children": 3,
+    "failure_examples": 3,
+    "max_attempts": 3,
+    "retry_backoff_seconds": 1.0,
+    "allow_rule_fallback": false
+  },
+  "search": {
+    "model_pool": ["qwen35_9b"],
+    "site_pool": ["center_a"],
+    "compression_pool": ["full", "summary", "final_only", "critic_brief"],
+    "max_tokens_pool": {
+      "planner": [1024], "solver": [1024], "verifier": [1024],
+      "decomposer": [1024], "worker": [1024], "aggregator": [1024]
+    },
+    "topology_max_tokens_pool": {
+      "solver_verifier": {"solver": [1024], "verifier": [1024]},
+      "planner_solver_verifier": {"planner": [1024], "solver": [1024], "verifier": [1024]},
+      "debate": {"solver": [1024], "verifier": [1024]},
+      "dag_decompose": {"decomposer": [1024], "worker": [1024], "aggregator": [1024]}
+    }
+  }
+}

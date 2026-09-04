@@ -1,0 +1,2 @@
+method,dataset,score,num_examples,valid_answer_rate,inference_calls,inference_tokens,model_errors,maxed_calls,search_calls,search_tokens
+maas,humaneval,0.9541984732824428,131,None,821,573162,0,0,843,568945

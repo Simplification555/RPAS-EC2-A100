@@ -1,0 +1,50 @@
+{
+  "experiment": "EC-2-v2",
+  "protocol_version": "ec2-mmlu-communication-v2",
+  "dataset": "mmlu",
+  "dataset_label": "MMLU-57x10 controlled subset",
+  "methods": ["single_agent", "full_connected", "chain", "gdesigner", "rpas_comm"],
+  "search_seeds": [0, 1, 2],
+  "splits": {
+    "search": {"source": "dev", "per_subject": 1, "role": "architecture learning/search"},
+    "select": {"source": "val", "per_subject": 1, "role": "independent architecture selection/audit"},
+    "test": {"source": "test", "per_subject": 10, "role": "held-out evaluation"}
+  },
+  "shared_conditions": {
+    "backbone": "Qwen/Qwen3.5-9B",
+    "agent_count": 6,
+    "roles": ["Knowlegable Expert", "Critic", "Mathematician", "Psychologist", "Historian", "Doctor"],
+    "communication_rounds": 1,
+    "temperature": 0.0,
+    "max_output_tokens": 256,
+    "final_aggregator": "GDesigner.FinalRefer",
+    "message_policy": "verbatim_official_gdesigner",
+    "compression": "disabled_for_all_methods"
+  },
+  "gdesigner": {
+    "official_repository": "https://github.com/yanweiyue/GDesigner",
+    "official_commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+    "training_iterations": 10,
+    "training_batch_size": 4,
+    "training_learning_rate": 0.1,
+    "d_search_query_executions": 40
+  },
+  "rpas_comm": {
+    "reflection": "llm_only_no_rule_fallback",
+    "new_candidate_budget": 3,
+    "allowed_mutations": ["topology"],
+    "candidate_topologies": ["full_connected", "chain", "star", "layered"],
+    "d_search_query_executions": 40,
+    "selection_rule": "maximize_D_select_accuracy__then_minimize_inter_agent_tokens__then_candidate_id"
+  },
+  "telemetry": [
+    "active_edges",
+    "messages_per_query",
+    "inter_agent_tokens_per_query",
+    "judge_input_tokens_per_query",
+    "total_test_tokens_per_query",
+    "search_tokens"
+  ],
+  "legacy_results_policy": "legacy EC-2 artifacts are development/debugging only and the v2 aggregator rejects them",
+  "paper_result_gate": "three protocol-valid seeds for every method, same split-manifest SHA-256, valid-answer-rate and provenance review"
+}

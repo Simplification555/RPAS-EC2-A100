@@ -1,0 +1,10 @@
+{
+  "dataset": "mmlu",
+  "role": "legacy_placeholder_not_formal",
+  "methods": ["gdesigner", "rpas"],
+  "fixed_conditions": ["agent_pool", "agent_count", "rounds", "backbone", "token_cap"],
+  "metrics": ["accuracy", "active_edges", "messages_per_query", "inter_agent_tokens", "calls", "total_tokens", "latency_ms"],
+  "primary_plot": "accuracy_vs_communication_tokens",
+  "implementation_status": "protocol_ready_data_and_native_adapter_contract_pending",
+  "todo": ["freeze subject subset and checksum", "define edge/message telemetry mapping", "implement G-Designer native adapter"]
+}

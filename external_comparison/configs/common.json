@@ -1,0 +1,21 @@
+{
+  "protocol_version": "external-comparison-v0-foundation",
+  "authority": "EXPERIMENT_PROTOCOL.md",
+  "methods": ["random_as", "aflow_style", "adas_style", "rpas_quality", "rpas"],
+  "search_seeds": [0, 1, 2],
+  "realized_budget_fractions": [0.25, 0.5, 0.75, 1.0],
+  "selection": {
+    "quality_delta": 0.05,
+    "test_is_never_used_for_selection": true,
+    "same_quality_and_efficiency_selector": true
+  },
+  "fairness_boundary": {
+    "same_executor": true,
+    "same_model_and_decoding": true,
+    "same_data_splits": true,
+    "same_evaluator": true,
+    "same_runtime_and_telemetry": true,
+    "preserve_native_search": true
+  },
+  "status": "foundation_only_no_formal_results"
+}
