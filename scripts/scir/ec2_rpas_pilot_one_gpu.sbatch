@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# EC-2 v2 G-Designer and RPAS-Comm seed-0 pilot on one Slurm-allocated H100.
+# EC-2 v2 G-Designer and RPAS-Comm seed-0 pilot on one Slurm-allocated 80GB GPU.
 # This is a pilot artifact and is never a paper result.
-#SBATCH --job-name=rpas-ec2-pilot
+#SBATCH --job-name=rpas-ec2-pilot-a800
 #SBATCH --partition=compute
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:nvidia_h100_80gb_hbm3:1
+#SBATCH --gres=gpu:nvidia_a800_80gb_pcie:1
 #SBATCH --mem=40G
 #SBATCH --time=12:00:00
 #SBATCH --output=/home/jianbaizhao/RPAS-EC2-A100/logs/slurm/%x-%j.out
@@ -49,6 +49,7 @@ export GEPA_PHASE2_PROMPT_MODE=deliberate
   echo "job_id=${SLURM_JOB_ID}"
   echo "cuda_visible_devices=${gpu}"
   echo "protocol_amendment=SCIR_ALLOCATED_GPU_PILOT_ONLY"
+  echo "requested_gpu_type=nvidia_a800_80gb_pcie"
   nvidia-smi --query-gpu=index,uuid,name,memory.total,driver_version --format=csv
   find /home/jianbaizhao/RPAS/data/mmlu -maxdepth 2 -type f -name '*.parquet' | wc -l
   "${python_bin}" -m pip show torch transformers litellm datasets sentence-transformers

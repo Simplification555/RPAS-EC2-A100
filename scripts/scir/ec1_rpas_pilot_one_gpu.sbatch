@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# EC-1 RPAS seed-0 pilot on one Slurm-allocated H100.
+# EC-1 RPAS seed-0 pilot on one Slurm-allocated 80GB GPU.
 # This is intentionally a pilot artifact and is never a paper result.
-#SBATCH --job-name=rpas-ec1-pilot
+#SBATCH --job-name=rpas-ec1-pilot-a100
 #SBATCH --partition=compute
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:nvidia_h100_80gb_hbm3:1
+#SBATCH --gres=gpu:nvidia_a100_80gb_pcie:1
 #SBATCH --mem=40G
 #SBATCH --time=12:00:00
 #SBATCH --output=/home/jianbaizhao/RPAS-EC2-A100/logs/slurm/%x-%j.out
@@ -42,6 +42,7 @@ export GEPA_PHASE2_PROMPT_MODE=deliberate
   echo "job_id=${SLURM_JOB_ID}"
   echo "cuda_visible_devices=${gpu}"
   echo "protocol_amendment=SCIR_ALLOCATED_GPU_PILOT_ONLY"
+  echo "requested_gpu_type=nvidia_a100_80gb_pcie"
   nvidia-smi --query-gpu=index,uuid,name,memory.total,driver_version --format=csv
   sha256sum data/ec1_humaneval/official/humaneval.jsonl data/ec1_humaneval/aflow/humaneval_validate.jsonl data/ec1_humaneval/aflow/humaneval_test.jsonl data/ec1_humaneval/aflow/humaneval_public_test.jsonl
   git -C /home/jianbaizhao/external_baselines/AFlow rev-parse HEAD
