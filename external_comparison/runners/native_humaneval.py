@@ -31,10 +31,11 @@ def main() -> int:
     args = parser.parse_args()
     selected_gpu = os.environ.get("RPAS_EC1_GPU", "").strip()
     visible_gpu = os.environ.get("CUDA_VISIBLE_DEVICES", "").strip()
-    if selected_gpu not in {"4", "5"} or visible_gpu != selected_gpu:
+    allocated_pilot = os.environ.get("RPAS_SCIR_ALLOCATED_GPU", "0") == "1"
+    allowed = {"4", "5"} | ({selected_gpu} if allocated_pilot and selected_gpu.isdigit() else set())
+    if selected_gpu not in allowed or visible_gpu != selected_gpu:
         parser.error(
-            "EC-1 requires one matching physical GPU: "
-            "RPAS_EC1_GPU=CUDA_VISIBLE_DEVICES=4 or 5"
+            "EC-1 requires one matching physical GPU (4/5), or an explicitly recorded SCIR allocated-GPU pilot"
         )
     if args.run_kind == "formal":
         if not args.public_test_path:

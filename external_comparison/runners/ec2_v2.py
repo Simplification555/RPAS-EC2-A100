@@ -61,9 +61,11 @@ def require_authorized_gpu() -> str:
     """Reject an accidental run on any GPU other than the two authorized cards."""
 
     visible = os.environ.get("CUDA_VISIBLE_DEVICES", "")
-    if visible not in {"4", "5"}:
+    if visible not in {"4", "5"} and not (
+        os.environ.get("RPAS_SCIR_ALLOCATED_GPU", "0") == "1" and visible.isdigit()
+    ):
         raise RuntimeError(
-            "EC-2 v2 requires one explicit physical GPU: CUDA_VISIBLE_DEVICES=4 or CUDA_VISIBLE_DEVICES=5; "
+            "EC-2 v2 requires one explicit physical GPU 4/5, or an explicitly recorded SCIR allocated-GPU pilot; "
             f"got {visible!r}"
         )
     return visible

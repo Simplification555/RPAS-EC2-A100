@@ -13,8 +13,8 @@ dataset="$3"
 public_test="$4"
 output="$5"
 run_kind="${6:-pilot}"
-if [[ "$gpu" != "4" && "$gpu" != "5" ]]; then
-  echo "EC-1 permits only GPU 4 or GPU 5" >&2
+if [[ "$gpu" != "4" && "$gpu" != "5" && "${RPAS_SCIR_ALLOCATED_GPU:-0}" != "1" ]]; then
+  echo "EC-1 permits GPU 4/5, or an explicitly recorded SCIR allocated-GPU pilot" >&2
   exit 2
 fi
 

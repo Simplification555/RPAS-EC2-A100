@@ -42,8 +42,9 @@ from experiments.phase2_wan_agent_search import (
 def _require_selected_gpu() -> str:
     gpu = os.environ.get("RPAS_EC1_GPU", "")
     visible = os.environ.get("CUDA_VISIBLE_DEVICES", "")
-    if gpu not in {"4", "5"} or visible != gpu:
-        raise RuntimeError("native RPAS EC-1 requires exactly CUDA_VISIBLE_DEVICES=RPAS_EC1_GPU=4 or 5")
+    allocated_pilot = os.environ.get("RPAS_SCIR_ALLOCATED_GPU", "0") == "1"
+    if (gpu not in {"4", "5"} and not (allocated_pilot and gpu.isdigit())) or visible != gpu:
+        raise RuntimeError("native RPAS EC-1 requires matching GPU 4/5, or an explicitly recorded SCIR allocated-GPU pilot")
     return gpu
 
 
@@ -376,7 +377,9 @@ def run(args: Any) -> dict[str, Any]:
             "search_tokens": sum(int(row["total_tokens"]) for row in search_calls),
             "public_test_calls": len(tool_events),
             "public_test_repairs": sum(int(event["attempt"]) == 1 for event in tool_events),
-            "formal_result": args.run_kind == "formal",
+            "formal_result": False,
+            "formal_run": args.run_kind == "formal",
+            "formal_result_reason": "single-run artifacts require the EC-1 three-seed aggregate gate",
             "run_kind": args.run_kind,
         },
         "search_rows": search_rows,

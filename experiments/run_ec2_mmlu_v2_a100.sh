@@ -11,8 +11,8 @@ if [[ "${STAGE}" != "pilot" && "${STAGE}" != "formal" ]]; then
 fi
 
 export CUDA_VISIBLE_DEVICES="${RPAS_CUDA_VISIBLE_DEVICES:-}"
-if [[ "${CUDA_VISIBLE_DEVICES}" != "4" && "${CUDA_VISIBLE_DEVICES}" != "5" ]]; then
-  echo "set RPAS_CUDA_VISIBLE_DEVICES to exactly 4 or 5" >&2
+if [[ "${CUDA_VISIBLE_DEVICES}" != "4" && "${CUDA_VISIBLE_DEVICES}" != "5" && "${RPAS_SCIR_ALLOCATED_GPU:-0}" != "1" ]]; then
+  echo "set RPAS_CUDA_VISIBLE_DEVICES to 4/5, or use the explicitly recorded SCIR allocated-GPU pilot" >&2
   exit 2
 fi
 
