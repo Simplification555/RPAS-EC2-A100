@@ -258,7 +258,24 @@ def _setup(args: argparse.Namespace, *, output: Path, seed: int) -> tuple[dict[s
         raise ValueError("EC-3 requires executor cap 256/512 and meta cap at least 2048")
     if output.exists() and any(output.iterdir()):
         raise FileExistsError(f"refusing to reuse EC-3 AFlow workspace: {output}")
-    workspace = stage_checkout(Path(args.aflow_root), output, "aflow", seed, require_clean_git=True)
+    # The shared upstream checkout may legitimately retain earlier experiment
+    # artifacts under an untracked outputs/ directory. Clone its pinned HEAD
+    # locally so those artifacts cannot enter this run, then retain the usual
+    # clean-source check on the clone rather than weakening it.
+    source_snapshot = output / "_aflow_source_snapshot"
+    subprocess.run(
+        ["git", "clone", "--quiet", "--no-hardlinks", str(Path(args.aflow_root)), str(source_snapshot)],
+        check=True,
+    )
+    upstream_commit = subprocess.run(
+        ["git", "-C", str(Path(args.aflow_root)), "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+    ).stdout.strip()
+    snapshot_commit = subprocess.run(
+        ["git", "-C", str(source_snapshot), "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+    ).stdout.strip()
+    if snapshot_commit != upstream_commit:
+        raise RuntimeError("AFlow clean source snapshot does not match the preflight upstream commit")
+    workspace = stage_checkout(source_snapshot, output, "aflow", seed, require_clean_git=True)
     _clean_staged_hotpot_workspace(workspace)
     endpoint = os.environ.get("RPAS_EXTERNAL_API_BASE", "").strip()
     if not endpoint:
