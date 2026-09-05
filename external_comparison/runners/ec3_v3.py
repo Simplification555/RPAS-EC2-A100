@@ -45,7 +45,8 @@ MIN_VALID_ANSWER_RATE = 0.99
 MAX_TRUNCATION_RATE = 0.01
 
 
-def _read_json(path: Path) -> dict[str, Any]:
+def _read_json(path: Path | str) -> dict[str, Any]:
+    path = Path(path)
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
         raise ValueError(f"expected JSON object: {path}")

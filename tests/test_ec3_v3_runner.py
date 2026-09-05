@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from external_comparison.runners.ec3_v3 import _require_unlock, _select, _shortlist
+from external_comparison.runners.ec3_v3 import _read_json, _require_unlock, _select, _shortlist
 from experiments.phase2_wan_agent_search import (
     extract_prediction_for_dataset,
     score_example_answer,
@@ -53,3 +53,9 @@ def test_ec3_test_unlock_must_match_the_frozen_split(tmp_path: Path) -> None:
         _require_unlock(tmp_path, manifest)
     (tmp_path / "d_test_unlock.json").write_text(json.dumps({"d_test_unlocked": True, "split_manifest_sha256": "frozen"}), encoding="utf-8")
     assert _require_unlock(tmp_path, manifest)["d_test_unlocked"] is True
+
+
+def test_ec3_json_reader_accepts_cli_string_paths(tmp_path: Path) -> None:
+    path = tmp_path / "manifest.json"
+    path.write_text(json.dumps({"protocol_version": "EC3_HOTPOTQA_V3"}), encoding="utf-8")
+    assert _read_json(str(path))["protocol_version"] == "EC3_HOTPOTQA_V3"
