@@ -64,8 +64,10 @@ def run_preflight(dataset_path: Path, public_test_path: Path, config_path: Path,
     visible_gpu = os.environ.get("CUDA_VISIBLE_DEVICES", "").strip()
     if visible_gpu:
         allowed = {item.strip() for item in visible_gpu.split(",") if item.strip()}
-        if not allowed or not allowed.issubset({"4", "5"}):
-            errors.append("CUDA_VISIBLE_DEVICES must contain only GPU 4 and/or GPU 5")
+        scir_allocated = os.environ.get("RPAS_SCIR_ALLOCATED_GPU") == "1"
+        valid_scir_token = scir_allocated and visible_gpu.isdigit() and "," not in visible_gpu
+        if not allowed or (not allowed.issubset({"4", "5"}) and not valid_scir_token):
+            errors.append("CUDA_VISIBLE_DEVICES must contain only GPU 4/5 locally or one SCIR allocated token")
     result = {
         "status": "ready" if not errors else "blocked",
         "formal_result": False,
