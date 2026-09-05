@@ -319,7 +319,12 @@ def run_pretest(args: argparse.Namespace) -> Path:
     seed_archive_size = len(pareto_front(evaluated))
     mutation_logs: list[dict[str, Any]] = []
     generated = 0
-    while generated < 3:
+    reflection_attempts = 0
+    max_reflection_attempts = int(os.environ.get("RPAS_EC3_MAX_REFLECTION_ATTEMPTS", "8"))
+    if max_reflection_attempts < 3:
+        raise ValueError("EC-3 RPAS requires at least three reflection attempts")
+    while generated < 3 and reflection_attempts < max_reflection_attempts:
+        reflection_attempts += 1
         parent = min(evaluated, key=lambda row: (-float(row["answer_f1"]), str(row["candidate_id"])))
         started = time.perf_counter()
         plan = build_reflection_plan(
@@ -360,7 +365,15 @@ def run_pretest(args: argparse.Namespace) -> Path:
             generated += 1
             enqueued = True
         if not enqueued:
-            raise RuntimeError("EC-3 RPAS could not materialize an LLM-planned valid mutation")
+            # A single deterministic reflection can propose an already-used or
+            # contract-invalid mutation. Retry the LLM reflection within a
+            # bounded budget; rule-based fallback remains forbidden.
+            continue
+    if generated < 3:
+        raise RuntimeError(
+            "EC-3 RPAS could not materialize three LLM-planned valid mutations "
+            f"within {max_reflection_attempts} reflection attempts"
+        )
     finalists = _shortlist(evaluated)
     selection_rows: list[dict[str, Any]] = []
     selection_calls: list[dict[str, Any]] = []
