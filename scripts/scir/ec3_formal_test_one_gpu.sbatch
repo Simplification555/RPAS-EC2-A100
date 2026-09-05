@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
-# EC-3 formal held-out test: one method/seed per allocated GPU.
+# EC-3 formal held-out test: one method/seed per allocated 32GB GPU.
 #SBATCH --job-name=ec3-formal-test
 #SBATCH --partition=compute
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:a100-pcie-40gb:1
-#SBATCH --mem=40G
+# Qwen3.5-9B FP16 runs on the V100-32G pool. Completed EC-3 pretests
+# remained below 12 GiB host RSS, so 16 GiB leaves margin and avoids an
+# unnecessary dependency on the congested A100 queue.
+#SBATCH --gres=gpu:tesla_v100-sxm2-32gb:1
+#SBATCH --mem=16G
 #SBATCH --time=12:00:00
 #SBATCH --array=0-5%6
 #SBATCH --output=/home/jianbaizhao/RPAS-EC2-A100/logs/slurm/%x-%A_%a.out
