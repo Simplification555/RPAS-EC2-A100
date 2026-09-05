@@ -234,3 +234,29 @@ original experiment. A documented protocol decision and independent
 calibration would be needed to resolve an actual incompatibility. Other
 remaining final audits include matched EC1 search budgets, three-seed paired
 statistics, full telemetry completeness, and baseline fidelity.
+
+### Verified Deployment And Real Reflection Preflight
+
+At 02:06, the revised EC2 runtime was atomically deployed after two successful
+SCIR native-loop preflights. The deployed and preflight source hashes match:
+`536ded9d72a6d08148ba7d5295f1f92b85210d2a8a253c97b0d364abba8b7466`.
+The old runtime is retained remotely as
+`scripts/scir/ec2_v2_before_journal_20260906.py`. Pending array 132406 was
+not cancelled or resubmitted. Its actual Slurm batch snapshot was read back:
+normal requests retain cap 256, RPAS-Comm service permits reflector cap 768,
+and the frozen per-subject budgets remain 1/1/10 with a 24-hour allocation.
+
+A separate real-model synthetic preflight completed successfully at 02:11.
+With only `layered` remaining legal, the existing reflector returned that
+topology with parseable JSON, no fallback, no model error and finish=stop.
+One call used 1549 prompt + 379 completion = 1928 total tokens; observed
+latency was 277.13 seconds on the co-resident endpoint, including queue wait.
+Evidence: `outputs/preflight_20260906/real_reflection.json` remotely and
+`outputs/audit_20260906/real_reflection.json` locally. These calls are
+preflight overhead, not part of Single's experiment telemetry or any table.
+
+The local focused suite now has 37 passing tests. It additionally exercises
+the entire RPAS-Comm path with a simulated model/runtime, checking exactly
+40 D_search query executions, 228 D_select executions and 570 held-out
+examples; the selected topology must be frozen before test evaluation.
+This is regression evidence, not real-model benchmark performance.

@@ -78,3 +78,45 @@ def test_reflection_excludes_already_evaluated_topologies(monkeypatch):
     child, _ = _llm_topology_mutation(parent, config={"defaults": {"local_model": "model"}}, models={}, profile=None)
     assert child["topology"] == "layered"
     assert child["id"] not in seen
+
+
+def test_rpas_full_pipeline_keeps_search_select_and_test_separate(tmp_path, monkeypatch):
+    import external_comparison.runners.ec2_v2 as ec2
+    import experiments.phase2_wan_agent_search as search
+    phases = []
+    journals = []
+    usage = []
+    class Runtime:
+        def make_graph(self, **kwargs):
+            assert kwargs["optimized_spatial"] is False
+            return kwargs["topology"]
+        async def evaluate(self, graph, examples, *, split, candidate_id):
+            phases.append((split, [row.example_id for row in examples]))
+            rows = [{"example_id": row.example_id, "prediction": "A", "answer": "A", "correct": True,
+                     "inter_agent_tokens": 1} for row in examples]
+            usage.extend({"split": split, "total_tokens": 5, "prompt_tokens": 3, "completion_tokens": 2} for _ in rows)
+            return rows, {"inter_agent_tokens": len(rows)}
+        def calls(self, **kwargs):
+            return list(usage)
+        def journal(self, name, payload):
+            journals.append((name, payload, len(phases)))
+    monkeypatch.setenv("RPAS_EC2_V2_NEW_CANDIDATES", "3")
+    monkeypatch.setattr(ec2, "_reflection_context", lambda _: ({"defaults": {"local_model": "model"}}, {}, None))
+    def reflector(**kwargs):
+        return {"mode": "llm", "mutations": [{"type": "topology", "value": kwargs["config"]["allowed_topologies"][0]}],
+                "call_traces": [{"prompt_tokens": 3, "completion_tokens": 2, "total_tokens": 5}]}
+    monkeypatch.setattr(search, "build_reflection_plan", reflector)
+    rows = {phase: [MMLUExample(f"{phase}:{i}", "s", "q", ("a", "b", "c", "d"), "A") for i in range(count)]
+            for phase, count in (("search", 57), ("select", 57), ("test", 570))}
+    rows.update(output_dir=str(tmp_path), manifest={"split_manifest_sha256": "fixture",
+                "search": {"count": 57}, "select": {"count": 57}, "test": {"count": 570}})
+    asyncio.run(ec2._run_rpas_comm(Runtime(), rows, 0, tmp_path))
+    assert [phase for phase, _ in phases] == ["search"] * 4 + ["select"] * 4 + ["test"]
+    assert sum(len(ids) for phase, ids in phases if phase == "search") == 40
+    assert sum(len(ids) for phase, ids in phases if phase == "select") == 228
+    assert len(phases[-1][1]) == 570
+    assert all(all(item.startswith(phase + ":") for item in ids) for phase, ids in phases)
+    assert next(count for name, _, count in journals if name == "selection_frozen.jsonl") == 8
+    result = json.loads((tmp_path / "rpas_comm" / "seed_0" / "result.json").read_text())
+    assert result["rpas_reflection"]["new_candidates"] == 3
+    assert result["rpas_reflection"]["rule_fallbacks"] == 0
