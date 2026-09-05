@@ -269,7 +269,14 @@ def _install_graph_prompt_fallback(optimizer: Any) -> None:
         import workspace.HotpotQA.workflows.template.operator as operator_module
     except ImportError:
         return
-    custom = operator_module.Custom
+    _install_custom_json_compat(operator_module)
+
+
+def _install_custom_json_compat(operator_module: Any) -> None:
+    """Normalize the pinned Custom operator across dynamically loaded modules."""
+    custom = getattr(operator_module, "Custom", None)
+    if custom is None:
+        return
     if getattr(custom, "_rpas_json_compat", False):
         return
     original_custom_call = custom.__call__
@@ -288,7 +295,7 @@ def _install_graph_prompt_fallback(optimizer: Any) -> None:
                 # expecting a mapping. Preserve the answer text while making
                 # both upstream access conventions available.
                 answer = text
-                marker = re.search(r"(?:^|\\n)\\s*Answer\\s*:\\s*(.+)", text, flags=re.IGNORECASE | re.DOTALL)
+                marker = re.search(r"(?:^|\n)\s*Answer\s*:\s*(.+)", text, flags=re.IGNORECASE | re.DOTALL)
                 if marker:
                     answer = marker.group(1).strip()
                 return _AnswerCompat({"answer": answer, "response": answer})
@@ -385,6 +392,9 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
     for globals_dict in function_globals:
         if "prompt_custom" in globals_dict:
             globals_dict["prompt_custom"] = _PromptFallback(fallback_module, generic_prompt)
+        operator_module = globals_dict.get("operator")
+        if operator_module is not None:
+            _install_custom_json_compat(operator_module)
     before = set(log_dir.glob("*.csv"))
     score, _, _ = asyncio.run(
         Evaluator(eval_path=str(log_dir)).graph_evaluate(
