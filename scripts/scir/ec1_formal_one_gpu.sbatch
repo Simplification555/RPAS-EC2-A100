@@ -37,6 +37,7 @@ validate_fixture="${repo_root}/data/ec1_humaneval/aflow/humaneval_validate.jsonl
 test_fixture="${repo_root}/data/ec1_humaneval/aflow/humaneval_test.jsonl"
 mkdir -p "${job_root}/logs"
 cd "${repo_root}"
+run_started_at_epoch="$(date +%s.%N)"
 
 export PYTHONPATH="${repo_root}${PYTHONPATH:+:${PYTHONPATH}}"
 export RPAS_SCIR_ALLOCATED_GPU=1
@@ -62,6 +63,7 @@ export PYTHONUNBUFFERED=1
 
 {
   date --iso-8601=seconds
+  echo "run_started_at_epoch=${run_started_at_epoch}"
   hostname
   echo "job_id=${SLURM_JOB_ID}"
   echo "array_task_id=${task_id}"

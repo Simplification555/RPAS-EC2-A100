@@ -29,6 +29,7 @@ job_root="${repo_root}/outputs/scir_ec3_test/${method}/seed_${seed}_${SLURM_JOB_
 port=$((29900 + SLURM_JOB_ID % 800))
 mkdir -p "${job_root}/logs" "${root}"
 cd "${repo_root}"
+run_started_at_epoch="$(date +%s.%N)"
 export PYTHONPATH="${repo_root}${PYTHONPATH:+:${PYTHONPATH}}"
 export RPAS_SCIR_ALLOCATED_GPU=1
 export CUDA_VISIBLE_DEVICES="${gpu}"
@@ -39,6 +40,21 @@ export RPAS_EC3_EXECUTOR_MAX_TOKENS=512
 export RPAS_EC3_META_MAX_TOKENS=4096
 export GEPA_QWEN_DISABLE_THINKING=1
 export PYTHONUNBUFFERED=1
+
+{
+  date --iso-8601=seconds
+  echo "run_started_at_epoch=${run_started_at_epoch}"
+  hostname
+  echo "job_id=${SLURM_JOB_ID}"
+  echo "array_task_id=${task_id}"
+  echo "method=${method}"
+  echo "seed=${seed}"
+  echo "cuda_visible_devices=${gpu}"
+  echo "run_kind=formal_test"
+  nvidia-smi --query-gpu=index,uuid,name,memory.total,driver_version --format=csv
+  sha256sum "${manifest}"
+  "${python_bin}" -m pip show torch transformers litellm datasets sentence-transformers
+} | tee "${job_root}/environment.txt"
 
 "${python_bin}" scripts/serve_transformers_qwen35_openai.py --model "${model_path}" \
   --served-model-name Qwen/Qwen3.5-9B --host 127.0.0.1 --port "${port}" \

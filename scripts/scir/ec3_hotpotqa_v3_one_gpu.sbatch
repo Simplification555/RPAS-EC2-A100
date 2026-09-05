@@ -43,6 +43,7 @@ formal_root="${repo_root}/outputs/ec3_hotpotqa_v3"
 port=$((29890 + SLURM_JOB_ID % 900))
 mkdir -p "${job_root}/logs" "${formal_root}"
 cd "${repo_root}"
+run_started_at_epoch="$(date +%s.%N)"
 
 export PYTHONPATH="${repo_root}${PYTHONPATH:+:${PYTHONPATH}}"
 export RPAS_SCIR_ALLOCATED_GPU=1
@@ -58,6 +59,7 @@ export PYTHONUNBUFFERED=1
 
 {
   date --iso-8601=seconds
+  echo "run_started_at_epoch=${run_started_at_epoch}"
   hostname
   echo "job_id=${SLURM_JOB_ID}"
   echo "method=${method}"
