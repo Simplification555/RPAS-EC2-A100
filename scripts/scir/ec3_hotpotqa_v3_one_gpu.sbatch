@@ -8,7 +8,9 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:tesla_v100-sxm2-32gb:1
 #SBATCH --mem=40G
-#SBATCH --time=12:00:00
+# AFlow search/select and held-out evaluation can exceed two hours on a
+# serialized 9B endpoint; retain a six-hour ceiling for reproducible runs.
+#SBATCH --time=06:00:00
 #SBATCH --output=/home/jianbaizhao/RPAS-EC2-A100/logs/slurm/%x-%j.out
 #SBATCH --error=/home/jianbaizhao/RPAS-EC2-A100/logs/slurm/%x-%j.err
 
