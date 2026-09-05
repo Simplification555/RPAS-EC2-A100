@@ -473,3 +473,61 @@ current matrix as satisfying the original V3.1 specification. Older MaAS
 cost-hook latency measures the accounting callback, not request wall time;
 retain its run wall-clock as operational timing and audit per-call latency
 before any latency claim. Co-resident runs are not isolated timing trials.
+
+## Shared-Endpoint Chain Launch At 03:01 UTC+08
+
+The Full endpoints already support four-request batching but their old serial
+graph consumers leave spare capacity. Two pending Chain seeds now share
+these existing endpoints, without a second Qwen instance or a new allocation.
+This is authorized co-resident execution, not an isolated latency trial.
+Both endpoints first passed the real synthetic serial/four-way consistency
+preflight. Evidence: `outputs/preflight_20260906/shared_full0_batch.json`
+and `shared_full1_batch.json`; those eight calls per endpoint are overhead,
+not benchmark calls.
+
+| Added Worker | Allocation | Endpoint Port | Wrapper | Runner | Parent | Guard |
+|---|---|---|---|---|---|---|
+| Chain seed 1 | 131866 = 131783_3 | 30166 | 1367520 | 1367804 | 1320268 | 1367619 |
+| Chain seed 2 | 131909 = 131783_4 | 30209 | 1647412 | 1647558 | 1612721 | 1647459 |
+
+Original Full runners 1320496 and 1613025 were verified live after activation.
+Services 1320315 and 1612753 remain owned by their original batch shells.
+Only those shells are deliberately stopped; do not stop the model services or
+Full runners. Each independent guard resumes its parent after its added Chain
+wrapper exits, so normal Full cleanup cannot kill an active shared consumer.
+Guard logs are `_jobs/guard_shared_chain_seed{1,2}_{131866,131909}.log`
+under `outputs/scir_ec2_formal` (seed 1 maps to 131866, seed 2 to 131909).
+
+`ec2_shared_endpoint_packed.sh` validates the parent/service allocation and
+PID start identities, refuses an existing destination, acquires a seed lock,
+waits for an external guard activation, checks that the parent is stopped,
+and never kills the shared service. It preserves cap 256, all 570 test items,
+all 57 subjects, data seed 2026 and four-item fixed-graph batching. Artifacts
+stay in the canonical EC2 output root. At 03:02 Chain seed 1 had written real
+call records; seed 2's runner was live and loading from the shared filesystem.
+GPU memory stayed near 20 GB rather than loading another 18 GB model.
+
+### Queue Migration Incident And Recovery
+
+After verifying array tasks 132406_7 and 132406_8 were PENDING, the command
+`scancel --state=PENDING 132406_7 132406_8` cancelled the entire unmaterialized
+array on this SCIR setup. `sacct` and `scontrol` confirmed cancellation of
+the whole remaining array, not just the requested indices. Do not reuse this
+filtered cancellation pattern for a partially selected array.
+
+The other four never-started tasks were immediately restored as
+`132507_[10-11,13-14%4]`: G-Designer seeds 1/2 and RPAS-Comm seeds 1/2.
+They retain the same 4 CPUs, 40 GB host RAM, typed A100 PCIe 80 GB request,
+24-hour limit and frozen experiment budgets. No running experiment was
+cancelled and no partial benchmark work was lost, but the four tasks lost
+their earlier queue age. This was reported to the user explicitly.
+
+The focused suite now passes 78 tests. The shared launcher also passes
+SCIR `bash -n`; the runtime it invokes is the previously native-preflighted
+version with the unchanged protocol parameters.
+
+At 03:04 both shared Chain runners were making real requests: seed 1 had
+21 completed call records and seed 2 had 8 (excluding each run-start marker),
+with no recorded errors. Neither had completed its first four-question batch
+yet. Both Full runners and service processes remained live, and the parents
+remained stopped under their verified guards. Single seed 1 reached 126/131.
