@@ -106,14 +106,18 @@ curl -sf "http://127.0.0.1:${port}/v1/chat/completions" \
 
 test_result="${output_root}/${method}/seed_${seed}/result.json"
 [[ -s "${test_result}" ]] || { echo "missing formal result: ${test_result}" >&2; exit 1; }
-"${python_bin}" - "${test_result}" <<'PY'
+result_dir="${output_root}/${method}/seed_${seed}"
+[[ -s "${result_dir}/calls.jsonl" ]] || { echo "missing EC-2 calls audit: ${result_dir}/calls.jsonl" >&2; exit 1; }
+"${python_bin}" - "${test_result}" "${method}" <<'PY'
 import json, sys
 payload = json.load(open(sys.argv[1], encoding="utf-8"))
 if payload.get("formal_result") is not False:
     raise SystemExit("EC-2 result must remain false until three-seed aggregate gate")
-for key in ("calls", "search_trace", "split_manifest_sha256"):
-    if key not in payload and key != "calls":
-        raise SystemExit(f"missing EC-2 audit field: {key}")
+if not payload.get("split_manifest_sha256"):
+    raise SystemExit("missing EC-2 split_manifest_sha256")
+method = sys.argv[2]
+if method in {"gdesigner", "rpas_comm"} and int(payload.get("search_calls", 0)) <= 0:
+    raise SystemExit(f"{method} must record positive search_calls")
 PY
 echo "formal_result=false; seed_complete=true" >"${job_root}/job_status.txt"
 find "${job_root}" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum >"${job_root}/SHA256SUMS"
