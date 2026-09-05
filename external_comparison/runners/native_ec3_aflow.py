@@ -463,7 +463,9 @@ def run_calibration(args: argparse.Namespace) -> Path:
     seed_everything(2026)
     _install_runtime_compatibility()
     _instrument_async_llm(calls_path=calls_path, run_id="ec3-hotpotqa-aflow-calibration")
-    optimizer, _ = _make_optimizer(workspace, model=os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"), api_key=os.environ.get("RPAS_EXTERNAL_API_KEY", "EMPTY"), base_url=os.environ["RPAS_EXTERNAL_API_BASE"], executor_cap=executor_cap, meta_cap=meta_cap, max_rounds=2)
+    # AFlow counts the initial graph separately, so one optimization iteration
+    # produces exactly the required fresh round_2 candidate.
+    optimizer, _ = _make_optimizer(workspace, model=os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"), api_key=os.environ.get("RPAS_EXTERNAL_API_KEY", "EMPTY"), base_url=os.environ["RPAS_EXTERNAL_API_BASE"], executor_cap=executor_cap, meta_cap=meta_cap, max_rounds=1)
     _install_graph_prompt_fallback(optimizer)
     os.environ["RPAS_EC3_AFLOW_PHASE"] = "calib_search"
     optimizer.optimize("Graph")
@@ -500,7 +502,7 @@ def run_pretest(args: argparse.Namespace) -> Path:
     seed_everything(args.seed)
     _install_runtime_compatibility()
     _instrument_async_llm(calls_path=calls_path, run_id=f"ec3-hotpotqa-aflow-seed-{args.seed}")
-    optimizer, _ = _make_optimizer(workspace, model=os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"), api_key=os.environ.get("RPAS_EXTERNAL_API_KEY", "EMPTY"), base_url=os.environ["RPAS_EXTERNAL_API_BASE"], executor_cap=executor_cap, meta_cap=meta_cap, max_rounds=2)
+    optimizer, _ = _make_optimizer(workspace, model=os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"), api_key=os.environ.get("RPAS_EXTERNAL_API_KEY", "EMPTY"), base_url=os.environ["RPAS_EXTERNAL_API_BASE"], executor_cap=executor_cap, meta_cap=meta_cap, max_rounds=1)
     _install_graph_prompt_fallback(optimizer)
     started = time.time()
     os.environ["RPAS_EC3_AFLOW_PHASE"] = "search"
@@ -561,7 +563,7 @@ def run_test(args: argparse.Namespace) -> Path:
     sys.path.insert(0, str(workspace))
     _install_runtime_compatibility()
     _instrument_async_llm(calls_path=run / "test_calls.jsonl", run_id=f"ec3-hotpotqa-aflow-seed-{args.seed}")
-    optimizer, _ = _make_optimizer(workspace, model=os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"), api_key=os.environ.get("RPAS_EXTERNAL_API_KEY", "EMPTY"), base_url=os.environ["RPAS_EXTERNAL_API_BASE"], executor_cap=executor_cap, meta_cap=meta_cap, max_rounds=2)
+    optimizer, _ = _make_optimizer(workspace, model=os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"), api_key=os.environ.get("RPAS_EXTERNAL_API_KEY", "EMPTY"), base_url=os.environ["RPAS_EXTERNAL_API_BASE"], executor_cap=executor_cap, meta_cap=meta_cap, max_rounds=1)
     os.environ["RPAS_EC3_AFLOW_PHASE"] = "test"
     result = _evaluate_round(optimizer, round_number=int(selected["round"]), split_rows=test, split_path=split_path, log_dir=workspace / "workspace" / "HotpotQA" / "workflows" / f"round_{selected['round']}")
     _append_jsonl(run / "test_outputs.jsonl", result["outputs"])
