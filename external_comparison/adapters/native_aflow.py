@@ -8,7 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from external_comparison.adapters.native_common import call_record, env_path, write_native_result
+from external_comparison.adapters.native_common import env_path, write_native_result
+from external_comparison.adapters.native_telemetry import call_record
 
 
 def _root() -> Path:

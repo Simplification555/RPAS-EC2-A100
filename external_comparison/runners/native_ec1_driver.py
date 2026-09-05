@@ -30,6 +30,7 @@ from external_comparison.adapters.native_runtime import (
     write_aflow_config,
     write_maas_config,
 )
+from external_comparison.adapters.native_telemetry import NativeCallRecorder
 
 
 class _PromptFallback:
@@ -193,13 +194,16 @@ def _aflow(args, source: Path, run_root: Path) -> dict[str, Any]:
 
     from scripts.async_llm import AsyncLLM, LLMConfig
     from scripts.optimizer import Optimizer
+    from benchmarks.humaneval import HumanEvalBenchmark
 
     compatibility_patch = _install_aflow_runtime_compatibility()
+    recorder = NativeCallRecorder(telemetry, method="aflow", seed=args.seed)
+    recorder.bind_benchmark(HumanEvalBenchmark)
+    recorder.install_openai()
 
     original_call = AsyncLLM.__call__
 
     async def instrumented_call(self, prompt):
-        started = time.perf_counter()
         original_create = self.aclient.chat.completions.create
 
         async def capped_create(*call_args, **call_kwargs):
@@ -214,9 +218,6 @@ def _aflow(args, source: Path, run_root: Path) -> dict[str, Any]:
             result = await original_call(self, prompt)
         finally:
             self.aclient.chat.completions.create = original_create
-        history = self.get_usage_summary().get("history", [])
-        if history:
-            _append(telemetry, _usage_record("aflow", os.environ["RPAS_EC1_PHASE"], history[-1], self.config.model, started))
         return result
 
     AsyncLLM.__call__ = instrumented_call
@@ -267,7 +268,7 @@ def _aflow(args, source: Path, run_root: Path) -> dict[str, Any]:
     test_rows = [json.loads(line) for line in Path(data["test_path"]).read_text(encoding="utf-8").splitlines() if line.strip()]
     outputs = _csv_rows(test_root / "round_1", test_rows)
     return {
-        "manifest": {**source_manifest(source, workspace, "aflow", args.seed, data), "implementation_status": "official_optimizer_graph_then_selected_workflow_test", "aflow_max_rounds": args.aflow_max_rounds, "aflow_sample": args.aflow_sample, "aflow_validation_rounds": args.aflow_validation_rounds, "selected_round": selected_round, "selected_validation_score": selected.get("score"), "search_wall_clock_seconds": search_wall_clock, "staged_compatibility_patch": compatibility_patch + "; " + prompt_compatibility},
+        "manifest": {**source_manifest(source, workspace, "aflow", args.seed, data), **recorder.manifest(), "implementation_status": "official_optimizer_graph_then_selected_workflow_test", "aflow_max_rounds": args.aflow_max_rounds, "aflow_sample": args.aflow_sample, "aflow_validation_rounds": args.aflow_validation_rounds, "selected_round": selected_round, "selected_validation_score": selected.get("score"), "search_wall_clock_seconds": search_wall_clock, "staged_compatibility_patch": compatibility_patch + "; " + prompt_compatibility},
         "search_rows": search_rows,
         "test_rows": outputs,
         "telemetry_path": str(telemetry),
@@ -312,12 +313,15 @@ def _aflow_test_only(args, source: Path, run_root: Path) -> dict[str, Any]:
     seed_everything(args.seed)
     from scripts.async_llm import AsyncLLM, LLMConfig
     from scripts.optimizer import Optimizer
+    from benchmarks.humaneval import HumanEvalBenchmark
 
     compatibility_patch = _install_aflow_runtime_compatibility()
+    recorder = NativeCallRecorder(telemetry, method="aflow", seed=args.seed)
+    recorder.bind_benchmark(HumanEvalBenchmark)
+    recorder.install_openai()
     original_call = AsyncLLM.__call__
 
     async def instrumented_call(self, prompt):
-        started = time.perf_counter()
         original_create = self.aclient.chat.completions.create
 
         async def capped_create(*call_args, **call_kwargs):
@@ -330,9 +334,6 @@ def _aflow_test_only(args, source: Path, run_root: Path) -> dict[str, Any]:
             result = await original_call(self, prompt)
         finally:
             self.aclient.chat.completions.create = original_create
-        history = self.get_usage_summary().get("history", [])
-        if history:
-            _append(telemetry, _usage_record("aflow", "test", history[-1], self.config.model, started))
         return result
 
     AsyncLLM.__call__ = instrumented_call
@@ -355,6 +356,7 @@ def _aflow_test_only(args, source: Path, run_root: Path) -> dict[str, Any]:
     return {
         "manifest": {
             **source_manifest(source, workspace, "aflow", args.seed, data),
+            **recorder.manifest(),
             "implementation_status": "official_optimizer_graph_then_selected_workflow_test",
             "aflow_max_rounds": args.aflow_max_rounds,
             "aflow_sample": args.aflow_sample,
@@ -614,8 +616,12 @@ def _maas(args, source: Path, run_root: Path) -> dict[str, Any]:
     from maas.configs.models_config import ModelsConfig
     from maas.ext.maas.scripts.optimizer import Optimizer
     from maas.ext.maas.scripts.optimizer_utils.data_utils import DataUtils
-    from maas.provider.base_llm import BaseLLM
     from maas.provider.openai_api import OpenAILLM
+    from maas.ext.maas.benchmark.humaneval import HumanEvalBenchmark
+
+    recorder = NativeCallRecorder(telemetry, method="maas", seed=args.seed)
+    recorder.bind_benchmark(HumanEvalBenchmark)
+    recorder.install_openai()
 
     # The released call sites pass only ``round, score`` although the released
     # DataUtils requires three additional arguments.  This narrow compatibility
@@ -626,15 +632,6 @@ def _maas(args, source: Path, run_root: Path) -> dict[str, Any]:
         return original_create_result(self, round, score, avg_cost, total_cost, token)
 
     DataUtils.create_result_data = compatible_result
-    original_update = BaseLLM._update_costs
-
-    def instrumented_update(self, usage, model=None, local_calc_usage=True):
-        started = time.perf_counter()
-        result = original_update(self, usage, model=model, local_calc_usage=local_calc_usage)
-        _append(telemetry, _usage_record("maas", os.environ["RPAS_EC1_PHASE"], usage, str(model or getattr(self, "model", args.model)), started))
-        return result
-
-    BaseLLM._update_costs = instrumented_update
     original_kwargs = OpenAILLM._cons_kwargs
 
     def controlled_kwargs(self, messages, timeout=0, **extra_kwargs):
@@ -682,7 +679,7 @@ def _maas(args, source: Path, run_root: Path) -> dict[str, Any]:
     test_root = workspace / "maas" / "ext" / "maas" / "scripts" / "optimized" / "HumanEval" / "test" / "round_1"
     outputs = _csv_rows(test_root, test_rows)
     return {
-        "manifest": {**source_manifest(source, workspace, "maas", args.seed, data), "implementation_status": "official_optimizer_reused_trained_controller_then_test" if args.maas_test_only else "official_optimizer_fresh_train_checkpoint_then_test", "maas_sample": args.maas_sample, "maas_batch_size": args.maas_batch_size, "maas_lr": args.maas_lr, "search_wall_clock_seconds": search_wall_clock, "checkpoint": str(checkpoint), "checkpoint_bytes": checkpoint.stat().st_size, "checkpoint_reused": args.maas_test_only, "checkpoint_source": str(Path(args.maas_controller_path).resolve()) if args.maas_test_only else None, "staged_compatibility_patch": "DataUtils.create_result_data optional avg_cost,total_cost,token; " + provider_patch + "; " + actions_patch + "; " + embedding_patch + "; " + public_test_patch},
+        "manifest": {**source_manifest(source, workspace, "maas", args.seed, data), **recorder.manifest(), "implementation_status": "official_optimizer_reused_trained_controller_then_test" if args.maas_test_only else "official_optimizer_fresh_train_checkpoint_then_test", "maas_sample": args.maas_sample, "maas_batch_size": args.maas_batch_size, "maas_lr": args.maas_lr, "search_wall_clock_seconds": search_wall_clock, "checkpoint": str(checkpoint), "checkpoint_bytes": checkpoint.stat().st_size, "checkpoint_reused": args.maas_test_only, "checkpoint_source": str(Path(args.maas_controller_path).resolve()) if args.maas_test_only else None, "staged_compatibility_patch": "DataUtils.create_result_data optional avg_cost,total_cost,token; " + provider_patch + "; " + actions_patch + "; " + embedding_patch + "; " + public_test_patch},
         "search_rows": [{"round": 1, "checkpoint": str(checkpoint), "reused": args.maas_test_only}],
         "test_rows": outputs,
         "telemetry_path": str(telemetry),

@@ -538,3 +538,57 @@ time, complete per-item token attribution. Its local backup at
 `outputs/scir_ec1_single_seed1_20260906` passed SHA-256 verification.
 Single seed 2 started automatically and reached 2/131. Chain seed 1 completed
 its first four-question batch. These updates do not waive publication gates.
+
+## Native EC1 Telemetry Repair At 03:19 UTC+08
+
+Structural call-chain inspection found 11 consumers of the public
+`native_common.call_record` helper, including EC2 and EC3. That helper was
+left unchanged. The new native-only converter is used solely by AFlow,
+MaAS and the native EC1 materializer, so legacy conversion remains identical.
+
+New AFlow/MaAS driver invocations now observe the actual asynchronous OpenAI
+response boundary, rather than a usage-history tail or a cost callback.
+They persist response usage, finish reason, actual awaited duration, seed,
+phase, task ID, observed workflow class identity, request cap/temperature,
+configured timeout/retries and any error/cancellation. Task identity is carried
+through ContextVars around the actual upstream `evaluate_problem`, preserving
+concurrent example attribution. Operator class names are observed from native
+Python operator frames when present; absent observations remain null.
+
+The counter explicitly measures SDK `create` invocations. Internal HTTP retry
+attempts are NOT individually observed: `retry_count=null` and
+`transport_attempts_observed=false`, with the SDK retry limit recorded
+separately. Do not equate this count to HTTP attempts or change retry policy
+without the protocol decision. Streaming telemetry is explicitly unsupported;
+the frozen local endpoint already rejects streaming. Missing response usage
+creates an error record instead of being silently treated as measured zero.
+
+Validation before deployment:
+
+- 85 focused local tests passed, including concurrent identity, cancellation,
+  actual await duration, operator frames, request/return preservation and
+  byte-equivalent legacy conversion.
+- Both real upstream provider and HumanEval benchmark classes passed isolated
+  synthetic-response preflights on SCIR. Each produced three correctly
+  attributed calls with unchanged requests and upstream return values. No
+  benchmark data or model endpoint was used in these two class preflights.
+- A separate real endpoint synthetic check passed: 20 prompt + 2 completion
+  tokens, finish=stop, 8337.56 ms observed latency. Evidence is retained in
+  `outputs/preflight_20260906/native_telemetry_real_response.json` remotely and
+  `outputs/audit_20260906/native_telemetry_real_response.json` locally. This
+  call is preflight overhead, not part of a benchmark result.
+
+The tested recorder was deployed with SHA-256
+`bf734b6d723a0891ff2934075ca4fd95626483c751a17758f1da88b95ee00e36`;
+the integrated driver has SHA-256
+`47c0c725c910c74e223e4819537c7272c27a65bd6c204ee15b934776e260e8a7`.
+The old driver and adapters are preserved remotely under `scripts/scir/`
+with `before_response_telemetry` filenames. Existing processes retain their
+loaded code; no live search was restarted and no old call evidence was
+rewritten. A test-only resume may therefore mix preserved legacy search
+records with new test records; `new_call_telemetry_schema` certifies only
+new calls, not retroactive completeness of an entire historical run.
+
+At 03:17 Single seed 2 had reached 69/131; the two shared Chain seeds had
+completed 20 and 16 held-out rows. Array 132507 remained pending with its
+four original experimental budgets unchanged.

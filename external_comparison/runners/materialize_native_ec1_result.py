@@ -12,7 +12,8 @@ import argparse
 import json
 from pathlib import Path
 
-from external_comparison.adapters.native_common import call_record, write_native_result
+from external_comparison.adapters.native_common import write_native_result
+from external_comparison.adapters.native_telemetry import call_record
 
 
 def _read_jsonl(path: Path) -> list[dict]:
