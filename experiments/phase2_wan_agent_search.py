@@ -98,6 +98,13 @@ MMLU_INSTRUCTION = (
     "letter.\n\n"
 )
 
+HOTPOTQA_INSTRUCTION = (
+    "/no_think\n"
+    "Answer the question using only the supplied context. Do not use outside knowledge, retrieval, or "
+    "unsupported assumptions. Return exactly one line in the format `FINAL ANSWER: ANSWER`, where ANSWER "
+    "is the concise answer span. Do not include an explanation or any other text.\n\n"
+)
+
 
 @dataclass(frozen=True)
 class ModelSpec:
@@ -578,6 +585,8 @@ def task_instruction(dataset: str | None = None) -> str:
         return HUMANEVAL_INSTRUCTION
     if dataset == "mmlu":
         return MMLU_INSTRUCTION
+    if dataset == "hotpotqa":
+        return HOTPOTQA_INSTRUCTION
     if dataset == "gaia":
         return GAIA_INSTRUCTION
     if dataset == "masbench":
@@ -635,6 +644,10 @@ def extract_masbench_final_answer(text: str) -> str:
 
 
 def score_example_answer(output: str, answer: str, dataset: str | None = None) -> float:
+    if dataset == "hotpotqa":
+        from external_comparison.runners.hotpotqa_ec3_data import answer_scores
+
+        return float(answer_scores(extract_prediction_for_dataset(output, dataset), str(answer))["f1"])
     if dataset == "gaia":
         expected = normalize_gaia_answer(answer)
         actual = normalize_gaia_answer(output)
@@ -650,6 +663,8 @@ def score_example_answer(output: str, answer: str, dataset: str | None = None) -
 
 
 def score_answer_components(output: str, answer: str, dataset: str | None = None) -> float:
+    if dataset == "hotpotqa":
+        return score_example_answer(output, answer, dataset)
     if dataset != "masbench" or MASBENCH_ANSWER_SEPARATOR not in str(answer):
         return score_example_answer(output, answer, dataset)
     explicit_answer = extract_masbench_final_answer(output)
@@ -665,6 +680,10 @@ def score_answer_components(output: str, answer: str, dataset: str | None = None
 
 
 def extract_prediction_for_dataset(output: str, dataset: str | None = None) -> str:
+    if dataset == "hotpotqa":
+        cleaned = re.sub(r"<think>.*?</think>", "", str(output), flags=re.DOTALL).strip()
+        matches = list(re.finditer(r"(?im)^FINAL\s+ANSWER\s*:\s*(.+?)\s*$", cleaned))
+        return matches[-1].group(1).strip() if matches else ""
     if dataset == "gaia":
         return normalize_gaia_answer(output)
     if dataset == "masbench":
@@ -1848,6 +1867,7 @@ def evaluate_candidate(
                     "component_score": component_score,
                     "output": output,
                     "trace": summary,
+                    "call_traces": [asdict(call) for call in trace.calls],
                 }
             )
     aggregate = aggregate_trace_summaries(trace_summaries)
@@ -1973,6 +1993,10 @@ def local_process_is_alive(pid: int) -> bool:
         return False
     except PermissionError:
         return True
+    except OSError:
+        # Windows may report a dead/non-existent PID as a generic OSError
+        # rather than ProcessLookupError (for example WinError 11).
+        return False
     return True
 
 

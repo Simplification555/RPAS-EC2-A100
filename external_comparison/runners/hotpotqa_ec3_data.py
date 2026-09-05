@@ -191,7 +191,8 @@ def _write_jsonl(path: Path, rows: Iterable[HotpotExample]) -> None:
 
 
 def prepare(
-    *, validate_fixture_path: Path, test_fixture_path: Path, calibration_path: Path, output_dir: Path, data_seed: int, aflow_commit: str
+    *, validate_fixture_path: Path, test_fixture_path: Path, calibration_path: Path, output_dir: Path,
+    data_seed: int, aflow_commit: str, calibration_provenance_path: Path | None = None,
 ) -> dict[str, Any]:
     validation_fixture = canonicalize(_read_records(validate_fixture_path), source_split="aflow_validate_fixture")
     test_fixture = canonicalize(_read_records(test_fixture_path), source_split="aflow_test_fixture")
@@ -221,6 +222,13 @@ def prepare(
         "prompt_policy": "provided_context_and_question_only; no_answer_supporting_facts_type_or_external_retrieval",
         "answer_evaluator": "hotpotqa_normalize_answer_em_f1",
     }
+    if calibration_provenance_path is not None:
+        provenance = json.loads(calibration_provenance_path.read_text(encoding="utf-8"))
+        if provenance.get("output_sha256") != _sha256(calibration_path):
+            raise ValueError("calibration provenance does not match the supplied pool")
+        manifest["calibration_source"]["provenance"] = provenance
+        manifest["calibration_source"]["provenance_path"] = str(calibration_provenance_path.resolve())
+        manifest["calibration_source"]["provenance_sha256"] = _sha256(calibration_provenance_path)
     (output_dir / "hotpotqa_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return manifest
 
@@ -230,11 +238,12 @@ def main() -> int:
     parser.add_argument("--aflow-validate-fixture", required=True, help="Materialized official AFlow 200-example HotpotQA validation fixture")
     parser.add_argument("--aflow-test-fixture", required=True, help="Materialized official AFlow 800-example HotpotQA test fixture")
     parser.add_argument("--calibration-source", required=True, help="Disjoint HotpotQA train source for D_calib")
+    parser.add_argument("--calibration-provenance", help="JSON provenance emitted by prepare_ec3_calibration_pool.py")
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--data-seed", type=int, default=DATA_SEED)
     parser.add_argument("--aflow-commit", required=True)
     args = parser.parse_args()
-    print(json.dumps(prepare(validate_fixture_path=Path(args.aflow_validate_fixture), test_fixture_path=Path(args.aflow_test_fixture), calibration_path=Path(args.calibration_source), output_dir=Path(args.output_dir), data_seed=args.data_seed, aflow_commit=args.aflow_commit), ensure_ascii=False, indent=2))
+    print(json.dumps(prepare(validate_fixture_path=Path(args.aflow_validate_fixture), test_fixture_path=Path(args.aflow_test_fixture), calibration_path=Path(args.calibration_source), output_dir=Path(args.output_dir), data_seed=args.data_seed, aflow_commit=args.aflow_commit, calibration_provenance_path=Path(args.calibration_provenance) if args.calibration_provenance else None), ensure_ascii=False, indent=2))
     return 0
 
 

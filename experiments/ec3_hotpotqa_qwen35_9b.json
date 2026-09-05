@@ -1,0 +1,71 @@
+{
+  "models": {
+    "qwen35_9b": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "api_base": "${RPAS_EXTERNAL_API_BASE}",
+      "api_key_value": "EMPTY",
+      "completion_kwargs": {"temperature": 0.0, "max_tokens": 256}
+    }
+  },
+  "sites": {
+    "center_a": {
+      "kind": "single_allocated_gpu_service",
+      "compute_latency_ms": 0.0,
+      "notes": "Every logical role calls the same Slurm-allocated Qwen3.5-9B endpoint."
+    }
+  },
+  "network_profiles": {
+    "lan_homogeneous": {
+      "default_rtt_ms": 0.0,
+      "default_bandwidth_mbps": 10000.0,
+      "default_failure_rate": 0.0,
+      "retry_backoff_ms": 0.0
+    }
+  },
+  "defaults": {
+    "local_model": "qwen35_9b",
+    "cheap_model": "qwen35_9b",
+    "strong_model": "qwen35_9b",
+    "local_site": "center_a",
+    "secondary_site": "center_a",
+    "remote_site": "center_a",
+    "orchestrator_site": "center_a",
+    "dag_decomposer_model": "qwen35_9b",
+    "dag_worker_models": ["qwen35_9b", "qwen35_9b", "qwen35_9b"],
+    "dag_aggregator_model": "qwen35_9b",
+    "agent_max_tokens": {
+      "planner": 256,
+      "solver": 256,
+      "verifier": 256,
+      "decomposer": 256,
+      "worker": 256,
+      "aggregator": 256
+    },
+    "topology_agent_max_tokens": {
+      "self_consistency": {"solver": 256},
+      "solver_verifier": {"solver": 256, "verifier": 256},
+      "planner_solver_verifier": {"planner": 256, "solver": 256, "verifier": 256},
+      "debate": {"solver": 256, "verifier": 256},
+      "dag_decompose": {"decomposer": 256, "worker": 256, "aggregator": 256}
+    }
+  },
+  "allowed_topologies": ["single", "self_consistency", "solver_verifier", "planner_solver_verifier", "debate", "dag_decompose"],
+  "reflection": {
+    "model": "qwen35_9b",
+    "max_tokens": 4096,
+    "children": 3,
+    "failure_examples": 3,
+    "max_attempts": 3,
+    "retry_backoff_seconds": 1.0,
+    "allow_rule_fallback": false
+  },
+  "search": {
+    "model_pool": ["qwen35_9b"],
+    "site_pool": ["center_a"],
+    "compression_pool": ["full", "summary", "final_only", "critic_brief"],
+    "max_tokens_pool": {
+      "planner": [128, 256], "solver": [128, 256], "verifier": [128, 256],
+      "decomposer": [128, 256], "worker": [128, 256], "aggregator": [128, 256]
+    }
+  }
+}

@@ -61,9 +61,11 @@ def require_authorized_gpu() -> str:
     """Reject an accidental run on any GPU other than the two authorized cards."""
 
     visible = os.environ.get("CUDA_VISIBLE_DEVICES", "")
-    if visible not in {"4", "5"}:
+    if visible not in {"4", "5"} and not (
+        os.environ.get("RPAS_SCIR_ALLOCATED_GPU", "0") == "1" and visible.isdigit()
+    ):
         raise RuntimeError(
-            "EC-2 v2 requires one explicit physical GPU: CUDA_VISIBLE_DEVICES=4 or CUDA_VISIBLE_DEVICES=5; "
+            "EC-2 v2 requires one explicit physical GPU 4/5, or an explicitly recorded SCIR allocated-GPU pilot; "
             f"got {visible!r}"
         )
     return visible
@@ -244,6 +246,11 @@ class OfficialGDesignerRuntime:
         from transformers import AutoTokenizer
 
         self._tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, local_files_only=True)
+        # sentence-transformers imports the third-party Hugging Face datasets
+        # package. Load it before exposing G-Designer's unrelated local
+        # ``datasets`` package under the same top-level module name.
+        import sentence_transformers
+
         if str(self.root) not in sys.path:
             sys.path.insert(0, str(self.root))
         # The upstream repository imports its local datasets package at top level.
@@ -265,8 +272,6 @@ class OfficialGDesignerRuntime:
             local_embedding = Path(embedding_path).expanduser().resolve()
             if not local_embedding.is_dir():
                 raise FileNotFoundError(f"local MiniLM directory not found: {local_embedding}")
-            import sentence_transformers
-
             constructor = sentence_transformers.SentenceTransformer
             cached_model = None
 
@@ -528,7 +533,10 @@ def _llm_topology_mutation(
         profile=profile,
         reflection_mode="llm",
         reflection_model=config["defaults"]["local_model"],
-        reflection_max_tokens=MAX_TOKENS,
+        # The six worker/final-answer calls stay capped at MAX_TOKENS=256.
+        # Reflection is a search meta-call and needs enough room for a
+        # parseable JSON mutation plan; 256 routinely truncates it.
+        reflection_max_tokens=max(768, MAX_TOKENS),
         max_proposals=1,
     )
     if plan.get("mode") != "llm":
