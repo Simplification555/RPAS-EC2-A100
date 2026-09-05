@@ -285,6 +285,10 @@ def _install_graph_prompt_fallback(optimizer: Any) -> None:
             except json.JSONDecodeError:
                 return result
             if isinstance(parsed, dict) and isinstance(parsed.get("answer"), str):
+                parsed.setdefault("response", parsed["answer"])
+                return _AnswerCompat(parsed)
+            if isinstance(parsed, dict) and isinstance(parsed.get("response"), str):
+                parsed.setdefault("answer", parsed["response"])
                 return _AnswerCompat(parsed)
         return result
 
