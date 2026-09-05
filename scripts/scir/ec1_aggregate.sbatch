@@ -6,5 +6,8 @@
 #SBATCH --mem=4G
 set -euo pipefail
 cd /home/jianbaizhao/RPAS-EC2-A100
-/home/jianbaizhao/qwen_cuda126/bin/python scripts/aggregate_ec1_native_formal.py \
-  --root outputs/scir_ec1_formal_v2 --output outputs/scir_ec1_formal_v2/aggregate
+./.uv-linux run --no-project --offline --python /home/jianbaizhao/qwen_cuda126/bin/python -m scripts.aggregate_ec1_native_formal \
+  --root outputs/scir_ec1_formal_v2 \
+  --rpas-root outputs/scir_ec1_rpas_extractor_v2 \
+  --single-root outputs/scir_ec1_single_reference \
+  --output outputs/scir_ec1_formal_v2/aggregate

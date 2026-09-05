@@ -26,6 +26,7 @@ import json
 import os
 import random
 import sys
+import tempfile
 import time
 import types
 from pathlib import Path
@@ -55,6 +56,29 @@ ROLES = (
 )
 TOPOLOGIES = ("full_connected", "chain", "star", "layered")
 GDESIGNER_TRAINING_QUERY_BUDGET = 40
+RUNNER_SOURCE_SHA256 = sha256_file(__file__)
+
+
+def publish_frozen_split(path: Path, manifest: dict[str, Any]) -> None:
+    """Publish a complete shared snapshot without overwriting another run's split."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=path.parent,
+                                         prefix=".split-", suffix=".tmp", delete=False) as handle:
+            temporary = Path(handle.name)
+            json.dump(manifest, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        try:
+            os.link(temporary, path)
+        except FileExistsError:
+            if json.loads(path.read_text(encoding="utf-8")) != manifest:
+                raise ValueError(f"Existing frozen split differs; refusing overwrite: {path}")
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
 
 
 def require_authorized_gpu() -> str:
@@ -241,7 +265,7 @@ class OfficialGDesignerRuntime:
                 raise FileExistsError(f"Existing EC2 run artifact must be archived explicitly: {directory / name}")
         with (directory / "execution_identity.json").open("x", encoding="utf-8") as handle:
             json.dump({"pid": os.getpid(), "seed": self.seed, "started_at_epoch": time.time(),
-                       "runner_sha256": sha256_file(__file__), "runtime_audit_version": "journal_checkpoints_v1"}, handle)
+                       "runner_sha256": RUNNER_SOURCE_SHA256, "runtime_audit_version": "journal_checkpoints_v1"}, handle)
         self.output_dir = directory
         self.journal("live_calls.jsonl", {"event": "run_started", "seed": self.seed, "time": time.time()})
 
@@ -708,7 +732,7 @@ def _base_manifest(method: str, seed: int, split_manifest: dict[str, Any]) -> di
         "protocol_version": EC2_V2_PROTOCOL,
         "implementation_status": "formal_candidate_pending_three_seed_aggregate",
         "runtime_audit_version": "journal_checkpoints_v1",
-        "runner_sha256": sha256_file(__file__),
+        "runner_sha256": RUNNER_SOURCE_SHA256,
         "formal_result": False,
         "formal_result_reason": "A single seed is never a paper result; aggregate requires all three protocol-valid seeds.",
         "backbone": BACKBONE,
@@ -981,7 +1005,7 @@ async def _run(args: argparse.Namespace) -> None:
     }
     output = Path(args.output_dir).resolve()
     output.mkdir(parents=True, exist_ok=True)
-    (output / "split_manifest.json").write_text(json.dumps(split_manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    publish_frozen_split(output / "split_manifest.json", split_manifest)
     runtime = OfficialGDesignerRuntime(Path(args.gdesigner_root).resolve(), seed=args.seed)
     runtime.configure_artifacts(output / args.method / f"seed_{args.seed}")
     runtime.journal("frozen_split.jsonl", split_manifest)

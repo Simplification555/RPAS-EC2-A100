@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 import random
@@ -13,10 +14,53 @@ from statistics import mean, stdev
 from typing import Any
 
 from external_comparison.runners.ec2_v2 import EC2_V2_PROTOCOL, validate_v2_manifest
+from external_comparison.common.paired_statistics import two_level_paired_bootstrap
+from external_comparison.common.manifest import sha256_json
+from external_comparison.runners.mmlu import MMLU_SUBJECTS
 
 METHODS = ("single_agent", "full_connected", "chain", "gdesigner", "rpas_comm")
 SEEDS = (0, 1, 2)
 TEST_EXAMPLES = 570
+
+
+def _validate_frozen_split(run_dir: Path, manifest: dict[str, Any], item_ids: set[str]) -> None:
+    journal = run_dir / "frozen_split.jsonl"
+    if journal.is_file():
+        records = [json.loads(line) for line in journal.read_text(encoding="utf-8").splitlines() if line.strip()]
+        if len(records) != 1:
+            raise ValueError(f"EC2 requires one frozen split record: {run_dir}")
+        frozen = records[0]
+    else:
+        # Earlier runs saved only the shared split; validate its content, not just its claim.
+        frozen = json.loads((run_dir.parent.parent / "split_manifest.json").read_text(encoding="utf-8"))
+    ids = {phase: frozen[phase]["ids"] for phase in ("search", "select", "test")}
+    for phase, count in (("search", 57), ("select", 57), ("test", TEST_EXAMPLES)):
+        if len(ids[phase]) != count or len(set(ids[phase])) != count:
+            raise ValueError(f"EC2 frozen {phase} IDs have invalid coverage: {run_dir}")
+    if any(set(ids[a]) & set(ids[b]) for a, b in (("search", "select"), ("search", "test"), ("select", "test"))):
+        raise ValueError(f"EC2 frozen splits overlap: {run_dir}")
+    digest = sha256_json(ids)
+    if digest != frozen.get("split_manifest_sha256") or digest != manifest.get("split_manifest_sha256"):
+        raise ValueError(f"EC2 frozen split hash disagrees with actual IDs: {run_dir}")
+    if item_ids != set(ids["test"]):
+        raise ValueError(f"EC2 outputs do not match frozen held-out IDs: {run_dir}")
+
+
+def _validate_checkpoints(run_dir: Path, manifest: dict[str, Any]) -> bool | None:
+    if manifest["method"] != "gdesigner":
+        return None
+    files = manifest.get("checkpoint_files", {})
+    if not files:
+        if manifest.get("runtime_audit_version") == "journal_checkpoints_v1":
+            raise ValueError(f"EC2 audited runtime is missing its checkpoint declarations: {run_dir}")
+        return False  # Older running workers cannot retroactively deliver checkpoints.
+    if set(files) != {"gdesigner_initial.pt", "gdesigner_pretest.pt"}:
+        raise ValueError(f"EC2 checkpoint set is incomplete: {run_dir}")
+    for name, digest in files.items():
+        path = run_dir / name
+        if not path.is_file() or path.stat().st_size == 0 or hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            raise ValueError(f"EC2 checkpoint is missing or corrupt: {path}")
+    return True
 
 
 def _ci95(values: list[float]) -> tuple[float, float]:
@@ -54,7 +98,7 @@ def _mcnemar(left: dict[str, float], right: dict[str, float]) -> dict[str, Any]:
     left_only = sum(left[item_id] == 1 and right[item_id] == 0 for item_id in common)
     right_only = sum(left[item_id] == 0 and right[item_id] == 1 for item_id in common)
     discordant = left_only + right_only
-    statistic = ((abs(left_only - right_only) - 1) ** 2 / discordant) if discordant else 0.0
+    statistic = (max(0, abs(left_only - right_only) - 1) ** 2 / discordant) if discordant else 0.0
     return {
         "available": True,
         "n_examples": len(common),
@@ -71,6 +115,8 @@ def _load_seed(run_dir: Path) -> dict[str, Any]:
         raise ValueError(f"legacy or unknown EC-2 artifact is not eligible for v2 aggregation: {run_dir}")
     validate_v2_manifest(manifest)
     result = json.loads((run_dir / "result.json").read_text(encoding="utf-8"))
+    if any(result.get(key) != value for key, value in manifest.items()):
+        raise ValueError(f"EC2 result and manifest disagree: {run_dir}")
     summary = result.get("summary", {})
     rows = result.get("rows", [])
     if int(summary.get("num_examples", 0)) != TEST_EXAMPLES or len(rows) != TEST_EXAMPLES:
@@ -85,18 +131,46 @@ def _load_seed(run_dir: Path) -> dict[str, Any]:
         subject = str(row.get("subject", ""))
         if not item_id or not subject or item_id in item_scores:
             raise ValueError(f"EC-2 v2 output has missing or duplicate held-out IDs: {run_dir}")
-        correct = float(bool(row.get("correct", False)))
+        if type(row.get("correct")) is not bool or not isinstance(row.get("answer"), str) or row["answer"] not in {"A", "B", "C", "D"}:
+            raise ValueError(f"EC2 row lacks a boolean outcome or valid gold answer: {run_dir}")
+        if row["correct"] != (row.get("prediction") == row["answer"]):
+            raise ValueError(f"EC2 correctness disagrees with the saved answer/prediction: {run_dir}")
+        correct = float(row["correct"])
         item_scores[item_id] = correct
         by_subject[subject].append(correct)
         for key in communication:
             communication[key] += int(row.get(key, 0))
-    if len(by_subject) != 57:
+    if set(by_subject) != set(MMLU_SUBJECTS) or any(len(scores) != 10 for scores in by_subject.values()):
         raise ValueError(f"EC-2 v2 must preserve all 57 MMLU subjects: {run_dir}")
+    _validate_frozen_split(run_dir, manifest, set(item_scores))
+    checkpoints_verified = _validate_checkpoints(run_dir, manifest)
     subject_macro = mean(mean(scores) for scores in by_subject.values())
     test_calls = int(summary.get("inference_calls", 0))
     test_tokens = int(summary.get("inference_tokens", 0))
     search_calls = int(summary.get("search_calls", manifest.get("search_calls", 0)))
     search_tokens = int(summary.get("search_tokens", manifest.get("search_tokens", 0)))
+    if not math.isclose(summary["score"], mean(item_scores.values()), abs_tol=1e-12):
+        raise ValueError(f"EC2 summary score disagrees with the saved outcomes: {run_dir}")
+    valid_rate = sum(row.get("prediction") in {"A", "B", "C", "D"} for row in rows) / len(rows)
+    if not math.isclose(summary["valid_answer_rate"], valid_rate, abs_tol=1e-12):
+        raise ValueError(f"EC2 parser-valid rate disagrees with predictions: {run_dir}")
+    saved_rows = [json.loads(line) for line in (run_dir / "test_outputs.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    if saved_rows != rows:
+        raise ValueError(f"EC2 JSON and JSONL outputs disagree: {run_dir}")
+    calls = [json.loads(line) for line in (run_dir / "calls.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    if not calls or summary.get("model_errors") != 0 or any(call.get("error") for call in calls):
+        raise ValueError(f"EC2 has missing calls or model errors: {run_dir}")
+    for call in calls:
+        values = [call.get(key) for key in ("prompt_tokens", "completion_tokens", "total_tokens")]
+        if any(type(value) is not int or value < 0 for value in values) or values[2] != values[0] + values[1]:
+            raise ValueError(f"EC2 token accounting is invalid: {run_dir}")
+        if call.get("split") not in {"search", "select", "test"}:
+            raise ValueError(f"EC2 call has an unknown phase: {run_dir}")
+    for phases, expected_calls, expected_tokens in (({"test"}, test_calls, test_tokens), ({"search", "select"}, search_calls, search_tokens)):
+        subset = [call for call in calls if call["split"] in phases]
+        if len(subset) != expected_calls or sum(call["total_tokens"] for call in subset) != expected_tokens:
+            raise ValueError(f"EC2 summary disagrees with call telemetry: {run_dir}")
+    truncation_rate = sum(call.get("finish_reason") == "length" for call in calls) / len(calls)
     return {
         "method": str(manifest["method"]),
         "seed": int(manifest["seed"]),
@@ -116,14 +190,23 @@ def _load_seed(run_dir: Path) -> dict[str, Any]:
         "judge_input_tokens_per_query": communication["judge_input_tokens"] / TEST_EXAMPLES,
         "total_test_tokens_per_query": test_tokens / TEST_EXAMPLES,
         "item_scores": item_scores,
+        "checkpoint_files_verified": checkpoints_verified,
+        "all_call_truncation_rate": truncation_rate,
+        "truncation_gate_passed": truncation_rate < 0.01 and all(call.get("finish_reason") in {"stop", "length"} for call in calls),
     }
 
 
 def aggregate(root: str | Path, output_dir: str | Path, methods: tuple[str, ...] = METHODS) -> dict[str, Any]:
-    if not methods or any(method not in METHODS for method in methods):
+    if not methods or len(set(methods)) != len(methods) or any(method not in METHODS for method in methods):
         raise ValueError(f"methods must be a nonempty subset of {METHODS}")
     root = Path(root)
-    seeds = [_load_seed(root / method / f"seed_{seed}") for method in methods for seed in SEEDS]
+    seeds = []
+    for method in methods:
+        for seed in SEEDS:
+            row = _load_seed(root / method / f"seed_{seed}")
+            if row["method"] != method or row["seed"] != seed:
+                raise ValueError(f"EC2 method/seed does not match its artifact directory: {method}/seed_{seed}")
+            seeds.append(row)
     grouped = {method: [row for row in seeds if row["method"] == method] for method in methods}
     split_hashes = {row["split_manifest_sha256"] for row in seeds}
     if len(split_hashes) != 1:
@@ -138,10 +221,16 @@ def aggregate(root: str | Path, output_dir: str | Path, methods: tuple[str, ...]
             "method": method,
             "seeds": len(method_rows),
             "accuracy_mean": mean(accuracy),
+            "accuracy_std": stdev(accuracy),
             "accuracy_ci95_low": _ci95(accuracy)[0],
             "accuracy_ci95_high": _ci95(accuracy)[1],
             "subject_macro_accuracy_mean": mean(row["subject_macro"] for row in method_rows),
             "valid_answer_rate_mean": mean(row["valid_answer_rate"] for row in method_rows),
+            "all_call_truncation_rate_mean": mean(row["all_call_truncation_rate"] for row in method_rows),
+            "truncation_gate_passed_all_seeds": all(row["truncation_gate_passed"] for row in method_rows),
+            "checkpoint_delivery_gate": "not_applicable" if method != "gdesigner" else (
+                "passed" if all(row["checkpoint_files_verified"] for row in method_rows) else "missing_legacy_checkpoints"
+            ),
         }
         for field in (
             "active_edges_per_query",
@@ -179,6 +268,13 @@ def aggregate(root: str | Path, output_dir: str | Path, methods: tuple[str, ...]
             for seed in SEEDS
         }
     seed_rows = [{key: value for key, value in row.items() if key != "item_scores"} for row in seeds]
+    hierarchical = {}
+    if reference_rows:
+        reference_scores = {seed: row["item_scores"] for seed, row in reference_rows.items()}
+        for method in methods:
+            if method != "full_connected":
+                scores = {row["seed"]: row["item_scores"] for row in grouped[method]}
+                hierarchical[method] = two_level_paired_bootstrap(scores, reference_scores)
     payload = {
         "protocol_version": EC2_V2_PROTOCOL,
         "dataset": "MMLU-57x10 controlled subset",
@@ -189,6 +285,7 @@ def aggregate(root: str | Path, output_dir: str | Path, methods: tuple[str, ...]
         "rows": table,
         "seed_rows": seed_rows,
         "paired_statistics_vs_full_connected": paired,
+        "two_level_paired_statistics_vs_full_connected": hierarchical,
     }
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)

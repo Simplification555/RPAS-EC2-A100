@@ -36,8 +36,32 @@ dataset="${repo_root}/data/ec1_humaneval/official/humaneval.jsonl"
 public_test="${repo_root}/data/ec1_humaneval/aflow/humaneval_public_test.jsonl"
 validate_fixture="${repo_root}/data/ec1_humaneval/aflow/humaneval_validate.jsonl"
 test_fixture="${repo_root}/data/ec1_humaneval/aflow/humaneval_test.jsonl"
-mkdir -p "${job_root}/logs"
 cd "${repo_root}"
+mkdir -p "${experiment_root}/_locks"
+exec 8>"${experiment_root}/_locks/${method}_seed_${seed}.lock"
+flock 8
+# A separately started corrected seed may finish before its old sequential
+# lane reaches it. Only reuse a fully audited result from this exact rerun root.
+if [[ -e "${experiment_root}/${method}/seed_${seed}/result.json" ]]; then
+  if [[ "$method" == rpas && "$packed_slot" == extractor_v2* && \
+        "$experiment_root" == "$repo_root/outputs/scir_ec1_rpas_extractor_v2" ]]; then
+    ./.uv-linux run --no-project --offline --python "$python_bin" - "$experiment_root" "$seed" <<'PY'
+import hashlib, json, sys
+from pathlib import Path
+from scripts.aggregate_ec1_native_formal import load
+root, seed = Path(sys.argv[1]), int(sys.argv[2])
+audited = load(root, "rpas", seed)
+config = Path("experiments/phase2_humaneval_qwen35_9b_single_service.json")
+if audited["config_sha256"] != hashlib.sha256(config.read_bytes()).hexdigest():
+    raise SystemExit("Completed RPAS configuration differs; reuse is forbidden")
+print(json.dumps({"reused_audited_completed_seed": seed, "score": audited["score"]}))
+PY
+    exit 0
+  fi
+  echo "Existing result; refusing overwrite: $experiment_root/$method/seed_$seed" >&2
+  exit 2
+fi
+mkdir -p "${job_root}/logs"
 run_started_at_epoch="$(date +%s.%N)"
 
 export PYTHONPATH="${repo_root}${PYTHONPATH:+:${PYTHONPATH}}"

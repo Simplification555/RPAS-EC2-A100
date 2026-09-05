@@ -163,3 +163,31 @@ def test_failed_batch_cancels_remaining_items():
     with pytest.raises(RuntimeError, match="synthetic failure"):
         asyncio.run(runtime.evaluate(graph, list(range(4)), split="test", candidate_id="fixed", concurrency=4))
     assert sorted(cancelled) == [1, 2, 3]
+
+
+def test_shared_split_publish_is_atomic_and_never_overwrites(tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+    from external_comparison.runners.ec2_v2 import publish_frozen_split
+
+    path = tmp_path / "split_manifest.json"
+    manifest = {"test": {"ids": ["test:1", "test:2"]}}
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        list(pool.map(lambda _: publish_frozen_split(path, manifest), range(20)))
+    assert json.loads(path.read_text()) == manifest
+    before = path.read_bytes()
+    with pytest.raises(ValueError, match="refusing overwrite"):
+        publish_frozen_split(path, {"test": {"ids": ["different"]}})
+    assert path.read_bytes() == before
+    assert list(tmp_path.glob(".split-*.tmp")) == []
+
+
+def test_runner_hash_is_frozen_at_import(tmp_path, monkeypatch):
+    import external_comparison.runners.ec2_v2 as ec2
+
+    imported = ec2.RUNNER_SOURCE_SHA256
+    monkeypatch.setattr(ec2, "sha256_file", lambda _: "changed-on-disk")
+    manifest = ec2._base_manifest("chain", 0, {"split_manifest_sha256": "fixture",
+        "search": {"count": 57}, "select": {"count": 57}, "test": {"count": 570}})
+    bare_runtime().configure_artifacts(tmp_path)
+    identity = json.loads((tmp_path / "execution_identity.json").read_text())
+    assert identity["runner_sha256"] == manifest["runner_sha256"] == imported

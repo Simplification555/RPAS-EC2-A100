@@ -322,3 +322,100 @@ completion alone may not execute the original wrapper's cleanup/metrics
 commands. Confirm the actual child runner has exited and result artifacts
 are stable before collecting metrics or reclaiming that service's GPU memory.
 Do not cancel allocation 132166, which also owns both corrected RPAS lanes.
+
+## AFlow Completion And Three-Way RPAS At 02:40 UTC+08
+
+All three AFlow seeds have completed and passed the seed artifact-integrity
+loader. Scores are 115/131, 114/131 and 114/131 for seeds 0/1/2 respectively.
+Mean accuracy is 0.8727735369; sample standard deviation is 0.0044072540.
+Search calls/tokens are 237/227054, 255/152135, 359/392888; test calls/tokens
+are 178/95388, 131/51759, 131/51759. This is a completed baseline, not a
+completed EC1 matrix. The unequal search-token usage still requires the
+protocol budget audit and cannot be labelled budget-matched automatically.
+
+AFlow seed 2 metrics and seed-level checksums were generated while its
+original parent was stopped. When the parent eventually resumes, its
+post-processing may rewrite metrics. Reconcile and reseal metadata after
+wrapper termination; do not alter predictions. A local copy of the seed-level
+files is retained at `outputs/scir_ec1_formal_v2_aflow_seed2_20260906` and
+passed SHA-256 verification after transfer.
+
+Allocation 132166 now runs corrected RPAS seeds 0/1/2 on ports
+40332/40333/40334, runners 1161180/1161313/1164802. Compute-node checks
+confirmed all three live, healthy endpoints and about 57.2 GB GPU use.
+Parent 1146820 remains stopped. Guard 1164899 watches wrappers 1160848 and
+1164390; the earlier two-lane guard was replaced only after the new guard
+was verified. Its log is `_jobs/guard_three_lanes_132166.log` in the corrected
+RPAS output root. Never terminate an old guard with TERM during replacement,
+because its EXIT trap can resume the parent prematurely.
+
+The AFlow service was reclaimed inside a compute-node `srun` only after its
+runners had exited. An earlier login-node PID check was invalid and corrected;
+the third-lane activation preceded the corrected cleanup briefly. One overlap
+step reported a cgroup memory allocation warning during that transition.
+Subsequent compute-node checks confirmed the three RPAS runners and endpoints
+remained live; this is not evidence of an experiment OOM termination.
+
+Per-method/seed locks now prevent two wrappers from writing the same seed.
+When the original sequential lane reaches RPAS seed 2, it waits for the new
+lane and only reuses an audited complete result with the exact corrected root
+and current configuration hash. Other existing results still reject overwrite.
+
+EC1 Single seed 0 also completed: 113/131, exactly 131 direct model calls,
+47423 total tokens and 2379.97 seconds operational wall time. It passed the
+seed-integrity loader. Its local verified backup is
+`outputs/scir_ec1_single_seed0_20260906`. Seed 1 was at 29/131 at 02:39;
+seed 2 follows automatically. No public-test repair was used.
+
+## Pending-Code And Aggregation Audit
+
+The focused local suite passes 67 tests, covering HumanEval import preservation,
+native adapters, MiniLM selection, run metrics, batching, split isolation,
+checkpoints, duplicate writers and the paired statistics. This is regression
+coverage, not a guarantee that every live workload will complete successfully.
+
+EC1 aggregation now requires Single/AFlow/MaAS/RPAS with all three seeds,
+including the separate corrected RPAS and Single roots. EC1 and EC2 report
+10,000-repetition two-level paired bootstrap intervals: resample paired seeds,
+then paired held-out IDs within each selected seed. Missing seeds or unmatched
+IDs reject aggregation rather than silently taking their intersection.
+
+EC2 integrity checks now reconstruct the frozen ID hash, require the actual
+570 held-out IDs and the canonical 57 subjects, compare saved JSON/JSONL rows,
+recompute accuracy and parser validity, and reconcile phase call/token totals.
+The two completed older Single runs passed the actual-ID checks on SCIR; both
+still fail the separate truncation gate. G-Designer checkpoint declarations
+are checked against real nonempty files and hashes. Legacy absent checkpoints
+are explicitly flagged, not retroactively invented or marked delivered.
+
+Pending-runtime hardening publishes the shared split through a complete
+temporary file and an atomic, no-overwrite hard link. Existing identical splits
+are accepted; different splits reject startup. This avoids concurrent partial
+JSON writes and has passed a real SCIR shared-filesystem check. Each seed still
+retains its own frozen-split journal. Source identity is captured at import,
+so a later deployment cannot change the final manifest's claimed runner hash.
+Earlier live workers retain the old code; their final on-disk source hashes
+may differ from their startup identity and require a provenance note.
+
+Eight allocations remain running and array 132406 remains pending on the
+per-user job limit, not missing dataset files. Pending work was neither
+duplicated nor requeued. Runtime deployment is gated on a fresh SCIR native
+training-loop preflight, including 10 iterations, checkpoint output and
+serial/four-item request-equivalence checks with simulated responses.
+
+### Deployment Confirmed At 02:45 UTC+08
+
+The staged runtime passed the fresh SCIR preflight: ten native training
+iterations, 280 simulated training calls, both checkpoint files and 28 identical
+serial/four-item fixed-graph requests. No benchmark model requests were made
+by this native-loop preflight. The exact tested runtime was deployed atomically
+at 02:44:54 with SHA-256
+`b44960f048c4ec610c9b574c41e3be03d8216bb52745ced8cdadaffeff684b51`.
+The prior runtime is preserved as
+`scripts/scir/ec2_v2_before_split_publish_20260906.py` remotely.
+
+The deployed aggregation source SHA-256 is
+`36e6e1870e3cdf3f41bd6caad26671dee674f3d228fdd7984138a47579863b8d`.
+Shell syntax checks passed for the EC1/EC2 launchers, third-lane launcher and
+EC1 aggregate launcher. Array 132406 was still pending during deployment;
+no running worker was restarted and no queue position was discarded.

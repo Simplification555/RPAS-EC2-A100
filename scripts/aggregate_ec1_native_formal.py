@@ -1,4 +1,4 @@
-"""Audit and aggregate the nine native EC-1 formal seed artifacts."""
+"""Audit the complete EC1 matrix, including the direct Single reference."""
 
 from __future__ import annotations
 
@@ -10,7 +10,9 @@ import math
 import statistics
 from pathlib import Path
 
-METHODS = ("aflow", "maas", "rpas")
+from external_comparison.common.paired_statistics import two_level_paired_bootstrap
+
+METHODS = ("single", "aflow", "maas", "rpas")
 SEEDS = (0, 1, 2)
 
 
@@ -70,7 +72,7 @@ def load(root: Path, method: str, seed: int) -> dict:
         raise ValueError(f"manifest/result divergence: {directory}")
     if method == "maas" and "hashed" in manifest.get("staged_compatibility_patch", "").lower():
         raise ValueError(f"substituted MaAS embeddings are not a native baseline: {directory}")
-    if method == "rpas" and manifest.get("code_extractor_version") != "preserve_complete_program_v2":
+    if method in {"rpas", "single"} and manifest.get("code_extractor_version") != "preserve_complete_program_v2":
         raise ValueError(f"RPAS used the legacy import-stripping evaluator: {directory}")
     rows = [json.loads(line) for line in outputs_path.read_text(encoding="utf-8").splitlines() if line.strip()]
     if len(rows) != 131 or len({str(row.get("task_id", row.get("id", ""))) for row in rows}) != 131:
@@ -101,6 +103,13 @@ def load(root: Path, method: str, seed: int) -> dict:
     ):
         if summary.get(prefix + "_calls") != len(phase_calls) or summary.get(prefix + "_tokens") != sum(call["total_tokens"] for call in phase_calls):
             raise ValueError(f"{prefix} call accounting disagrees with telemetry: {directory}")
+    if method == "single" and (
+        len(calls) != 131 or any(call["split"] != "test" for call in calls)
+        or manifest.get("reference_only") is not True or manifest.get("public_test_calls") != 0
+        or manifest.get("public_test_repairs") != 0
+        or sorted(call.get("example_id", "") for call in calls) != split["test"]
+    ):
+        raise ValueError(f"Single must have exactly one direct call per held-out item and no test repair: {directory}")
     metrics = json.loads((directory / "run_metrics.json").read_text(encoding="utf-8"))
     if metrics.get("total_model_calls") != len(calls) or metrics.get("total_tokens") != sum(call["total_tokens"] for call in calls):
         raise ValueError(f"metrics disagree with calls: {directory}")
@@ -120,11 +129,13 @@ def load(root: Path, method: str, seed: int) -> dict:
         "total_model_calls": len(calls),
         "total_tokens": metrics["total_tokens"],
         "wall_clock_seconds": metrics.get("wall_clock_seconds"),
+        "item_scores": {str(row.get("task_id", row.get("id"))): float(outcome) for row, outcome in zip(rows, outcomes)},
     }
 
 
-def aggregate(root: Path, output: Path) -> dict:
-    runs = [load(root, method, seed) for method in METHODS for seed in SEEDS]
+def aggregate(root: Path, output: Path, *, rpas_root: Path | None = None, single_root: Path | None = None) -> dict:
+    roots = {"rpas": rpas_root or root, "single": single_root or root}
+    runs = [load(roots.get(method, root), method, seed) for method in METHODS for seed in SEEDS]
     split_keys = {json.dumps(run["split_manifest"], sort_keys=True) for run in runs}
     if len(split_keys) != 1:
         raise ValueError("EC-1 formal runs do not share one frozen split manifest")
@@ -144,7 +155,17 @@ def aggregate(root: Path, output: Path) -> dict:
             "inference_tokens_mean": statistics.fmean(run["inference_tokens"] for run in subset),
             "search_tokens_mean": statistics.fmean(run["search_tokens"] for run in subset),
         })
-    payload = {"protocol": "EC-1 HumanEval native formal", "formal_result": True, "runs": runs, "summary": rows}
+    paired = {}
+    rpas = {run["seed"]: run["item_scores"] for run in runs if run["method"] == "rpas"}
+    for baseline in ("single", "aflow", "maas"):
+        reference = {run["seed"]: run["item_scores"] for run in runs if run["method"] == baseline}
+        paired[f"rpas_vs_{baseline}"] = two_level_paired_bootstrap(rpas, reference)
+    payload = {
+        "protocol": "EC-1 HumanEval native formal", "formal_result": False,
+        "formal_result_reason": "Full matrix integrity and statistics do not certify search-budget matching or all publication gates.",
+        "artifact_integrity_passed": True, "runs": runs, "summary": rows,
+        "two_level_paired_statistics": paired,
+    }
     output.mkdir(parents=True, exist_ok=True)
     (output / "summary.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     with (output / "summary.csv").open("w", encoding="utf-8", newline="") as handle:
@@ -158,5 +179,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--rpas-root", type=Path, help="Separate root for corrected complete RPAS reruns")
+    parser.add_argument("--single-root", type=Path, help="Separate root for the direct Single reference")
     args = parser.parse_args()
-    print(json.dumps(aggregate(args.root, args.output), ensure_ascii=False, indent=2))
+    print(json.dumps(aggregate(args.root, args.output, rpas_root=args.rpas_root, single_root=args.single_root), ensure_ascii=False, indent=2))
