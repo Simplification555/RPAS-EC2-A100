@@ -165,3 +165,72 @@ this field to old manifests is forbidden; a full corrected search is required.
 The complete EC1 table still requires the Single reference and the full
 protocol audit, including search-budget comparability. Completed seed files
 are not sufficient evidence for an accepted paper-ready comparison.
+
+## Single Reference And Pending-Job Audit At 02:05 UTC+08
+
+The missing EC1 direct Single reference now has a dedicated runner:
+`external_comparison/runners/single_humaneval.py`. Each held-out item receives
+one direct model request, temperature zero, 1024 completion tokens, no search,
+and no public-test repair. The three seeds are independent deterministic
+reference repetitions, not invented search seeds. Partial rows, raw outputs,
+response token counts and latency are written after every completed item.
+Transport failures or missing token usage fail closed, preserving diagnostics.
+The client uses a 600-second timeout and zero hidden SDK retries; this policy
+is recorded and must be compared with other methods' transport policies in the
+final fidelity audit. It is not silently claimed to be identical to them.
+
+Single runs sequentially on endpoint 42375 in step `132375_4.16`, sharing the
+H100 with G-Designer seed 0 and RPAS-Comm seed 0. Wrapper PID 2706133 is covered
+by separate guard step `132375_4.17`, PID 2706369, which also watches EC2 peer
+wrappers 2688594 and 2696165. Old guard PID 2696431 was KILLed only after the
+new guard was verified. Parent PID 2687909 remains intentionally stopped.
+Single results are under `outputs/scir_ec1_single_reference`; initial real
+requests completed successfully. Do not stop this allocation or its guard
+until all three peer wrappers finish.
+
+### Repairs For EC2 Jobs That Have Not Started
+
+Code review found that the EC2 runtime retained most telemetry in memory,
+discarded example/seed/iteration fields when materializing calls, and saved
+only GCN hashes rather than reusable trained weights. The revised runtime:
+
+- Journals completed calls, raw outputs, example results and reflection plans
+  while running; refuses to overwrite an existing execution identity.
+- Retains example ID, seed, phase and training iteration in calls.jsonl.
+  Context variables are set before the unchanged upstream trainer creates
+  each async task, preserving concurrent item attribution.
+- Saves initial GCN/MLP and pre-test trained GCN/MLP checkpoints with hashes,
+  and verifies that GCN values do not change during select/test evaluation.
+- Freezes the selected RPAS-Comm topology before the held-out pass.
+- Fixes reflector latency accounting to use observed_latency_ms rather than
+  silently recording zero for the same completed call.
+
+These are instrumentation/artifact repairs, not changes to the native
+training loop, query sets, search budget, topology proposals or token caps.
+The separate SCIR runtime preflight uses simulated LLM responses and
+synthetic fixtures. It completed the actual pinned ten-iteration G-Designer
+training loop, 280 simulated training calls and two checkpoint files. It is
+strictly PASS_RUNTIME_ONLY, formal_result=false, not experiment evidence.
+
+The six pending output directories (Chain/G-Designer/RPAS-Comm seeds 1/2)
+were checked and do not contain earlier results. Running processes already
+imported the old runtime and do NOT acquire these changes. In particular,
+the active G-Designer seed 0 still has an unresolved checkpoint-delivery gap;
+do not claim it is repaired retrospectively or restart it without a recovery
+decision and preserving the existing work.
+
+### Publication Gate Risk: Truncation
+
+Read-only inspection of completed EC2 Single seeds 0 and 1 found, for each,
+136 finish_reason=length calls out of 1140 (11.93%). Both have 570 held-out
+rows and 100% parse-valid final answers, but the latter does not satisfy the
+protocol's separate truncation <1% requirement. The existing aggregate does
+not enforce all paper gates. These seeds must NOT be described as fully
+paper-eligible on the strength of their manifest or parser success.
+
+The frozen EC2 cap remains 256. Do not raise it, alter prompts using held-out
+answers, silently relax the threshold, or report a changed protocol as the
+original experiment. A documented protocol decision and independent
+calibration would be needed to resolve an actual incompatibility. Other
+remaining final audits include matched EC1 search budgets, three-seed paired
+statistics, full telemetry completeness, and baseline fidelity.

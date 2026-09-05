@@ -31,7 +31,7 @@ import types
 from pathlib import Path
 from typing import Any
 
-from external_comparison.adapters.native_common import call_record, git_commit, write_native_result
+from external_comparison.adapters.native_common import call_record, git_commit, sha256_file, write_native_result
 from external_comparison.runners.mmlu import (
     MMLUExample,
     build_mmlu_manifest,
@@ -229,8 +229,40 @@ class OfficialGDesignerRuntime:
         self.phase = contextvars.ContextVar("ec2_v2_phase", default="test")
         self.example_id = contextvars.ContextVar("ec2_v2_example_id", default="")
         self.candidate_id = contextvars.ContextVar("ec2_v2_candidate_id", default="")
+        self.training_iteration = contextvars.ContextVar("ec2_v2_training_iteration", default=None)
+        self.output_dir: Path | None = None
         self._tokenizer: Any | None = None
         self._load_official_modules()
+
+    def configure_artifacts(self, directory: Path) -> None:
+        directory.mkdir(parents=True, exist_ok=True)
+        for name in ("result.json", "live_calls.jsonl", "live_rows.jsonl"):
+            if (directory / name).exists():
+                raise FileExistsError(f"Existing EC2 run artifact must be archived explicitly: {directory / name}")
+        with (directory / "execution_identity.json").open("x", encoding="utf-8") as handle:
+            json.dump({"pid": os.getpid(), "seed": self.seed, "started_at_epoch": time.time(),
+                       "runner_sha256": sha256_file(__file__), "runtime_audit_version": "journal_checkpoints_v1"}, handle)
+        self.output_dir = directory
+        self.journal("live_calls.jsonl", {"event": "run_started", "seed": self.seed, "time": time.time()})
+
+    def journal(self, filename: str, payload: dict[str, Any]) -> None:
+        if self.output_dir is not None:
+            with (self.output_dir / filename).open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps(payload, ensure_ascii=False, sort_keys=True) + "\n")
+                handle.flush()
+
+    def save_checkpoint(self, graph: Any, filename: str) -> str:
+        import torch
+
+        if self.output_dir is None:
+            raise RuntimeError("Checkpoint output directory has not been configured")
+        destination = self.output_dir / filename
+        with destination.open("xb") as handle:
+            torch.save({"gcn": graph.gcn.state_dict(), "mlp": graph.mlp.state_dict(),
+                        "seed": self.seed, "gcn_sha256": self.gcn_checksum(graph),
+                        "torch_rng_state": torch.get_rng_state(),
+                        "official_commit": git_commit(self.root)}, handle)
+        return sha256_file(destination)
 
     def _load_official_modules(self) -> None:
         if not self.root.is_dir():
@@ -305,13 +337,21 @@ class OfficialGDesignerRuntime:
                 content = str(message.get("content", ""))
                 normalized.append({"role": message.get("role", "user"), "content": content})
             started = time.perf_counter()
-            response = await self.client.chat.completions.create(
-                model=BACKBONE,
-                messages=normalized,
-                temperature=0.0,
-                max_tokens=MAX_TOKENS,
-                extra_body={"chat_template_kwargs": {"enable_thinking": False}},
-            )
+            try:
+                response = await self.client.chat.completions.create(
+                    model=BACKBONE,
+                    messages=normalized,
+                    temperature=0.0,
+                    max_tokens=MAX_TOKENS,
+                    extra_body={"chat_template_kwargs": {"enable_thinking": False}},
+                )
+            except Exception as exc:
+                self.journal("live_calls.jsonl", {
+                    "phase": self.phase.get(), "example_id": self.example_id.get(),
+                    "candidate_id": self.candidate_id.get(), "seed": self.seed,
+                    "error": f"{type(exc).__name__}: {exc}", "time": time.time(),
+                })
+                raise
             latency_ms = (time.perf_counter() - started) * 1000
             usage = response.usage
             self.usage.append(
@@ -319,6 +359,9 @@ class OfficialGDesignerRuntime:
                     "phase": self.phase.get(),
                     "example_id": self.example_id.get(),
                     "candidate_id": self.candidate_id.get(),
+                    "seed": self.seed,
+                    "round": 0,
+                    "training_iteration": self.training_iteration.get(),
                     "model": BACKBONE,
                     "prompt_tokens": int(getattr(usage, "prompt_tokens", 0) or 0),
                     "completion_tokens": int(getattr(usage, "completion_tokens", 0) or 0),
@@ -327,6 +370,7 @@ class OfficialGDesignerRuntime:
                     "finish_reason": getattr(response.choices[0], "finish_reason", None),
                 }
             )
+            self.journal("live_calls.jsonl", {**self.usage[-1], "model_output": response.choices[0].message.content or ""})
             return response.choices[0].message.content or ""
 
         self.gpt_chat.achat = achat
@@ -425,13 +469,17 @@ class OfficialGDesignerRuntime:
                     "inter_agent_tokens": message_tokens,
                     "judge_input_tokens": judge_tokens,
                     "latency_ms": (time.perf_counter() - started) * 1000,
+                    "model_output": output if isinstance(output, str) else str(output),
                 }
             )
+            self.journal("live_rows.jsonl", {"phase": split, "candidate_id": candidate_id, "row": outputs[-1]})
+            print(json.dumps({"event": "example_complete", "phase": split, "candidate_id": candidate_id,
+                              "completed": len(outputs), "total": len(rows), "seed": self.seed}), flush=True)
         return outputs, communication
 
     def calls(self, *, run_id: str, method: str) -> list[dict[str, Any]]:
         return [
-            call_record(
+            {**call_record(
                 run_id,
                 method,
                 "mmlu",
@@ -439,7 +487,8 @@ class OfficialGDesignerRuntime:
                 str(record.get("candidate_id", "")),
                 index,
                 record,
-            )
+            ), **{key: record[key] for key in ("example_id", "seed", "round", "training_iteration") if key in record},
+             "phase": str(record["phase"])}
             for index, record in enumerate(self.usage)
         ]
 
@@ -507,6 +556,22 @@ def _reflection_context(repo_root: Path) -> tuple[dict[str, Any], dict[str, Any]
     return config, load_models(config["models"]), load_network_profiles(config["network_profiles"])["lan_homogeneous"]
 
 
+class _TrainingRowsDataset(_RowsDataset):
+    """Set per-query context before the pinned trainer creates each asyncio task."""
+
+    def __init__(self, rows: list[MMLUExample], runtime: OfficialGDesignerRuntime) -> None:
+        super().__init__(rows)
+        self.runtime = runtime
+        self.position = 0
+
+    def record_to_input(self, row: MMLUExample) -> dict[str, str]:
+        self.runtime.example_id.set(row.example_id)
+        self.runtime.candidate_id.set("gdesigner_training")
+        self.runtime.training_iteration.set(self.position // 4)
+        self.position += 1
+        return _RowsDataset.record_to_input(row)
+
+
 def _llm_topology_mutation(
     parent: dict[str, Any],
     *,
@@ -568,7 +633,11 @@ def _reflection_call_records(
     for index, trace in enumerate(plan.get("call_traces", []), start_index):
         payload = dict(trace)
         payload["agent"] = "reflector"
-        records.append(call_record(run_id, method, "mmlu", "search", candidate_id, index, payload))
+        payload["latency_ms"] = trace.get("observed_latency_ms", 0.0)
+        record = call_record(run_id, method, "mmlu", "search", candidate_id, index, payload)
+        record.update(phase="search", example_id=None, example_scope="candidate_failure_summary",
+                      requested_max_tokens=trace.get("requested_max_tokens"), call_index=index)
+        records.append(record)
     return records
 
 
@@ -605,6 +674,8 @@ def _base_manifest(method: str, seed: int, split_manifest: dict[str, Any]) -> di
         "seed": seed,
         "protocol_version": EC2_V2_PROTOCOL,
         "implementation_status": "formal_candidate_pending_three_seed_aggregate",
+        "runtime_audit_version": "journal_checkpoints_v1",
+        "runner_sha256": sha256_file(__file__),
         "formal_result": False,
         "formal_result_reason": "A single seed is never a paper result; aggregate requires all three protocol-valid seeds.",
         "backbone": BACKBONE,
@@ -683,7 +754,11 @@ async def _run_gdesigner(runtime: OfficialGDesignerRuntime, rows: dict[str, list
     # the fixed references, this is query-conditioned topology learning.
     graph = runtime.make_graph(topology=None, optimized_spatial=True)
     initial_sha = runtime.gcn_checksum(graph)
+    initial_checkpoint_sha = runtime.save_checkpoint(graph, "gdesigner_initial.pt")
     token = runtime.phase.set("search")
+    example_token = runtime.example_id.set("")
+    candidate_token = runtime.candidate_id.set("gdesigner_training")
+    iteration_token = runtime.training_iteration.set(None)
     try:
         train_path = runtime.root / "experiments" / "train_mmlu.py"
         spec = importlib.util.spec_from_file_location("rpas_ec2_v2_gdesigner_train_mmlu", train_path)
@@ -691,16 +766,22 @@ async def _run_gdesigner(runtime: OfficialGDesignerRuntime, rows: dict[str, list
             raise ImportError(f"cannot load pinned G-Designer train loop: {train_path}")
         trainer = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(trainer)
-        await trainer.train(graph=graph, dataset=_RowsDataset(rows["search"]), num_iters=10, num_rounds=ROUNDS, lr=0.1, batch_size=4)
+        await trainer.train(graph=graph, dataset=_TrainingRowsDataset(rows["search"], runtime), num_iters=10, num_rounds=ROUNDS, lr=0.1, batch_size=4)
     finally:
         runtime.phase.reset(token)
+        runtime.example_id.reset(example_token)
+        runtime.candidate_id.reset(candidate_token)
+        runtime.training_iteration.reset(iteration_token)
     trained_sha = runtime.gcn_checksum(graph)
     if initial_sha == trained_sha:
         raise RuntimeError("official G-Designer training did not change the GCN checkpoint")
+    trained_checkpoint_sha = runtime.save_checkpoint(graph, "gdesigner_pretest.pt")
     # D_select is an audit-only validation pass: the released official loop
     # trains for exactly ten iterations and has no checkpoint-selection step.
     _, select_communication = await runtime.evaluate(graph, rows["select"], split="select", candidate_id="gdesigner_trained")
     result_rows, test_communication = await runtime.evaluate(graph, rows["test"], split="test", candidate_id="gdesigner_trained")
+    if runtime.gcn_checksum(graph) != trained_sha:
+        raise RuntimeError("G-Designer parameters changed during validation or held-out evaluation")
     calls = runtime.calls(run_id=f"ec2-v2-gdesigner-seed-{seed}", method="gdesigner")
     search_calls = sum(1 for call in calls if call["split"] in {"search", "select"})
     search_tokens = sum(int(call["total_tokens"]) for call in calls if call["split"] in {"search", "select"})
@@ -716,6 +797,9 @@ async def _run_gdesigner(runtime: OfficialGDesignerRuntime, rows: dict[str, list
             "select_communication": select_communication,
             "test_communication": test_communication,
             "gdesigner_training": {"iterations": 10, "batch_size": 4, "lr": 0.1, "initial_gcn_sha256": initial_sha, "trained_gcn_sha256": trained_sha},
+            "checkpoint_files": {
+                "gdesigner_initial.pt": initial_checkpoint_sha, "gdesigner_pretest.pt": trained_checkpoint_sha,
+            },
             "search_trace": {
                 "mode": "official_gdesigner_train",
                 "events": search_calls,
@@ -763,6 +847,7 @@ async def _run_rpas_comm(runtime: OfficialGDesignerRuntime, rows: dict[str, list
         parent = dict(max(candidate_rows, key=lambda row: (row["score"], -row["avg_inter_agent_tokens"], row["candidate_id"])))
         parent["excluded_candidate_ids"] = sorted(evaluated_ids)
         child, plan = _llm_topology_mutation(parent, config=config, models=models, profile=profile)
+        runtime.journal("live_reflections.jsonl", {"index": index, "parent_id": parent["candidate_id"], "plan": plan})
         reflection_calls += len(plan.get("call_traces", []))
         reflection_call_records.extend(
             _reflection_call_records(
@@ -795,8 +880,12 @@ async def _run_rpas_comm(runtime: OfficialGDesignerRuntime, rows: dict[str, list
     if not valid_selection:
         raise RuntimeError("RPAS-Comm produced no parse-valid candidate on D_select")
     selected = min(valid_selection, key=lambda row: (-row["score"], row["avg_inter_agent_tokens"], row["candidate_id"]))
+    runtime.journal("selection_frozen.jsonl", {"selected": selected["candidate"], "selection_rows": selection_rows,
+                                               "frozen_before_heldout": True})
     test_rows, test_communication, _ = await evaluate_candidate(selected["candidate"], "test", rows["test"])
     calls = runtime.calls(run_id=f"ec2-v2-rpas_comm-seed-{seed}", method="rpas_comm") + reflection_call_records
+    for call in reflection_call_records:
+        call["seed"] = seed
     search_calls = sum(1 for call in calls if call["split"] in {"search", "select"})
     search_tokens = sum(int(call["total_tokens"]) for call in calls if call["split"] in {"search", "select"})
     manifest = _base_manifest("rpas_comm", seed, rows["manifest"])
@@ -855,6 +944,8 @@ async def _run(args: argparse.Namespace) -> None:
     output.mkdir(parents=True, exist_ok=True)
     (output / "split_manifest.json").write_text(json.dumps(split_manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     runtime = OfficialGDesignerRuntime(Path(args.gdesigner_root).resolve(), seed=args.seed)
+    runtime.configure_artifacts(output / args.method / f"seed_{args.seed}")
+    runtime.journal("frozen_split.jsonl", split_manifest)
     if args.method == "single_agent":
         await _run_single(runtime, rows, args.seed)
     elif args.method in {"full_connected", "chain"}:
