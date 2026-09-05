@@ -260,3 +260,65 @@ the entire RPAS-Comm path with a simulated model/runtime, checking exactly
 40 D_search query executions, 228 D_select executions and 570 held-out
 examples; the selected topology must be frozen before test evaluation.
 This is regression evidence, not real-model benchmark performance.
+
+## Bounded Fixed-Topology Batching Audit At 02:17 UTC+08
+
+The EC2 service supports batches of four, but the harness evaluated held-out
+questions sequentially. The fixed-graph path can therefore leave that batch
+capacity unused. The proposed runtime evaluates independent fixed-graph
+questions in groups of at most four, preserving fixture output order, each
+question's copied graph, prompt contents, token cap, and candidate ordering.
+On failure it cancels and joins outstanding siblings. Every completed item
+still goes to the live journal. The selected concurrency is recorded in the
+manifest; co-resident timings remain operational rather than isolated latency.
+
+Concurrency is explicitly rejected for graphs with optimized spatial or
+temporal edges. G-Designer training and its sampled select/test graph path
+are unchanged. Chain and RPAS-Comm future runs use the bounded fixed path;
+running processes retain their already-imported code.
+
+The SCIR native-loop preflight passed again and compared serial versus
+four-way evaluation using the same native fixed Chain graph. All 28 model
+request payloads, ordered predictions and communication counts were equal
+with simulated responses. Local coverage now includes 39 passing tests,
+including out-of-order completion, the concurrency bound, sampled-graph
+rejection and cancellation of siblings after a failed item. A separate real
+model-service synthetic batching check is required before deployment.
+
+### Truncation Attribution
+
+For the existing serial EC2 Single runs, native Graph.arun executes the one
+AnalyzeAgent and then FinalRefer. Each saved run has exactly 1140 calls for
+570 questions. Inspecting this two-call ordering attributes all 136 length
+terminations to the worker and zero to the final judge, for both seeds 0/1.
+Old calls lack explicit agent/item metadata, so this attribution relies on
+the verified serial executor layout rather than on a saved agent field.
+This diagnostic does not change the original all-call 11.93% rate or waive
+the protocol's truncation threshold.
+
+### Fixed-Topology Batching Deployment
+
+The strengthened native preflight used distinct synthetic question contents
+and compared request payloads together with their ContextVar example IDs.
+It passed, as did a real service check with four variable-length synthetic
+prompts evaluated serially and concurrently. Real answers, stop reasons and
+prompt-token counts agreed. Evidence is retained in
+`outputs/preflight_20260906/real_batch_service.json` remotely and
+`outputs/audit_20260906/real_batch_service.json` locally. This short smoke
+does not prove a fourfold speedup or exact numerical equivalence for every
+possible model input; do not report it as a throughput benchmark.
+
+The approved runtime was atomically deployed at 02:22 with SHA-256
+`a5de1792e8e6f6e98368d6b965ef18838b1a7eb956d730b95a79648636d22fe4`.
+The preceding journal-only source is preserved remotely as
+`scripts/scir/ec2_v2_before_batch_20260906.py`. Array 132406 remained pending
+at deployment, with its queue priority unchanged. Chain and RPAS-Comm seeds
+1/2 use four-item batches; G-Designer seeds 1/2 retain native serial sampled
+evaluation. All currently running workers retain their old loaded code.
+
+At the last check AFlow seed 2 had reached 89/131 held-out items. Its parent
+batch is still deliberately stopped by the RPAS bundle guard, so AFlow
+completion alone may not execute the original wrapper's cleanup/metrics
+commands. Confirm the actual child runner has exited and result artifacts
+are stable before collecting metrics or reclaiming that service's GPU memory.
+Do not cancel allocation 132166, which also owns both corrected RPAS lanes.

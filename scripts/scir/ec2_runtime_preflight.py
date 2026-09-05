@@ -19,14 +19,16 @@ async def check(root: Path) -> dict:
         destination = Path(temporary)
         runtime = OfficialGDesignerRuntime(root, seed=0)
         runtime.configure_artifacts(destination / "gdesigner" / "seed_0")
+        requests = []
         async def simulated_completion(**kwargs):
             assert kwargs["max_tokens"] == 256
             assert kwargs["temperature"] == 0.0
+            requests.append((runtime.example_id.get(), json.dumps(kwargs, sort_keys=True)))
             return SimpleNamespace(usage=SimpleNamespace(prompt_tokens=3, completion_tokens=1, total_tokens=4),
                                    choices=[SimpleNamespace(finish_reason="stop", message=SimpleNamespace(content="A"))])
         runtime.client.chat.completions.create = simulated_completion
         rows = {
-            "search": [MMLUExample(f"synthetic-dev:{i}", "s", "Select A.", ("yes", "no", "no", "no"), "A") for i in range(8)],
+            "search": [MMLUExample(f"synthetic-dev:{i}", "s", f"Select A. Synthetic case {i}.", ("yes", "no", "no", "no"), "A") for i in range(8)],
             "select": [MMLUExample("synthetic-val:0", "s", "Select A.", ("yes", "no", "no", "no"), "A")],
             "test": [MMLUExample("synthetic-test:0", "s", "Select A.", ("yes", "no", "no", "no"), "A")],
             "manifest": {"split_manifest_sha256": "synthetic-preflight", "search": {"count": 8}, "select": {"count": 1}, "test": {"count": 1}},
@@ -42,8 +44,25 @@ async def check(root: Path) -> dict:
         assert all(call["example_id"].startswith("synthetic-dev:") for call in training)
         assert all((result_dir / name).stat().st_size > 100 for name in result["checkpoint_files"])
         assert len(result["checkpoint_files"]) == 2
+        fixed_rows = rows["search"][:4]
+        fixed_graph = runtime.make_graph(topology="chain", optimized_spatial=False)
+        requests.clear()
+        with contextlib.redirect_stdout(io.StringIO()):
+            serial_rows, serial_communication = await runtime.evaluate(
+                fixed_graph, fixed_rows, split="test", candidate_id="fixed_preflight", concurrency=1)
+        serial_requests = sorted(requests)
+        requests.clear()
+        with contextlib.redirect_stdout(io.StringIO()):
+            parallel_rows, parallel_communication = await runtime.evaluate(
+                fixed_graph, fixed_rows, split="test", candidate_id="fixed_preflight", concurrency=4)
+        assert sorted(requests) == serial_requests
+        assert len(requests) == 28
+        assert parallel_communication == serial_communication
+        assert [{k: v for k, v in row.items() if k != "latency_ms"} for row in parallel_rows] == [
+            {k: v for k, v in row.items() if k != "latency_ms"} for row in serial_rows]
         return {"formal_result": False, "simulated_llm": True, "native_training_iterations": 10,
                 "checkpoint_files": list(result["checkpoint_files"]), "training_calls": len(training),
+                "fixed_serial_vs_parallel_requests_equal": True, "fixed_fixture_calls": len(requests),
                 "status": "PASS_RUNTIME_ONLY"}
 
 

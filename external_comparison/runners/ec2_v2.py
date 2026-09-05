@@ -412,6 +412,39 @@ class OfficialGDesignerRuntime:
         return digest.hexdigest()
 
     async def evaluate(
+        self, graph: Any, rows: list[MMLUExample], *, split: str,
+        candidate_id: str, concurrency: int = 1,
+    ) -> tuple[list[dict[str, Any]], dict[str, int]]:
+        if type(concurrency) is not int or concurrency not in range(1, 5):
+            raise ValueError("EC2 evaluation concurrency must be an integer between 1 and 4")
+        if concurrency == 1:
+            return await self._evaluate_serial(graph, rows, split=split, candidate_id=candidate_id)
+        if graph.optimized_spatial or graph.optimized_temporal:
+            raise ValueError("Concurrent item evaluation is restricted to fixed graphs; native sampled graphs stay serial")
+        outputs = []
+        totals = {"active_edges": 0, "messages": 0, "inter_agent_tokens": 0, "judge_input_tokens": 0}
+        # A bounded batch keeps model queue depth and copied graph memory finite.
+        # gather preserves fixture order even when requests finish out of order.
+        for offset in range(0, len(rows), concurrency):
+            tasks = [asyncio.create_task(self._evaluate_serial(
+                graph, [row], split=split, candidate_id=candidate_id,
+            )) for row in rows[offset:offset + concurrency]]
+            try:
+                batch = await asyncio.gather(*tasks)
+            except BaseException:
+                for task in tasks:
+                    task.cancel()
+                await asyncio.gather(*tasks, return_exceptions=True)
+                raise
+            for batch_rows, communication in batch:
+                outputs.extend(batch_rows)
+                for key in totals:
+                    totals[key] += communication[key]
+            print(json.dumps({"event": "fixed_batch_complete", "phase": split, "candidate_id": candidate_id,
+                              "completed": len(outputs), "total": len(rows), "concurrency": concurrency}), flush=True)
+        return outputs, totals
+
+    async def _evaluate_serial(
         self,
         graph: Any,
         rows: list[MMLUExample],
@@ -720,9 +753,11 @@ def _base_manifest(method: str, seed: int, split_manifest: dict[str, Any]) -> di
 async def _run_fixed(runtime: OfficialGDesignerRuntime, method: str, rows: dict[str, list[MMLUExample]], seed: int) -> None:
     topology = {"full_connected": "full_connected", "chain": "chain"}[method]
     graph = runtime.make_graph(topology=topology, optimized_spatial=False)
-    result_rows, communication = await runtime.evaluate(graph, rows["test"], split="test", candidate_id=method)
+    concurrency = int(os.environ.get("RPAS_EC2_FIXED_EVAL_CONCURRENCY", "4"))
+    result_rows, communication = await runtime.evaluate(graph, rows["test"], split="test", candidate_id=method, concurrency=concurrency)
     manifest = _base_manifest(method, seed, rows["manifest"])
     manifest.update({"native_search": "none_fixed_reference", "fixed_topology": topology, "search_calls": 0, "search_tokens": 0, "test_communication": communication})
+    manifest["fixed_evaluation_concurrency"] = concurrency
     validate_v2_manifest(manifest)
     write_native_result(Path(rows["output_dir"]) / method / f"seed_{seed}", manifest, result_rows, runtime.calls(run_id=manifest["run_id"], method=method), {"topology": topology})
 
@@ -733,10 +768,12 @@ async def _run_single(runtime: OfficialGDesignerRuntime, rows: dict[str, list[MM
         domain="mmlu", llm_name=BACKBONE, agent_names=["AnalyzeAgent"], decision_method="FinalRefer",
         optimized_spatial=False, fixed_spatial_masks=[[0]], fixed_temporal_masks=[[0]],
     )
-    result_rows, communication = await runtime.evaluate(graph, rows["test"], split="test", candidate_id="single_agent")
+    concurrency = int(os.environ.get("RPAS_EC2_FIXED_EVAL_CONCURRENCY", "4"))
+    result_rows, communication = await runtime.evaluate(graph, rows["test"], split="test", candidate_id="single_agent", concurrency=concurrency)
     manifest = _base_manifest("single_agent", seed, rows["manifest"])
     manifest["agent_count"] = 1
     manifest["roles"] = [ROLES[0]]
+    manifest["fixed_evaluation_concurrency"] = concurrency
     manifest.update({"native_search": "none_reference_only", "reference_only": True, "fixed_topology": "single_agent", "search_calls": 0, "search_tokens": 0, "test_communication": communication})
     # Single Agent is intentionally outside the six-agent competitor set.
     validate_v2_manifest(manifest)
@@ -814,6 +851,7 @@ async def _run_gdesigner(runtime: OfficialGDesignerRuntime, rows: dict[str, list
 
 async def _run_rpas_comm(runtime: OfficialGDesignerRuntime, rows: dict[str, list[MMLUExample]], seed: int, repo_root: Path) -> None:
     config, models, profile = _reflection_context(repo_root)
+    concurrency = int(os.environ.get("RPAS_EC2_FIXED_EVAL_CONCURRENCY", "4"))
     seed_topologies = [TOPOLOGIES[0]]
     candidate_rows: list[dict[str, Any]] = []
     evaluated_ids: set[str] = set()
@@ -832,7 +870,7 @@ async def _run_rpas_comm(runtime: OfficialGDesignerRuntime, rows: dict[str, list
     async def evaluate_candidate(candidate: dict[str, Any], split: str, examples: list[MMLUExample]) -> tuple[list[dict[str, Any]], dict[str, int], Any]:
         assert_v2_candidate(candidate)
         graph = runtime.make_graph(topology=candidate["topology"], optimized_spatial=False)
-        outputs, communication = await runtime.evaluate(graph, examples, split=split, candidate_id=candidate["id"])
+        outputs, communication = await runtime.evaluate(graph, examples, split=split, candidate_id=candidate["id"], concurrency=concurrency)
         return outputs, communication, graph
 
     for candidate_index, topology in enumerate(seed_topologies):
@@ -892,6 +930,7 @@ async def _run_rpas_comm(runtime: OfficialGDesignerRuntime, rows: dict[str, list
     manifest.update(
         {
             "native_search": "llm_reflection__typed_topology_mutation__pareto_select",
+            "fixed_evaluation_concurrency": concurrency,
             "search_calls": search_calls,
             "search_tokens": search_tokens,
             "search_candidates": len(candidate_rows),

@@ -1,6 +1,7 @@
 import asyncio
 import contextvars
 import json
+from types import SimpleNamespace
 
 import pytest
 
@@ -90,7 +91,8 @@ def test_rpas_full_pipeline_keeps_search_select_and_test_separate(tmp_path, monk
         def make_graph(self, **kwargs):
             assert kwargs["optimized_spatial"] is False
             return kwargs["topology"]
-        async def evaluate(self, graph, examples, *, split, candidate_id):
+        async def evaluate(self, graph, examples, *, split, candidate_id, concurrency=1):
+            assert concurrency == 4
             phases.append((split, [row.example_id for row in examples]))
             rows = [{"example_id": row.example_id, "prediction": "A", "answer": "A", "correct": True,
                      "inter_agent_tokens": 1} for row in examples]
@@ -120,3 +122,44 @@ def test_rpas_full_pipeline_keeps_search_select_and_test_separate(tmp_path, monk
     result = json.loads((tmp_path / "rpas_comm" / "seed_0" / "result.json").read_text())
     assert result["rpas_reflection"]["new_candidates"] == 3
     assert result["rpas_reflection"]["rule_fallbacks"] == 0
+
+
+def test_fixed_batch_bounds_concurrency_and_preserves_order():
+    runtime = bare_runtime()
+    live = 0
+    peak = 0
+    async def serial(graph, rows, **kwargs):
+        nonlocal live, peak
+        live += 1
+        peak = max(peak, live)
+        await asyncio.sleep((8 - rows[0]) / 1000)
+        live -= 1
+        return [{"id": rows[0]}], {key: 1 for key in ("active_edges", "messages", "inter_agent_tokens", "judge_input_tokens")}
+    runtime._evaluate_serial = serial
+    graph = SimpleNamespace(optimized_spatial=False, optimized_temporal=False)
+    outputs, totals = asyncio.run(runtime.evaluate(graph, list(range(9)), split="test", candidate_id="fixed", concurrency=4))
+    assert peak == 4 and live == 0
+    assert [row["id"] for row in outputs] == list(range(9))
+    assert totals["messages"] == 9
+    graph.optimized_spatial = True
+    with pytest.raises(ValueError, match="fixed graphs"):
+        asyncio.run(runtime.evaluate(graph, [0], split="test", candidate_id="learned", concurrency=4))
+
+
+def test_failed_batch_cancels_remaining_items():
+    runtime = bare_runtime()
+    cancelled = []
+    async def serial(graph, rows, **kwargs):
+        if rows[0] == 0:
+            await asyncio.sleep(0)
+            raise RuntimeError("synthetic failure")
+        try:
+            await asyncio.sleep(10)
+        except asyncio.CancelledError:
+            cancelled.append(rows[0])
+            raise
+    runtime._evaluate_serial = serial
+    graph = SimpleNamespace(optimized_spatial=False, optimized_temporal=False)
+    with pytest.raises(RuntimeError, match="synthetic failure"):
+        asyncio.run(runtime.evaluate(graph, list(range(4)), split="test", candidate_id="fixed", concurrency=4))
+    assert sorted(cancelled) == [1, 2, 3]
