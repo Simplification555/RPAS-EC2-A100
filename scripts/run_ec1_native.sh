@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# One job per invocation.  The caller must choose GPU 4 or GPU 5 explicitly.
+# One job per invocation.  Local runs use GPU 4/5; SCIR receives exactly one
+# Slurm-assigned GPU token and may therefore run on an equivalent H100.
 if [[ $# -lt 5 ]]; then
   echo "usage: $0 <aflow|maas|rpas> <4|5> <humaneval.jsonl> <public_test.jsonl> <output_dir> [pilot|formal]" >&2
   exit 2
@@ -13,8 +14,10 @@ dataset="$3"
 public_test="$4"
 output="$5"
 run_kind="${6:-pilot}"
-if [[ "$gpu" != "4" && "$gpu" != "5" ]]; then
-  echo "EC-1 permits only GPU 4 or GPU 5" >&2
+if [[ "$gpu" != "4" && "$gpu" != "5" ]] && ! {
+  [[ "${RPAS_SCIR_ALLOCATED_GPU:-0}" == "1" ]] && [[ "$gpu" =~ ^[0-9]+$ ]];
+}; then
+  echo "EC-1 requires GPU 4/5 locally or one Slurm-assigned GPU token on SCIR" >&2
   exit 2
 fi
 
