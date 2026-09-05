@@ -48,6 +48,7 @@ export RPAS_EXTERNAL_API_KEY=EMPTY
 export RPAS_EXTERNAL_MODEL=Qwen/Qwen3.5-9B
 export RPAS_EC3_EXECUTOR_MAX_TOKENS=256
 export RPAS_EC3_META_MAX_TOKENS=4096
+export RPAS_CODE_COMMIT="${RPAS_CODE_COMMIT:-bundle_without_git_metadata}"
 export GEPA_QWEN_DISABLE_THINKING=1
 
 {
@@ -61,7 +62,7 @@ export GEPA_QWEN_DISABLE_THINKING=1
   echo "formal_root=${formal_root}"
   nvidia-smi --query-gpu=index,uuid,name,memory.total,driver_version --format=csv
   sha256sum "${manifest_path}"
-  git -C "${repo_root}" rev-parse HEAD
+  git -C "${repo_root}" rev-parse HEAD || echo "bundle_code_commit=${RPAS_CODE_COMMIT}"
   git -C "${aflow_root}" rev-parse HEAD
   git -C "${aflow_root}" status --porcelain --untracked-files=no
   "${python_bin}" -m pip show torch transformers litellm pandas

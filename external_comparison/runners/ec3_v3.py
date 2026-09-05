@@ -73,9 +73,11 @@ def _require_one_allocated_gpu() -> str:
 
 def _git_commit(root: Path) -> str:
     completed = subprocess.run(
-        ["git", "-C", str(root), "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+        ["git", "-C", str(root), "rev-parse", "HEAD"], capture_output=True, text=True, check=False
     )
-    return completed.stdout.strip()
+    if completed.returncode == 0 and completed.stdout.strip():
+        return completed.stdout.strip()
+    return os.environ.get("RPAS_CODE_COMMIT", "bundle_without_git_metadata")
 
 
 def _load_split(manifest: dict[str, Any], name: str) -> list[HotpotExample]:
