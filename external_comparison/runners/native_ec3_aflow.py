@@ -33,6 +33,17 @@ MIN_VALID_ANSWER_RATE = 0.99
 MAX_TRUNCATION_RATE = 0.01
 
 
+class _PromptFallback:
+    """Delegate known prompt constants and supply a bounded fallback."""
+
+    def __init__(self, module: Any, fallback: str) -> None:
+        self._module = module
+        self._fallback = fallback
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._module, name, self._fallback)
+
+
 def _read_json(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
@@ -256,6 +267,7 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
             for name in referenced:
                 if not hasattr(module, name):
                     setattr(module, name, generic_prompt)
+        graph_globals["prompt_custom"] = _PromptFallback(prompt_module or prompt_modules[0], generic_prompt)
     before = set(log_dir.glob("*.csv"))
     score, _, _ = asyncio.run(
         Evaluator(eval_path=str(log_dir)).graph_evaluate(
