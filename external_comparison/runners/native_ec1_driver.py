@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import csv
+import hashlib
 import json
 import os
 import shutil
@@ -504,19 +505,23 @@ def _install_maas_actions_compat(workspace: Path) -> str:
 
 
 def _install_maas_embedding_compat(workspace: Path) -> str:
-    """Keep MaAS's controller embedding path offline and deterministic.
-
-    The upstream helper downloads all-MiniLM-L6-v2 at first use.  EC-1 runs
-    on isolated SCIR nodes and the embedding only ranks operator descriptions;
-    a fixed signed hashed n-gram vector preserves deterministic controller
-    inputs without an undeclared network dependency.
-    """
+    """Load the original MiniLM weights offline without substituting features."""
+    configured = os.environ.get("RPAS_MAAS_EMBEDDING_MODEL", "")
+    if not configured:
+        raise RuntimeError("RPAS_MAAS_EMBEDDING_MODEL must point to the local all-MiniLM-L6-v2 weights")
+    model = Path(configured).resolve()
+    for name in ("modules.json", "config.json", "model.safetensors", "tokenizer.json"):
+        if not (model / name).is_file():
+            raise FileNotFoundError(model / name)
     path = workspace / "maas" / "ext" / "maas" / "models" / "utils.py"
-    path.write_text(
-        """import hashlib\nimport re\nimport torch\n\ndef get_sentence_embedding(sentence):\n    text = str(sentence).lower()\n    vector = torch.zeros(384, dtype=torch.float32)\n    grams = [text[i:i+3] for i in range(max(1, len(text)-2))]\n    for gram in grams:\n        digest = hashlib.sha256(gram.encode('utf-8')).digest()\n        index = int.from_bytes(digest[:4], 'little') % 384\n        vector[index] += 1.0 if digest[4] & 1 else -1.0\n    norm = torch.linalg.vector_norm(vector)\n    return vector / norm if norm > 0 else vector\n\nclass SentenceEncoder(torch.nn.Module):\n    def __init__(self):\n        super().__init__()\n    def forward(self, sentence):\n        return get_sentence_embedding(sentence)\n\ndef sample_operators(probs: torch.Tensor, threshold: float = 0.25) -> torch.Tensor:\n    device = probs.device\n    probs = probs.detach()\n    num_ops = probs.size(0)\n    if num_ops == 0:\n        return torch.tensor([], dtype=torch.long, device=device)\n    selected = torch.tensor([], dtype=torch.long, device=device)\n    cumulative = 0.0\n    remaining = torch.arange(num_ops, device=device)\n    while cumulative < threshold and remaining.numel() > 0:\n        sampled = torch.multinomial(probs[remaining], num_samples=1)\n        idx = remaining[sampled].squeeze()\n        if not torch.any(selected == idx):\n            selected = torch.cat([selected, idx.unsqueeze(0)])\n            cumulative += probs[idx].item()\n        mask = torch.ones_like(remaining, dtype=torch.bool)\n        mask[sampled] = False\n        remaining = remaining[mask]\n    if selected.numel() == 0:\n        selected = probs.argmax().unsqueeze(0)\n    return selected\n""",
-        encoding="utf-8",
-    )
-    return "offline deterministic hashed 3-gram embedding; no Hugging Face download"
+    source = path.read_text(encoding="utf-8")
+    original = "SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
+    if source.count(original) != 2:
+        raise RuntimeError("MaAS embedding helper is not the expected pristine upstream source")
+    replacement = f"SentenceTransformer({str(model)!r}, local_files_only=True)"
+    path.write_text(source.replace(original, replacement), encoding="utf-8")
+    weights_sha = hashlib.sha256((model / "model.safetensors").read_bytes()).hexdigest()
+    return f"native all-MiniLM-L6-v2 loaded offline; weights_sha256={weights_sha}; sampling helper unchanged"
 
 
 def _install_maas_public_test_compat(workspace: Path) -> str:

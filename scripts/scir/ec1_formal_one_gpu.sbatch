@@ -47,6 +47,7 @@ export RPAS_EC1_SEED="${seed}"
 export RPAS_EC1_PYTHON="${python_bin}"
 export RPAS_AFLOW_ROOT="/home/jianbaizhao/external_baselines/AFlow_formal_clean"
 export RPAS_MAAS_ROOT="/home/jianbaizhao/external_baselines/MaAS_formal_clean"
+export RPAS_MAAS_EMBEDDING_MODEL="/home/jianbaizhao/model/sentence-transformers/all-MiniLM-L6-v2"
 export RPAS_EXTERNAL_API_BASE="http://127.0.0.1:${port}/v1"
 export RPAS_EXTERNAL_API_KEY=EMPTY
 export RPAS_EXTERNAL_MODEL=Qwen/Qwen3.5-9B
@@ -122,5 +123,10 @@ PY
   --result-dir "${experiment_root}/${method}/seed_${seed}" --job-id "${SLURM_JOB_ID}" \
   --job-root "${job_root}" --stage "formal_seed_${packed_slot}"
 echo "formal_result=true" >"${job_root}/job_status.txt"
+result_dir="${experiment_root}/${method}/seed_${seed}"
+(
+  cd "${result_dir}"
+  find . -maxdepth 1 -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum >SHA256SUMS
+)
 find "${job_root}" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum >"${job_root}/SHA256SUMS"
 echo "EC-1 formal ${method} seed ${seed} completed: ${job_root}"

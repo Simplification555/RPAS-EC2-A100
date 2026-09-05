@@ -40,6 +40,15 @@ def main() -> None:
     from maas.provider.openai_api import OpenAILLM
 
     assert ModelsConfig is not None and Optimizer is not None and OpenAILLM is not None
+    from maas.ext.maas.models.utils import SentenceEncoder, get_sentence_embedding
+    import torch
+
+    sentence = "Generate a Python function and verify its public tests."
+    vector = get_sentence_embedding(sentence)
+    encoder = SentenceEncoder()
+    assert vector.shape == (384,) and torch.isfinite(vector).all()
+    assert all(not parameter.requires_grad for parameter in encoder.model.parameters())
+    assert torch.allclose(vector, encoder(sentence), atol=1e-6)
     faulthandler.cancel_dump_traceback_later()
     print("maas_import_smoke=PASS")
 
