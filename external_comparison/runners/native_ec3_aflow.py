@@ -266,6 +266,18 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
         "Use only the supplied context to answer the question. "
         "Reason briefly, then provide the concise final answer.\n\nInput: {input}"
     )
+    # Make the generated graph self-contained as a second line of defense:
+    # loaders may replace prompt modules after this function returns.
+    patched_graph_source = graph_source
+    for name in referenced:
+        patched_graph_source = re.sub(
+            rf"prompt_custom\.{name}\b",
+            f"getattr(prompt_custom, {name!r}, {generic_prompt!r})",
+            patched_graph_source,
+        )
+    if patched_graph_source != graph_source:
+        graph_path.write_text(patched_graph_source, encoding="utf-8")
+        importlib.invalidate_caches()
     if prompt_modules:
         for module in prompt_modules:
             for name in referenced:
