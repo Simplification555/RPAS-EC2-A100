@@ -208,6 +208,21 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
 
     _write_split(split_path, split_rows)
     importlib.invalidate_caches()
+    # AFlow's meta-model occasionally emits prompt constants as commented
+    # examples. The generated graph still references those names, so provide
+    # the locked EC-3 prompt contract at runtime rather than scoring skipped
+    # executions as if they were valid answers.
+    prompt_module = importlib.import_module(f"workspace.HotpotQA.workflows.round_{round_number}.prompt")
+    if not hasattr(prompt_module, "REASONING_PROMPT"):
+        prompt_module.REASONING_PROMPT = (
+            "Use only the supplied context to answer the question. "
+            "Reason briefly, then output the final answer.\n\nInput: {input}"
+        )
+    if not hasattr(prompt_module, "FINAL_ANSWER_PROMPT"):
+        prompt_module.FINAL_ANSWER_PROMPT = (
+            "Extract only the concise answer from the text below. "
+            "Do not add explanation.\n\nInput Text: {input}"
+        )
     graph = optimizer.graph_utils.load_graph(round_number, "workspace/HotpotQA/workflows")
     before = set(log_dir.glob("*.csv"))
     score, _, _ = asyncio.run(
