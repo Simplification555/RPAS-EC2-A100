@@ -294,52 +294,58 @@ def run(args: Any) -> dict[str, Any]:
     reflections: list[dict[str, Any]] = []
     proposal_rows: list[dict[str, Any]] = []
     seen = {row["candidate_id"] for row in search_rows}
+    exhausted_parents: set[str] = set()
     while len([row for row in search_rows if row["candidate_origin"] == "generated"]) < new_budget:
-        parent = max(
-            (row for row in search_rows if row["valid"]),
+        parent_candidates = sorted(
+            (row for row in search_rows if row["valid"] and row["candidate_id"] not in exhausted_parents),
             key=lambda row: (float(row["score"]), -float(row["avg_total_tokens"]), str(row["candidate_id"])),
-            default=None,
+            reverse=True,
         )
-        if parent is None:
-            raise RuntimeError("RPAS EC-1 has no valid parent for LLM reflection")
-        plan = build_reflection_plan(
-            row=parent, config=raw_config, models=models, profile=profile, reflection_mode="llm",
-            reflection_model="qwen35_9b", reflection_max_tokens=1024, max_proposals=3,
-        )
-        if plan.get("mode") != "llm":
-            raise RuntimeError("formal RPAS EC-1 forbids rule-reflection fallback")
-        reflections.append({"parent_id": parent["candidate_id"], "plan": plan})
-        all_calls.extend(_reflection_calls(run_id, parent["candidate_id"], plan))
-        proposals = choose_planned_mutations(plan, parent["candidate"], raw_config, limit=3)
-        if not proposals:
-            raise RuntimeError("LLM reflection returned no applicable typed mutation")
+        if not parent_candidates:
+            raise RuntimeError("LLM reflection exhausted all valid parents without a unique valid typed mutation")
         accepted = False
-        for proposal in proposals:
-            child = mutate_candidate(
-                parent["candidate"], raw_config, rng, parent_row=parent, mode="wan_pareto",
-                reflection_plan=plan, planned_mutation_override=proposal,
+        for parent in parent_candidates:
+            exhausted_parents.add(parent["candidate_id"])
+            plan = build_reflection_plan(
+                row=parent, config=raw_config, models=models, profile=profile, reflection_mode="llm",
+                reflection_model="qwen35_9b", reflection_max_tokens=1024, max_proposals=6,
             )
-            if child["id"] in seen:
-                proposal_rows.append({"status": "duplicate", "candidate_id": child["id"], "proposal": proposal})
+            if plan.get("mode") != "llm":
+                raise RuntimeError("formal RPAS EC-1 forbids rule-reflection fallback")
+            reflections.append({"parent_id": parent["candidate_id"], "plan": plan})
+            all_calls.extend(_reflection_calls(run_id, parent["candidate_id"], plan))
+            proposals = choose_planned_mutations(plan, parent["candidate"], raw_config, limit=6)
+            if not proposals:
+                proposal_rows.append({"status": "no_applicable_mutation", "parent_id": parent["candidate_id"]})
                 continue
-            errors = validate_candidate_contract(child, raw_config, models)
-            if errors:
-                proposal_rows.append({"status": "invalid", "candidate_id": child["id"], "proposal": proposal, "reasons": errors})
-                continue
-            result = _evaluate_candidate(
-                candidate=child, tasks=splits["search"], models=models, profile=profile,
-                executor=executor, run_id=run_id, split="search", capture_outputs=False,
-            )
-            row = _search_row(child, result, "generated")
-            search_rows.append(row)
-            all_calls.extend(result["calls"])
-            tool_events.extend(result["tool_events"])
-            proposal_rows.append({"status": "accepted", "candidate_id": child["id"], "proposal": proposal})
-            seen.add(child["id"])
-            accepted = True
-            break
+            for proposal in proposals:
+                child = mutate_candidate(
+                    parent["candidate"], raw_config, rng, parent_row=parent, mode="wan_pareto",
+                    reflection_plan=plan, planned_mutation_override=proposal,
+                )
+                if child["id"] in seen:
+                    proposal_rows.append({"status": "duplicate", "candidate_id": child["id"], "proposal": proposal})
+                    continue
+                errors = validate_candidate_contract(child, raw_config, models)
+                if errors:
+                    proposal_rows.append({"status": "invalid", "candidate_id": child["id"], "proposal": proposal, "reasons": errors})
+                    continue
+                result = _evaluate_candidate(
+                    candidate=child, tasks=splits["search"], models=models, profile=profile,
+                    executor=executor, run_id=run_id, split="search", capture_outputs=False,
+                )
+                row = _search_row(child, result, "generated")
+                search_rows.append(row)
+                all_calls.extend(result["calls"])
+                tool_events.extend(result["tool_events"])
+                proposal_rows.append({"status": "accepted", "candidate_id": child["id"], "proposal": proposal})
+                seen.add(child["id"])
+                accepted = True
+                break
+            if accepted:
+                break
         if not accepted:
-            raise RuntimeError("LLM reflection produced no unique valid typed mutation")
+            raise RuntimeError("LLM reflection exhausted all valid parents without a unique valid typed mutation")
     selected = max(
         (row for row in search_rows if row["valid"]),
         key=lambda row: (float(row["score"]), -float(row["avg_total_tokens"]), str(row["candidate_id"])),

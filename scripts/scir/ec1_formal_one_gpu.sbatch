@@ -114,6 +114,9 @@ payload = json.load(open(sys.argv[1], encoding="utf-8"))
 if payload.get("formal_result") is not True:
     raise SystemExit("EC-1 formal result flag is not true")
 PY
+"${python_bin}" -m external_comparison.runners.write_run_metrics \
+  --result-dir "${experiment_root}/${method}/seed_${seed}" --job-id "${SLURM_JOB_ID}" \
+  --job-root "${job_root}" --stage formal_seed
 echo "formal_result=true" >"${job_root}/job_status.txt"
 find "${job_root}" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum >"${job_root}/SHA256SUMS"
 echo "EC-1 formal ${method} seed ${seed} completed: ${job_root}"
