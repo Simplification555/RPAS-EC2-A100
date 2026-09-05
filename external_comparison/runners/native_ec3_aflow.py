@@ -283,7 +283,15 @@ def _install_graph_prompt_fallback(optimizer: Any) -> None:
             try:
                 parsed = json.loads(text)
             except json.JSONDecodeError:
-                return result
+                # Some official optimizer prompts use a plain-text
+                # ``Answer: ...`` response despite the generated workflow
+                # expecting a mapping. Preserve the answer text while making
+                # both upstream access conventions available.
+                answer = text
+                marker = re.search(r"(?:^|\\n)\\s*Answer\\s*:\\s*(.+)", text, flags=re.IGNORECASE | re.DOTALL)
+                if marker:
+                    answer = marker.group(1).strip()
+                return _AnswerCompat({"answer": answer, "response": answer})
             if isinstance(parsed, dict) and isinstance(parsed.get("answer"), str):
                 parsed.setdefault("response", parsed["answer"])
                 return _AnswerCompat(parsed)
