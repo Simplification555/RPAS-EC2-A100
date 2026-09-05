@@ -6,7 +6,9 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:nvidia_a100_80gb_pcie:1
+# A100 PCIe 40GB is sufficient for the frozen Qwen3.5-9B FP16 endpoint and
+# exposes otherwise idle 40GB slots while the 80GB pool is busy.
+#SBATCH --gres=gpu:a100-pcie-40gb:1
 #SBATCH --mem=80G
 #SBATCH --time=24:00:00
 #SBATCH --array=0-14%6
