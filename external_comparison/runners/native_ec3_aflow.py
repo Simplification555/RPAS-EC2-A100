@@ -209,20 +209,28 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
     _write_split(split_path, split_rows)
     importlib.invalidate_caches()
     # AFlow's meta-model occasionally emits prompt constants as commented
-    # examples. The generated graph still references those names, so provide
-    # the locked EC-3 prompt contract at runtime rather than scoring skipped
-    # executions as if they were valid answers.
-    prompt_module = importlib.import_module(f"workspace.HotpotQA.workflows.round_{round_number}.prompt")
-    if not hasattr(prompt_module, "REASONING_PROMPT"):
-        prompt_module.REASONING_PROMPT = (
-            "Use only the supplied context to answer the question. "
-            "Reason briefly, then output the final answer.\n\nInput: {input}"
+    # examples. The generated graph still references those names. Patch the
+    # generated source before AFlow imports it; module attributes alone are
+    # insufficient because graph loading can invalidate/reload the module.
+    prompt_path = log_dir / "prompt.py"
+    prompt_source = prompt_path.read_text(encoding="utf-8") if prompt_path.is_file() else ""
+    has_reasoning = any(line.lstrip().startswith("REASONING_PROMPT") for line in prompt_source.splitlines())
+    has_final = any(line.lstrip().startswith("FINAL_ANSWER_PROMPT") for line in prompt_source.splitlines())
+    additions = []
+    if not has_reasoning:
+        additions.append(
+            'REASONING_PROMPT = "Use only the supplied context to answer the question. '
+            'Reason briefly, then output the final answer.\\n\\nInput: {input}"'
         )
-    if not hasattr(prompt_module, "FINAL_ANSWER_PROMPT"):
-        prompt_module.FINAL_ANSWER_PROMPT = (
-            "Extract only the concise answer from the text below. "
-            "Do not add explanation.\n\nInput Text: {input}"
+    if not has_final:
+        additions.append(
+            'FINAL_ANSWER_PROMPT = "Extract only the concise answer from the text below. '
+            'Do not add explanation.\\n\\nInput Text: {input}"'
         )
+    if additions:
+        prompt_path.write_text(prompt_source.rstrip() + "\n\n" + "\n\n".join(additions) + "\n", encoding="utf-8")
+        importlib.invalidate_caches()
+    sys.modules.pop(f"workspace.HotpotQA.workflows.round_{round_number}.prompt", None)
     graph = optimizer.graph_utils.load_graph(round_number, "workspace/HotpotQA/workflows")
     before = set(log_dir.glob("*.csv"))
     score, _, _ = asyncio.run(
