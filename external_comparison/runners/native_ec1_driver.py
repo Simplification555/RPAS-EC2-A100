@@ -432,6 +432,39 @@ def _install_maas_optional_encoding_compat() -> None:
 
         fallback.Document = _document_unavailable
         sys.modules["docx"] = fallback
+    # MaAS's token counter imports the optional Anthropic SDK eagerly even
+    # though the frozen EC-1 path is restricted to the local OpenAI endpoint.
+    # Keep bootstrap independent of that unused cloud extra; any accidental
+    # Anthropic execution still fails explicitly instead of fabricating data.
+    try:
+        __import__("anthropic")
+    except ModuleNotFoundError:
+        fallback = types.ModuleType("anthropic")
+
+        class _UnavailableAnthropicClient:
+            def __init__(self, *_args, **_kwargs):
+                raise RuntimeError("Anthropic SDK is unavailable; EC-1 permits only the local OpenAI endpoint")
+
+        fallback.Client = _UnavailableAnthropicClient
+        fallback.Anthropic = _UnavailableAnthropicClient
+        sys.modules["anthropic"] = fallback
+    try:
+        __import__("loguru")
+    except ModuleNotFoundError:
+        fallback = types.ModuleType("loguru")
+
+        class _FallbackLogger:
+            def remove(self, *_args, **_kwargs):
+                return None
+
+            def add(self, *_args, **_kwargs):
+                return None
+
+            def __getattr__(self, name):
+                return lambda *args, **kwargs: None
+
+        fallback.logger = _FallbackLogger()
+        sys.modules["loguru"] = fallback
 
 
 def _install_maas_provider_compat(workspace: Path) -> str:
@@ -468,6 +501,22 @@ def _install_maas_actions_compat(workspace: Path) -> str:
         encoding="utf-8",
     )
     return "staged actions registry limited to HumanEval action primitives"
+
+
+def _install_maas_embedding_compat(workspace: Path) -> str:
+    """Keep MaAS's controller embedding path offline and deterministic.
+
+    The upstream helper downloads all-MiniLM-L6-v2 at first use.  EC-1 runs
+    on isolated SCIR nodes and the embedding only ranks operator descriptions;
+    a fixed signed hashed n-gram vector preserves deterministic controller
+    inputs without an undeclared network dependency.
+    """
+    path = workspace / "maas" / "ext" / "maas" / "models" / "utils.py"
+    path.write_text(
+        """import hashlib\nimport re\nimport torch\n\ndef get_sentence_embedding(sentence):\n    text = str(sentence).lower()\n    vector = torch.zeros(384, dtype=torch.float32)\n    grams = [text[i:i+3] for i in range(max(1, len(text)-2))]\n    for gram in grams:\n        digest = hashlib.sha256(gram.encode('utf-8')).digest()\n        index = int.from_bytes(digest[:4], 'little') % 384\n        vector[index] += 1.0 if digest[4] & 1 else -1.0\n    norm = torch.linalg.vector_norm(vector)\n    return vector / norm if norm > 0 else vector\n\nclass SentenceEncoder(torch.nn.Module):\n    def __init__(self):\n        super().__init__()\n    def forward(self, sentence):\n        return get_sentence_embedding(sentence)\n\ndef sample_operators(probs: torch.Tensor, threshold: float = 0.25) -> torch.Tensor:\n    device = probs.device\n    probs = probs.detach()\n    num_ops = probs.size(0)\n    if num_ops == 0:\n        return torch.tensor([], dtype=torch.long, device=device)\n    selected = torch.tensor([], dtype=torch.long, device=device)\n    cumulative = 0.0\n    remaining = torch.arange(num_ops, device=device)\n    while cumulative < threshold and remaining.numel() > 0:\n        sampled = torch.multinomial(probs[remaining], num_samples=1)\n        idx = remaining[sampled].squeeze()\n        if not torch.any(selected == idx):\n            selected = torch.cat([selected, idx.unsqueeze(0)])\n            cumulative += probs[idx].item()\n        mask = torch.ones_like(remaining, dtype=torch.bool)\n        mask[sampled] = False\n        remaining = remaining[mask]\n    if selected.numel() == 0:\n        selected = probs.argmax().unsqueeze(0)\n    return selected\n""",
+        encoding="utf-8",
+    )
+    return "offline deterministic hashed 3-gram embedding; no Hugging Face download"
 
 
 def _install_maas_public_test_compat(workspace: Path) -> str:
@@ -555,6 +604,7 @@ def _maas(args, source: Path, run_root: Path) -> dict[str, Any]:
     _install_maas_optional_encoding_compat()
     provider_patch = _install_maas_provider_compat(workspace)
     actions_patch = _install_maas_actions_compat(workspace)
+    embedding_patch = _install_maas_embedding_compat(workspace)
     public_test_patch = _install_maas_public_test_compat(workspace)
     from maas.configs.models_config import ModelsConfig
     from maas.ext.maas.scripts.optimizer import Optimizer
@@ -627,7 +677,7 @@ def _maas(args, source: Path, run_root: Path) -> dict[str, Any]:
     test_root = workspace / "maas" / "ext" / "maas" / "scripts" / "optimized" / "HumanEval" / "test" / "round_1"
     outputs = _csv_rows(test_root, test_rows)
     return {
-        "manifest": {**source_manifest(source, workspace, "maas", args.seed, data), "implementation_status": "official_optimizer_reused_trained_controller_then_test" if args.maas_test_only else "official_optimizer_fresh_train_checkpoint_then_test", "maas_sample": args.maas_sample, "maas_batch_size": args.maas_batch_size, "maas_lr": args.maas_lr, "search_wall_clock_seconds": search_wall_clock, "checkpoint": str(checkpoint), "checkpoint_bytes": checkpoint.stat().st_size, "checkpoint_reused": args.maas_test_only, "checkpoint_source": str(Path(args.maas_controller_path).resolve()) if args.maas_test_only else None, "staged_compatibility_patch": "DataUtils.create_result_data optional avg_cost,total_cost,token; " + provider_patch + "; " + actions_patch + "; " + public_test_patch},
+        "manifest": {**source_manifest(source, workspace, "maas", args.seed, data), "implementation_status": "official_optimizer_reused_trained_controller_then_test" if args.maas_test_only else "official_optimizer_fresh_train_checkpoint_then_test", "maas_sample": args.maas_sample, "maas_batch_size": args.maas_batch_size, "maas_lr": args.maas_lr, "search_wall_clock_seconds": search_wall_clock, "checkpoint": str(checkpoint), "checkpoint_bytes": checkpoint.stat().st_size, "checkpoint_reused": args.maas_test_only, "checkpoint_source": str(Path(args.maas_controller_path).resolve()) if args.maas_test_only else None, "staged_compatibility_patch": "DataUtils.create_result_data optional avg_cost,total_cost,token; " + provider_patch + "; " + actions_patch + "; " + embedding_patch + "; " + public_test_patch},
         "search_rows": [{"round": 1, "checkpoint": str(checkpoint), "reused": args.maas_test_only}],
         "test_rows": outputs,
         "telemetry_path": str(telemetry),

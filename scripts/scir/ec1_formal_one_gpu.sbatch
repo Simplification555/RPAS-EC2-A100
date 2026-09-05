@@ -27,10 +27,11 @@ method="${methods[$((task_id / 3))]}"
 seed="$((task_id % 3))"
 gpu="${CUDA_VISIBLE_DEVICES:-}"
 [[ "${gpu}" =~ ^[0-9]+$ ]] || { echo "expected one allocated GPU token, got ${gpu:-<unset>}" >&2; exit 2; }
+packed_slot="${RPAS_EC1_PACKED_SLOT:-primary}"
 
 experiment_root="${repo_root}/outputs/scir_ec1_formal_v2"
 job_root="${experiment_root}/_jobs/${method}/seed_${seed}_${SLURM_JOB_ID}"
-port=$((29600 + SLURM_JOB_ID % 900))
+port="${RPAS_EC1_SERVICE_PORT:-$((29600 + SLURM_JOB_ID % 900))}"
 dataset="${repo_root}/data/ec1_humaneval/official/humaneval.jsonl"
 public_test="${repo_root}/data/ec1_humaneval/aflow/humaneval_public_test.jsonl"
 validate_fixture="${repo_root}/data/ec1_humaneval/aflow/humaneval_validate.jsonl"
@@ -67,6 +68,7 @@ export PYTHONUNBUFFERED=1
   hostname
   echo "job_id=${SLURM_JOB_ID}"
   echo "array_task_id=${task_id}"
+  echo "packed_slot=${packed_slot}"
   echo "method=${method}"
   echo "seed=${seed}"
   echo "cuda_visible_devices=${gpu}"
@@ -118,7 +120,7 @@ if payload.get("formal_result") is not True:
 PY
 "${python_bin}" -m external_comparison.runners.write_run_metrics \
   --result-dir "${experiment_root}/${method}/seed_${seed}" --job-id "${SLURM_JOB_ID}" \
-  --job-root "${job_root}" --stage formal_seed
+  --job-root "${job_root}" --stage "formal_seed_${packed_slot}"
 echo "formal_result=true" >"${job_root}/job_status.txt"
 find "${job_root}" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum >"${job_root}/SHA256SUMS"
 echo "EC-1 formal ${method} seed ${seed} completed: ${job_root}"
