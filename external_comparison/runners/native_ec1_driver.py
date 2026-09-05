@@ -417,6 +417,21 @@ def _install_maas_optional_encoding_compat() -> None:
         fallback = types.ModuleType("gitignore_parser")
         fallback.parse_gitignore = lambda *_args, **_kwargs: (lambda _path: False)
         sys.modules["gitignore_parser"] = fallback
+    # MaAS eagerly imports its general document helper even on the HumanEval
+    # path, where no DOCX is read.  Some isolated SCIR environments expose
+    # python-docx to the parent interpreter but not after MaAS adjusts its
+    # import path.  Keep the code path importable; an actual DOCX call still
+    # fails explicitly instead of silently returning fabricated content.
+    try:
+        __import__("docx")
+    except ModuleNotFoundError:
+        fallback = types.ModuleType("docx")
+
+        def _document_unavailable(*_args, **_kwargs):
+            raise RuntimeError("python-docx is required only for MaAS document inputs")
+
+        fallback.Document = _document_unavailable
+        sys.modules["docx"] = fallback
 
 
 def _install_maas_provider_compat(workspace: Path) -> str:
