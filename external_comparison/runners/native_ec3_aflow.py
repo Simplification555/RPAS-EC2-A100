@@ -216,6 +216,31 @@ def _make_optimizer(workspace: Path, *, model: str, api_key: str, base_url: str,
     ), execute_config
 
 
+def _install_graph_prompt_fallback(optimizer: Any) -> None:
+    """Patch every optimizer-side graph load before official evaluation."""
+    original_load_graph = optimizer.graph_utils.load_graph
+    generic_prompt = (
+        "Use only the supplied context to answer the question. "
+        "Reason briefly, then provide the concise final answer.\n\nInput: {input}"
+    )
+
+    def load_graph_with_prompt_fallback(round_number: int, workflows_path: str):
+        graph = original_load_graph(round_number, workflows_path)
+        function_globals: list[dict[str, Any]] = []
+        for attribute in dir(graph):
+            function = getattr(graph, attribute, None)
+            globals_dict = getattr(function, "__globals__", None)
+            if isinstance(globals_dict, dict) and globals_dict not in function_globals:
+                function_globals.append(globals_dict)
+        for globals_dict in function_globals:
+            prompt_module = globals_dict.get("prompt_custom")
+            if prompt_module is not None:
+                globals_dict["prompt_custom"] = _PromptFallback(prompt_module, generic_prompt)
+        return graph
+
+    optimizer.graph_utils.load_graph = load_graph_with_prompt_fallback
+
+
 def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[HotpotExample], split_path: Path, log_dir: Path) -> dict[str, Any]:
     from scripts.evaluator import Evaluator
 
@@ -384,6 +409,7 @@ def run_calibration(args: argparse.Namespace) -> Path:
     _install_runtime_compatibility()
     _instrument_async_llm(calls_path=calls_path, run_id="ec3-hotpotqa-aflow-calibration")
     optimizer, _ = _make_optimizer(workspace, model=os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"), api_key=os.environ.get("RPAS_EXTERNAL_API_KEY", "EMPTY"), base_url=os.environ["RPAS_EXTERNAL_API_BASE"], executor_cap=executor_cap, meta_cap=meta_cap, max_rounds=2)
+    _install_graph_prompt_fallback(optimizer)
     os.environ["RPAS_EC3_AFLOW_PHASE"] = "calib_search"
     optimizer.optimize("Graph")
     workflows = workspace / "workspace" / "HotpotQA" / "workflows"
@@ -420,6 +446,7 @@ def run_pretest(args: argparse.Namespace) -> Path:
     _install_runtime_compatibility()
     _instrument_async_llm(calls_path=calls_path, run_id=f"ec3-hotpotqa-aflow-seed-{args.seed}")
     optimizer, _ = _make_optimizer(workspace, model=os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"), api_key=os.environ.get("RPAS_EXTERNAL_API_KEY", "EMPTY"), base_url=os.environ["RPAS_EXTERNAL_API_BASE"], executor_cap=executor_cap, meta_cap=meta_cap, max_rounds=2)
+    _install_graph_prompt_fallback(optimizer)
     started = time.time()
     os.environ["RPAS_EC3_AFLOW_PHASE"] = "search"
     optimizer.optimize("Graph")
