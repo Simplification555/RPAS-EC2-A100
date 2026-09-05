@@ -18,8 +18,9 @@ def _root() -> Path:
 
 def _gpu_env() -> dict[str, str]:
     gpu = os.environ.get("RPAS_EC1_GPU", "").strip()
-    if gpu not in {"4", "5"}:
-        raise RuntimeError("EC-1 native execution requires RPAS_EC1_GPU=4 or RPAS_EC1_GPU=5")
+    scir_allocated = os.environ.get("RPAS_SCIR_ALLOCATED_GPU") == "1"
+    if gpu not in {"4", "5"} and not (scir_allocated and gpu.isdigit() and "," not in gpu):
+        raise RuntimeError("EC-1 native execution requires GPU 4/5 locally or one SCIR allocated token")
     configured = os.environ.get("CUDA_VISIBLE_DEVICES", "").strip()
     if configured and configured != gpu:
         raise RuntimeError(f"refusing GPU mismatch: RPAS_EC1_GPU={gpu}, CUDA_VISIBLE_DEVICES={configured}")
@@ -36,9 +37,11 @@ def _selected_endpoint() -> str:
         "5": "http://127.0.0.1:29501/v1",
     }
     expected = endpoints.get(gpu)
-    if expected is None:
-        raise RuntimeError("EC-1 endpoint selection requires RPAS_EC1_GPU=4 or 5")
     configured = os.environ.get("RPAS_EXTERNAL_API_BASE", "").strip()
+    if expected is None:
+        if os.environ.get("RPAS_SCIR_ALLOCATED_GPU") == "1" and configured:
+            return configured
+        raise RuntimeError("EC-1 endpoint selection requires GPU 4/5 or a configured SCIR endpoint")
     if configured and configured != expected:
         raise RuntimeError(
             f"refusing endpoint mismatch for GPU {gpu}: {configured} != {expected}"

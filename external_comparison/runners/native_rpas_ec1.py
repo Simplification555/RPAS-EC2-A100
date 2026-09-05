@@ -42,8 +42,13 @@ from experiments.phase2_wan_agent_search import (
 def _require_selected_gpu() -> str:
     gpu = os.environ.get("RPAS_EC1_GPU", "")
     visible = os.environ.get("CUDA_VISIBLE_DEVICES", "")
-    if gpu not in {"4", "5"} or visible != gpu:
-        raise RuntimeError("native RPAS EC-1 requires exactly CUDA_VISIBLE_DEVICES=RPAS_EC1_GPU=4 or 5")
+    scir_allocated = os.environ.get("RPAS_SCIR_ALLOCATED_GPU") == "1"
+    valid_scir_token = scir_allocated and gpu.isdigit() and "," not in gpu
+    if (gpu not in {"4", "5"} and not valid_scir_token) or visible != gpu:
+        raise RuntimeError(
+            "native RPAS EC-1 requires matching CUDA_VISIBLE_DEVICES/RPAS_EC1_GPU "
+            "(4/5 locally, or one SCIR allocated token)"
+        )
     return gpu
 
 
