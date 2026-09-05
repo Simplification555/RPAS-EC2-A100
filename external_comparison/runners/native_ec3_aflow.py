@@ -13,6 +13,7 @@ import csv
 import importlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -213,20 +214,20 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
     # generated source before AFlow imports it; module attributes alone are
     # insufficient because graph loading can invalidate/reload the module.
     prompt_path = log_dir / "prompt.py"
+    graph_path = log_dir / "graph.py"
     prompt_source = prompt_path.read_text(encoding="utf-8") if prompt_path.is_file() else ""
-    has_reasoning = any(line.lstrip().startswith("REASONING_PROMPT") for line in prompt_source.splitlines())
-    has_final = any(line.lstrip().startswith("FINAL_ANSWER_PROMPT") for line in prompt_source.splitlines())
-    additions = []
-    if not has_reasoning:
-        additions.append(
-            'REASONING_PROMPT = "Use only the supplied context to answer the question. '
-            'Reason briefly, then output the final answer.\\n\\nInput: {input}"'
-        )
-    if not has_final:
-        additions.append(
-            'FINAL_ANSWER_PROMPT = "Extract only the concise answer from the text below. '
-            'Do not add explanation.\\n\\nInput Text: {input}"'
-        )
+    graph_source = graph_path.read_text(encoding="utf-8") if graph_path.is_file() else ""
+    referenced = sorted(set(re.findall(r"prompt_custom\.([A-Z][A-Z0-9_]*)", graph_source)))
+    defined = {
+        match.group(1)
+        for match in re.finditer(r"(?m)^\s*([A-Z][A-Z0-9_]*)\s*=", prompt_source)
+    }
+    additions = [
+        f'{name} = "Use only the supplied context to answer the question. '
+        f'Reason briefly, then provide the concise final answer.\\n\\nInput: {{input}}"'
+        for name in referenced
+        if name not in defined
+    ]
     if additions:
         prompt_path.write_text(prompt_source.rstrip() + "\n\n" + "\n\n".join(additions) + "\n", encoding="utf-8")
         importlib.invalidate_caches()
