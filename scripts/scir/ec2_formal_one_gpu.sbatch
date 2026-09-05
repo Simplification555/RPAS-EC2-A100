@@ -37,7 +37,10 @@ done
 
 job_root="${repo_root}/outputs/scir_ec2_formal/${method}/seed_${seed}"
 output_root="${repo_root}/outputs/scir_ec2_formal"
-port=$((29700 + SLURM_JOB_ID % 900))
+port="${RPAS_EC2_SERVICE_PORT:-$((29700 + SLURM_JOB_ID % 900))}"
+service_max_tokens=256
+# Worker calls remain capped at 256 by ec2_v2; reflection JSON needs 768.
+[[ "${method}" != "rpas_comm" ]] || service_max_tokens=768
 mkdir -p "${job_root}/logs" "${output_root}"
 cd "${repo_root}"
 run_started_at_epoch="$(date +%s.%N)"
@@ -65,6 +68,8 @@ export PYTHONUNBUFFERED=1
   echo "array_task_id=${task_id}"
   echo "method=${method}"
   echo "seed=${seed}"
+  echo "service_port=${port}"
+  echo "service_max_tokens=${service_max_tokens}"
   echo "cuda_visible_devices=${gpu}"
   echo "run_kind=formal"
   nvidia-smi --query-gpu=index,uuid,name,memory.total,driver_version --format=csv
@@ -82,7 +87,7 @@ export PYTHONUNBUFFERED=1
 
 "${python_bin}" scripts/serve_transformers_qwen35_openai.py \
   --model "${model_path}" --served-model-name Qwen/Qwen3.5-9B \
-  --host 127.0.0.1 --port "${port}" --max-new-tokens 256 \
+  --host 127.0.0.1 --port "${port}" --max-new-tokens "${service_max_tokens}" \
   --max-batch-size 4 --batch-wait-ms 25 --dtype float16 --stop-string '<<RPAS_END>>' \
   >"${job_root}/logs/service.log" 2>&1 &
 service_pid=$!

@@ -99,3 +99,28 @@ remain frozen. All 19 local runtime, embedding, metrics, and integrity tests pas
 
 Do not claim complete EC1/EC2 results until every required method/seed and
 the paper protocol (including the Single reference) is independently checked.
+
+## EC2 Submission Correction At 01:31
+
+- The RPAS-Comm reflector requests 768 tokens, but the previous batch service
+  capped every response at 256. The updated wrapper permits 768 only for
+  RPAS-Comm's service. Worker requests are still explicitly 256; no worker
+  decoding budget or topology algorithm was changed.
+- RPAS-Comm seed 0 is now running in `132375_4.10`, wrapper PID 2696165,
+  service port 38712. Its environment records `service_max_tokens=768`.
+  The old pending duplicate `132330_12` was cancelled before launch.
+- Guard `132375_4.4` was replaced using KILL (not TERM, whose trap would
+  resume the parent prematurely). Replacement guard `132375_4.13` watches
+  both wrappers 2688594 and 2696165. The same parent PID 2687909 remains
+  paused while these runners execute. New log: `packed_guard_132375_v2.log`.
+- Pending EC2 indices 7/8, 10/11, 13/14 were resubmitted as array `132406`
+  with the corrected batch snapshot, A100 PCIe 80GB, 4 CPUs and 40GB host RAM
+  per task. SCIR rejected generic `gpu:1` during test-only preflight before
+  any old tasks were cancelled. Typed A100 submission passed.
+- At 01:31 there are 12 distinct runners in 8 allocations; remaining tasks
+  are constrained by `QOSMaxJobsPerUserLimit`.
+
+The user's later request to pack experiments supersedes the original
+single-worker scheduling instruction. Co-resident wall-clock latency is
+operational telemetry, not a controlled standalone method-speed comparison.
+Do not present these timings as equivalent hardware-isolated latency results.
