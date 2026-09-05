@@ -241,14 +241,21 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
     graph = optimizer.graph_utils.load_graph(round_number, "workspace/HotpotQA/workflows")
     graph_globals = getattr(getattr(graph, "__call__", None), "__globals__", {})
     prompt_module = graph_globals.get("prompt_custom")
-    if prompt_module is not None:
+    prompt_modules = [
+        module for module in list(sys.modules.values())
+        if getattr(module, "__name__", "").endswith(f"round_{round_number}.prompt")
+    ]
+    if prompt_module is not None and prompt_module not in prompt_modules:
+        prompt_modules.append(prompt_module)
+    if prompt_modules:
         generic_prompt = (
             "Use only the supplied context to answer the question. "
             "Reason briefly, then provide the concise final answer.\n\nInput: {input}"
         )
-        for name in referenced:
-            if not hasattr(prompt_module, name):
-                setattr(prompt_module, name, generic_prompt)
+        for module in prompt_modules:
+            for name in referenced:
+                if not hasattr(module, name):
+                    setattr(module, name, generic_prompt)
     before = set(log_dir.glob("*.csv"))
     score, _, _ = asyncio.run(
         Evaluator(eval_path=str(log_dir)).graph_evaluate(
