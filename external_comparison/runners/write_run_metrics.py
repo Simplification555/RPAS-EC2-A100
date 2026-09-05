@@ -45,7 +45,10 @@ def main() -> int:
     if not manifest_path.is_file():
         raise FileNotFoundError(f"missing run manifest: {manifest_path}")
     manifest = _read_json(manifest_path)
-    calls = _read_jsonl(root / "calls.jsonl")
+    calls = [
+        *_read_jsonl(root / "calls.jsonl"),
+        *_read_jsonl(root / "test_calls.jsonl"),
+    ]
     by_phase: dict[str, dict[str, int]] = defaultdict(lambda: {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "latency_ms": 0})
     model_counts: Counter[str] = Counter()
     finish_reasons: Counter[str] = Counter()
@@ -100,6 +103,7 @@ def main() -> int:
         "source_files": {
             "run_manifest": str(manifest_path),
             "calls": str(root / "calls.jsonl"),
+            "test_calls": str(root / "test_calls.jsonl"),
         },
     }
     (root / "run_metrics.json").write_text(json.dumps(metrics, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")

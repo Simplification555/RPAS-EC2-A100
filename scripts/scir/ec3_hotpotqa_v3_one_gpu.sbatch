@@ -118,6 +118,11 @@ printf '%q ' "${command[@]}" >"${job_root}/runner_command.txt"
 printf '\n' >>"${job_root}/runner_command.txt"
 "${command[@]}" >"${job_root}/logs/runner.log" 2>&1
 
+if [[ "${stage}" != "calibration" ]]; then
+  result_dir="${formal_root}/${method}/seed_${seed}"
+  "${python_bin}" -m external_comparison.runners.write_run_metrics \
+    --result-dir "${result_dir}" --job-id "${SLURM_JOB_ID}" --job-root "${job_root}" --stage "${stage}"
+fi
 echo "formal_result=false" >"${job_root}/job_status.txt"
 find "${job_root}" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum >"${job_root}/SHA256SUMS"
 echo "EC-3 ${method} ${stage} completed: ${job_root}"

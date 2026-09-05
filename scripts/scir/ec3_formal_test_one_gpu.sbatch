@@ -63,6 +63,8 @@ printf '\n' >>"${job_root}/runner_command.txt"
 "${command[@]}" >"${job_root}/logs/runner.log" 2>&1
 summary="${root}/${method}/seed_${seed}/test_summary.json"
 [[ -s "${summary}" ]] || { echo "missing held-out summary: ${summary}" >&2; exit 1; }
+"${python_bin}" -m external_comparison.runners.write_run_metrics \
+  --result-dir "${root}/${method}/seed_${seed}" --job-id "${SLURM_JOB_ID}" --job-root "${job_root}" --stage formal_test
 echo "formal_result=true; d_test_accessed=true" >"${job_root}/job_status.txt"
 find "${job_root}" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum >"${job_root}/SHA256SUMS"
 echo "EC-3 formal test ${method} seed ${seed} completed: ${summary}"
