@@ -45,6 +45,25 @@ class _PromptFallback:
         return getattr(self._module, name, self._fallback)
 
 
+class _AnswerCompat(dict):
+    """Support both generated-workflow mapping access and string scoring."""
+
+    def _answer_text(self) -> str:
+        return str(self.get("answer", self.get("response", "")))
+
+    def __str__(self) -> str:
+        return self._answer_text()
+
+    def lower(self) -> str:
+        return self._answer_text().lower()
+
+    def strip(self, chars: str | None = None) -> str:
+        return self._answer_text().strip(chars)
+
+    def startswith(self, prefix: str | tuple[str, ...], *args: Any) -> bool:
+        return self._answer_text().startswith(prefix, *args)
+
+
 def _read_json(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
@@ -266,7 +285,7 @@ def _install_graph_prompt_fallback(optimizer: Any) -> None:
             except json.JSONDecodeError:
                 return result
             if isinstance(parsed, dict) and isinstance(parsed.get("answer"), str):
-                return parsed
+                return _AnswerCompat(parsed)
         return result
 
     custom.__call__ = custom_call_with_json
