@@ -629,6 +629,14 @@ def _base_manifest(method: str, seed: int, split_manifest: dict[str, Any]) -> di
             "rpas_comm_candidate_evaluation_budget": GDESIGNER_TRAINING_QUERY_BUDGET,
             "budget_match_scope": "D_search graph executions only; D_select is separately accounted.",
         },
+        # Retain an explicit, machine-readable account even for fixed
+        # references.  Older submitted wrappers require this field and its
+        # no-search value is preferable to inventing a synthetic trace.
+        "search_trace": {
+            "mode": "not_applicable_fixed_reference",
+            "events": 0,
+            "reason": "The method uses a fixed topology and performs no architecture search.",
+        },
         "communication_definition": {
             "active_edges": "realized directed edges among the six worker agents; excludes final judge inputs",
             "messages": "one verbatim worker-to-worker forwarding event per realized directed edge",
@@ -708,6 +716,12 @@ async def _run_gdesigner(runtime: OfficialGDesignerRuntime, rows: dict[str, list
             "select_communication": select_communication,
             "test_communication": test_communication,
             "gdesigner_training": {"iterations": 10, "batch_size": 4, "lr": 0.1, "initial_gcn_sha256": initial_sha, "trained_gcn_sha256": trained_sha},
+            "search_trace": {
+                "mode": "official_gdesigner_train",
+                "events": search_calls,
+                "artifact": "calls.jsonl",
+                "selection": "official ten-iteration loop; D_select is audit-only",
+            },
         }
     )
     validate_v2_manifest(manifest)
@@ -801,6 +815,13 @@ async def _run_rpas_comm(runtime: OfficialGDesignerRuntime, rows: dict[str, list
                 "new_candidates": len(mutation_logs),
                 "mutation_logs": len(mutation_logs),
                 "rule_fallbacks": sum(log["plan"].get("mode") == "rule_fallback" for log in mutation_logs),
+            },
+            "search_trace": {
+                "mode": "llm_reflection_typed_topology_mutation",
+                "events": search_calls,
+                "artifact": "mutation_logs.jsonl",
+                "candidate_count": len(candidate_rows),
+                "selection": "maximize_D_select_accuracy__then_minimize_inter_agent_tokens__then_candidate_id",
             },
         }
     )

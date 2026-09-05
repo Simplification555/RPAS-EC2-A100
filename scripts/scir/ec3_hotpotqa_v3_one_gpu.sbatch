@@ -7,7 +7,9 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:tesla_v100-sxm2-32gb:1
-#SBATCH --mem=40G
+# Completed EC-3 pretests peaked at 11.2 GiB RSS.  Reserve a conservative
+# 16 GiB while allowing backfill onto the otherwise free V100-32G slots.
+#SBATCH --mem=16G
 # AFlow search/select and held-out evaluation can exceed two hours on a
 # serialized 9B endpoint; retain a six-hour ceiling for reproducible runs.
 #SBATCH --time=06:00:00
