@@ -531,3 +531,10 @@ At 03:04 both shared Chain runners were making real requests: seed 1 had
 with no recorded errors. Neither had completed its first four-question batch
 yet. Both Full runners and service processes remained live, and the parents
 remained stopped under their verified guards. Single seed 1 reached 126/131.
+
+At 03:05 EC1 Single seed 1 completed and passed the seed-integrity loader:
+113/131, 131 direct calls, 47567 tokens, 1715.69 seconds operational wall
+time, complete per-item token attribution. Its local backup at
+`outputs/scir_ec1_single_seed1_20260906` passed SHA-256 verification.
+Single seed 2 started automatically and reached 2/131. Chain seed 1 completed
+its first four-question batch. These updates do not waive publication gates.
