@@ -42,7 +42,11 @@ class _PromptFallback:
         self._fallback = fallback
 
     def __getattr__(self, name: str) -> Any:
-        return getattr(self._module, name, self._fallback)
+        # Generated AFlow prompts often request chain-of-thought prose.  The
+        # EC-3 contract scores a concise answer and caps executor output, so
+        # use the frozen compatibility prompt for every constant.  The
+        # operator boundary still accepts JSON/plain-text answer variants.
+        return self._fallback
 
 
 class _AnswerCompat(dict):
