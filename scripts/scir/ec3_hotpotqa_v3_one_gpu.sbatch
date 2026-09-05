@@ -50,6 +50,7 @@ export RPAS_EC3_EXECUTOR_MAX_TOKENS=256
 export RPAS_EC3_META_MAX_TOKENS=4096
 export RPAS_CODE_COMMIT="${RPAS_CODE_COMMIT:-bundle_without_git_metadata}"
 export GEPA_QWEN_DISABLE_THINKING=1
+export PYTHONUNBUFFERED=1
 
 {
   date --iso-8601=seconds
@@ -62,7 +63,14 @@ export GEPA_QWEN_DISABLE_THINKING=1
   echo "formal_root=${formal_root}"
   nvidia-smi --query-gpu=index,uuid,name,memory.total,driver_version --format=csv
   sha256sum "${manifest_path}"
-  git -C "${repo_root}" rev-parse HEAD || echo "bundle_code_commit=${RPAS_CODE_COMMIT}"
+  # SCIR receives a source bundle rather than a Git working tree. Avoid a
+  # failing Git probe inside this pipefail pipeline while still retaining a
+  # reproducible provenance identifier in every artifact.
+  if repo_commit="$(git -C "${repo_root}" rev-parse HEAD 2>/dev/null)"; then
+    echo "repo_commit=${repo_commit}"
+  else
+    echo "bundle_code_commit=${RPAS_CODE_COMMIT}"
+  fi
   git -C "${aflow_root}" rev-parse HEAD
   git -C "${aflow_root}" status --porcelain --untracked-files=no
   "${python_bin}" -m pip show torch transformers litellm pandas
