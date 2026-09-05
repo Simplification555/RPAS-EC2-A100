@@ -125,3 +125,10 @@ def test_aggregate_rejects_duplicate_methods_before_loading(tmp_path):
     from external_comparison.runners.aggregate_mmlu_v2 import aggregate
     with pytest.raises(ValueError, match="nonempty subset"):
         aggregate(tmp_path, tmp_path / "summary", ("chain", "chain"))
+
+
+def test_old_metrics_cannot_be_used_while_a_new_seed_run_is_in_progress(run_dir):
+    (run_dir / "environment.txt").write_text("run_started_at_epoch=200.0\n")
+    (run_dir / "run_metrics.json").write_text(json.dumps({"generated_at_epoch": 100.0}))
+    with pytest.raises(ValueError, match="old artifacts remain"):
+        _load_seed(run_dir)

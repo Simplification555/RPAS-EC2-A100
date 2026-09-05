@@ -10,7 +10,7 @@ import math
 import statistics
 from pathlib import Path
 
-from external_comparison.common.paired_statistics import two_level_paired_bootstrap
+from external_comparison.common.paired_statistics import heldout_token_map, paired_token_interval, two_level_paired_bootstrap
 
 METHODS = ("single", "aflow", "maas", "rpas")
 SEEDS = (0, 1, 2)
@@ -130,6 +130,7 @@ def load(root: Path, method: str, seed: int) -> dict:
         "total_tokens": metrics["total_tokens"],
         "wall_clock_seconds": metrics.get("wall_clock_seconds"),
         "item_scores": {str(row.get("task_id", row.get("id"))): float(outcome) for row, outcome in zip(rows, outcomes)},
+        "heldout_tokens": heldout_token_map(calls, set(split["test"])),
     }
 
 
@@ -156,15 +157,21 @@ def aggregate(root: Path, output: Path, *, rpas_root: Path | None = None, single
             "search_tokens_mean": statistics.fmean(run["search_tokens"] for run in subset),
         })
     paired = {}
+    token_intervals = {}
     rpas = {run["seed"]: run["item_scores"] for run in runs if run["method"] == "rpas"}
+    rpas_tokens = {run["seed"]: run["heldout_tokens"] for run in runs if run["method"] == "rpas"}
     for baseline in ("single", "aflow", "maas"):
         reference = {run["seed"]: run["item_scores"] for run in runs if run["method"] == baseline}
         paired[f"rpas_vs_{baseline}"] = two_level_paired_bootstrap(rpas, reference)
+        token_intervals[f"rpas_vs_{baseline}"] = paired_token_interval(
+            rpas_tokens, {run["seed"]: run["heldout_tokens"] for run in runs if run["method"] == baseline},
+        )
     payload = {
         "protocol": "EC-1 HumanEval native formal", "formal_result": False,
         "formal_result_reason": "Full matrix integrity and statistics do not certify search-budget matching or all publication gates.",
         "artifact_integrity_passed": True, "runs": runs, "summary": rows,
         "two_level_paired_statistics": paired,
+        "two_level_paired_test_token_statistics": token_intervals,
     }
     output.mkdir(parents=True, exist_ok=True)
     (output / "summary.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

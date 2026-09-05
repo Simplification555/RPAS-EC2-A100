@@ -13,7 +13,10 @@ def two_level_paired_bootstrap(
     *,
     repetitions: int = 10_000,
     random_seed: int = 2026,
+    metric: str = "score",
 ) -> dict:
+    if metric not in {"score", "tokens"}:
+        raise ValueError("metric must be score or tokens")
     if type(repetitions) is not int or repetitions < 100:
         raise ValueError("At least 100 integer bootstrap repetitions are required")
     if set(left) != {0, 1, 2} or set(right) != {0, 1, 2}:
@@ -29,9 +32,10 @@ def two_level_paired_bootstrap(
         values = []
         for item in item_ids:
             a, b = left[seed][item], right[seed][item]
-            if any(not isinstance(value, (int, float)) or not math.isfinite(value) or not 0 <= value <= 1
+            if any(type(value) not in (int, float) or not math.isfinite(value) or value < 0
+                   or (metric == "score" and value > 1)
                    for value in (a, b)):
-                raise ValueError("Item scores must be finite numbers in [0, 1]")
+                raise ValueError("Item values must be finite nonnegative numbers; scores must be in [0, 1]")
             values.append(float(a) - float(b))
         differences.append(values)
     rng = random.Random(random_seed)
@@ -47,6 +51,8 @@ def two_level_paired_bootstrap(
     return {
         "available": True,
         "statistic": "mean_left_minus_right",
+        "metric": metric,
+        "units": "tokens_per_query" if metric == "tokens" else "score_fraction",
         "method": "two_level_paired_percentile_bootstrap",
         "outer_sampling": "three paired search seeds with replacement",
         "inner_sampling": "matched item IDs with replacement, independently for each sampled seed",
@@ -60,3 +66,47 @@ def two_level_paired_bootstrap(
         "lower": samples[math.floor(0.025 * repetitions)],
         "upper": samples[math.ceil(0.975 * repetitions) - 1],
     }
+
+
+def heldout_token_map(calls: list[dict], item_ids: set[str]) -> dict:
+    """Require observed call-to-item attribution; never infer it from call order."""
+    test_calls = [call for call in calls if call.get("split") == "test"]
+    tokens = {item: 0 for item in item_ids}
+    seen = set()
+    identity_sources = set()
+    for call in test_calls:
+        item = call.get("example_id")
+        source = "example_id"
+        if not item and call.get("method") == "rpas" and call.get("dataset") == "humaneval":
+            # humaneval._call_records stores the literal task ID in this field:
+            # agent = f"{task_id}:{call.agent}:{index}". This is not order inference.
+            agent = call.get("agent", "")
+            fields = agent.split(":") if isinstance(agent, str) else []
+            if len(fields) >= 3 and fields[-1].isdigit():
+                item = fields[0]
+                source = "recorded_humaneval_agent_task_prefix"
+        if not isinstance(item, str) or item not in item_ids:
+            return {"available": False, "reason": "missing_or_unknown_test_call_example_id", "item_tokens": {}}
+        value = call.get("total_tokens")
+        if type(value) is not int or value < 0:
+            raise ValueError("Per-item tokens require nonnegative integer call usage")
+        tokens[item] += value
+        seen.add(item)
+        identity_sources.add(source)
+    if not item_ids or seen != item_ids:
+        return {"available": False, "reason": "incomplete_test_call_item_coverage", "item_tokens": {}}
+    return {"available": True, "reason": "observed_call_task_identity", "identity_sources": sorted(identity_sources),
+            "item_tokens": tokens}
+
+
+def paired_token_interval(left: dict[int, dict], right: dict[int, dict]) -> dict:
+    if set(left) != {0, 1, 2} or set(right) != {0, 1, 2}:
+        raise ValueError("Token interval requires all three paired seeds")
+    missing = {side: {seed: row.get("reason") for seed, row in runs.items() if not row.get("available")}
+               for side, runs in (("left", left), ("right", right))}
+    if any(missing.values()):
+        return {"available": False, "reason": "per_item_token_attribution_incomplete", "missing": missing}
+    return two_level_paired_bootstrap(
+        {seed: row["item_tokens"] for seed, row in left.items()},
+        {seed: row["item_tokens"] for seed, row in right.items()}, metric="tokens",
+    )

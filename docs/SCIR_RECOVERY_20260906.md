@@ -419,3 +419,57 @@ The deployed aggregation source SHA-256 is
 Shell syntax checks passed for the EC1/EC2 launchers, third-lane launcher and
 EC1 aggregate launcher. Array 132406 was still pending during deployment;
 no running worker was restarted and no queue position was discarded.
+
+## Publication Inventory At 02:52 UTC+08
+
+`scripts/audit_ec12_publication.py` now inventories all 27 required seed
+results (12 EC1, 15 EC2). It is read-only and never declares publication
+eligibility. The first SCIR snapshot is retained remotely at
+`outputs/preflight_20260906/publication_gap_snapshot.json` and locally at
+`outputs/audit_20260906/publication_gap_snapshot.json`.
+
+Six seed artifact sets currently pass integrity checks. This is not six
+publication-ready results. The snapshot establishes these concrete gaps:
+
+- The three observed AFlow search costs cannot satisfy one +/-10% budget:
+  the required budget lower bound is 357170.91 tokens, while its upper bound
+  is 169038.89. The protocol's native-unit overshoot exception needs explicit
+  adjudication, not automatic use to waive arbitrary cost differences.
+- All 1291 AFlow calls across the three seeds lack recorded finish reasons
+  and individual example IDs. Their truncation status is UNKNOWN, not zero.
+  Per-item token intervals cannot be reconstructed from aggregate totals.
+- EC1 Single seed 0 has three length terminations out of 131 calls (2.29%),
+  exceeding the separate <1% generation-truncation gate.
+- EC2 Single seeds 0/1 each have 136/1140 length terminations (11.93%).
+- EC2 Single seed 2 contains an old result while its current retry remains
+  live. Current environment startup postdates the old metrics, so the loader
+  now rejects that stale completion. Do not overwrite or remove files while
+  the runner is active; let its normal completion publish the new result.
+
+The Slurm array task `132330_2` maps to actual allocation JobId `132376`.
+Use the actual numeric JobId for `srun --jobid`; a message that array parent
+132330 has expired does not mean its task has stopped. `scontrol show job`
+and compute-node process inspection confirmed runner 124831 and endpoint
+124192 alive on gpu13. The current task must not be restarted on the basis
+of that parent-ID lookup error.
+
+The V3.1 protocol also requires a token-difference confidence interval, not
+only an accuracy interval. Both aggregators now support 10,000-repetition
+two-level paired test-token intervals. Call-to-task attribution must be
+observed. RPAS HumanEval's literal task prefix in the recorded agent field
+is accepted with explicit provenance; call order or per-seed averages are
+never substituted for missing item IDs. Unsupported intervals report
+`available=false` and a reason rather than a numeric estimate.
+
+The focused suite now passes 76 tests. SCIR also passed a separate 10,000-draw
+constant-token-difference preflight. These aggregation changes are deployed;
+no model parameters, token caps, candidate budgets or predictions changed.
+Single seed 1 had reached 107/131 at the subsequent check.
+
+A user decision was requested before any protocol revision or revised
+experimental rerun. Until then, preserve and continue the active workloads;
+do not silently relax gates, tune against held-out outcomes, or present the
+current matrix as satisfying the original V3.1 specification. Older MaAS
+cost-hook latency measures the accounting callback, not request wall time;
+retain its run wall-clock as operational timing and audit per-call latency
+before any latency claim. Co-resident runs are not isolated timing trials.

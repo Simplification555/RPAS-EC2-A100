@@ -14,9 +14,10 @@ from statistics import mean, stdev
 from typing import Any
 
 from external_comparison.runners.ec2_v2 import EC2_V2_PROTOCOL, validate_v2_manifest
-from external_comparison.common.paired_statistics import two_level_paired_bootstrap
+from external_comparison.common.paired_statistics import heldout_token_map, paired_token_interval, two_level_paired_bootstrap
 from external_comparison.common.manifest import sha256_json
 from external_comparison.runners.mmlu import MMLU_SUBJECTS
+from external_comparison.runners.write_run_metrics import _started_epoch
 
 METHODS = ("single_agent", "full_connected", "chain", "gdesigner", "rpas_comm")
 SEEDS = (0, 1, 2)
@@ -110,6 +111,12 @@ def _mcnemar(left: dict[str, float], right: dict[str, float]) -> dict[str, Any]:
 
 
 def _load_seed(run_dir: Path) -> dict[str, Any]:
+    metrics_path = run_dir / "run_metrics.json"
+    if metrics_path.is_file():
+        metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+        current_start = _started_epoch(run_dir, 0.0)
+        if current_start and float(metrics.get("generated_at_epoch", 0)) < current_start:
+            raise ValueError(f"EC2 result metrics predate the current run; old artifacts remain during a rerun: {run_dir}")
     manifest = json.loads((run_dir / "run_manifest.json").read_text(encoding="utf-8"))
     if manifest.get("protocol_version") != EC2_V2_PROTOCOL:
         raise ValueError(f"legacy or unknown EC-2 artifact is not eligible for v2 aggregation: {run_dir}")
@@ -191,6 +198,7 @@ def _load_seed(run_dir: Path) -> dict[str, Any]:
         "total_test_tokens_per_query": test_tokens / TEST_EXAMPLES,
         "item_scores": item_scores,
         "checkpoint_files_verified": checkpoints_verified,
+        "heldout_tokens": heldout_token_map(calls, set(item_scores)),
         "all_call_truncation_rate": truncation_rate,
         "truncation_gate_passed": truncation_rate < 0.01 and all(call.get("finish_reason") in {"stop", "length"} for call in calls),
     }
@@ -267,14 +275,19 @@ def aggregate(root: str | Path, output_dir: str | Path, methods: tuple[str, ...]
             }
             for seed in SEEDS
         }
-    seed_rows = [{key: value for key, value in row.items() if key != "item_scores"} for row in seeds]
+    seed_rows = [{key: value for key, value in row.items() if key not in {"item_scores", "heldout_tokens"}} for row in seeds]
     hierarchical = {}
+    token_intervals = {}
     if reference_rows:
         reference_scores = {seed: row["item_scores"] for seed, row in reference_rows.items()}
         for method in methods:
             if method != "full_connected":
                 scores = {row["seed"]: row["item_scores"] for row in grouped[method]}
                 hierarchical[method] = two_level_paired_bootstrap(scores, reference_scores)
+                token_intervals[method] = paired_token_interval(
+                    {row["seed"]: row["heldout_tokens"] for row in grouped[method]},
+                    {seed: row["heldout_tokens"] for seed, row in reference_rows.items()},
+                )
     payload = {
         "protocol_version": EC2_V2_PROTOCOL,
         "dataset": "MMLU-57x10 controlled subset",
@@ -286,6 +299,7 @@ def aggregate(root: str | Path, output_dir: str | Path, methods: tuple[str, ...]
         "seed_rows": seed_rows,
         "paired_statistics_vs_full_connected": paired,
         "two_level_paired_statistics_vs_full_connected": hierarchical,
+        "two_level_paired_test_token_statistics_vs_full_connected": token_intervals,
     }
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
