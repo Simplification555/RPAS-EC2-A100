@@ -7,8 +7,10 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:nvidia_a100_80gb_pcie:1
-#SBATCH --mem=80G
+# Qwen3.5-9B FP16 plus the single-request endpoint fits comfortably on an
+# A100 PCIe 40GB, which exposes more parallel slots than the 80GB pool.
+#SBATCH --gres=gpu:a100-pcie-40gb:1
+#SBATCH --mem=40G
 #SBATCH --time=24:00:00
 #SBATCH --array=0-8%6
 #SBATCH --output=/home/jianbaizhao/RPAS-EC2-A100/logs/slurm/%x-%A_%a.out

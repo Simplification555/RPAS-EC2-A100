@@ -19,7 +19,9 @@ set -euo pipefail
 repo_root="/home/jianbaizhao/RPAS-EC2-A100"
 model_path="/home/jianbaizhao/model/Qwen/Qwen3.5-9B"
 python_bin="/home/jianbaizhao/qwen_cuda126/bin/python"
-aflow_root="/home/jianbaizhao/external_baselines/AFlow"
+# Use the commit-pinned clean checkout; the legacy shared checkout may contain
+# untracked experiment artifacts from earlier pilots.
+aflow_root="/home/jianbaizhao/external_baselines/AFlow_formal_clean"
 manifest_path="${repo_root}/data/ec3_hotpotqa/formal/hotpotqa_manifest.json"
 method="${RPAS_EC3_METHOD:?set RPAS_EC3_METHOD to aflow or rpas}"
 stage="${RPAS_EC3_STAGE:?set RPAS_EC3_STAGE to calibration, pretest, test, or single-test}"

@@ -420,12 +420,15 @@ def _workflow_rounds(workflows: Path) -> list[int]:
     return sorted(values)
 
 
-def _truncation_rate(calls_path: Path) -> float:
+def _truncation_rate(calls_path: Path, *, executor_cap: int, meta_cap: int) -> float:
     rows = [json.loads(line) for line in calls_path.read_text(encoding="utf-8").splitlines() if line.strip()] if calls_path.exists() else []
     generated = [row for row in rows if row.get("split") != "unknown"]
     if not generated:
         return 1.0
-    return sum(int(row.get("completion_tokens", 0)) >= (4096 if row.get("agent") == "aflow_meta" else 256) for row in generated) / len(generated)
+    return sum(
+        int(row.get("completion_tokens", 0)) >= (meta_cap if row.get("agent") == "aflow_meta" else executor_cap)
+        for row in generated
+    ) / len(generated)
 
 
 def _manifest_base(manifest: dict[str, Any], *, seed: int, gpu: str, executor_cap: int, meta_cap: int) -> dict[str, Any]:
@@ -498,7 +501,7 @@ def run_calibration(args: argparse.Namespace) -> Path:
         os.environ["RPAS_EC3_AFLOW_PHASE"] = "calib_executor"
         evaluations.append(_evaluate_round(optimizer, round_number=round_number, split_rows=calibration, split_path=split_path, log_dir=workflows / f"round_{round_number}"))
     executable_rate = sum(row["valid_answer_rate"] >= MIN_VALID_ANSWER_RATE for row in evaluations) / len(evaluations) if evaluations else 0.0
-    truncation = _truncation_rate(calls_path)
+    truncation = _truncation_rate(calls_path, executor_cap=executor_cap, meta_cap=meta_cap)
     calls = [json.loads(line) for line in calls_path.read_text(encoding="utf-8").splitlines() if line.strip()] if calls_path.exists() else []
     payload = {
         **_manifest_base(manifest, seed=-1, gpu=gpu, executor_cap=executor_cap, meta_cap=meta_cap),
@@ -590,7 +593,7 @@ def run_test(args: argparse.Namespace) -> Path:
     result = _evaluate_round(optimizer, round_number=int(selected["round"]), split_rows=test, split_path=split_path, log_dir=workspace / "workspace" / "HotpotQA" / "workflows" / f"round_{selected['round']}")
     _append_jsonl(run / "test_outputs.jsonl", result["outputs"])
     calls = [json.loads(line) for line in (run / "test_calls.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
-    truncation = _truncation_rate(run / "test_calls.jsonl")
+    truncation = _truncation_rate(run / "test_calls.jsonl", executor_cap=executor_cap, meta_cap=meta_cap)
     summary = {"protocol_version": PROTOCOL_VERSION, "method": "aflow", "seed": args.seed, "split_manifest_sha256": manifest["split_manifest_sha256"], "d_test_accessed": True, "runtime_cuda_visible_devices": gpu, "generation_truncation_rate": truncation, "test_calls": len(calls), "test_tokens": sum(int(row["total_tokens"]) for row in calls), **{key: value for key, value in result.items() if key != "outputs"}}
     _write_json(run / "test_summary.json", summary)
     if result["valid_answer_rate"] < MIN_VALID_ANSWER_RATE or truncation >= MAX_TRUNCATION_RATE:

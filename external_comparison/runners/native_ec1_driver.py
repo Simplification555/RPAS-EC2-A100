@@ -31,6 +31,20 @@ from external_comparison.adapters.native_runtime import (
 )
 
 
+class _PromptFallback:
+    """Delegate generated prompt constants and fill missing ones."""
+
+    def __init__(self, module: Any, fallback: str) -> None:
+        self._module = module
+        self._fallback = fallback
+
+    def __getattr__(self, name: str) -> Any:
+        try:
+            return getattr(self._module, name)
+        except AttributeError:
+            return self._fallback
+
+
 def _append(path: Path, record: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as handle:
@@ -124,6 +138,41 @@ def _install_aflow_runtime_compatibility() -> str:
     return "aflow_runtime: max_concurrent_tasks=1; HumanEval timeout worker daemonized"
 
 
+def _install_aflow_prompt_fallback(optimizer: Any) -> str:
+    """Patch missing generated prompt constants at each AFlow graph load.
+
+    The pinned meta-model occasionally emits a commented ``REFINE_PROMPT``
+    (or another constant) while its generated graph still references that
+    name.  Replacing only the graph's module binding preserves the upstream
+    optimizer and evaluator while preventing avoidable per-example skips.
+    """
+    original_load_graph = optimizer.graph_utils.load_graph
+    code_prompt = (
+        "You are a Python code formatter. Return ONLY valid corrected Python "
+        "code, with no markdown, quotes, or explanation. Preserve the requested "
+        "function signature.\n\nInput code:\n{input}"
+    )
+
+    def load_graph_with_prompt_fallback(round_number: int, workflows_path: str):
+        graph = original_load_graph(round_number, workflows_path)
+        function_globals: list[dict[str, Any]] = []
+        for attribute in dir(graph):
+            function = getattr(graph, attribute, None)
+            globals_dict = getattr(function, "__globals__", None)
+            if isinstance(globals_dict, dict) and globals_dict not in function_globals:
+                function_globals.append(globals_dict)
+        for globals_dict in function_globals:
+            prompt_module = globals_dict.get("prompt_custom")
+            if prompt_module is not None:
+                globals_dict["prompt_custom"] = _PromptFallback(prompt_module, code_prompt)
+        return graph
+
+    # ``load_graph`` is stored on this optimizer instance, so the wrapper
+    # intentionally accepts the same two arguments as the bound method.
+    optimizer.graph_utils.load_graph = load_graph_with_prompt_fallback
+    return "generated prompt fallback enabled"
+
+
 def _aflow(args, source: Path, run_root: Path) -> dict[str, Any]:
     if args.aflow_test_only:
         return _aflow_test_only(args, source, run_root)
@@ -184,6 +233,7 @@ def _aflow(args, source: Path, run_root: Path) -> dict[str, Any]:
         validation_rounds=args.aflow_validation_rounds,
         check_convergence=False,
     )
+    prompt_compatibility = _install_aflow_prompt_fallback(optimizer)
     started = time.perf_counter()
     os.environ["RPAS_EC1_PHASE"] = "search"
     optimizer.optimize("Graph")
@@ -216,7 +266,7 @@ def _aflow(args, source: Path, run_root: Path) -> dict[str, Any]:
     test_rows = [json.loads(line) for line in Path(data["test_path"]).read_text(encoding="utf-8").splitlines() if line.strip()]
     outputs = _csv_rows(test_root / "round_1", test_rows)
     return {
-        "manifest": {**source_manifest(source, workspace, "aflow", args.seed, data), "implementation_status": "official_optimizer_graph_then_selected_workflow_test", "aflow_max_rounds": args.aflow_max_rounds, "aflow_sample": args.aflow_sample, "aflow_validation_rounds": args.aflow_validation_rounds, "selected_round": selected_round, "selected_validation_score": selected.get("score"), "search_wall_clock_seconds": search_wall_clock, "staged_compatibility_patch": compatibility_patch},
+        "manifest": {**source_manifest(source, workspace, "aflow", args.seed, data), "implementation_status": "official_optimizer_graph_then_selected_workflow_test", "aflow_max_rounds": args.aflow_max_rounds, "aflow_sample": args.aflow_sample, "aflow_validation_rounds": args.aflow_validation_rounds, "selected_round": selected_round, "selected_validation_score": selected.get("score"), "search_wall_clock_seconds": search_wall_clock, "staged_compatibility_patch": compatibility_patch + "; " + prompt_compatibility},
         "search_rows": search_rows,
         "test_rows": outputs,
         "telemetry_path": str(telemetry),

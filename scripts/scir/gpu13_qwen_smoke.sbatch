@@ -15,8 +15,10 @@ set -euo pipefail
 
 repo_root="/home/jianbaizhao/RPAS-EC2-A100"
 model_path="/home/jianbaizhao/model/Qwen/Qwen3.5-9B"
-server_python="/home/jianbaizhao/miniconda3/envs/qwen35_vllm/bin/python"
-runner_python="/home/jianbaizhao/miniconda3/envs/qwen35_vllm/bin/python"
+# Use the CUDA 12.6 environment: the CUDA 13 wheel used by the older smoke
+# test dropped V100 (sm70) kernels and fails at generation time.
+server_python="/home/jianbaizhao/qwen_cuda126/bin/python"
+runner_python="/home/jianbaizhao/qwen_cuda126/bin/python"
 port="29680"
 artifact_dir="${repo_root}/outputs/scir_smoke/${SLURM_JOB_ID}"
 mkdir -p "${artifact_dir}"

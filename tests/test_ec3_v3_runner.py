@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 from external_comparison.runners.ec3_v3 import _read_json, _require_unlock, _select, _shortlist
+from external_comparison.runners.native_ec3_aflow import _truncation_rate
 from experiments.phase2_wan_agent_search import (
     extract_prediction_for_dataset,
     score_example_answer,
@@ -59,3 +60,14 @@ def test_ec3_json_reader_accepts_cli_string_paths(tmp_path: Path) -> None:
     path = tmp_path / "manifest.json"
     path.write_text(json.dumps({"protocol_version": "EC3_HOTPOTQA_V3"}), encoding="utf-8")
     assert _read_json(str(path))["protocol_version"] == "EC3_HOTPOTQA_V3"
+
+
+def test_aflow_truncation_rate_uses_the_frozen_executor_cap(tmp_path: Path) -> None:
+    path = tmp_path / "calls.jsonl"
+    rows = [
+        {"agent": "aflow_executor", "split": "calib_executor", "completion_tokens": 300},
+        {"agent": "aflow_executor", "split": "calib_executor", "completion_tokens": 512},
+        {"agent": "aflow_meta", "split": "calib_search", "completion_tokens": 4096},
+    ]
+    path.write_text("\n".join(json.dumps(row) for row in rows) + "\n", encoding="utf-8")
+    assert _truncation_rate(path, executor_cap=512, meta_cap=4096) == pytest.approx(2 / 3)
