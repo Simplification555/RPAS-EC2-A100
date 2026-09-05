@@ -774,3 +774,63 @@ The first four RPAS-Comm seed 2 calls each awaited about 131 seconds (batch
 completion), including shared scheduling/startup effects; seed 1's first batch
 completed later. Do not infer a finish ETA from process count alone. Monitor
 per-seed call/row slopes and the oldest allocations' 24-hour time limits.
+
+## Throughput And Kernel Audit At 04:09 UTC+08
+
+The previous turn was concrete progress: all remaining EC2 seeds were moved
+into live guarded execution. This follow-up verified ongoing work and checked
+the risk that current throughput will exceed old allocations' wall limits.
+
+| Legacy EC2 Worker | Response Markers 03:59:42 | Response Markers 04:05:39 |
+|---|---|---|
+| Full 0 | 2972 | 2987 |
+| Full 1 | 1986 | 1998 |
+| Full 2 | 2738 | 2767 |
+| Chain 0 | 1732 | 1748 |
+| G-Designer 0 | 857 | 865 |
+| RPAS-Comm 0 | 507 | 541 |
+
+These are native stdout response markers, NOT verified held-out row counts.
+The short sample is workload-dependent, but flags timeout risk for Full 1
+and some slower shared consumers. A single attempt to extend actual allocation
+131909 to 36 hours was denied by Slurm: `Access/permission denied`. No job
+state or time limit changed. Its current deadline remains September 6,
+17:17:40 UTC+08. Extending a running allocation requires administrator help;
+do not claim a new time limit or cancel/restart on this observation alone.
+
+All three MaAS native driver processes were verified live on compute node
+gpu01 at 04:08, with 290/403/425 recorded native calls for seeds 0/1/2.
+No new complete seed bundle had appeared. New RPAS-Comm seeds each had twelve
+completed calls without error records by 04:05; shared Chain seeds had 84/72
+completed held-out rows. G-Designer 1 had six journaled rows (phase must be
+read before calling these held-out). Do not count a run-start journal marker
+as a completed model call.
+
+### Isolated Synthetic Kernel Probe
+
+The actual Qwen environment is torch 2.9.1+cu126, transformers 5.15.0 and
+triton 3.5.1. `causal-conv1d` is not installed there. The installed Qwen module
+contains PyTorch fallback implementations, plus optional hub-kernel hooks;
+the server additionally overrides its causal-convolution update function.
+This inspection is NOT proof of what fraction of full-model runtime each
+operator consumes.
+
+`scripts/scir/qwen_decode_kernel_preflight.py` extracts only the actual
+reference functions without running their module or decorators, then checks
+synthetic single-token batches 1 and 4 on the real configured head dimensions.
+The probe ran in allocation 132532, loaded NO Qwen weights and made NO model
+calls. It did not modify any running server, interpreter environment, package
+installation, model cap, experimental request or generated output.
+
+Results: compiled recurrent attention was approximately 1.50x / 1.78x faster;
+compiled convolution was slower (0.57x / 0.68x). Maximum recurrent-state
+absolute difference was about 0.0006013, within the tested rtol/atol 0.002,
+but NOT bitwise equal. These microbenchmarks include co-resident load and
+input/output cloning. They are NOT end-to-end model speedups or isolated
+latency results. Full token-output parity and multi-step cache validation are
+still required before any use in an approved revised run. No compiled kernel
+was deployed into an experiment.
+
+Evidence: `outputs/preflight_20260906/qwen_decode_kernel_0405.json`, copied to
+local `outputs/audit_20260906/`. The measured source SHA-256 values are in the
+report, so future probes cannot silently refer to a different server/module.
