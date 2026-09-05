@@ -242,6 +242,36 @@ def _install_graph_prompt_fallback(optimizer: Any) -> None:
 
     optimizer.graph_utils.load_graph = load_graph_with_prompt_fallback
 
+    # The pinned AFlow Custom operator uses TextFormatter, so a JSON response
+    # is returned as {"response": "<json>"}. Generated HotpotQA workflows
+    # access solution["answer"]; normalize that boundary without changing
+    # the upstream search or execution logic.
+    try:
+        import workspace.HotpotQA.workflows.template.operator as operator_module
+    except ImportError:
+        return
+    custom = operator_module.Custom
+    if getattr(custom, "_rpas_json_compat", False):
+        return
+    original_custom_call = custom.__call__
+
+    async def custom_call_with_json(self: Any, input: str, instruction: str):
+        result = await original_custom_call(self, input, instruction)
+        if isinstance(result, dict) and "answer" not in result and isinstance(result.get("response"), str):
+            text = result["response"].strip()
+            if text.startswith("```"):
+                text = text.strip("`").removeprefix("json").strip()
+            try:
+                parsed = json.loads(text)
+            except json.JSONDecodeError:
+                return result
+            if isinstance(parsed, dict) and isinstance(parsed.get("answer"), str):
+                return parsed
+        return result
+
+    custom.__call__ = custom_call_with_json
+    custom._rpas_json_compat = True
+
 
 def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[HotpotExample], split_path: Path, log_dir: Path) -> dict[str, Any]:
     from scripts.evaluator import Evaluator
