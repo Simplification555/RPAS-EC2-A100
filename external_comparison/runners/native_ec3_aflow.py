@@ -220,8 +220,10 @@ def _install_graph_prompt_fallback(optimizer: Any) -> None:
     """Patch every optimizer-side graph load before official evaluation."""
     original_load_graph = optimizer.graph_utils.load_graph
     generic_prompt = (
-        "Use only the supplied context to answer the question. "
-        "Reason briefly, then provide the concise final answer.\n\nInput: {input}"
+        "You are an expert question-answering solver. Use only the supplied context. "
+        "Return ONLY a JSON object with exactly two string keys: "
+        '\"thought\" (brief reasoning) and \"answer\" (the concise final answer). '
+        "Do not include markdown or any text outside the JSON object.\n\nInput: {input}"
     )
 
     def load_graph_with_prompt_fallback(round_number: int, workflows_path: str):
