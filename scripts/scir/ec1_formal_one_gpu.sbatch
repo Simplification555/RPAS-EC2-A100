@@ -26,7 +26,8 @@ seed="$((task_id % 3))"
 gpu="${CUDA_VISIBLE_DEVICES:-}"
 [[ "${gpu}" =~ ^[0-9]+$ ]] || { echo "expected one allocated GPU token, got ${gpu:-<unset>}" >&2; exit 2; }
 
-job_root="${repo_root}/outputs/scir_ec1_formal_v2/${method}/seed_${seed}"
+experiment_root="${repo_root}/outputs/scir_ec1_formal_v2"
+job_root="${experiment_root}/_jobs/${method}/seed_${seed}_${SLURM_JOB_ID}"
 port=$((29600 + SLURM_JOB_ID % 900))
 dataset="${repo_root}/data/ec1_humaneval/official/humaneval.jsonl"
 public_test="${repo_root}/data/ec1_humaneval/aflow/humaneval_public_test.jsonl"
@@ -101,9 +102,9 @@ curl -sf "http://127.0.0.1:${port}/v1/chat/completions" \
   >"${job_root}/smoke_completion.json"
 
 bash scripts/run_ec1_native.sh "${method}" "${gpu}" "${dataset}" "${public_test}" \
-  "${job_root}/result" formal >"${job_root}/logs/runner.log" 2>&1
+  "${experiment_root}" formal >"${job_root}/logs/runner.log" 2>&1
 
-test_result="${job_root}/result/${method}/seed_${seed}/result.json"
+test_result="${experiment_root}/${method}/seed_${seed}/result.json"
 [[ -s "${test_result}" ]] || { echo "missing formal result: ${test_result}" >&2; exit 1; }
 "${python_bin}" - "${test_result}" <<'PY'
 import json, sys
