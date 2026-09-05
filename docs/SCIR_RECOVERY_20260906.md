@@ -767,3 +767,10 @@ Single baselines x3). This is full matrix EXECUTION COVERAGE, not completion
 or publication eligibility. The outstanding truncation, EC1 matched-budget
 and legacy-telemetry gates remain unresolved. A user decision was again
 requested before preparing/launching any revised formal protocol.
+
+At 03:58 both added RPAS-Comm seeds had four completed model responses, and
+G-Designer 2 had at least twelve. No error records or OOM events were observed.
+The first four RPAS-Comm seed 2 calls each awaited about 131 seconds (batch
+completion), including shared scheduling/startup effects; seed 1's first batch
+completed later. Do not infer a finish ETA from process count alone. Monitor
+per-seed call/row slopes and the oldest allocations' 24-hour time limits.
