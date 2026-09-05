@@ -608,3 +608,85 @@ must address this long-tail risk before a revised formal run is authorized.
 
 Single seed 2 reached 95/131 at the same check. Native telemetry repair is
 committed locally as `5599366`; no upstream GitHub push is implied.
+
+## Pending-Task Audit And Baseline Completion At 03:45 UTC+08
+
+The pending-task audit used the actual SCIR files, without model calls or
+changing any benchmark parameters. `scripts/scir/ec2_pending_preflight.py`
+verified all 171 MMLU source files against the existing frozen manifest,
+57/57/570 split counts, all four Qwen safetensors shard files, local MiniLM
+assets, pinned G-Designer revision, worker decoding settings and disabled
+rule fallback. All four seed 1/2 G-Designer/RPAS-Comm destinations were
+unoccupied at the audit snapshot. Weight contents were NOT rehashed, and
+this readiness check is neither a lock nor a publication gate.
+
+Evidence is preserved remotely under `outputs/preflight_20260906/` and
+locally under `outputs/audit_20260906/`:
+
+- `pending_inputs_0330.json`
+- `pending_native_seed1_0330.json`
+- `pending_native_seed2_0330.json`
+
+The native runtime preflight now accepts an explicit seed. Seeds 1 and 2
+each passed ten native GCN training iterations, 280 simulated training calls,
+initial/pretest checkpoint output and equality of all 28 synthetic request
+payloads between serial and four-item fixed-graph execution. These checks
+ran CPU-only with simulated responses; they are not experimental outcomes.
+The focused local regression suite passed 88 tests. SCIR `bash -n` passed.
+Ruff was unavailable in the local offline environment; no lint pass is claimed.
+
+### Result Sealing
+
+The EC2 batch wrapper previously checksummed the still-active service log.
+Service shutdown can append to that log after sealing, causing a bundle
+checksum mismatch even when result artifacts are unchanged. The wrapper on
+disk now seals stable top-level artifacts only, using relative paths, as the
+shared-endpoint wrapper already does. Runtime logs are retained separately.
+
+IMPORTANT: `scontrol write batch_script 132507 -` confirmed Slurm retained
+the OLD wrapper snapshot. Replacing the file on disk does not update that
+queued script. No job was cancelled or resubmitted to install this packaging
+fix, so queue age was preserved. After these jobs finish, verify stable
+artifacts and log finalization separately. A checksum-only log discrepancy
+does not justify rerunning model inference; preserve the original manifest
+and add a separately identified final bundle checksum after all writers exit.
+The already-loaded model runners and model-service code were not modified.
+
+### Completed Baselines
+
+EC2 Single seed 2 finished with Slurm `COMPLETED`, exit `0:0`, elapsed
+02:25:06. Its 570-row result passed the seed-integrity loader. The local
+backup `outputs/scir_ec2_single_seed2_retry_20260906` passed all 14 original
+SHA-256 checks, including its logs. This is the fresh retry, not the old
+September 5 result.
+
+| EC2 Single Seed | Accuracy | Calls | Total Tokens | All-Call Truncation |
+|---|---|---|---|---|
+| 0 | 0.80877193 | 1140 | 445810 | 11.9298% |
+| 1 | 0.80701754 | 1140 | 444670 | 11.9298% |
+| 2 | 0.80877193 | 1140 | 445765 | 12.1930% |
+
+Mean accuracy is 0.80818713, sample standard deviation 0.00101290.
+All three have complete parser-valid final outputs but FAIL the all-call
+truncation gate. Per-item token attribution remains missing in these old
+runtime instances. Do not claim complete EC2 or paper eligibility.
+
+EC1 Single seed 2 also finished all 131 items and passed the integrity loader.
+Its local backup `outputs/scir_ec1_single_seed2_20260906` passed all nine
+SHA-256 checks. All three seeds score 113/131 = 0.86259542, sample standard
+deviation zero. Seed 2 records 131 calls, 47423 tokens and 1980.62 seconds
+operational wall time. Seeds 0/1 record 47423/47567 tokens respectively.
+These are direct-reference repetitions, not a completed four-method EC1.
+
+The released EC2 Single allocation allowed G-Designer seed 1 to start
+automatically at 03:30:49: display `132507_10`, actual allocation `132532`,
+gpu05 A100 PCIe 80 GB. Its model smoke check passed and native training was
+making calls by 03:43. Remaining pending indices are 11, 13 and 14, still
+limited by the per-user running-job cap. Eight allocations remain running.
+
+After the EC1 Single wrapper exited, the guard on `132375` continued watching
+the two remaining G-Designer/RPAS-Comm workers. Do not cancel that allocation
+or assume its original parent has sole ownership. Shared Chain seeds 1/2
+had 56/48 completed held-out rows at 03:43 and remained live. No live search
+was restarted, no cap/retry policy was changed, and no publication gate was
+waived during this audit.

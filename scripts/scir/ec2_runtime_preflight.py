@@ -14,11 +14,11 @@ from external_comparison.runners.ec2_v2 import OfficialGDesignerRuntime, _run_gd
 from external_comparison.runners.mmlu import MMLUExample
 
 
-async def check(root: Path) -> dict:
+async def check(root: Path, seed: int = 0) -> dict:
     with tempfile.TemporaryDirectory(prefix="ec2_runtime_preflight_") as temporary:
         destination = Path(temporary)
-        runtime = OfficialGDesignerRuntime(root, seed=0)
-        runtime.configure_artifacts(destination / "gdesigner" / "seed_0")
+        runtime = OfficialGDesignerRuntime(root, seed=seed)
+        runtime.configure_artifacts(destination / "gdesigner" / f"seed_{seed}")
         requests = []
         async def simulated_completion(**kwargs):
             assert kwargs["max_tokens"] == 256
@@ -35,8 +35,8 @@ async def check(root: Path) -> dict:
             "output_dir": str(destination),
         }
         with contextlib.redirect_stdout(io.StringIO()):
-            await _run_gdesigner(runtime, rows, 0)
-        result_dir = destination / "gdesigner" / "seed_0"
+            await _run_gdesigner(runtime, rows, seed)
+        result_dir = destination / "gdesigner" / f"seed_{seed}"
         result = json.loads((result_dir / "result.json").read_text())
         calls = [json.loads(line) for line in (result_dir / "calls.jsonl").read_text().splitlines()]
         training = [call for call in calls if call["split"] == "search"]
@@ -60,7 +60,7 @@ async def check(root: Path) -> dict:
         assert parallel_communication == serial_communication
         assert [{k: v for k, v in row.items() if k != "latency_ms"} for row in parallel_rows] == [
             {k: v for k, v in row.items() if k != "latency_ms"} for row in serial_rows]
-        return {"formal_result": False, "simulated_llm": True, "native_training_iterations": 10,
+        return {"formal_result": False, "simulated_llm": True, "seed": seed, "native_training_iterations": 10,
                 "checkpoint_files": list(result["checkpoint_files"]), "training_calls": len(training),
                 "fixed_serial_vs_parallel_requests_equal": True, "fixed_fixture_calls": len(requests),
                 "status": "PASS_RUNTIME_ONLY"}
@@ -69,6 +69,7 @@ async def check(root: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--gdesigner-root", type=Path, required=True)
+    parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--runtime-source", type=Path, help="Validate staged code before deploying to pending jobs")
     args = parser.parse_args()
     if args.runtime_source:
@@ -76,4 +77,4 @@ if __name__ == "__main__":
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         OfficialGDesignerRuntime, _run_gdesigner = module.OfficialGDesignerRuntime, module._run_gdesigner
-    print(json.dumps(asyncio.run(check(args.gdesigner_root))))
+    print(json.dumps(asyncio.run(check(args.gdesigner_root, args.seed))))

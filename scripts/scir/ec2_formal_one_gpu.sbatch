@@ -129,5 +129,8 @@ PY
 "${python_bin}" -m external_comparison.runners.write_run_metrics \
   --result-dir "${result_dir}" --job-id "${SLURM_JOB_ID}" --job-root "${job_root}" --stage formal_seed
 echo "formal_result=false; seed_complete=true" >"${job_root}/job_status.txt"
-find "${job_root}" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum >"${job_root}/SHA256SUMS"
+# Service shutdown can still append to logs. Seal immutable result artifacts
+# with relative paths so a downloaded bundle remains independently verifiable.
+( cd "${job_root}"
+  find . -maxdepth 1 -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum >SHA256SUMS )
 echo "EC-2 formal ${method} seed ${seed} completed: ${job_root}"
