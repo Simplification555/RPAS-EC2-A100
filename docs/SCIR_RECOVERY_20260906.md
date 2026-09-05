@@ -690,3 +690,80 @@ or assume its original parent has sole ownership. Shared Chain seeds 1/2
 had 56/48 completed held-out rows at 03:43 and remained live. No live search
 was restarted, no cap/retry policy was changed, and no publication gate was
 waived during this audit.
+
+## All Remaining EC2 Seeds Started At 03:52 UTC+08
+
+After Single released its model copy, allocation `132375` had about 34 GB
+of free GPU memory and 21.9 GB / 42.95 GB cgroup host memory in use. A new
+guarded bundle now runs the last three EC2 seeds without waiting for another
+Slurm job slot. This is user-authorized co-residency, NOT isolated latency.
+
+`scripts/scir/ec2_pending_bundle_packed.sh` starts only ONE new Qwen endpoint
+on port 43375, cap 768, max batch four. RPAS-Comm seeds 1 and 2 share it;
+their worker calls remain capped at 256. G-Designer seed 2 borrows the already
+running cap-256 endpoint on port 29775. Each seed keeps the exact 57/57/570
+split and independent seed/runtime artifacts. The underlying EC2 runner SHA
+remains `b44960f048c4ec610c9b574c41e3be03d8216bb52745ced8cdadaffeff684b51`.
+
+The new endpoint passed eight synthetic serial/parallel consistency calls
+BEFORE the three experiment runners launched. These are preflight overhead,
+not benchmark calls. Evidence:
+`outputs/scir_ec2_formal/_jobs/pending_bundle_batch_preflight_132375.json`.
+The focused suite now passes 90 tests and SCIR `bash -n` passes.
+
+### Lifetime Ownership
+
+| Component | PID | Role |
+|---|---|---|
+| Batch parent | 2687909 | Deliberately stopped; do not resume early |
+| Original G-Designer 0 wrapper | 2688594 | Owns borrowed service 2688674, port 29775 |
+| Original RPAS-Comm 0 wrapper | 2696165 | Owns its unchanged service on port 38712 |
+| New three-seed bundle | 2747870 | Waits for ALL three new workers |
+| New allocation guard | 2748030 | Watches wrappers 2688594, 2696165, 2747870 |
+| New service launcher / Python | 2748326 / 2748332 | Owns port 43375 only |
+| New G-Designer 2 Python | 2748813 | Port 29775 |
+| New RPAS-Comm 1 Python | 2748801 | Port 43375 |
+| New RPAS-Comm 2 Python | 2748802 | Port 43375 |
+
+The replacement guard was installed and verified before old guard 2706369
+was killed with SIGKILL. SIGTERM must NOT be used to replace that old guard:
+its EXIT trap would resume the batch parent. Parent 2687909 remained stopped
+throughout; original worker/service processes were preserved.
+
+New guard log: `_jobs/guard_pending_bundle_132375.log` under EC2 output root.
+Bundle log: `_jobs/pending_bundle_132375.log`.
+Activation marker: `_jobs/pending_bundle_132375.activate`, containing 2748030.
+Do not stop the new guard or allocation while any of these five seeds runs.
+The bundle never terminates the borrowed service. Its own service stops only
+after all three owned seed workers have exited; one failed seed does not
+prematurely cancel its independent siblings.
+
+### Original Queue Entries Are Held, Not Additional Experiments
+
+Each original pending array task was individually held and its state checked.
+Unlike the earlier cancellation incident, this materialized independent task
+records and left running `132507_10` / actual 132532 untouched:
+
+| Original Task | Actual JobId | State | Replacement |
+|---|---|---|---|
+| 132507_11 | 132558 | JobHeldUser | Packed G-Designer 2 |
+| 132507_13 | 132559 | JobHeldUser | Packed RPAS-Comm 1 |
+| 132507_14 | 132507 | JobHeldUser | Packed RPAS-Comm 2 |
+
+No array task was cancelled in this migration. The held entries consume no
+GPU slot and MUST NOT be released while their replacements run or have
+unarchived output. Preserve them as explicit recovery records for now.
+In particular, cancelling numeric parent 132507 is unsafe while task 10 runs.
+
+At 03:53 all three new Python runners were live and had written exclusive
+execution identities and frozen split journals. G-Designer 2 had also saved
+its initial checkpoint. GPU usage was approximately 66.7 GB / 81.6 GB and
+host cgroup usage 28.2 GB / 42.95 GB, with zero OOM/max events. Follow-up
+checks must confirm actual call/row growth, not merely process existence.
+
+All 18 unfinished EC1/EC2 seed runners were observed alive across the eight
+allocations; nine seed bundles were already complete (AFlow x3 and both
+Single baselines x3). This is full matrix EXECUTION COVERAGE, not completion
+or publication eligibility. The outstanding truncation, EC1 matched-budget
+and legacy-telemetry gates remain unresolved. A user decision was again
+requested before preparing/launching any revised formal protocol.
