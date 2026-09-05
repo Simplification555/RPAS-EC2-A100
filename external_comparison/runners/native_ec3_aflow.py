@@ -231,7 +231,13 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
     if additions:
         prompt_path.write_text(prompt_source.rstrip() + "\n\n" + "\n\n".join(additions) + "\n", encoding="utf-8")
         importlib.invalidate_caches()
-    sys.modules.pop(f"workspace.HotpotQA.workflows.round_{round_number}.prompt", None)
+    prompt_module_name = f"workspace.HotpotQA.workflows.round_{round_number}.prompt"
+    graph_module_name = f"workspace.HotpotQA.workflows.round_{round_number}.graph"
+    # The optimizer may already have imported the generated graph while
+    # writing it. Remove both cached modules so the patched source is used by
+    # the evaluator rather than a stale module object.
+    sys.modules.pop(prompt_module_name, None)
+    sys.modules.pop(graph_module_name, None)
     graph = optimizer.graph_utils.load_graph(round_number, "workspace/HotpotQA/workflows")
     before = set(log_dir.glob("*.csv"))
     score, _, _ = asyncio.run(
