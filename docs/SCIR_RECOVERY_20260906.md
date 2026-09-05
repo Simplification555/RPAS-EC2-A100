@@ -124,3 +124,44 @@ The user's later request to pack experiments supersedes the original
 single-worker scheduling instruction. Co-resident wall-clock latency is
 operational telemetry, not a controlled standalone method-speed comparison.
 Do not present these timings as equivalent hardware-isolated latency results.
+
+## RPAS Evaluator Repair At 01:45 UTC+08
+
+The shared HumanEval extractor removed all source preceding the required
+function, even when the full completion was valid Python. This discarded
+imports and helper functions, causing false execution failures. The repaired
+extractor preserves complete parseable programs. Imports, helpers, fenced
+code and prose fallback have regression coverage.
+
+Diagnostic-only rescoring of the original RPAS seed 0 raw completions changed
+the passed count from 96 to 112 of 131. This is NOT a formal replacement:
+the original search also used the broken extractor and was not replayed by
+the diagnostic. The original outputs are untouched. The separate report is
+`outputs/scir_ec1_formal_v2/_diagnostics/rpas_seed0_extraction_v2.json`, with
+`formal_result=false` and the original result SHA-256.
+
+All old RPAS seeds under `outputs/scir_ec1_formal_v2/rpas` are now ineligible
+for formal aggregation. The aggregator requires
+`code_extractor_version=preserve_complete_program_v2` for RPAS. Merely adding
+this field to old manifests is forbidden; a full corrected search is required.
+
+- Data preflight passed remotely: 164 official tasks, frozen disjoint 33/131
+  fixtures, unchanged source hashes. No dataset download is necessary.
+- New step `132166_2.13` owns two RPAS lanes on the existing H100. Lane zero
+  runs seeds 0 then 2; lane one runs seed 1. It uses separate endpoints
+  40332/40333 and independent result directories in
+  `outputs/scir_ec1_rpas_extractor_v2`.
+- Bundle PID 1160848 and new guard PID 1160858 were verified before retiring
+  the old guard PID 1158203 with KILL and terminating only old RPAS step
+  `132166.1`. Legacy runner/server PIDs were confirmed gone before activating
+  the new bundle. AFlow seed 2 remains running in the original allocation.
+- The batch parent PID 1146820 remains stopped intentionally while the guard
+  watches the new bundle. The bundle waits for both lanes; do not terminate
+  this guard or cancel the allocation while either AFlow or RPAS is active.
+- Wrapper service cleanup now waits for server termination before reusing a
+  port for the next seed. Output-root override prevents overwriting legacy
+  artifacts. Initial endpoint smoke succeeded before starting search.
+
+The complete EC1 table still requires the Single reference and the full
+protocol audit, including search-budget comparability. Completed seed files
+are not sufficient evidence for an accepted paper-ready comparison.

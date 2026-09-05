@@ -144,13 +144,19 @@ def extract_code(output: str, entry_point: str) -> str:
 
     for candidate in _code_candidates(output, entry_point):
         candidate = candidate.strip()
-        marker = f"def {entry_point}"
-        if marker in candidate:
-            candidate = candidate[candidate.find(marker) :]
         try:
             tree = ast.parse(candidate)
         except SyntaxError:
-            continue
+            # Only strip a prose prefix when the whole completion is invalid.
+            # Valid imports and helper definitions are part of the program.
+            marker = f"def {entry_point}"
+            if marker not in candidate:
+                continue
+            candidate = candidate[candidate.find(marker) :]
+            try:
+                tree = ast.parse(candidate)
+            except SyntaxError:
+                continue
         if any(isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == entry_point for node in tree.body):
             return candidate
     return ""

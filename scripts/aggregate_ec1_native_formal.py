@@ -70,6 +70,8 @@ def load(root: Path, method: str, seed: int) -> dict:
         raise ValueError(f"manifest/result divergence: {directory}")
     if method == "maas" and "hashed" in manifest.get("staged_compatibility_patch", "").lower():
         raise ValueError(f"substituted MaAS embeddings are not a native baseline: {directory}")
+    if method == "rpas" and manifest.get("code_extractor_version") != "preserve_complete_program_v2":
+        raise ValueError(f"RPAS used the legacy import-stripping evaluator: {directory}")
     rows = [json.loads(line) for line in outputs_path.read_text(encoding="utf-8").splitlines() if line.strip()]
     if len(rows) != 131 or len({str(row.get("task_id", row.get("id", ""))) for row in rows}) != 131:
         raise ValueError(f"duplicate or incomplete test rows: {outputs_path}")

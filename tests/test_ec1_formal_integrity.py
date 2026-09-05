@@ -105,3 +105,25 @@ def test_hashed_maas_is_not_a_native_baseline(completed):
     seal(destination)
     with pytest.raises(ValueError, match="not a native baseline"):
         load(root, "maas", 0)
+
+
+def test_legacy_rpas_evaluator_rejected(completed):
+    root, directory = completed
+    destination = root / "rpas" / "seed_0"
+    destination.parent.mkdir()
+    directory.rename(destination)
+    for name in ("run_manifest.json", "result.json"):
+        path = destination / name
+        payload = json.loads(path.read_text())
+        payload["method"] = "rpas"
+        path.write_text(json.dumps(payload))
+    seal(destination)
+    with pytest.raises(ValueError, match="legacy import-stripping evaluator"):
+        load(root, "rpas", 0)
+    for name in ("run_manifest.json", "result.json"):
+        path = destination / name
+        payload = json.loads(path.read_text())
+        payload["code_extractor_version"] = "preserve_complete_program_v2"
+        path.write_text(json.dumps(payload))
+    seal(destination)
+    assert load(root, "rpas", 0)["num_examples"] == 131

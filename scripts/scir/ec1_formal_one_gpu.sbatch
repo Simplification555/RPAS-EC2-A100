@@ -29,7 +29,7 @@ gpu="${CUDA_VISIBLE_DEVICES:-}"
 [[ "${gpu}" =~ ^[0-9]+$ ]] || { echo "expected one allocated GPU token, got ${gpu:-<unset>}" >&2; exit 2; }
 packed_slot="${RPAS_EC1_PACKED_SLOT:-primary}"
 
-experiment_root="${repo_root}/outputs/scir_ec1_formal_v2"
+experiment_root="${RPAS_EC1_OUTPUT_ROOT:-${repo_root}/outputs/scir_ec1_formal_v2}"
 job_root="${experiment_root}/_jobs/${method}/seed_${seed}_${SLURM_JOB_ID}"
 port="${RPAS_EC1_SERVICE_PORT:-$((29600 + SLURM_JOB_ID % 900))}"
 dataset="${repo_root}/data/ec1_humaneval/official/humaneval.jsonl"
@@ -95,7 +95,10 @@ export PYTHONUNBUFFERED=1
   --max-batch-size 1 --batch-wait-ms 0 --dtype float16 --stop-string '<<RPAS_END>>' \
   >"${job_root}/logs/service.log" 2>&1 &
 service_pid=$!
-cleanup() { kill "${service_pid}" 2>/dev/null || true; }
+cleanup() {
+  kill "${service_pid}" 2>/dev/null || true
+  wait "${service_pid}" 2>/dev/null || true
+}
 trap cleanup EXIT
 for _ in $(seq 1 180); do
   curl -sf "http://127.0.0.1:${port}/health" >"${job_root}/health.json" && break

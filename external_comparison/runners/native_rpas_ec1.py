@@ -360,6 +360,7 @@ def run(args: Any) -> dict[str, Any]:
     return {
         "manifest": {
             "implementation_status": "repository_phase2_llm_reflection_typed_mutation_public_test_executor",
+            "code_extractor_version": "preserve_complete_program_v2",
             "native_search": "llm_reflection_only__no_rule_fallback",
             "gpu": gpu,
             "model": os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"),
