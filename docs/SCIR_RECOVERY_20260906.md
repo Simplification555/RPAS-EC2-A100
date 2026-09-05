@@ -567,7 +567,7 @@ Validation before deployment:
 
 - 85 focused local tests passed, including concurrent identity, cancellation,
   actual await duration, operator frames, request/return preservation and
-  byte-equivalent legacy conversion.
+  identical legacy conversion fields.
 - Both real upstream provider and HumanEval benchmark classes passed isolated
   synthetic-response preflights on SCIR. Each produced three correctly
   attributed calls with unchanged requests and upstream return values. No
@@ -592,3 +592,19 @@ new calls, not retroactive completeness of an entire historical run.
 At 03:17 Single seed 2 had reached 69/131; the two shared Chain seeds had
 completed 20 and 16 held-out rows. Array 132507 remained pending with its
 four original experimental budgets unchanged.
+
+### MaAS Seed 0 Long Tail
+
+At the next check all three native MaAS driver processes were confirmed live
+on the compute node. Seed 0 still showed batch 5 at 3/4 since approximately
+02:39, while its API usage journal continued growing. Of 244 recorded calls,
+the latest 30 all returned exactly 1024 completion tokens, consuming 56306
+total tokens. The old journal has no task IDs or finish reasons, so this is
+evidence of cap-saturating calls during a long remaining batch item, not proof
+of a specific repeated prompt or an exact truncation rate. Do not describe
+this as a dead process or restart it on that basis. Native retry limits and
+the frozen completion cap were not changed. The outstanding protocol decision
+must address this long-tail risk before a revised formal run is authorized.
+
+Single seed 2 reached 95/131 at the same check. Native telemetry repair is
+committed locally as `5599366`; no upstream GitHub push is implied.
