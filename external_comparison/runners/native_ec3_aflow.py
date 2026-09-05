@@ -19,6 +19,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, Iterable
 
 from external_comparison.adapters.native_common import call_record, sha256_file
@@ -250,7 +251,10 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
     sys.modules.pop(prompt_module_name, None)
     sys.modules.pop(graph_module_name, None)
     graph = optimizer.graph_utils.load_graph(round_number, "workspace/HotpotQA/workflows")
-    graph_globals = getattr(getattr(graph, "__call__", None), "__globals__", {})
+    call_function = graph.__dict__.get("__call__") if hasattr(graph, "__dict__") else None
+    if call_function is None:
+        call_function = getattr(graph, "__call__", None)
+    graph_globals = getattr(call_function, "__globals__", {})
     prompt_module = graph_globals.get("prompt_custom")
     prompt_modules = [
         module for module in list(sys.modules.values())
@@ -258,16 +262,29 @@ def _evaluate_round(optimizer: Any, *, round_number: int, split_rows: list[Hotpo
     ]
     if prompt_module is not None and prompt_module not in prompt_modules:
         prompt_modules.append(prompt_module)
+    generic_prompt = (
+        "Use only the supplied context to answer the question. "
+        "Reason briefly, then provide the concise final answer.\n\nInput: {input}"
+    )
     if prompt_modules:
-        generic_prompt = (
-            "Use only the supplied context to answer the question. "
-            "Reason briefly, then provide the concise final answer.\n\nInput: {input}"
-        )
         for module in prompt_modules:
             for name in referenced:
                 if not hasattr(module, name):
                     setattr(module, name, generic_prompt)
-        graph_globals["prompt_custom"] = _PromptFallback(prompt_module or prompt_modules[0], generic_prompt)
+    fallback_module = prompt_module or (prompt_modules[0] if prompt_modules else SimpleNamespace())
+    # Patch every function global dictionary on the generated Workflow class;
+    # this covers loaders that retain a wrapper or a stale module reference.
+    function_globals = []
+    for attribute in dir(graph):
+        function = getattr(graph, attribute, None)
+        globals_dict = getattr(function, "__globals__", None)
+        if isinstance(globals_dict, dict) and globals_dict not in function_globals:
+            function_globals.append(globals_dict)
+    if graph_globals not in function_globals:
+        function_globals.append(graph_globals)
+    for globals_dict in function_globals:
+        if "prompt_custom" in globals_dict:
+            globals_dict["prompt_custom"] = _PromptFallback(fallback_module, generic_prompt)
     before = set(log_dir.glob("*.csv"))
     score, _, _ = asyncio.run(
         Evaluator(eval_path=str(log_dir)).graph_evaluate(
