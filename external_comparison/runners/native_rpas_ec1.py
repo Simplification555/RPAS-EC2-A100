@@ -33,8 +33,11 @@ from experiments.phase2_wan_agent_search import (
     load_network_profiles,
     load_sites,
     mutate_candidate,
+    pareto_front,
     run_single_architecture,
+    select_operating_points,
     seed_architectures,
+    shortlist_rows_for_selection,
     validate_candidate_contract,
 )
 
@@ -236,6 +239,23 @@ def _reflection_calls(run_id: str, parent_id: str, plan: dict[str, Any]) -> list
     return records
 
 
+def _native_operating_points(search_rows: list[dict[str, Any]]) -> tuple[
+    list[dict[str, Any]], str, dict[str, dict[str, Any]]
+]:
+    """Apply the repository Phase-2 Pareto/operating-point policy to EC-1."""
+    valid_rows = [row for row in search_rows if row["valid"]]
+    if not valid_rows:
+        raise RuntimeError("EC-1 RPAS search produced no valid candidate")
+    shortlisted, shortlist_policy = shortlist_rows_for_selection(
+        valid_rows,
+        mode="wan_pareto",
+        shortlist_size=min(5, len(valid_rows)),
+        selection_strategy="quality_band_cost",
+        quality_band=0.05,
+    )
+    return shortlisted, shortlist_policy, select_operating_points(shortlisted)
+
+
 def run(args: Any) -> dict[str, Any]:
     gpu = _require_selected_gpu()
     repo_root = Path(args.repo_root).resolve()
@@ -346,10 +366,15 @@ def run(args: Any) -> dict[str, Any]:
                 break
         if not accepted:
             raise RuntimeError("LLM reflection exhausted all valid parents without a unique valid typed mutation")
-    selected = max(
-        (row for row in search_rows if row["valid"]),
-        key=lambda row: (float(row["score"]), -float(row["avg_total_tokens"]), str(row["candidate_id"])),
-    )
+    # HumanEval's frozen AFlow-compatible protocol exposes only validate/search
+    # and held-out test (33/131); it does not define a separate D_select split.
+    # Reuse the repository-native Pareto shortlist and operating-point policy on
+    # D_search rather than silently replacing it with max(score).  The manifest
+    # records that selection is search-only for this benchmark contract.
+    shortlisted, shortlist_policy, operating_points = _native_operating_points(search_rows)
+    valid_search_rows = [row for row in search_rows if row["valid"]]
+    selected = operating_points["quality"]
+    efficient = operating_points["efficiency"]
     test_result = _evaluate_candidate(
         candidate=selected["candidate"], tasks=splits["test"], models=models, profile=profile,
         executor=executor, run_id=run_id, split="test", capture_outputs=True,
@@ -386,6 +411,19 @@ def run(args: Any) -> dict[str, Any]:
             "rule_fallbacks": 0,
             "search_calls": len(search_calls),
             "search_tokens": sum(int(row["total_tokens"]) for row in search_calls),
+            "search_pareto_front_ids": [row["candidate_id"] for row in pareto_front(valid_search_rows)],
+            "selection_shortlist_ids": [row["candidate_id"] for row in shortlisted],
+            "selection_shortlist_policy": shortlist_policy,
+            "selection_split": "D_search (EC-1 frozen AFlow contract has no D_select)",
+            "selection_policy": "native_select_operating_points",
+            "quality_operating_point": {
+                "candidate_id": selected["candidate_id"],
+                "score": selected["score"],
+            },
+            "efficiency_operating_point": {
+                "candidate_id": efficient["candidate_id"],
+                "score": efficient["score"],
+            },
             "public_test_calls": len(tool_events),
             "public_test_repairs": sum(int(event["attempt"]) == 1 for event in tool_events),
             "formal_result": args.run_kind == "formal",

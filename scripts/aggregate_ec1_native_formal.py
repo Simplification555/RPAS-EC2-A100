@@ -74,6 +74,20 @@ def load(root: Path, method: str, seed: int) -> dict:
         raise ValueError(f"substituted MaAS embeddings are not a native baseline: {directory}")
     if method in {"rpas", "single"} and manifest.get("code_extractor_version") != "preserve_complete_program_v2":
         raise ValueError(f"RPAS used the legacy import-stripping evaluator: {directory}")
+    if method == "rpas":
+        required_native_selection = (
+            "search_pareto_front_ids",
+            "selection_shortlist_ids",
+            "selection_shortlist_policy",
+            "quality_operating_point",
+            "efficiency_operating_point",
+        )
+        if manifest.get("selection_policy") != "native_select_operating_points":
+            raise ValueError(f"RPAS did not use native operating-point selection: {directory}")
+        if any(not manifest.get(key) for key in required_native_selection):
+            raise ValueError(f"RPAS is missing native Pareto/operating-point evidence: {directory}")
+        if manifest.get("selection_split") != "D_search (EC-1 frozen AFlow contract has no D_select)":
+            raise ValueError(f"RPAS selection split declaration is invalid: {directory}")
     rows = [json.loads(line) for line in outputs_path.read_text(encoding="utf-8").splitlines() if line.strip()]
     if len(rows) != 131 or len({str(row.get("task_id", row.get("id", ""))) for row in rows}) != 131:
         raise ValueError(f"duplicate or incomplete test rows: {outputs_path}")

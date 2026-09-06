@@ -29,7 +29,9 @@ gpu="${CUDA_VISIBLE_DEVICES:-}"
 [[ "${gpu}" =~ ^[0-9]+$ ]] || { echo "expected one allocated GPU token, got ${gpu:-<unset>}" >&2; exit 2; }
 packed_slot="${RPAS_EC1_PACKED_SLOT:-primary}"
 
-experiment_root="${RPAS_EC1_OUTPUT_ROOT:-${repo_root}/outputs/scir_ec1_formal_v2}"
+# V2 used a non-native RPAS selector and is retained only as an immutable
+# boundary artifact.  Formal V4-compatible reruns must never share its root.
+experiment_root="${RPAS_EC1_OUTPUT_ROOT:-${repo_root}/outputs/scir_ec1_formal_v3}"
 job_root="${experiment_root}/_jobs/${method}/seed_${seed}_${SLURM_JOB_ID}"
 port="${RPAS_EC1_SERVICE_PORT:-$((29600 + SLURM_JOB_ID % 900))}"
 dataset="${repo_root}/data/ec1_humaneval/official/humaneval.jsonl"

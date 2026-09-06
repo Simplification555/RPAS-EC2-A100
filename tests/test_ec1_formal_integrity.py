@@ -124,6 +124,15 @@ def test_legacy_rpas_evaluator_rejected(completed):
         path = destination / name
         payload = json.loads(path.read_text())
         payload["code_extractor_version"] = "preserve_complete_program_v2"
+        payload.update({
+            "selection_policy": "native_select_operating_points",
+            "search_pareto_front_ids": ["candidate"],
+            "selection_shortlist_ids": ["candidate"],
+            "selection_shortlist_policy": "pareto_front_quality_band_cost_selection_shortlist.band=0.05",
+            "selection_split": "D_search (EC-1 frozen AFlow contract has no D_select)",
+            "quality_operating_point": {"candidate_id": "candidate", "score": 1.0},
+            "efficiency_operating_point": {"candidate_id": "candidate", "score": 1.0},
+        })
         path.write_text(json.dumps(payload))
     seal(destination)
     assert load(root, "rpas", 0)["num_examples"] == 131
