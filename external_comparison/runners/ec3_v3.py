@@ -34,8 +34,10 @@ from experiments.phase2_wan_agent_search import (
     mutate_candidate,
     pareto_front,
     scientific_config_payload,
+    select_operating_points,
     seed_architectures,
     sha256_json,
+    shortlist_rows_for_selection,
     validate_candidate_contract,
 )
 
@@ -43,6 +45,11 @@ from experiments.phase2_wan_agent_search import (
 PROTOCOL_VERSION = "EC3_HOTPOTQA_V3"
 MIN_VALID_ANSWER_RATE = 0.99
 MAX_TRUNCATION_RATE = 0.01
+EXECUTOR_MAX_TOKENS = 512
+META_MAX_TOKENS = 4096
+RPAS_MODE = "wan_pareto"
+SELECTION_STRATEGY = "quality_band_cost"
+SELECTION_QUALITY_BAND = 0.05
 
 
 def _read_json(path: Path | str) -> dict[str, Any]:
@@ -112,9 +119,12 @@ def _runtime(config_path: Path) -> tuple[dict[str, Any], dict[str, Any], Any]:
     endpoint = os.environ.get("RPAS_EXTERNAL_API_BASE", "").strip()
     if not endpoint:
         raise RuntimeError("RPAS_EXTERNAL_API_BASE must point to this worker's local model service")
-    executor_max_tokens = int(os.environ.get("RPAS_EC3_EXECUTOR_MAX_TOKENS", "256"))
-    if executor_max_tokens not in {256, 512}:
-        raise ValueError("EC-3 executor cap must be a calibrated 256 or 512")
+    executor_max_tokens = int(os.environ.get("RPAS_EC3_EXECUTOR_MAX_TOKENS", str(EXECUTOR_MAX_TOKENS)))
+    meta_max_tokens = int(os.environ.get("RPAS_EC3_META_MAX_TOKENS", str(META_MAX_TOKENS)))
+    if executor_max_tokens != EXECUTOR_MAX_TOKENS or meta_max_tokens != META_MAX_TOKENS:
+        raise ValueError(
+            "EC-3 V3 requires the frozen executor/meta decoding contract: 512/4096"
+        )
     for model in raw_config["models"].values():
         model["api_base"] = endpoint
         model["completion_kwargs"] = {"temperature": 0.0, "max_tokens": executor_max_tokens}
@@ -201,33 +211,25 @@ def _candidate_row(candidate: dict[str, Any], result: dict[str, Any], origin: st
         "candidate_name": candidate["name"],
         "topology": candidate["topology"],
         "candidate_origin": origin,
+        # Native Phase-2 selection expects score. For HotpotQA it is answer F1.
+        "score": float(result["answer_f1"]),
         **_compact_result(result),
     }
 
 
 def _shortlist(rows: list[dict[str, Any]], maximum: int = 5) -> list[dict[str, Any]]:
-    eligible = [row for row in rows if row.get("is_valid_candidate")]
-    if not eligible:
-        raise RuntimeError("EC-3 RPAS has no valid D_search candidate")
-    selected: list[dict[str, Any]] = []
-    for row in sorted(eligible, key=lambda item: (-float(item["answer_f1"]), str(item["candidate_id"])))[:3]:
-        selected.append(row)
-    for row in sorted(pareto_front(eligible), key=lambda item: (float(item["avg_total_tokens"]), str(item["candidate_id"]))):
-        if row["candidate_id"] not in {item["candidate_id"] for item in selected}:
-            selected.append(row)
-        if len(selected) >= maximum:
-            break
-    return selected[:maximum]
-
-
-def _select(selection_rows: list[dict[str, Any]]) -> dict[str, Any]:
-    valid = [row for row in selection_rows if row.get("is_valid_candidate")]
-    if not valid:
-        raise RuntimeError("EC-3 RPAS has no valid D_select finalist")
-    return min(
-        valid,
-        key=lambda row: (-float(row["answer_f1"]), float(row["avg_total_tokens"]), float(row["avg_calls"]), str(row["candidate_id"])),
+    shortlisted, _ = shortlist_rows_for_selection(
+        rows,
+        mode=RPAS_MODE,
+        shortlist_size=maximum,
+        selection_strategy=SELECTION_STRATEGY,
+        quality_band=SELECTION_QUALITY_BAND,
     )
+    return shortlisted
+
+
+def _select(selection_rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    return select_operating_points(selection_rows)
 
 
 def _manifest_base(manifest: dict[str, Any], *, method: str, seed: int, config: dict[str, Any], gpu: str) -> dict[str, Any]:
@@ -242,8 +244,8 @@ def _manifest_base(manifest: dict[str, Any], *, method: str, seed: int, config: 
         "split_protocol": "calib__search__select__test_locked",
         "d_test_accessed": False,
         "executor_model": os.environ.get("RPAS_EXTERNAL_MODEL", "Qwen/Qwen3.5-9B"),
-        "executor_max_tokens": int(os.environ.get("RPAS_EC3_EXECUTOR_MAX_TOKENS", "256")),
-        "meta_max_tokens": int(config["reflection"]["max_tokens"]),
+        "executor_max_tokens": EXECUTOR_MAX_TOKENS,
+        "meta_max_tokens": META_MAX_TOKENS,
         "temperature": 0.0,
         "runtime_cuda_visible_devices": gpu,
         "config_sha256": sha256_json(scientific_config_payload(config)),
@@ -374,7 +376,13 @@ def run_pretest(args: argparse.Namespace) -> Path:
             "EC-3 RPAS could not materialize three LLM-planned valid mutations "
             f"within {max_reflection_attempts} reflection attempts"
         )
-    finalists = _shortlist(evaluated)
+    finalists, shortlist_policy = shortlist_rows_for_selection(
+        evaluated,
+        mode=RPAS_MODE,
+        shortlist_size=5,
+        selection_strategy=SELECTION_STRATEGY,
+        quality_band=SELECTION_QUALITY_BAND,
+    )
     selection_rows: list[dict[str, Any]] = []
     selection_calls: list[dict[str, Any]] = []
     for row in finalists:
@@ -382,11 +390,22 @@ def run_pretest(args: argparse.Namespace) -> Path:
         selection_rows.append(_candidate_row(row["candidate"], result, row["candidate_origin"]))
         selection_calls.extend(call_rows)
         all_outputs.extend(result["outputs"])
-    selected = _select(selection_rows)
+    operating_points = select_operating_points(selection_rows)
+    selected = operating_points["quality"]
+    efficient = operating_points["efficiency"]
     selected_payload = {
         "candidate": selected["candidate"], "candidate_id": selected["candidate_id"],
         "selection_answer_f1": selected["answer_f1"], "selection_answer_em": selected["answer_em"],
-        "selection_policy": "max_d_select_f1__min_tokens__min_calls__candidate_id",
+        "operating_point": "quality",
+        "selection_policy": "protocol_q_e.delta=0.05",
+        "quality_operating_point": {
+            "candidate": selected["candidate"], "candidate_id": selected["candidate_id"],
+            "answer_f1": selected["answer_f1"], "answer_em": selected["answer_em"],
+        },
+        "efficiency_operating_point": {
+            "candidate": efficient["candidate"], "candidate_id": efficient["candidate_id"],
+            "answer_f1": efficient["answer_f1"], "answer_em": efficient["answer_em"],
+        },
         "finalists": [row["candidate_id"] for row in finalists],
     }
     _write_json(root / "selected_candidate.json", selected_payload)
@@ -407,6 +426,10 @@ def run_pretest(args: argparse.Namespace) -> Path:
             "new_candidates": generated, "mutation_logs": len([row for row in mutation_logs if row["status"] == "evaluated"]),
             "seed_archive_size": seed_archive_size, "pareto_archive_size": archive_size,
             "rule_fallbacks": 0, "finalists": len(finalists),
+            "mode": RPAS_MODE, "selection_strategy": SELECTION_STRATEGY,
+            "shortlist_policy": shortlist_policy, "selection_policy": "protocol_q_e.delta=0.05",
+            "quality_candidate_id": selected["candidate_id"],
+            "efficiency_candidate_id": efficient["candidate_id"],
         },
     }
     _write_json(root / "run_manifest.json", payload)
@@ -441,7 +464,8 @@ def run_test(args: argparse.Namespace, *, single: bool = False) -> Path:
         selected_path = root / "rpas" / f"seed_{args.seed}" / "selected_candidate.json"
         if not selected_path.is_file():
             raise FileNotFoundError(f"missing frozen RPAS selection: {selected_path}")
-        candidate = _read_json(selected_path)["candidate"]
+        selected = _read_json(selected_path)
+        candidate = selected["quality_operating_point"]["candidate"]
     run_id = f"ec3-hotpotqa-{method}-seed-{args.seed}"
     result, calls = _evaluate(candidate=candidate, rows=test, models=models, profile=profile, config=raw_config, split="test", run_id=run_id, method=method)
     output.mkdir(parents=True, exist_ok=True)

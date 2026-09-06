@@ -32,6 +32,8 @@ from external_comparison.runners.hotpotqa_ec3_data import HotpotExample, answer_
 PROTOCOL_VERSION = "EC3_HOTPOTQA_V3"
 MIN_VALID_ANSWER_RATE = 0.99
 MAX_TRUNCATION_RATE = 0.01
+EXECUTOR_MAX_TOKENS = 512
+META_MAX_TOKENS = 4096
 
 
 class _PromptFallback:
@@ -445,10 +447,10 @@ def _manifest_base(manifest: dict[str, Any], *, seed: int, gpu: str, executor_ca
 def _setup(args: argparse.Namespace, *, output: Path, seed: int) -> tuple[dict[str, Any], Path, Path, int, int, str]:
     gpu = _require_one_allocated_gpu()
     manifest = _read_json(Path(args.manifest))
-    executor_cap = int(os.environ.get("RPAS_EC3_EXECUTOR_MAX_TOKENS", "256"))
-    meta_cap = int(os.environ.get("RPAS_EC3_META_MAX_TOKENS", "4096"))
-    if executor_cap not in {256, 512} or meta_cap < 2048:
-        raise ValueError("EC-3 requires executor cap 256/512 and meta cap at least 2048")
+    executor_cap = int(os.environ.get("RPAS_EC3_EXECUTOR_MAX_TOKENS", str(EXECUTOR_MAX_TOKENS)))
+    meta_cap = int(os.environ.get("RPAS_EC3_META_MAX_TOKENS", str(META_MAX_TOKENS)))
+    if executor_cap != EXECUTOR_MAX_TOKENS or meta_cap != META_MAX_TOKENS:
+        raise ValueError("EC-3 V3 requires the frozen executor/meta decoding contract: 512/4096")
     if output.exists() and any(output.iterdir()):
         raise FileExistsError(f"refusing to reuse EC-3 AFlow workspace: {output}")
     # The shared upstream checkout may legitimately retain earlier experiment
@@ -580,8 +582,10 @@ def run_test(args: argparse.Namespace) -> Path:
     workspace = run / "_workspaces" / f"aflow_seed_{args.seed}"
     if not workspace.is_dir():
         raise FileNotFoundError(f"missing frozen AFlow workspace: {workspace}")
-    executor_cap = int(os.environ.get("RPAS_EC3_EXECUTOR_MAX_TOKENS", "256"))
-    meta_cap = int(os.environ.get("RPAS_EC3_META_MAX_TOKENS", "4096"))
+    executor_cap = int(os.environ.get("RPAS_EC3_EXECUTOR_MAX_TOKENS", str(EXECUTOR_MAX_TOKENS)))
+    meta_cap = int(os.environ.get("RPAS_EC3_META_MAX_TOKENS", str(META_MAX_TOKENS)))
+    if executor_cap != EXECUTOR_MAX_TOKENS or meta_cap != META_MAX_TOKENS:
+        raise ValueError("EC-3 V3 requires the frozen executor/meta decoding contract: 512/4096")
     test = _load_split(manifest, "test")
     split_path = workspace / "data" / "datasets" / "hotpotqa_validate.jsonl"
     os.chdir(workspace)

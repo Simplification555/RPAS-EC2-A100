@@ -53,8 +53,10 @@ export CUDA_VISIBLE_DEVICES="${gpu}"
 export RPAS_EXTERNAL_API_BASE="http://127.0.0.1:${port}/v1"
 export RPAS_EXTERNAL_API_KEY=EMPTY
 export RPAS_EXTERNAL_MODEL=Qwen/Qwen3.5-9B
-export RPAS_EC3_EXECUTOR_MAX_TOKENS="${RPAS_EC3_EXECUTOR_MAX_TOKENS:-256}"
+export RPAS_EC3_EXECUTOR_MAX_TOKENS="${RPAS_EC3_EXECUTOR_MAX_TOKENS:-512}"
 export RPAS_EC3_META_MAX_TOKENS="${RPAS_EC3_META_MAX_TOKENS:-4096}"
+[[ "${RPAS_EC3_EXECUTOR_MAX_TOKENS}" == "512" ]] || { echo "EC-3 V3 requires executor cap 512" >&2; exit 2; }
+[[ "${RPAS_EC3_META_MAX_TOKENS}" == "4096" ]] || { echo "EC-3 V3 requires meta cap 4096" >&2; exit 2; }
 export RPAS_CODE_COMMIT="${RPAS_CODE_COMMIT:-bundle_without_git_metadata}"
 export GEPA_QWEN_DISABLE_THINKING=1
 export PYTHONUNBUFFERED=1
@@ -69,6 +71,8 @@ export PYTHONUNBUFFERED=1
   echo "seed=${seed}"
   echo "cuda_visible_devices=${gpu}"
   echo "formal_root=${formal_root}"
+  echo "executor_max_tokens=${RPAS_EC3_EXECUTOR_MAX_TOKENS}"
+  echo "meta_max_tokens=${RPAS_EC3_META_MAX_TOKENS}"
   nvidia-smi --query-gpu=index,uuid,name,memory.total,driver_version --format=csv
   sha256sum "${manifest_path}"
   # SCIR receives a source bundle rather than a Git working tree. Avoid a

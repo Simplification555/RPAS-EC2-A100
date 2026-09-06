@@ -41,6 +41,7 @@ export RPAS_EXTERNAL_API_KEY=EMPTY
 export RPAS_EXTERNAL_MODEL=Qwen/Qwen3.5-9B
 export RPAS_EC3_EXECUTOR_MAX_TOKENS=512
 export RPAS_EC3_META_MAX_TOKENS=4096
+[[ "${RPAS_EC3_EXECUTOR_MAX_TOKENS}" == "512" && "${RPAS_EC3_META_MAX_TOKENS}" == "4096" ]] || { echo "invalid frozen EC-3 decoding contract" >&2; exit 2; }
 export GEPA_QWEN_DISABLE_THINKING=1
 export PYTHONUNBUFFERED=1
 
@@ -54,6 +55,8 @@ export PYTHONUNBUFFERED=1
   echo "seed=${seed}"
   echo "cuda_visible_devices=${gpu}"
   echo "run_kind=formal_test"
+  echo "executor_max_tokens=${RPAS_EC3_EXECUTOR_MAX_TOKENS}"
+  echo "meta_max_tokens=${RPAS_EC3_META_MAX_TOKENS}"
   nvidia-smi --query-gpu=index,uuid,name,memory.total,driver_version --format=csv
   sha256sum "${manifest}"
   "${python_bin}" -m pip show torch transformers litellm datasets sentence-transformers

@@ -11,11 +11,18 @@ def _manifest(method: str, seed: int) -> dict:
         "protocol_version": "EC3_HOTPOTQA_V3", "dataset": "hotpotqa", "method": method,
         "seed": seed, "split_protocol": "calib__search__select__test_locked", "d_test_accessed": False,
         "search_calls": 10, "search_tokens": 100, "split_manifest_sha256": "fixed-split",
+        "executor_max_tokens": 512, "meta_max_tokens": 4096,
     }
     if method == "aflow":
         payload["aflow_search"] = {"new_workflow_rounds": 1, "optimizer_calls": 1, "workflow_executable_rate": 1.0}
     else:
-        payload["rpas_search"] = {"reflection_calls": 1, "new_candidates": 1, "mutation_logs": 1, "seed_archive_size": 2, "pareto_archive_size": 3}
+        payload["rpas_search"] = {
+            "reflection_calls": 1, "new_candidates": 1, "mutation_logs": 1,
+            "seed_archive_size": 2, "pareto_archive_size": 3, "mode": "wan_pareto",
+            "selection_strategy": "quality_band_cost", "shortlist_policy": "native",
+            "selection_policy": "protocol_q_e.delta=0.05", "quality_candidate_id": "q",
+            "efficiency_candidate_id": "e",
+        }
     return payload
 
 
@@ -23,7 +30,18 @@ def _write_run(root: Path, method: str, seed: int) -> Path:
     run = root / method / f"seed_{seed}"
     run.mkdir(parents=True)
     (run / "run_manifest.json").write_text(json.dumps(_manifest(method, seed)), encoding="utf-8")
-    (run / "selected_candidate.json").write_text(json.dumps({"candidate": f"{method}-{seed}"}), encoding="utf-8")
+    candidate = {"candidate": f"{method}-{seed}"}
+    if method == "rpas":
+        architecture = {"id": "q", "topology": "single"}
+        candidate.update(
+            {
+                "candidate": architecture, "candidate_id": "q", "operating_point": "quality",
+                "selection_policy": "protocol_q_e.delta=0.05",
+                "quality_operating_point": {"candidate_id": "q", "candidate": architecture},
+                "efficiency_operating_point": {"candidate_id": "e"},
+            }
+        )
+    (run / "selected_candidate.json").write_text(json.dumps(candidate), encoding="utf-8")
     return run
 
 
@@ -43,4 +61,31 @@ def test_ec3_freeze_rejects_pretest_access(tmp_path: Path):
     manifest["d_test_accessed"] = True
     (run / "run_manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
     with pytest.raises(ValueError, match="D_test"):
+        freeze_state(run)
+
+
+def test_ec3_freeze_rejects_a_mismatched_decoding_contract(tmp_path: Path):
+    run = _write_run(tmp_path, "rpas", 0)
+    manifest = json.loads((run / "run_manifest.json").read_text())
+    manifest["executor_max_tokens"] = 256
+    (run / "run_manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(ValueError, match="512/4096"):
+        freeze_state(run)
+
+
+def test_ec3_freeze_rejects_simplified_rpas_selection(tmp_path: Path):
+    run = _write_run(tmp_path, "rpas", 0)
+    candidate = json.loads((run / "selected_candidate.json").read_text())
+    candidate.pop("efficiency_operating_point")
+    (run / "selected_candidate.json").write_text(json.dumps(candidate), encoding="utf-8")
+    with pytest.raises(ValueError, match="quality/efficiency"):
+        freeze_state(run)
+
+
+def test_ec3_freeze_rejects_a_top_level_candidate_that_is_not_the_quality_point(tmp_path: Path):
+    run = _write_run(tmp_path, "rpas", 0)
+    candidate = json.loads((run / "selected_candidate.json").read_text())
+    candidate["candidate"] = {"id": "other", "topology": "single"}
+    (run / "selected_candidate.json").write_text(json.dumps(candidate), encoding="utf-8")
+    with pytest.raises(ValueError, match="differs from the quality"):
         freeze_state(run)

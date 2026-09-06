@@ -16,6 +16,7 @@ def _row(candidate_id: str, f1: float, tokens: float, calls: float) -> dict:
     return {
         "candidate_id": candidate_id,
         "answer_f1": f1,
+        "score": f1,
         "avg_total_tokens": tokens,
         "avg_calls": calls,
         "avg_errors": 0.0,
@@ -42,7 +43,9 @@ def test_ec3_shortlist_and_selection_apply_deterministic_tie_breaks() -> None:
     shortlisted = _shortlist(rows)
     assert len(shortlisted) <= 5
     assert {row["candidate_id"] for row in shortlisted}.issuperset({"a", "b", "c"})
-    assert _select([_row("z", 0.7, 200, 3), _row("y", 0.7, 100, 4)])["candidate_id"] == "y"
+    selected = _select([_row("z", 0.7, 200, 3), _row("y", 0.7, 100, 4)])
+    assert selected["quality"]["candidate_id"] == "y"
+    assert selected["efficiency"]["candidate_id"] == "y"
 
 
 def test_ec3_test_unlock_must_match_the_frozen_split(tmp_path: Path) -> None:
