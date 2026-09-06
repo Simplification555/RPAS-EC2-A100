@@ -29,8 +29,9 @@ job_root="${output_root}/_jobs/${method}_${SLURM_JOB_ID}"
 
 cd "$repo_root"
 mkdir -p "$job_root/logs" "${output_root}/_locks" logs/slurm
-exec 8>"${output_root}/_locks/${method}_seed_0.lock"
-flock -n 8 || { echo "duplicate ${method} seed 0 job" >&2; exit 2; }
+lock_dir="${output_root}/_locks/${method}_seed_0.lockdir"
+mkdir "$lock_dir" 2>/dev/null || { echo "duplicate ${method} seed 0 job" >&2; exit 2; }
+printf '%s\n' "${SLURM_JOB_ID}" >"${lock_dir}/owner_job_id"
 [[ ! -e "${output_root}/${method}/seed_0/result.json" ]] || { echo "completed result already exists" >&2; exit 2; }
 
 export PYTHONPATH="${repo_root}${PYTHONPATH:+:${PYTHONPATH}}"

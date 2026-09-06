@@ -40,8 +40,9 @@ validate_fixture="${repo_root}/data/ec1_humaneval/aflow/humaneval_validate.jsonl
 test_fixture="${repo_root}/data/ec1_humaneval/aflow/humaneval_test.jsonl"
 cd "${repo_root}"
 mkdir -p "${experiment_root}/_locks"
-exec 8>"${experiment_root}/_locks/${method}_seed_${seed}.lock"
-flock 8
+lock_dir="${experiment_root}/_locks/${method}_seed_${seed}.lockdir"
+mkdir "$lock_dir" 2>/dev/null || { echo "duplicate ${method} seed ${seed} job" >&2; exit 2; }
+printf '%s\n' "${SLURM_JOB_ID}" >"${lock_dir}/owner_job_id"
 # A separately started corrected seed may finish before its old sequential
 # lane reaches it. Only reuse a fully audited result from this exact rerun root.
 if [[ -e "${experiment_root}/${method}/seed_${seed}/result.json" ]]; then
