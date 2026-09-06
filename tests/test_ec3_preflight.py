@@ -34,5 +34,9 @@ def test_ec3_preflight_accepts_pinned_clean_fixture(monkeypatch, tmp_path: Path)
 
     monkeypatch.setattr("external_comparison.runners.ec3_preflight.subprocess.run", fake_run)
     monkeypatch.setenv("RPAS_EXTERNAL_API_BASE", "http://127.0.0.1:29500/v1")
+    manifest = json.loads((frozen / "hotpotqa_manifest.json").read_text(encoding="utf-8"))
+    Path(manifest["splits"]["test"]["path"]).unlink()
     payload = preflight(manifest_path=frozen / "hotpotqa_manifest.json", aflow_root=tmp_path / "AFlow", expected_endpoint="http://127.0.0.1:29500/v1")
     assert payload["status"] == "ready_for_calibration"
+    assert payload["splits"]["test"]["accessed"] is False
+    assert payload["splits"]["test"]["access_policy"] == "deferred_until_six_state_unlock"

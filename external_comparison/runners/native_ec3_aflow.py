@@ -522,6 +522,11 @@ def run_pretest(args: argparse.Namespace) -> Path:
     manifest, workspace, calls_path, executor_cap, meta_cap, gpu = _setup(args, output=output, seed=args.seed)
     search = _load_split(manifest, "search")
     select = _load_split(manifest, "select")
+    pilot = args.command == "pilot"
+    if pilot:
+        search, select = search[:8], select[:8]
+        if len(search) != 8 or len(select) != 8:
+            raise ValueError("EC-3 AFlow minimum pilot requires eight search and selection examples")
     split_path = workspace / "data" / "datasets" / "hotpotqa_validate.jsonl"
     _write_split(split_path, search)
     os.chdir(workspace)
@@ -553,18 +558,63 @@ def run_pretest(args: argparse.Namespace) -> Path:
     selected_payload = {"round": selected["round"], "selection_answer_f1": selected["answer_f1"], "selection_answer_em": selected["answer_em"], "selection_policy": "max_d_select_f1__round"}
     _write_json(output / "selected_candidate.json", selected_payload)
     _append_jsonl(output / "selection_rows.jsonl", selection)
+    calibration_result = None
+    if pilot:
+        calibration = _load_split(manifest, "calib")
+        os.environ["RPAS_EC3_AFLOW_PHASE"] = "calib_quality"
+        calibration_result = _evaluate_round(
+            optimizer,
+            round_number=int(selected["round"]),
+            split_rows=calibration,
+            split_path=split_path,
+            log_dir=workflows / f"round_{selected['round']}",
+        )
+        _append_jsonl(output / "pilot_calibration_outputs.jsonl", calibration_result["outputs"])
     calls = [json.loads(line) for line in calls_path.read_text(encoding="utf-8").splitlines() if line.strip()] if calls_path.exists() else []
     meta_calls = [row for row in calls if row.get("agent") == "aflow_meta"]
     executor_calls = [row for row in calls if row.get("agent") == "aflow_executor"]
+    search_calls = [row for row in calls if row.get("split") == "search"]
+    selection_calls = [row for row in calls if row.get("split") == "select"]
+    calibration_calls = [row for row in calls if str(row.get("split", "")).startswith("calib_")]
     executable_rate = sum(row["valid_answer_rate"] >= MIN_VALID_ANSWER_RATE for row in selection) / len(selection) if selection else 0.0
+    truncation = _truncation_rate(calls_path, executor_cap=executor_cap, meta_cap=meta_cap)
     payload = {
         **_manifest_base(manifest, seed=args.seed, gpu=gpu, executor_cap=executor_cap, meta_cap=meta_cap),
-        "run_id": f"ec3-hotpotqa-aflow-seed-{args.seed}", "run_kind": "pretest_search_select", "code_commit": _git_commit(Path(args.repo_root)),
-        "search_calls": len(calls), "search_tokens": sum(int(row.get("total_tokens", 0)) for row in calls), "search_wall_clock_seconds": time.time() - started,
+        "run_id": f"ec3-hotpotqa-aflow-seed-{args.seed}",
+        "run_kind": "minimum_search_select_calib_pilot" if pilot else "pretest_search_select",
+        "formal_result": False,
+        "code_commit": _git_commit(Path(args.repo_root)),
+        "search_examples": len(search), "select_examples": len(select),
+        "subset_policy": "first_eight_frozen_fixture_rows" if pilot else "full_frozen_splits",
+        "search_calls": len(search_calls),
+        "search_tokens": sum(int(row.get("total_tokens", 0)) for row in search_calls),
+        "selection_calls": len(selection_calls),
+        "selection_tokens": sum(int(row.get("total_tokens", 0)) for row in selection_calls),
+        "calibration_calls": len(calibration_calls),
+        "calibration_tokens": sum(int(row.get("total_tokens", 0)) for row in calibration_calls),
+        "total_model_calls": len(calls),
+        "total_tokens": sum(int(row.get("total_tokens", 0)) for row in calls),
+        "search_wall_clock_seconds": time.time() - started,
+        "executor_generation_truncation_rate": truncation,
         "aflow_search": {"new_workflow_rounds": sum(round_number > 1 for round_number in rounds), "optimizer_calls": len(meta_calls), "workflow_executable_rate": executable_rate, "executor_calls": len(executor_calls), "finalists": len(finalists)},
     }
+    if calibration_result is not None:
+        payload.update({
+            "calibration_answer_f1": calibration_result["answer_f1"],
+            "calibration_answer_em": calibration_result["answer_em"],
+            "status": (
+                "passed"
+                if calibration_result["valid_answer_rate"] >= MIN_VALID_ANSWER_RATE
+                and truncation < MAX_TRUNCATION_RATE
+                else "failed"
+            ),
+        })
     _write_json(output / "run_manifest.json", payload)
-    freeze_state(output)
+    if pilot:
+        if payload["status"] != "passed":
+            raise RuntimeError("EC-3 AFlow pilot failed frozen D_calib validity")
+    else:
+        freeze_state(output)
     return output
 
 
@@ -615,6 +665,8 @@ def main() -> int:
     sub.add_parser("calibration")
     pretest = sub.add_parser("pretest")
     pretest.add_argument("--seed", type=int, choices=(0, 1, 2), required=True)
+    pilot = sub.add_parser("pilot")
+    pilot.add_argument("--seed", type=int, choices=(0,), required=True)
     test = sub.add_parser("test")
     test.add_argument("--seed", type=int, choices=(0, 1, 2), required=True)
     args = parser.parse_args()
@@ -622,9 +674,9 @@ def main() -> int:
     args.manifest = str(Path(args.manifest).resolve())
     args.aflow_root = str(Path(args.aflow_root).resolve())
     args.output_root = str(Path(args.output_root).resolve())
-    if args.command in {"calibration", "pretest"}:
+    if args.command in {"calibration", "pretest", "pilot"}:
         preflight(manifest_path=Path(args.manifest), aflow_root=Path(args.aflow_root), expected_endpoint=os.environ.get("RPAS_EXTERNAL_API_BASE"))
-    target = run_calibration(args) if args.command == "calibration" else run_pretest(args) if args.command == "pretest" else run_test(args)
+    target = run_calibration(args) if args.command == "calibration" else run_pretest(args) if args.command in {"pretest", "pilot"} else run_test(args)
     print(target)
     return 0
 

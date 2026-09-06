@@ -37,18 +37,41 @@ def preflight(*, manifest_path: Path, aflow_root: Path, expected_endpoint: str |
     for name, expected_count in FORMAL_COUNTS.items():
         details = manifest.get("splits", {}).get(name, {})
         path = Path(details.get("path", ""))
-        if not path.is_file() or int(details.get("count", -1)) != expected_count:
-            raise ValueError(f"EC-3 {name} fixture is missing or has an invalid count")
-        if sha256_file(path) != details.get("sha256") or path.stat().st_size != int(details.get("bytes", -1)):
+        ids = [str(value) for value in details.get("ids", [])]
+        if int(details.get("count", -1)) != expected_count:
+            raise ValueError(f"EC-3 {name} manifest has an invalid count")
+        if len(ids) != expected_count or len(set(ids)) != expected_count or not all(ids):
+            raise ValueError(f"EC-3 {name} manifest has duplicate or missing IDs")
+        if all_ids & set(ids):
+            raise ValueError(f"EC-3 {name} manifest overlaps an earlier split")
+        all_ids.update(ids)
+        if name == "test":
+            # D_test is first opened by the test runner only after the six-state
+            # unlock. Its immutable metadata is sufficient for a pretest
+            # disjointness check and avoids turning preflight into test access.
+            checks[name] = {
+                "path": str(path),
+                "count": expected_count,
+                "sha256": details.get("sha256"),
+                "accessed": False,
+                "access_policy": "deferred_until_six_state_unlock",
+            }
+            continue
+        if not path.is_file():
+            raise ValueError(f"EC-3 {name} fixture is missing")
+        actual_sha256 = sha256_file(path)
+        if actual_sha256 != details.get("sha256") or path.stat().st_size != int(details.get("bytes", -1)):
             raise ValueError(f"EC-3 {name} fixture hash or byte size differs from its manifest")
         rows = _load_jsonl(path)
-        ids = [str(row.get("task_id", "")) for row in rows]
-        if len(rows) != expected_count or len(set(ids)) != expected_count or not all(ids):
-            raise ValueError(f"EC-3 {name} fixture has duplicate or missing IDs")
-        if all_ids & set(ids):
-            raise ValueError(f"EC-3 {name} fixture overlaps an earlier split")
-        all_ids.update(ids)
-        checks[name] = {"path": str(path), "count": len(rows), "sha256": sha256_file(path)}
+        actual_ids = [str(row.get("task_id", "")) for row in rows]
+        if actual_ids != ids:
+            raise ValueError(f"EC-3 {name} fixture IDs differ from its frozen manifest")
+        checks[name] = {
+            "path": str(path),
+            "count": len(rows),
+            "sha256": actual_sha256,
+            "accessed": True,
+        }
     if len(all_ids) != sum(FORMAL_COUNTS.values()):
         raise ValueError("EC-3 split cardinality is inconsistent")
     endpoint = os.environ.get("RPAS_EXTERNAL_API_BASE", "")

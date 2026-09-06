@@ -139,6 +139,49 @@ def test_ec3_pretest_delegates_the_controller_to_native_run_search() -> None:
     assert "mutate_candidate(" not in source
 
 
+def test_aflow_cli_accepts_seed_zero_pilot(monkeypatch, tmp_path: Path) -> None:
+    import external_comparison.runners.native_ec3_aflow as aflow
+
+    observed = {}
+
+    def fake_preflight(**kwargs):
+        observed["preflight"] = kwargs
+
+    def fake_run(args):
+        observed["command"] = args.command
+        observed["seed"] = args.seed
+        return tmp_path / "result"
+
+    monkeypatch.setenv("RPAS_EXTERNAL_API_BASE", "http://127.0.0.1:29999/v1")
+    monkeypatch.setattr(aflow, "preflight", fake_preflight)
+    monkeypatch.setattr(aflow, "run_pretest", fake_run)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "native_ec3_aflow.py",
+            "--repo-root", str(tmp_path),
+            "--manifest", str(tmp_path / "manifest.json"),
+            "--aflow-root", str(tmp_path / "AFlow"),
+            "--output-root", str(tmp_path / "outputs"),
+            "pilot", "--seed", "0",
+        ],
+    )
+    assert aflow.main() == 0
+    assert observed["command"] == "pilot"
+    assert observed["seed"] == 0
+    assert observed["preflight"]["expected_endpoint"] == "http://127.0.0.1:29999/v1"
+
+
+def test_aflow_pilot_is_bounded_and_does_not_freeze_formal_state() -> None:
+    from external_comparison.runners.native_ec3_aflow import run_pretest as run_aflow_pretest
+
+    source = inspect.getsource(run_aflow_pretest)
+    assert "search, select = search[:8], select[:8]" in source
+    assert '"formal_result": False' in source
+    assert "if pilot:" in source
+    assert "else:\n        freeze_state(output)" in source
+
+
 @pytest.mark.parametrize("dataset,expected", [("hotpotqa", "FINAL ANSWER: German"), ("aime", "### German")])
 def test_majority_vote_preserves_dataset_output_contract(monkeypatch, dataset, expected):
     import experiments.phase2_wan_agent_search as native
