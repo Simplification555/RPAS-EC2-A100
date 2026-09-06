@@ -27,15 +27,16 @@ run=("${repo_root}/.uv-linux" run --no-project --offline --python "${python_bin}
 aflow_root="/home/jianbaizhao/external_baselines/AFlow_formal_clean"
 manifest_path="${repo_root}/data/ec3_hotpotqa/formal/hotpotqa_manifest.json"
 method="${RPAS_EC3_METHOD:?set RPAS_EC3_METHOD to aflow or rpas}"
-stage="${RPAS_EC3_STAGE:?set RPAS_EC3_STAGE to calibration, pretest, test, or single-test}"
+stage="${RPAS_EC3_STAGE:?set RPAS_EC3_STAGE to calibration, pilot, pretest, test, or single-test}"
 seed="${RPAS_EC3_SEED:-0}"
 gpu="${CUDA_VISIBLE_DEVICES:-}"
 
 [[ "${gpu}" =~ ^[0-9]+$ ]] || { echo "expected exactly one Slurm GPU token, got ${gpu:-<unset>}" >&2; exit 2; }
 [[ "${method}" == "aflow" || "${method}" == "rpas" ]] || { echo "invalid EC-3 method: ${method}" >&2; exit 2; }
-case "${stage}" in calibration|pretest|test|single-test) ;; *) echo "invalid EC-3 stage: ${stage}" >&2; exit 2 ;; esac
+case "${stage}" in calibration|pilot|pretest|test|single-test) ;; *) echo "invalid EC-3 stage: ${stage}" >&2; exit 2 ;; esac
 [[ "${stage}" != "single-test" || "${method}" == "rpas" ]] || { echo "single-test is owned by the RPAS runner" >&2; exit 2; }
 [[ "${stage}" == "calibration" || "${seed}" =~ ^[012]$ ]] || { echo "EC-3 seed must be 0, 1, or 2" >&2; exit 2; }
+[[ "${stage}" != "pilot" || "${seed}" == "0" ]] || { echo "EC-3 pilot only supports seed 0" >&2; exit 2; }
 
 gpu_memory_mib="$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits | head -n 1 | tr -d ' ')"
 [[ "${gpu_memory_mib}" =~ ^[0-9]+$ ]] || { echo "unable to determine allocated GPU memory" >&2; exit 2; }
