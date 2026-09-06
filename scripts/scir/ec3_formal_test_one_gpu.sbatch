@@ -27,7 +27,7 @@ method="${methods[$((task_id / 3))]}"
 seed="$((task_id % 3))"
 gpu="${CUDA_VISIBLE_DEVICES:-}"
 [[ "${gpu}" =~ ^[0-9]+$ ]] || { echo "expected one allocated GPU token" >&2; exit 2; }
-root="${repo_root}/outputs/ec3_hotpotqa_v3"
+root="${RPAS_EC3_OUTPUT_ROOT:-${repo_root}/outputs/ec3_hotpotqa_v3_v4}"
 job_root="${repo_root}/outputs/scir_ec3_test/${method}/seed_${seed}_${SLURM_JOB_ID}"
 port=$((29900 + SLURM_JOB_ID % 800))
 mkdir -p "${job_root}/logs" "${root}"

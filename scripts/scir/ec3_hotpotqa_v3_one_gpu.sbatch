@@ -41,7 +41,7 @@ gpu_memory_mib="$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,noun
 (( gpu_memory_mib >= 30000 )) || { echo "Qwen3.5-9B EC-3 requires at least 30GB, found ${gpu_memory_mib}MiB" >&2; exit 2; }
 
 job_root="${repo_root}/outputs/scir_ec3_v3/${SLURM_JOB_ID}"
-formal_root="${repo_root}/outputs/ec3_hotpotqa_v3"
+formal_root="${RPAS_EC3_OUTPUT_ROOT:-${repo_root}/outputs/ec3_hotpotqa_v3_v4}"
 port=$((29890 + SLURM_JOB_ID % 900))
 mkdir -p "${job_root}/logs" "${formal_root}"
 cd "${repo_root}"
