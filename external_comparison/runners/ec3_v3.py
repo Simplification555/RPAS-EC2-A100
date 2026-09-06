@@ -326,16 +326,46 @@ def run_pretest(args: argparse.Namespace) -> Path:
     raw_config, models, profile = _runtime(Path(args.config))
     search = _load_split(manifest, "search")
     select = _load_split(manifest, "select")
+    pilot = args.command == "pilot"
+    if pilot:
+        # Frozen fixture order, chosen without examining answer scores.
+        search, select = search[:8], select[:8]
+        if len(search) != 8 or len(select) != 8:
+            raise ValueError("EC-3 minimum pilot requires eight search and selection examples")
     root = Path(args.output_root) / "rpas" / f"seed_{args.seed}"
     if root.exists() and any(root.iterdir()):
         raise FileExistsError(f"refusing to reuse a frozen EC-3 search directory: {root}")
     root.mkdir(parents=True, exist_ok=True)
     run_id = f"ec3-hotpotqa-rpas-seed-{args.seed}"
+    run_contract = {
+        "run_id": run_id, "formal_result": False, "d_test_accessed": False,
+        "run_kind": "minimum_search_select_calib_pilot" if pilot else "pretest_search_select",
+        "status": "running", "seed": args.seed,
+        "code_commit": _git_commit(Path(args.repo_root)),
+        "runner_sha256": sha256_file(__file__),
+        "search_examples": len(search), "select_examples": len(select),
+        "seed_candidates": 4, "new_candidate_budget": 3,
+        "subset_policy": "first_eight_frozen_fixture_rows" if pilot else "full_frozen_splits",
+        "search_ids": [row.task_id for row in search], "select_ids": [row.task_id for row in select],
+        "parent_selection": "native.select_parent",
+        "fidelity_scope": "native executor/reflection/mutation/selection components; adapter search loop",
+    }
+    _write_json(root / "minimum_run_contract.json", run_contract)
     rng = random.Random(args.seed)
     candidates = _native_seeds(raw_config, 4)
     evaluated: list[dict[str, Any]] = []
     search_calls: list[dict[str, Any]] = []
-    all_outputs: list[dict[str, Any]] = []
+    def record_evaluation(result: dict[str, Any], calls: list[dict[str, Any]], candidate: dict[str, Any], origin: str) -> None:
+        split = result["split"]
+        filename = {"search": "search_rows.jsonl", "select": "selection_rows.jsonl", "calib": "pilot_calibration_rows.jsonl"}[split]
+        _append_jsonl(root / filename, [_candidate_row(candidate, result, origin)])
+        _append_jsonl(root / "search_outputs.jsonl", [
+            {**output, "candidate_id": candidate["id"], "split": split} for output in result["outputs"]
+        ])
+        _append_jsonl(root / "calls.jsonl", calls)
+        print(json.dumps({"stage": split, "candidate_id": candidate["id"],
+                          "answer_f1": result["answer_f1"], "valid": result["is_valid_candidate"],
+                          "calls": len(calls)}, sort_keys=True), flush=True)
     for candidate in candidates:
         errors = validate_candidate_contract(candidate, raw_config, models)
         if errors:
@@ -343,7 +373,7 @@ def run_pretest(args: argparse.Namespace) -> Path:
         result, call_rows = _evaluate(candidate=candidate, rows=search, models=models, profile=profile, config=raw_config, split="search", run_id=run_id, method="rpas")
         evaluated.append(_candidate_row(candidate, result, "seed"))
         search_calls.extend(call_rows)
-        all_outputs.extend(result["outputs"])
+        record_evaluation(result, call_rows, candidate, "seed")
     seed_archive_size = len(pareto_front(evaluated))
     mutation_logs: list[dict[str, Any]] = []
     generated = 0
@@ -359,10 +389,15 @@ def run_pretest(args: argparse.Namespace) -> Path:
             row=parent, config=raw_config, models=models, profile=profile, reflection_mode="llm",
             reflection_model="qwen35_9b", reflection_max_tokens=int(raw_config["reflection"]["max_tokens"]), max_proposals=3,
         )
+        _append_jsonl(root / "reflection_plans.jsonl", [{
+            "attempt": reflection_attempts, "parent_candidate_id": parent["candidate_id"],
+            "parent_source": parent_source, "plan": plan,
+        }])
         if plan.get("mode") != "llm":
             raise RuntimeError("EC-3 RPAS forbids rule-based reflection fallback")
         reflection_calls = _reflection_call_rows(run_id, parent["candidate_id"], plan)
         search_calls.extend(reflection_calls)
+        _append_jsonl(root / "calls.jsonl", reflection_calls)
         proposals = choose_planned_mutations(plan, parent["candidate"], raw_config, limit=3)
         if not proposals:
             raise RuntimeError("EC-3 RPAS reflection returned no applicable typed mutation")
@@ -385,13 +420,15 @@ def run_pretest(args: argparse.Namespace) -> Path:
             if errors or any(child["id"] == row["candidate_id"] for row in evaluated):
                 mutation_log["status"] = "rejected"
                 mutation_logs.append(mutation_log)
+                _append_jsonl(root / "mutation_logs.jsonl", [mutation_log])
                 continue
             result, call_rows = _evaluate(candidate=child, rows=search, models=models, profile=profile, config=raw_config, split="search", run_id=run_id, method="rpas")
             evaluated.append(_candidate_row(child, result, "generated"))
             search_calls.extend(call_rows)
-            all_outputs.extend(result["outputs"])
+            record_evaluation(result, call_rows, child, "generated")
             mutation_log["status"] = "evaluated"
             mutation_logs.append(mutation_log)
+            _append_jsonl(root / "mutation_logs.jsonl", [mutation_log])
             generated += 1
             enqueued = True
         if not enqueued:
@@ -417,7 +454,7 @@ def run_pretest(args: argparse.Namespace) -> Path:
         result, call_rows = _evaluate(candidate=row["candidate"], rows=select, models=models, profile=profile, config=raw_config, split="select", run_id=run_id, method="rpas")
         selection_rows.append(_candidate_row(row["candidate"], result, row["candidate_origin"]))
         selection_calls.extend(call_rows)
-        all_outputs.extend(result["outputs"])
+        record_evaluation(result, call_rows, row["candidate"], row["candidate_origin"])
     operating_points = select_operating_points(selection_rows)
     selected = operating_points["quality"]
     efficient = operating_points["efficiency"]
@@ -437,18 +474,36 @@ def run_pretest(args: argparse.Namespace) -> Path:
         "finalists": [row["candidate_id"] for row in finalists],
     }
     _write_json(root / "selected_candidate.json", selected_payload)
-    _append_jsonl(root / "search_rows.jsonl", evaluated)
-    _append_jsonl(root / "selection_rows.jsonl", selection_rows)
-    _append_jsonl(root / "search_outputs.jsonl", all_outputs)
-    _append_jsonl(root / "mutation_logs.jsonl", mutation_logs)
-    _append_jsonl(root / "calls.jsonl", [*search_calls, *selection_calls])
+    calibration_calls: list[dict[str, Any]] = []
+    calibration_result: dict[str, Any] | None = None
+    if pilot:
+        # Selection is fixed before calibration; no reselection from its scores.
+        selected_sha = sha256_file(root / "selected_candidate.json")
+        _write_json(root / "pilot_selection_lock.json", {
+            "selected_candidate_sha256": selected_sha, "d_test_accessed": False,
+            "selected_candidate_id": selected["candidate_id"], "frozen_at_epoch": time.time(),
+        })
+        calibration = _load_split(manifest, "calib")
+        calibration_result, calibration_calls = _evaluate(
+            candidate=selected["candidate"], rows=calibration, models=models, profile=profile,
+            config=raw_config, split="calib", run_id=run_id, method="rpas",
+        )
+        record_evaluation(calibration_result, calibration_calls, selected["candidate"], "selected_pilot")
+        if sha256_file(root / "selected_candidate.json") != selected_sha:
+            raise RuntimeError("pilot selection changed during calibration")
     archive_size = len(pareto_front(evaluated))
     payload = {
         **_manifest_base(manifest, method="rpas", seed=args.seed, config=raw_config, gpu=gpu),
-        "run_id": run_id, "run_kind": "pretest_search_select", "code_commit": _git_commit(Path(args.repo_root)),
+        **run_contract,
+        "status": "passed" if calibration_result is None or calibration_result["is_valid_candidate"] else "failed",
         "search_calls": len(search_calls) + len(selection_calls),
         "search_tokens": sum(int(row["total_tokens"]) for row in [*search_calls, *selection_calls]),
         "search_wall_clock_seconds": float(time.time() - args.started_at),
+        "calibration_calls": len(calibration_calls),
+        "calibration_tokens": sum(int(row["total_tokens"]) for row in calibration_calls),
+        "calibration_answer_f1": calibration_result["answer_f1"] if calibration_result else None,
+        "total_model_calls": len(search_calls) + len(selection_calls) + len(calibration_calls),
+        "total_tokens": sum(int(row["total_tokens"]) for row in [*search_calls, *selection_calls, *calibration_calls]),
         "rpas_search": {
             "reflection_calls": sum(row["split"] == "search_reflection" for row in search_calls),
             "new_candidates": generated, "mutation_logs": len([row for row in mutation_logs if row["status"] == "evaluated"]),
@@ -465,7 +520,11 @@ def run_pretest(args: argparse.Namespace) -> Path:
         },
     }
     _write_json(root / "run_manifest.json", payload)
-    freeze_state(root)
+    if pilot:
+        if payload["status"] != "passed":
+            raise RuntimeError("EC-3 selected pilot candidate failed calibration validity")
+    else:
+        freeze_state(root)
     return root
 
 
@@ -525,6 +584,8 @@ def main() -> int:
     sub.add_parser("calibration")
     pretest = sub.add_parser("pretest")
     pretest.add_argument("--seed", type=int, required=True, choices=(0, 1, 2))
+    pilot = sub.add_parser("pilot")
+    pilot.add_argument("--seed", type=int, required=True, choices=(0,))
     test = sub.add_parser("test")
     test.add_argument("--seed", type=int, required=True, choices=(0, 1, 2))
     single_test = sub.add_parser("single-test")
@@ -535,11 +596,11 @@ def main() -> int:
     args.config = str(Path(args.config).resolve())
     args.output_root = str(Path(args.output_root).resolve())
     args.started_at = time.time()
-    if args.command in {"calibration", "pretest"}:
+    if args.command in {"calibration", "pretest", "pilot"}:
         preflight(manifest_path=Path(args.manifest), aflow_root=Path(args.aflow_root), expected_endpoint=os.environ.get("RPAS_EXTERNAL_API_BASE"))
     if args.command == "calibration":
         target = run_calibration(args)
-    elif args.command == "pretest":
+    elif args.command in {"pretest", "pilot"}:
         target = run_pretest(args)
     elif args.command == "test":
         target = run_test(args)
