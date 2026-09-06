@@ -7,8 +7,6 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:nvidia_a100_80gb_pcie:1
-# Completed EC-3 pretests peaked at 11.2 GiB RSS.  Reserve a conservative
-# 16 GiB while allowing backfill onto the otherwise free V100-32G slots.
 # Model loading uses host RAM for checkpoint staging; reserve enough memory
 # for Qwen3.5-9B before the GPU service starts.
 #SBATCH --mem=40G
@@ -23,6 +21,7 @@ set -euo pipefail
 repo_root="/home/jianbaizhao/RPAS-EC2-A100"
 model_path="/home/jianbaizhao/model/Qwen/Qwen3.5-9B"
 python_bin="/home/jianbaizhao/qwen_cuda126/bin/python"
+run=("${repo_root}/.uv-linux" run --no-project --offline --python "${python_bin}")
 # Use the commit-pinned clean checkout; the legacy shared checkout may contain
 # untracked experiment artifacts from earlier pilots.
 aflow_root="/home/jianbaizhao/external_baselines/AFlow_formal_clean"
@@ -87,16 +86,16 @@ export PYTHONUNBUFFERED=1
   fi
   git -C "${aflow_root}" rev-parse HEAD
   git -C "${aflow_root}" status --porcelain --untracked-files=no
-  "${python_bin}" -m pip show torch transformers litellm pandas
+  "${run[@]}" -m pip show torch transformers litellm pandas
 } | tee "${job_root}/environment.txt"
 
-"${python_bin}" -m py_compile \
+"${run[@]}" -m py_compile \
   external_comparison/runners/ec3_v3.py \
   external_comparison/runners/native_ec3_aflow.py \
   external_comparison/runners/ec3_preflight.py \
   external_comparison/runners/ec3_formal_gate.py
 
-"${python_bin}" scripts/serve_transformers_qwen35_openai.py \
+"${run[@]}" scripts/serve_transformers_qwen35_openai.py \
   --model "${model_path}" --served-model-name Qwen/Qwen3.5-9B \
   --host 127.0.0.1 --port "${port}" --max-new-tokens 4096 \
   --max-batch-size 1 --batch-wait-ms 0 --dtype float16 --stop-string '<<RPAS_END>>' \
@@ -105,21 +104,21 @@ service_pid=$!
 cleanup() { kill "${service_pid}" 2>/dev/null || true; }
 trap cleanup EXIT
 for _ in $(seq 1 180); do
-  curl -sf "http://127.0.0.1:${port}/health" >"${job_root}/health.json" && break
+  curl --max-time 2 -sf "http://127.0.0.1:${port}/health" >"${job_root}/health.json" && break
   kill -0 "${service_pid}" 2>/dev/null || { tail -n 160 "${job_root}/logs/service.log" >&2; exit 1; }
   sleep 5
 done
-curl -sf "http://127.0.0.1:${port}/v1/models" >"${job_root}/models.json"
-curl -sf "http://127.0.0.1:${port}/v1/chat/completions" \
+curl --max-time 10 -sf "http://127.0.0.1:${port}/v1/models" >"${job_root}/models.json"
+curl --max-time 120 -sf "http://127.0.0.1:${port}/v1/chat/completions" \
   -H 'Content-Type: application/json' \
   -d '{"model":"Qwen/Qwen3.5-9B","messages":[{"role":"user","content":"Reply exactly: OK"}],"max_tokens":4,"temperature":0.0}' \
   >"${job_root}/smoke_completion.json"
 
 common=(--repo-root "${repo_root}" --manifest "${manifest_path}" --aflow-root "${aflow_root}" --output-root "${formal_root}")
 if [[ "${method}" == "aflow" ]]; then
-  command=("${python_bin}" -m external_comparison.runners.native_ec3_aflow "${common[@]}" "${stage}")
+  command=("${run[@]}" -m external_comparison.runners.native_ec3_aflow "${common[@]}" "${stage}")
 else
-  command=("${python_bin}" -m external_comparison.runners.ec3_v3 "${common[@]}" "${stage}")
+  command=("${run[@]}" -m external_comparison.runners.ec3_v3 "${common[@]}" "${stage}")
 fi
 if [[ "${stage}" != "calibration" ]]; then
   command+=(--seed "${seed}")
@@ -130,7 +129,7 @@ printf '\n' >>"${job_root}/runner_command.txt"
 
 if [[ "${stage}" != "calibration" ]]; then
   result_dir="${formal_root}/${method}/seed_${seed}"
-  "${python_bin}" -m external_comparison.runners.write_run_metrics \
+  "${run[@]}" -m external_comparison.runners.write_run_metrics \
     --result-dir "${result_dir}" --job-id "${SLURM_JOB_ID}" --job-root "${job_root}" --stage "${stage}"
 fi
 echo "formal_result=false" >"${job_root}/job_status.txt"
