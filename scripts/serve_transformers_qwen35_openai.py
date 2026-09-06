@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Minimal OpenAI chat-completions server for Qwen3.5 via Transformers.
 
-vLLM 0.12 cannot execute Qwen3_5ForConditionalGeneration. This server keeps
-the experimental clients unchanged while using the official implementation.
-Requests are serialized because one model replica serves one selected GPU.
+This fallback originally supported environments with vLLM 0.12, which cannot
+execute Qwen3_5ForConditionalGeneration. Newer vLLM versions require separate
+validation. Compatible requests are dynamically batched on one selected GPU.
 """
 
 from __future__ import annotations
@@ -102,6 +102,12 @@ def parse_args() -> argparse.Namespace:
         help="Optional explicit terminal marker. It is stripped from returned content after stopping.",
     )
     parser.add_argument("--enable-thinking", action="store_true")
+    parser.add_argument(
+        "--dtype",
+        choices=("auto", "float16", "bfloat16"),
+        default="auto",
+        help="Model dtype. auto selects BF16 when supported and FP16 otherwise.",
+    )
     return parser.parse_args()
 
 
@@ -111,8 +117,16 @@ def main() -> None:
     # Decoder-only generation must left-pad batched prompts; right padding
     # changes the position of the final token and corrupts continuations.
     processor.tokenizer.padding_side = "left"
+    if args.dtype == "auto":
+        model_dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+    else:
+        model_dtype = {"float16": torch.float16, "bfloat16": torch.bfloat16}[args.dtype]
+    if model_dtype is torch.bfloat16 and not torch.cuda.is_bf16_supported():
+        raise RuntimeError("bfloat16 was requested, but the selected CUDA device does not support BF16")
+    model_dtype_name = str(model_dtype).removeprefix("torch.")
+    print(f"Loading {args.model} on CUDA with dtype={model_dtype_name}", flush=True)
     model = Qwen3_5ForConditionalGeneration.from_pretrained(
-        args.model, torch_dtype=torch.bfloat16, low_cpu_mem_usage=True
+        args.model, torch_dtype=model_dtype, low_cpu_mem_usage=True
     ).to("cuda").eval()
     request_queue: asyncio.Queue[PendingRequest] = asyncio.Queue()
 
@@ -241,14 +255,14 @@ def main() -> None:
             worker.cancel()
             with suppress(asyncio.CancelledError):
                 await worker
-        del model
+        # The outer scope owns the model, including any still-finishing worker thread.
         torch.cuda.empty_cache()
 
     app = FastAPI(lifespan=lifespan)
 
     @app.get("/health")
     async def health() -> dict[str, str]:
-        return {"status": "ok"}
+        return {"status": "ok", "dtype": model_dtype_name}
 
     @app.get("/v1/models")
     async def models() -> dict[str, Any]:
