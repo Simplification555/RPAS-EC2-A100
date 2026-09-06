@@ -41,6 +41,26 @@ def validate_config(path: str | Path) -> list[str]:
     elif config_path.name == "ec1_humaneval.json":
         if tuple(payload.get("methods", [])) != EC1_EXTERNAL_METHODS:
             errors.append(f"methods must be {list(EC1_EXTERNAL_METHODS)}")
+    elif config_path.name == "ec1_livecodebench_v4.json":
+        expected_methods = ("single", "aflow", "rpas")
+        if payload.get("experiment") != "EC-1B" or payload.get("benchmark") != "LiveCodeBench":
+            errors.append("EC-1B must identify the LiveCodeBench benchmark")
+        if tuple(payload.get("methods", [])) != expected_methods:
+            errors.append(f"EC-1B methods must be {list(expected_methods)}")
+        if payload.get("split_sizes") != {"calib": 20, "search": 64, "select": 64, "test": 256}:
+            errors.append("EC-1B must use the frozen 20/64/64/256 split sizes")
+        inference = payload.get("shared_inference", {})
+        if (
+            inference.get("backbone") != "Qwen/Qwen3.5-9B"
+            or inference.get("temperature") != 0.0
+            or inference.get("max_tokens") != 2048
+            or inference.get("thinking") is not False
+        ):
+            errors.append("EC-1B shared inference contract differs from Qwen3.5-9B/0.0/2048/no-thinking")
+        if payload.get("aflow", {}).get("commit") != "3f457218fc716093fe53f6df8a5d5e6379d66346":
+            errors.append("EC-1B must pin AFlow 3f457218")
+        if payload.get("rpas", {}).get("rule_fallback") != "forbidden":
+            errors.append("EC-1B must forbid RPAS rule fallback")
     elif config_path.name == "ec2_mmlu.json":
         if tuple(payload.get("methods", [])) != EC2_EXTERNAL_METHODS:
             errors.append(f"methods must be {list(EC2_EXTERNAL_METHODS)}")
