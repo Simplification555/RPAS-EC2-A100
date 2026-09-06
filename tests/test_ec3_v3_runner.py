@@ -1,9 +1,13 @@
 import json
+import random
 from pathlib import Path
 
 import pytest
 
-from external_comparison.runners.ec3_v3 import _calibration_seeds, _read_json, _require_unlock, _select, _shortlist
+from external_comparison.runners.ec3_v3 import (
+    _calibration_seeds, _native_seeds, _read_json, _require_unlock,
+    _select, _select_search_parent, _shortlist,
+)
 from external_comparison.runners.native_ec3_aflow import _truncation_rate
 from experiments.phase2_wan_agent_search import (
     extract_prediction_for_dataset,
@@ -77,7 +81,7 @@ def test_calibration_skips_duplicate_native_ids(monkeypatch) -> None:
 
 def test_calibration_rejects_only_one_distinct_candidate(monkeypatch) -> None:
     monkeypatch.setattr("external_comparison.runners.ec3_v3.seed_architectures", lambda _: [{"id": "a"}] * 2)
-    with pytest.raises(RuntimeError, match="two distinct"):
+    with pytest.raises(RuntimeError, match="2 distinct"):
         _calibration_seeds({})
 
 
@@ -87,6 +91,43 @@ def test_calibration_real_singleton_config_has_distinct_seeds() -> None:
     assert len({candidate["id"] for candidate in seeds}) == 2
     assert seeds[0]["topology"] == "single"
     assert seeds[1]["topology"] != "single"
+
+
+def test_search_seeds_are_four_distinct_native_workflows() -> None:
+    config = _read_json(Path(__file__).resolve().parents[1] / "experiments/ec3_hotpotqa_qwen35_9b.json")
+    seeds = _native_seeds(config, 4)
+    assert len({candidate["id"] for candidate in seeds}) == 4
+    assert [candidate["topology"] for candidate in seeds] == [
+        "single", "self_consistency", "solver_verifier", "solver_verifier",
+    ]
+    assert seeds[2]["edges"][0]["compression"] == "full"
+    assert seeds[3]["edges"][0]["compression"] == "summary"
+
+
+def test_search_parent_delegates_to_native_defaults(monkeypatch) -> None:
+    rows = [_row("a", 0.8, 100, 1)]
+    rng = random.Random(0)
+
+    def native(evaluated, generator, mode, **kwargs):
+        assert evaluated is rows
+        assert generator is rng
+        assert mode == "wan_pareto"
+        assert kwargs == {"pareto_parent_prob": 0.5, "parent_score_band": 0.05, "parent_top_k": 6}
+        return rows[0], "pareto_front"
+
+    monkeypatch.setattr("external_comparison.runners.ec3_v3.select_parent", native)
+    assert _select_search_parent(rows, rng) == (rows[0], "pareto_front")
+
+
+def test_search_parent_excludes_invalid_high_score_and_is_reproducible() -> None:
+    rows = [_row("invalid", 1.0, 10, 1), _row("quality", 0.9, 200, 2), _row("cheap", 0.85, 100, 1)]
+    rows[0]["is_valid_candidate"] = False
+    first = [_select_search_parent(rows, random.Random(seed)) for seed in range(20)]
+    second = [_select_search_parent(rows, random.Random(seed)) for seed in range(20)]
+    assert first == second
+    assert {row["candidate_id"] for row, _ in first} == {"quality", "cheap"}
+    with pytest.raises(ValueError, match="No valid"):
+        _select_search_parent([rows[0]], random.Random(0))
 
 
 @pytest.mark.parametrize("dataset,expected", [("hotpotqa", "FINAL ANSWER: German"), ("aime", "### German")])

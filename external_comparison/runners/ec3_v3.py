@@ -35,6 +35,7 @@ from experiments.phase2_wan_agent_search import (
     pareto_front,
     scientific_config_payload,
     select_operating_points,
+    select_parent,
     seed_architectures,
     sha256_json,
     shortlist_rows_for_selection,
@@ -50,6 +51,9 @@ META_MAX_TOKENS = 4096
 RPAS_MODE = "wan_pareto"
 SELECTION_STRATEGY = "quality_band_cost"
 SELECTION_QUALITY_BAND = 0.05
+PARETO_PARENT_PROB = 0.5
+PARENT_SCORE_BAND = 0.05
+PARENT_TOP_K = 6
 
 
 def _read_json(path: Path | str) -> dict[str, Any]:
@@ -252,15 +256,28 @@ def _manifest_base(manifest: dict[str, Any], *, method: str, seed: int, config: 
     }
 
 
-def _calibration_seeds(config: dict[str, Any]) -> list[dict[str, Any]]:
+def _native_seeds(config: dict[str, Any], count: int) -> list[dict[str, Any]]:
     # Singleton model/site pools can collapse differently named native seeds.
     unique: dict[str, dict[str, Any]] = {}
     for candidate in seed_architectures(config):
         unique.setdefault(candidate["id"], candidate)
-    seeds = list(unique.values())[:2]
-    if len(seeds) != 2:
-        raise RuntimeError("EC-3 calibration requires two distinct RPAS seed workflows")
+    seeds = list(unique.values())[:count]
+    if len(seeds) != count:
+        raise RuntimeError(f"EC-3 requires {count} distinct RPAS seed workflows")
     return seeds
+
+
+def _calibration_seeds(config: dict[str, Any]) -> list[dict[str, Any]]:
+    return _native_seeds(config, 2)
+
+
+def _select_search_parent(rows: list[dict[str, Any]], rng: random.Random) -> tuple[dict[str, Any], str]:
+    return select_parent(
+        rows, rng, RPAS_MODE,
+        pareto_parent_prob=PARETO_PARENT_PROB,
+        parent_score_band=PARENT_SCORE_BAND,
+        parent_top_k=PARENT_TOP_K,
+    )
 
 
 def run_calibration(args: argparse.Namespace) -> Path:
@@ -315,9 +332,7 @@ def run_pretest(args: argparse.Namespace) -> Path:
     root.mkdir(parents=True, exist_ok=True)
     run_id = f"ec3-hotpotqa-rpas-seed-{args.seed}"
     rng = random.Random(args.seed)
-    candidates = seed_architectures(raw_config)[:4]
-    if len(candidates) != 4:
-        raise RuntimeError("EC-3 RPAS requires four seed candidates")
+    candidates = _native_seeds(raw_config, 4)
     evaluated: list[dict[str, Any]] = []
     search_calls: list[dict[str, Any]] = []
     all_outputs: list[dict[str, Any]] = []
@@ -338,7 +353,7 @@ def run_pretest(args: argparse.Namespace) -> Path:
         raise ValueError("EC-3 RPAS requires at least three reflection attempts")
     while generated < 3 and reflection_attempts < max_reflection_attempts:
         reflection_attempts += 1
-        parent = min(evaluated, key=lambda row: (-float(row["answer_f1"]), str(row["candidate_id"])))
+        parent, parent_source = _select_search_parent(evaluated, rng)
         started = time.perf_counter()
         plan = build_reflection_plan(
             row=parent, config=raw_config, models=models, profile=profile, reflection_mode="llm",
@@ -359,9 +374,11 @@ def run_pretest(args: argparse.Namespace) -> Path:
                 parent["candidate"], raw_config, rng, parent_row=parent, mode="wan_pareto",
                 reflection_plan=plan, planned_mutation_override=proposal,
             )
+            child["parent_source"] = parent_source
             errors = validate_candidate_contract(child, raw_config, models)
             mutation_log = {
                 "parent_candidate_id": parent["candidate_id"], "child_candidate_id": child["id"],
+                "parent_source": parent_source,
                 "applied_mutation": child.get("applied_mutation"), "reflection_mode": plan["mode"],
                 "reflection_wall_time_ms": (time.perf_counter() - started) * 1000, "contract_errors": errors,
             }
@@ -438,6 +455,10 @@ def run_pretest(args: argparse.Namespace) -> Path:
             "seed_archive_size": seed_archive_size, "pareto_archive_size": archive_size,
             "rule_fallbacks": 0, "finalists": len(finalists),
             "mode": RPAS_MODE, "selection_strategy": SELECTION_STRATEGY,
+            "seed_policy": "first_four_distinct_native_ids",
+            "parent_selection": "native.select_parent",
+            "pareto_parent_prob": PARETO_PARENT_PROB,
+            "parent_score_band": PARENT_SCORE_BAND, "parent_top_k": PARENT_TOP_K,
             "shortlist_policy": shortlist_policy, "selection_policy": "protocol_q_e.delta=0.05",
             "quality_candidate_id": selected["candidate_id"],
             "efficiency_candidate_id": efficient["candidate_id"],
