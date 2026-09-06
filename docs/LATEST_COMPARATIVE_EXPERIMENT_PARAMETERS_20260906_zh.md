@@ -4,6 +4,26 @@
 `RPAS_final_benchmark_native_fidelity_protocol_V4.md`、当前 runner、冻结数据 manifest
 和 SCIR 实际作业为准。本文不把 one-seed/pilot 结果表述为正式论文结果。
 
+## 0. 明日讨论速览
+
+截至 2026-09-06 21:53（SCIR，UTC+8），最新版代码为 `447ea58`。三组实验的
+科学参数已经冻结；当前运行只是在验证 one-seed 的质量、成本和工程稳定性。
+
+| EC | 核心问题 | Benchmark | 方法 | 当前 seed | 冻结 split | 当前状态 |
+|---|---|---|---|---:|---|---|
+| EC-1B | hard-code stress | LiveCodeBench `release_v6` | Single / AFlow / RPAS-Full | 0 | 20 / 64 / 64 / 256 | 三方法运行中 |
+| EC-2 | communication topology | MMLU-57 | Single / Full / Chain / G-Designer / RPAS-Comm | 1 | 57 / 57 / 570 | 三个固定基线完成；两方法运行中 |
+| EC-3 | cross-task generalization | HotpotQA distractor | Single / AFlow / RPAS-Full | 0 | 正式 40 / 120 / 80 / 800；pilot 40 / 8 / 8 / 0 | saturation gate 已触发，不解锁 test |
+
+这里的 split 顺序分别是：EC-1B/EC-3 为
+`D_calib / D_search / D_select / D_test`，EC-2 为 `D_search / D_select / D_test`。
+
+讨论时需要把三类量严格分开：
+
+1. **冻结科学参数**：模型、数据、解码、方法原生控制流、搜索与选择规则。
+2. **运行时参数**：GPU 型号、端口、Slurm 时限和服务 batch；只影响吞吐与 provenance。
+3. **已实现成本**：真实 calls、tokens、轮次和 wall-clock；用于公平性分析，不反向修改冻结参数。
+
 ## 1. 参数状态约定
 
 | 标签 | 含义 |
@@ -24,9 +44,11 @@
 | Thinking | disabled | `LOCKED`，`GEPA_QWEN_DISABLE_THINKING=1` |
 | API | 本机 OpenAI-compatible HTTP service | 每个 Slurm 作业独立 endpoint |
 | 网络 profile | `lan_homogeneous` | 不把同机调用伪装为 WAN 实测；网络延迟为 0 合理 |
+| Data seed | `2026` | 三个 EC 的冻结数据抽样种子 |
 | Seed 目标 | `0, 1, 2` | 正式聚合要求 3 seeds |
 | 当前快速结果 | seed 0 或 seed 1 单 seed | 一律 `formal_result=false` |
 | GPU 单元 | 每个方法/seed 独占 1 张 GPU | 作业内不跨卡切分 |
+| 最新代码提交 | `447ea58` | GitHub/local 最新；每个作业仍以文件 SHA 和环境清单为最终依据 |
 | 记录项 | prompt/completion/total tokens、调用数、轮次、wall time、模型、GPU、split、candidate | 缺项不得进入聚合 |
 
 SCIR 当前可接受的 32GB 以上卡均可运行 9B FP16；实际作业已经使用 A100-40GB、
@@ -96,6 +118,19 @@ RPAS-Full 其余锁定项：
 | Evaluation cache | disabled |
 | Resume | false |
 
+### 3.4 当前运行时配置
+
+| 方法 | Job | GPU | Slurm 时限 | 输出目录 |
+|---|---:|---|---:|---|
+| Single | `133465_0` | A100-40GB | 24h | `outputs/ec1_livecodebench_v4_seed0/single/seed_0` |
+| AFlow | `133463_1` | RTX A6000 48GB | 24h | `outputs/ec1_livecodebench_v4_seed0/aflow/seed_0` |
+| RPAS-Full（原作业） | `133486_2` | A100-80GB | 6h | `outputs/ec1_livecodebench_v4_seed0/rpas/seed_0` |
+| RPAS-Full（超时兜底） | `133542_2` | A100-80GB | 24h | `outputs/ec1_livecodebench_v4_seed0_rpas_24h/rpas/seed_0` |
+
+兜底作业与原作业使用相同科学参数，只更换输出目录并延长 Slurm wall-time；它依赖
+EC-3 clean pilot 完成后启动。若原 RPAS 先完整结束，应取消兜底，不能混合两个 run
+的中间产物。GPU 差异只作为 runtime provenance，不能解释为方法变量。
+
 ## 4. EC-2：MMLU communication-topology v2
 
 ### 4.1 对比问题与数据
@@ -159,6 +194,24 @@ token budget、压缩或 agent 数量。
 | Test | 冻结一个 selected topology 后运行 570 条 |
 
 注意：768 只用于产生可解析拓扑 JSON 的独立 meta-call，不是给 worker 增加回答预算。
+
+### 4.5 当前 seed-1 已完成基线与风险项
+
+所有已完成行使用相同 split manifest：
+`e83ebb2d9de3ded9bfd60ee0b66ba6f71ad9b5d8c2025f6c9455b96c4c1efb09`，
+均覆盖 570 个唯一 held-out 样本且 model errors 为 0。
+
+| 方法 | Accuracy | Model calls | Total tokens | 256-token cap 命中率 | 状态 |
+|---|---:|---:|---:|---:|---|
+| Single | 0.8070 | 1,140 | 444,670 | 11.9% | 完成，`formal_result=false` |
+| Fully Connected | 0.8439 | 3,990 | 4,414,967 | 74.5% | 完成，`formal_result=false` |
+| Chain | 0.8439 | 3,990 | 3,092,918 | 73.0% | 完成，`formal_result=false` |
+| G-Designer | 待完成 | 待审计 | 待审计 | 待审计 | `132532` 运行中 |
+| RPAS-Comm | 待完成 | 待审计 | 待审计 | 待审计 | `133525_13` 运行中 |
+
+三条已完成基线的高 cap 命中率必须原样报告。当前不能为了改善结果单独提高某个方法的
+worker/final token cap；如明天决定做更高 cap 的敏感性分析，必须作为全方法、全 seed
+对称的新实验版本，不能覆盖 EC-2 v2 主矩阵。
 
 ## 5. EC-3：HotpotQA cross-task generalization
 
@@ -263,6 +316,41 @@ HotpotQA `D_test`，转而讨论 MuSiQue amendment。按当前结果，这个条
 生成、选择或评分。因此它只能作为诊断 pilot。最新版 preflight 已改为锁定前只检查
 manifest 中的 `D_test` 元数据，并由回归测试证明即使测试文件不存在仍可完成 preflight。
 
+### 5.7 已完成的 clean AFlow seed-0 pilot
+
+| 项 | 值 |
+|---|---:|
+| SCIR job | `133521` |
+| Slurm elapsed | 13:35 |
+| Search / select / calibration 样本 | 8 / 8 / 40 |
+| Search / select / calibration calls | 25 / 24 / 40 |
+| Total model calls | 89 |
+| Search / select / calibration tokens | 28,631 / 22,390 / 55,686 |
+| Total tokens | 106,707 |
+| `D_select` selected F1 | 0.5596 |
+| `D_calib` F1 / EM | 0.4516 / 0.4000 |
+| Model errors | 0 |
+| `D_test` files / access | 0 / false |
+| Formal status | `formal_result=false` |
+
+该 run 的 job-root `SHA256SUMS` 已完整通过。clean RPAS 链为 `133531` calibration
+后接 `133532` pilot；最终只接受满足 fallback=0、new candidates=3、typed mutations=3、
+Pareto/Q/E 均存在且没有 `D_test` 访问的产物。
+
+### 5.8 已完成的 clean RPAS calibration
+
+`133531` 已正常完成（Slurm elapsed 10:55），并通过 job-root `SHA256SUMS` 校验。
+
+| Candidate | Topology | `D_calib` F1 | EM | Calls | Tokens |
+|---|---|---:|---:|---:|---:|
+| `a0711933a84a` | single | 0.8938 | 0.8750 | 40 | 61,200 |
+| `b42836deb980` | self-consistency, 3 samples | 0.8393 | 0.8000 | 120 | 186,215 |
+| 合计 | - | - | - | 160 | 247,415 |
+
+两个候选均 valid-answer-rate=1.0、generation-truncation-rate=0、model errors=0，且
+`d_test_accessed=false`。该 calibration 只用于冻结候选与验证 gate，不是 held-out test
+结果。其 clean pilot `133532` 已由 `afterok` 依赖自动启动。
+
 ## 6. 每个结果必须交付的日志字段
 
 每个 method/seed 的 manifest 或 telemetry 至少包含：
@@ -287,25 +375,28 @@ task_calls, optimizer_calls, rounds/iterations, wall_seconds,
 active_edges, inter_agent_tokens, GPU, formal_result, gate_status
 ```
 
-## 7. 当前作业快照（写文档时）
+## 7. 当前作业快照（2026-09-06 21:53，SCIR UTC+8）
 
 | EC | Method | Job | 状态 | 最近进度 |
 |---|---|---:|---|---:|
-| EC-1B | AFlow seed 0 | 133463 | RUNNING | 57/64 当前 search round |
-| EC-1B | Single seed 0 | 133465 | RUNNING | 31/256 |
-| EC-1B | RPAS seed 0 | 133486 | RUNNING | 首候选评估中 |
-| EC-2 | G-Designer seed 1 | 132532 (`132507_10`) | RUNNING | 500/570 test |
-| EC-2 | RPAS-Comm seed 1 | 133495_13 | dependency pending | 等 G-Designer 释放同一 A100-80GB |
-| EC-3 | RPAS seed 0 pilot | 133487 | COMPLETED | 审计通过但仅诊断 |
-| EC-3 | AFlow seed 0 pilot | 133489 | FAILED | CLI 未注册 pilot；修复后重提 |
+| EC-1B | AFlow seed 0 | `133463_1` | RUNNING | 新 workflow round 8/64 |
+| EC-1B | Single seed 0 | `133465_0` | RUNNING | 72/256，当前 39 correct |
+| EC-1B | RPAS seed 0 | `133486_2` | RUNNING | 首候选评估中 |
+| EC-1B | RPAS seed 0 24h 兜底 | `133542_2` | PENDING | 依赖 `afterany:133532` |
+| EC-2 | G-Designer seed 1 | `132532`（显示为 `132507_10`） | RUNNING | 最近核验 514/570 test |
+| EC-2 | RPAS-Comm seed 1 | `133525_13` | RUNNING | 2/3 LLM reflections 已记录；无 fallback/error |
+| EC-3 | AFlow seed 0 clean pilot | `133521` | COMPLETED | 8/8/40；89 calls；106,707 tokens |
+| EC-3 | RPAS clean calibration | `133531` | COMPLETED | 160 calls；247,415 tokens；SHA 通过 |
+| EC-3 | RPAS seed 0 clean pilot | `133532` | RUNNING | calibration 成功后已自动启动 |
+| EC-3 | RPAS seed 0 旧 pilot | `133487` | COMPLETED | 仅诊断；旧 preflight 读取过 test 文件 |
 
 ## 8. 明天需要讨论的决策
 
-1. EC-3 严格执行 saturation gate，转 MuSiQue，还是书面 amendment 后继续 HotpotQA。
-2. EC-1B seed-0 的 runtime/质量确认后，是否立即扩展 seed 1/2。
-3. EC-2 是否在 seed-1 主矩阵完整后再扩 3 seeds，避免放大基础设施问题。
+1. EC-3 是否严格按已触发的 saturation gate 转 MuSiQue；若继续 HotpotQA，必须先签书面 amendment，不能直接解锁 `D_test`。
+2. EC-1B seed-0 三方法完整审计后，是否按完全相同参数扩展 seed 1/2；先确认 RPAS 6h 原作业或 24h 兜底只有一个有效结果。
+3. EC-2 在 seed-1 五方法矩阵完成后，是直接扩 3 seeds，还是先做全方法对称的 256/512-token cap 敏感性实验。当前主矩阵不得静默改 cap。
 4. Search-budget 主表按累计 pre-test tokens 对齐；native iterations/candidates 作为独立列报告，不伪称完全相同。
-5. 任何 one-seed 结果只用于方向判断，主表必须等待三个 protocol-valid seeds。
+5. 统计主表只接收三个 protocol-valid seeds；one-seed 只做方向、资源和失败模式判断。
 
 ## 9. 禁止性表述
 
