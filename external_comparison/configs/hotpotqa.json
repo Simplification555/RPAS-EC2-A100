@@ -16,7 +16,7 @@
   "shared_inference": {
     "executor_model": "Qwen/Qwen3.5-9B",
     "temperature": 0.0,
-    "initial_executor_max_new_tokens": 256,
+    "initial_executor_max_new_tokens": 512,
     "context_window_minimum": 32768,
     "no_external_retrieval": true,
     "prompt_policy": "provided_context_and_question_only"
