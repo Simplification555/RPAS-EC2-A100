@@ -16,4 +16,4 @@ python_bin="/home/jianbaizhao/qwen_cuda126/bin/python"
 cd "${repo_root}"
 "${python_bin}" -m py_compile external_comparison/runners/ec3_formal_gate.py
 "${python_bin}" -m external_comparison.runners.ec3_formal_gate unlock \
-  --root "${RPAS_EC3_OUTPUT_ROOT:-${repo_root}/outputs/ec3_hotpotqa_v3_v4}"
+  --root "${RPAS_EC3_OUTPUT_ROOT:-${repo_root}/outputs/ec3_hotpotqa_v3_v4b}"

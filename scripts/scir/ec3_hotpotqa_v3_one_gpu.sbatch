@@ -9,7 +9,9 @@
 #SBATCH --gres=gpu:tesla_v100-sxm2-32gb:1
 # Completed EC-3 pretests peaked at 11.2 GiB RSS.  Reserve a conservative
 # 16 GiB while allowing backfill onto the otherwise free V100-32G slots.
-#SBATCH --mem=16G
+# Model loading uses host RAM for checkpoint staging; reserve enough memory
+# for Qwen3.5-9B before the GPU service starts.
+#SBATCH --mem=40G
 # AFlow search/select and held-out evaluation can exceed two hours on a
 # serialized 9B endpoint; retain a six-hour ceiling for reproducible runs.
 #SBATCH --time=06:00:00

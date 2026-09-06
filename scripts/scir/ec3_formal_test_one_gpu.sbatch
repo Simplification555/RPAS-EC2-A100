@@ -9,7 +9,8 @@
 # remained below 12 GiB host RSS, so 16 GiB leaves margin and avoids an
 # unnecessary dependency on the congested A100 queue.
 #SBATCH --gres=gpu:tesla_v100-sxm2-32gb:1
-#SBATCH --mem=16G
+# Keep the held-out service launch under the same host-memory contract.
+#SBATCH --mem=40G
 #SBATCH --time=12:00:00
 #SBATCH --array=0-5%6
 #SBATCH --output=/home/jianbaizhao/RPAS-EC2-A100/logs/slurm/%x-%A_%a.out
