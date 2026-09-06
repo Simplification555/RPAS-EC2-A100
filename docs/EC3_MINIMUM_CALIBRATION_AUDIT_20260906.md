@@ -70,3 +70,26 @@ format branch. It leaves vote counts, tie-breaking, prompts, and grading
 unchanged. Tests cover the HotpotQA contract and unchanged math formatting.
 Original outputs remain untouched; a fresh diagnostic run is required. No
 rescored diagnostic output may replace the failed run's original manifest.
+
+## Corrective Minimum Runs Submitted
+
+Source commit: `ba828a2` (including the contract correction in `7af0db8`).
+Local regression checks: 59 passed. Remote checks: shell syntax, Python
+compilation, and both runner CLI imports passed. Shell bundle line endings
+were normalized to LF before deployment. Original remote source files were
+backed up separately; previous output directories were not overwritten.
+
+| Job | Scope | Hardware | Output root | Last observed state |
+|---|---|---|---|---|
+| 133270 | EC3 corrected unique-seed calibration, same 40 D_calib questions | A100 PCIe 80GB, gpu05 | `outputs/ec3_calibration_contract_v4` | RUNNING |
+| 133273 | EC2 paired 256/1024-token decode probe, same 8 dev questions | A100 PCIe 40GB, gpu09 | `outputs/ec2_decode_probe/133273` | RUNNING |
+
+These are diagnostics, not complete RPAS-Full/G-Designer searched-method
+comparisons. Neither run authorizes D_test access or a three-seed campaign.
+Each paired EC2 condition uses the same allocated device; its timing must not
+be pooled with EC3 or historical runs on different hardware.
+
+Separately, EC1 AFlow seed-0 job `133095_0` (allocation `133098`) completed
+with exit code 0 after 01:57:21. Its runner log reports 131/131 evaluations
+and score 0.87023. This is a preliminary log observation, not yet an audited
+cross-method EC1 result.
