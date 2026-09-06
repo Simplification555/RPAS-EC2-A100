@@ -6,7 +6,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:tesla_v100s-pcie-32gb:1
+#SBATCH --gres=gpu:nvidia_a100_80gb_pcie:1
 # Completed EC-3 pretests peaked at 11.2 GiB RSS.  Reserve a conservative
 # 16 GiB while allowing backfill onto the otherwise free V100-32G slots.
 # Model loading uses host RAM for checkpoint staging; reserve enough memory

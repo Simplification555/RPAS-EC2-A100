@@ -8,7 +8,7 @@
 # Qwen3.5-9B FP16 runs on the V100-32G pool. Completed EC-3 pretests
 # remained below 12 GiB host RSS, so 16 GiB leaves margin and avoids an
 # unnecessary dependency on the congested A100 queue.
-#SBATCH --gres=gpu:tesla_v100s-pcie-32gb:1
+#SBATCH --gres=gpu:nvidia_a100_80gb_pcie:1
 # Keep the held-out service launch under the same host-memory contract.
 #SBATCH --mem=40G
 #SBATCH --time=12:00:00
