@@ -1,0 +1,39 @@
+{
+  "code_commit": "447ea58",
+  "d_test_accessed": false,
+  "d_test_substitute": "D_calib validity check after Q/E freeze; held-out D_test remains unopened",
+  "fidelity_scope": "repository-native phase2 run_search; HotpotQA evaluator injection only",
+  "formal_result": false,
+  "native_control_flow": "experiments.phase2_wan_agent_search.run_search",
+  "new_candidate_budget": 3,
+  "parent_selection": "repository_native_run_search.select_parent",
+  "run_id": "ec3-hotpotqa-rpas-seed-0",
+  "run_kind": "minimum_search_select_calib_pilot",
+  "runner_sha256": "c045f72b77db17bee4242219a0b7882c7754f2ddfe542f9805fa89c12ed3103a",
+  "search_examples": 8,
+  "search_ids": [
+    "5adf0ae45542992d7e9f9286",
+    "5a79118755429974737f7962",
+    "5a7ce444554299683c1c63c1",
+    "5a80b4d1554299260e20a134",
+    "5a7280105542994cef4bc2e4",
+    "5ab9b2c7554299743d22ebaf",
+    "5a8eea4a5542990e94052bb7",
+    "5a79caad5542994f819ef09f"
+  ],
+  "seed": 0,
+  "seed_candidates": 4,
+  "select_examples": 8,
+  "select_ids": [
+    "5ae4d2a55542990ba0bbb161",
+    "5ab29cef554299449642c936",
+    "5a776fc15542997042120a3a",
+    "5ab531cc5542990594ba9d23",
+    "5ab3c53955429969a97a81b9",
+    "5a89dd4d554299669944a5e3",
+    "5a8db348554299068b959dc2",
+    "5a8a5a1955429930ff3c0da7"
+  ],
+  "status": "running",
+  "subset_policy": "first_eight_frozen_fixture_rows"
+}

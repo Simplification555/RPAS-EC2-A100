@@ -1,0 +1,120 @@
+{
+  "experiment_protocol_version": "rpas_experiment_protocol_v1.0",
+  "prompt_protocol_version": "rpas_roles_reflection_v4_explicit_terminal_marker",
+  "evaluation_cache_version": "rpas_shared_eval_v2",
+  "code_commit": "",
+  "runtime_cuda_visible_devices": "0",
+  "formal_result": false,
+  "formal_result_reason": "formal G1-G9 gates must be verified by the formal aggregator",
+  "mode": "wan_pareto",
+  "search_seed": 0,
+  "data_seed": 2026,
+  "config_sha256": "79d85b163bca4b88a63b16975bdedc716c6a96908e6cb8798a4afb3819c701db",
+  "model_manifest_sha256": "09ceb9fd0377b44e78114b0ef22b20ce821d3887aec3657546f699fe21df85cc",
+  "model_manifest": {
+    "qwen35_9b": {
+      "litellm_model": "openai/Qwen/Qwen3.5-9B",
+      "completion_kwargs": {
+        "temperature": 0.0,
+        "max_tokens": 512
+      },
+      "input_cost_per_million_tokens_usd": 0.0,
+      "output_cost_per_million_tokens_usd": 0.0,
+      "pricing_source": ""
+    }
+  },
+  "network_profile_sha256": "b33a9bcf0ce4e60e1efd3329a12e4525723e5e077ae64f0b184aa2f95df7a87f",
+  "network_profile": {
+    "name": "lan_homogeneous",
+    "default_rtt_ms": 0.0,
+    "default_bandwidth_mbps": 10000.0,
+    "default_failure_rate": 0.0,
+    "retry_backoff_ms": 0.0,
+    "max_expected_retries": 1.0,
+    "edges": []
+  },
+  "dataset_splits": {
+    "search": {
+      "count": 8,
+      "ids": [
+        "5adf0ae45542992d7e9f9286",
+        "5a79118755429974737f7962",
+        "5a7ce444554299683c1c63c1",
+        "5a80b4d1554299260e20a134",
+        "5a7280105542994cef4bc2e4",
+        "5ab9b2c7554299743d22ebaf",
+        "5a8eea4a5542990e94052bb7",
+        "5a79caad5542994f819ef09f"
+      ],
+      "normalized_content_sha256": "68fa9c5276651c8f738719a86bb1c1a31b57f603a11624ade752e2cd2c86b9b4"
+    },
+    "selection": {
+      "count": 8,
+      "ids": [
+        "5ae4d2a55542990ba0bbb161",
+        "5ab29cef554299449642c936",
+        "5a776fc15542997042120a3a",
+        "5ab531cc5542990594ba9d23",
+        "5ab3c53955429969a97a81b9",
+        "5a89dd4d554299669944a5e3",
+        "5a8db348554299068b959dc2",
+        "5a8a5a1955429930ff3c0da7"
+      ],
+      "normalized_content_sha256": "94c7869605c46fdb86981d4c872efdbd45539219a572138fbe231376b54a666e"
+    },
+    "test": {
+      "count": 40,
+      "ids": [
+        "5abff6ed5542994516f45553",
+        "5ae63d585542992ae0d1629a",
+        "5ab6372f5542995eadeeff70",
+        "5a8743195542994846c1cd3f",
+        "5a8e5dd55542995085b37414",
+        "5a8bc7f65542995e66a4750b",
+        "5ac237e35542992f1f2b3824",
+        "5ab454745542991779162c75",
+        "5abd8e8c5542993062266cc7",
+        "5a80a881554299485f598684",
+        "5a89fbc955429946c8d6ea2e",
+        "5a7ea06c55429934daa2fc48",
+        "5a827be455429966c78a6a28",
+        "5a88090f55429938390d3ed4",
+        "5a7312f45542994cef4bc440",
+        "5a791e8855429907847277c1",
+        "5adbd7e15542994650320c01",
+        "5ab3ebc8554299753aec59f0",
+        "5ab4cc2a5542996a3a969fd0",
+        "5ae50b395542993aec5ec11d",
+        "5a8b2ab35542997f31a41c91",
+        "5a7a988255429941d65f26e2",
+        "5a8aee4355429950cd6afc02",
+        "5a8e58cb5542990e94052ae0",
+        "5abaee145542992ccd8e7e5e",
+        "5adc6aa5554299438c868db3",
+        "5a7fbbb85542994857a767e6",
+        "5ae7a91b55429952e35ea9ac",
+        "5a752f2455429916b016428c",
+        "5ab1f6e2554299706120959f",
+        "5adc8d27554299473435373c",
+        "5adf6a4e5542992d7e9f933f",
+        "5a81355155429938b61422f8",
+        "5a7a3c465542996a35c17150",
+        "5ae17cfc55429901ffe4aea4",
+        "5a8b27f855429971feec4653",
+        "5ab284b0554299449642c8d9",
+        "5a7e86485542997cc2c47560",
+        "5a8b2fa955429950cd6afc64",
+        "5ac1a1e45542991316484b6e"
+      ],
+      "normalized_content_sha256": "14ab00c1313dfc2e3cd434c2cc715053916ea4d1cd18a955cebadb174ce07a69"
+    }
+  },
+  "metadata": {
+    "dataset": "hotpotqa",
+    "test_name": "distractor_provided_context",
+    "data_seed": 2026,
+    "split_manifest_sha256": "1940fbef3792b691f60fe56c604d8e12f81e8f5ac71f444a7239462c0f3dd54c",
+    "d_test_accessed": false,
+    "task_adapter": "external_comparison.runners.ec3_v3.task_evaluator"
+  }
+}

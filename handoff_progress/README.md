@@ -30,3 +30,14 @@ bytes: 548673
 The documented `RPAS_MAAS_TEST_ONLY=1` path remains available only if a future
 copy is interrupted before its held-out test finishes. It is a recovery
 mechanism, not a replacement for an independent formal seed.
+
+## EC-3 seed-0 gate result
+
+`ec3_seed_0/` stores the clean AFlow pilot, clean RPAS-Full pilot, the distinct
+RPAS calibration prerequisite, and compact SCIR job audit records. These runs
+use only the frozen 8-item search fixture, 8-item selection fixture, and the
+complete 40-item calibration split. HotpotQA `D_test` was not opened.
+
+The result is a protocol gate artifact, not a held-out paper result. See
+`ec3_seed_0/README.md` and `docs/EC3_V4F_ONE_SEED_GATE_RESULT.md` for the
+audited metrics and limitations.

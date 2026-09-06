@@ -1,0 +1,27 @@
+{
+  "calibration_candidate_ids": [
+    "a0711933a84a",
+    "b42836deb980"
+  ],
+  "calibration_candidates": 2,
+  "calibration_seed_policy": "first_two_distinct_native_ids",
+  "config_sha256": "79d85b163bca4b88a63b16975bdedc716c6a96908e6cb8798a4afb3819c701db",
+  "d_test_accessed": false,
+  "data_seed": 2026,
+  "dataset": "hotpotqa",
+  "dataset_setting": "HotpotQA distractor / provided-context",
+  "executor_generation_truncation_rate": 0.0,
+  "executor_max_tokens": 512,
+  "executor_model": "Qwen/Qwen3.5-9B",
+  "meta_max_tokens": 4096,
+  "method": "rpas",
+  "protocol_version": "EC3_HOTPOTQA_V3",
+  "run_kind": "calibration",
+  "runtime_cuda_visible_devices": "0",
+  "seed": -1,
+  "split_manifest_sha256": "1940fbef3792b691f60fe56c604d8e12f81e8f5ac71f444a7239462c0f3dd54c",
+  "split_protocol": "calib__search__select__test_locked",
+  "status": "passed",
+  "temperature": 0.0,
+  "valid_answer_rate": 1.0
+}

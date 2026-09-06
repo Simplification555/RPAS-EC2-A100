@@ -1,0 +1,1 @@
+$REPO_ROOT/.uv-linux run --no-project --offline --python $PYTHON_ENV/bin/python -m external_comparison.runners.ec3_v3 --repo-root $REPO_ROOT --manifest $REPO_ROOT/data/ec3_hotpotqa/formal/hotpotqa_manifest.json --aflow-root $AFLOW_ROOT --output-root $REPO_ROOT/outputs/ec3_hotpotqa_v3_v4f_locked_seed0 calibration 

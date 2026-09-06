@@ -13,7 +13,7 @@
 |---|---|---|---|---:|---|---|
 | EC-1B | hard-code stress | LiveCodeBench `release_v6` | Single / AFlow / RPAS-Full | 0 | 20 / 64 / 64 / 256 | 三方法运行中 |
 | EC-2 | communication topology | MMLU-57 | Single / Full / Chain / G-Designer / RPAS-Comm | 1 | 57 / 57 / 570 | 三个固定基线完成；两方法运行中 |
-| EC-3 | cross-task generalization | HotpotQA distractor | Single / AFlow / RPAS-Full | 0 | 正式 40 / 120 / 80 / 800；pilot 40 / 8 / 8 / 0 | saturation gate 已触发，不解锁 test |
+| EC-3 | cross-task generalization | HotpotQA distractor | Single / AFlow / RPAS-Full | 0 | 正式 40 / 120 / 80 / 800；pilot 40 / 8 / 8 / 0 | clean gate result 已完成；不解锁 test |
 
 这里的 split 顺序分别是：EC-1B/EC-3 为
 `D_calib / D_search / D_select / D_test`，EC-2 为 `D_search / D_select / D_test`。
@@ -349,7 +349,32 @@ Pareto/Q/E 均存在且没有 `D_test` 访问的产物。
 
 两个候选均 valid-answer-rate=1.0、generation-truncation-rate=0、model errors=0，且
 `d_test_accessed=false`。该 calibration 只用于冻结候选与验证 gate，不是 held-out test
-结果。其 clean pilot `133532` 已由 `afterok` 依赖自动启动。
+结果。其 clean pilot `133532` 已由 `afterok` 依赖自动启动并正常完成。
+
+### 5.9 已完成的 clean RPAS seed-0 pilot
+
+| 项 | 值 |
+|---|---:|
+| SCIR job | `133532` |
+| Slurm elapsed / runner wall | 16:33 / 989.74 s |
+| Search / select / calibration 样本 | 8 / 8 / 40 |
+| Search / select / reflection / calibration calls | 96 / 24 / 6 / 40 |
+| Total model calls | 166 |
+| Search+select+reflection / calibration tokens | 206,745 / 61,200 |
+| Total tokens | 267,945 |
+| `D_select` selected F1 / EM | 0.7083 / 0.6250 |
+| `D_calib` F1 / EM | 0.8938 / 0.8750 |
+| New candidates / accepted typed mutations | 3 / 3 |
+| LLM reflections / rule fallbacks | 6 / 0 |
+| Q/E candidate | `45c0167f778d` / `45c0167f778d` |
+| Model errors / `D_test` access | 0 / false |
+| Formal status | `formal_result=false` |
+
+RPAS 的前置 clean calibration 另消耗 160 calls、247,415 tokens，因此端到端链路为
+326 calls、515,360 tokens；不能只报告 pilot 内的 166 calls。Pareto front 有 3 个原始
+条目但只有 2 个唯一 canonical ID，这是 singleton model/site 下等价 seed workflow
+折叠造成的；不影响 Q/E 选择，但不得描述为 3 个不同 Pareto 候选。便携结果包见
+`handoff_progress/ec3_seed_0/`。
 
 ## 6. 每个结果必须交付的日志字段
 
@@ -375,19 +400,19 @@ task_calls, optimizer_calls, rounds/iterations, wall_seconds,
 active_edges, inter_agent_tokens, GPU, formal_result, gate_status
 ```
 
-## 7. 当前作业快照（2026-09-06 21:53，SCIR UTC+8）
+## 7. 当前作业快照（2026-09-06 22:25，SCIR UTC+8）
 
 | EC | Method | Job | 状态 | 最近进度 |
 |---|---|---:|---|---:|
-| EC-1B | AFlow seed 0 | `133463_1` | RUNNING | 新 workflow round 8/64 |
-| EC-1B | Single seed 0 | `133465_0` | RUNNING | 72/256，当前 39 correct |
+| EC-1B | AFlow seed 0 | `133463_1` | RUNNING | 新 workflow round 21/64 |
+| EC-1B | Single seed 0 | `133465_0` | RUNNING | 116/256，当前 61 correct |
 | EC-1B | RPAS seed 0 | `133486_2` | RUNNING | 首候选评估中 |
 | EC-1B | RPAS seed 0 24h 兜底 | `133542_2` | PENDING | 依赖 `afterany:133532` |
 | EC-2 | G-Designer seed 1 | `132532`（显示为 `132507_10`） | RUNNING | 最近核验 514/570 test |
 | EC-2 | RPAS-Comm seed 1 | `133525_13` | RUNNING | 2/3 LLM reflections 已记录；无 fallback/error |
 | EC-3 | AFlow seed 0 clean pilot | `133521` | COMPLETED | 8/8/40；89 calls；106,707 tokens |
 | EC-3 | RPAS clean calibration | `133531` | COMPLETED | 160 calls；247,415 tokens；SHA 通过 |
-| EC-3 | RPAS seed 0 clean pilot | `133532` | RUNNING | calibration 成功后已自动启动 |
+| EC-3 | RPAS seed 0 clean pilot | `133532` | COMPLETED | 166 calls；267,945 tokens；SHA 通过 |
 | EC-3 | RPAS seed 0 旧 pilot | `133487` | COMPLETED | 仅诊断；旧 preflight 读取过 test 文件 |
 
 ## 8. 明天需要讨论的决策

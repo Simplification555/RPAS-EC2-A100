@@ -1,0 +1,107 @@
+[
+    {
+        "question": "Where was the film set in which the daughter of Shashi Kapoor, along side Sarat Pujari and Navni Parihar, set?",
+        "right_answer": "Orissa",
+        "model_output": "No specific question was asked about rural Orissa; please provide a clear query.",
+        "extracted_output": "No specific question was asked about rural Orissa; please provide a clear query.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Indie studio Jumpship developed what puzzle-platform video game released in July 2010?",
+        "right_answer": "Limbo",
+        "model_output": "The provided context does not contain information about a puzzle-platform video game developed by indie studio Jumpship that was released in July 2010.",
+        "extracted_output": "The provided context does not contain information about a puzzle-platform video game developed by indie studio Jumpship that was released in July 2010.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "When was the Western Germanic language spoken from which the small settlement situated on the river Leda opposite Leer derives its name?",
+        "right_answer": "between the 8th and 16th centuries",
+        "model_output": "Insufficient context to answer; no specific question or topic was provided for the 8th to 16th centuries.",
+        "extracted_output": "Insufficient context to answer; no specific question or topic was provided for the 8th to 16th centuries.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Are Harry Kizirian and Howard Kazanjian known for the same industry?",
+        "right_answer": "no",
+        "model_output": "No question was provided to answer.",
+        "extracted_output": "No question was provided to answer.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Who played the crime boss considered the father of modern organized crime in the 1997 drama Hoodlum?",
+        "right_answer": "Andy García",
+        "model_output": "No question was asked in the input.",
+        "extracted_output": "No question was asked in the input.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Which band formed first, Awolnation or Foo Fighters?",
+        "right_answer": "Foo Fighters",
+        "model_output": "No question was asked in the input.",
+        "extracted_output": "No question was asked in the input.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Are both Lygodium or Maxillaria a genus of orchids?",
+        "right_answer": "no",
+        "model_output": "No question was provided to answer.",
+        "extracted_output": "No question was provided to answer.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What is the subsidiary of the record company who released \"Love Incredible?\"",
+        "right_answer": "Vivendi S.A.",
+        "model_output": "No context was provided to answer questions about Vivendi S.A. Please supply relevant information for an accurate response.\n\nFinal Answer: Insufficient context.",
+        "extracted_output": "No context was provided to answer questions about Vivendi S.A. Please supply relevant information for an accurate response.\n\nFinal Answer: Insufficient context.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Who won the special election in 2014 to replace Bill Young?",
+        "right_answer": "David Jolly",
+        "model_output": "The input \"David Wilson Jolly\" appears to be a proper name, likely referring to an individual. Without additional context or specific questions about this person (such as their profession, achievements, or background), no further information can be derived.\n\nFinal Answer: The input is a name; no additional context is provided to answer a specific question.",
+        "extracted_output": "The input \"David Wilson Jolly\" appears to be a proper name, likely referring to an individual. Without additional context or specific questions about this person (such as their profession, achievements, or background), no further information can be derived.\n\nFinal Answer: The input is a name; no additional context is provided to answer a specific question.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What is the mascot of the oldest private university in Georgia?",
+        "right_answer": "The Bears",
+        "model_output": "The input \"Bears\" is a noun referring to large mammals of the family Ursidae. Without additional context, no specific question can be answered.\n\nFinal Answer: Insufficient context to answer a specific question.",
+        "extracted_output": "The input \"Bears\" is a noun referring to large mammals of the family Ursidae. Without additional context, no specific question can be answered.\n\nFinal Answer: Insufficient context to answer a specific question.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "In what year was the Sayrevill, New Jersey rock band that Frankie LaRocka played drums for formed?",
+        "right_answer": "1983",
+        "model_output": "The input \"1983\" is a year. Without additional context or a specific question, no further reasoning or answer can be derived.\n\nFinal Answer: 1983",
+        "extracted_output": "The input \"1983\" is a year. Without additional context or a specific question, no further reasoning or answer can be derived.\n\nFinal Answer: 1983",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Flower Alley was bred by the trainer who was killed at what Fayette County, Kentucky airport?",
+        "right_answer": "Blue Grass Airport",
+        "model_output": "No context was supplied to answer the question about Blue Grass Airport.\n\nFinal Answer: Cannot be answered without context.",
+        "extracted_output": "No context was supplied to answer the question about Blue Grass Airport.\n\nFinal Answer: Cannot be answered without context.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Giselle Cossard was known as Mother Giselle of what type of diety?",
+        "right_answer": "major water deity",
+        "model_output": "The input \"Yemoja\" refers to a major deity in Yoruba religion and mythology, often associated with the ocean, rivers, and fertility. She is one of the Orishas (deities) and is widely revered in West African cultures and the diaspora.\n\nFinal Answer: Yemoja is a Yoruba goddess of the ocean, rivers, and fertility.",
+        "extracted_output": "The input \"Yemoja\" refers to a major deity in Yoruba religion and mythology, often associated with the ocean, rivers, and fertility. She is one of the Orishas (deities) and is widely revered in West African cultures and the diaspora.\n\nFinal Answer: Yemoja is a Yoruba goddess of the ocean, rivers, and fertility.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "How large is the shopping mall where KGOT radio station has its studios ?",
+        "right_answer": "728,000 ft²",
+        "model_output": "The provided context contains only a specific area measurement: 728,000 square feet (equivalent to 67,000 square meters). Without additional context regarding a specific building, location, or question to address, no further reasoning or answer can be derived.\n\n**Final Answer:** The input provides an area of 728,000 ft² (67,000 m²).",
+        "extracted_output": "The provided context contains only a specific area measurement: 728,000 square feet (equivalent to 67,000 square meters). Without additional context regarding a specific building, location, or question to address, no further reasoning or answer can be derived.\n\n**Final Answer:** The input provides an area of 728,000 ft² (67,000 m²).",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "In which year was the University where Joost Alois Businger is an emeritus professor established ?",
+        "right_answer": "1861",
+        "model_output": "The input \"1861\" is a year. Without additional context specifying a historical event, location, or subject associated with this year, no specific factual answer can be derived solely from the number itself.\n\nFinal Answer: 1861",
+        "extracted_output": "The input \"1861\" is a year. Without additional context specifying a historical event, location, or subject associated with this year, no specific factual answer can be derived solely from the number itself.\n\nFinal Answer: 1861",
+        "extract_answer_code": "None"
+    }
+]

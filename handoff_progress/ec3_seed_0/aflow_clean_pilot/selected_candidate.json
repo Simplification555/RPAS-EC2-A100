@@ -1,0 +1,6 @@
+{
+  "round": 1,
+  "selection_answer_em": 0.5,
+  "selection_answer_f1": 0.5595741901776384,
+  "selection_policy": "max_d_select_f1__round"
+}

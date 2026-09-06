@@ -1,0 +1,226 @@
+[
+    {
+        "question": "Indie studio Jumpship developed what puzzle-platform video game released in July 2010?",
+        "right_answer": "Limbo",
+        "model_output": "Based on the text provided, the indie studio **Jumpship** developed the game **Somerville**. However, the text describes *Somerville* as an \"upcoming video game\" (at the time of writing), not one released in July 2010.\n\nThe game released in **July 2010** by an independent studio is **Limbo**, but it was developed by **Playdead**, not Jumpship. The text notes that the founder of Jumpship previously founded Playdead and worked on *Limbo* and *Inside*.\n\nTherefore, there is no game in the provided text that fits both criteria (developed by Jumpship AND released in July 2010).\n\n*   **Game released in July 2010:** *Limbo* (Developer: Playdead)\n*   **Game developed by Jumpship:** *Somerville* (Status: Upcoming/Debut title)\n\nIf the question implies a connection between the two, the answer is likely highlighting the confusion or the shared founder, but strictly speaking, **Jumpship did not develop a puzzle-platform game released in July 2010** according to the text. The game released in July 2010 is **Limbo**.",
+        "extracted_output": "Based on the text provided, the indie studio **Jumpship** developed the game **Somerville**. However, the text describes *Somerville* as an \"upcoming video game\" (at the time of writing), not one released in July 2010.\n\nThe game released in **July 2010** by an independent studio is **Limbo**, but it was developed by **Playdead**, not Jumpship. The text notes that the founder of Jumpship previously founded Playdead and worked on *Limbo* and *Inside*.\n\nTherefore, there is no game in the provided text that fits both criteria (developed by Jumpship AND released in July 2010).\n\n*   **Game released in July 2010:** *Limbo* (Developer: Playdead)\n*   **Game developed by Jumpship:** *Somerville* (Status: Upcoming/Debut title)\n\nIf the question implies a connection between the two, the answer is likely highlighting the confusion or the shared founder, but strictly speaking, **Jumpship did not develop a puzzle-platform game released in July 2010** according to the text. The game released in July 2010 is **Limbo**.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Who played the crime boss considered the father of modern organized crime in the 1997 drama Hoodlum?",
+        "right_answer": "Andy García",
+        "model_output": "Based on the text provided, the crime boss considered the father of modern organized crime is **Charles \"Lucky\" Luciano**. In the 1997 drama film *Hoodlum*, he was played by **Andy García**.\n\nThe text states: \"The film concentrated on... Lucky Luciano (Andy García)\" and later confirms that \"Charles 'Lucky' Luciano... is considered the father of modern organized crime in the United States.\"",
+        "extracted_output": "Based on the text provided, the crime boss considered the father of modern organized crime is **Charles \"Lucky\" Luciano**. In the 1997 drama film *Hoodlum*, he was played by **Andy García**.\n\nThe text states: \"The film concentrated on... Lucky Luciano (Andy García)\" and later confirms that \"Charles 'Lucky' Luciano... is considered the father of modern organized crime in the United States.\"",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Are both Lygodium or Maxillaria a genus of orchids?",
+        "right_answer": "no",
+        "model_output": "No, only **Maxillaria** is a genus of orchids.\n\nAccording to the text provided:\n*   **Maxillaria** is explicitly described as a \"large genus of orchids\" in the family Orchidaceae.\n*   **Lygodium** is described as a \"genus of about 40 species of **ferns**,\" not orchids.",
+        "extracted_output": "No, only **Maxillaria** is a genus of orchids.\n\nAccording to the text provided:\n*   **Maxillaria** is explicitly described as a \"large genus of orchids\" in the family Orchidaceae.\n*   **Lygodium** is described as a \"genus of about 40 species of **ferns**,\" not orchids.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Are Harry Kizirian and Howard Kazanjian known for the same industry?",
+        "right_answer": "no",
+        "model_output": "No, Harry Kizirian and Howard Kazanjian are not known for the same industry.\n\n**Harry Kizirian** was an **Armenian American member of the United States Marine Corps** who served during World War II. His career and recognition are in the **military** sector.\n\n**Howard Kazanjian** is an **American film producer** known for his work on movies like *Raiders of the Lost Ark* and *Return of the Jedi*. His career and recognition are in the **film industry**.",
+        "extracted_output": "No, Harry Kizirian and Howard Kazanjian are not known for the same industry.\n\n**Harry Kizirian** was an **Armenian American member of the United States Marine Corps** who served during World War II. His career and recognition are in the **military** sector.\n\n**Howard Kazanjian** is an **American film producer** known for his work on movies like *Raiders of the Lost Ark* and *Return of the Jedi*. His career and recognition are in the **film industry**.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Which band formed first, Awolnation or Foo Fighters?",
+        "right_answer": "Foo Fighters",
+        "model_output": "Based on the text provided, **Foo Fighters** formed first.\n\nThe text states that Foo Fighters was formed in **1994** by Dave Grohl. In contrast, Awolnation was formed later, with their first EP released in 2010 and their first studio album in 2011 (the text does not specify the exact year Awolnation was formed, but their debut activity is well after 1994).",
+        "extracted_output": "Based on the text provided, **Foo Fighters** formed first.\n\nThe text states that Foo Fighters was formed in **1994** by Dave Grohl. In contrast, Awolnation was formed later, with their first EP released in 2010 and their first studio album in 2011 (the text does not specify the exact year Awolnation was formed, but their debut activity is well after 1994).",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Who won the special election in 2014 to replace Bill Young?",
+        "right_answer": "David Jolly",
+        "model_output": "Based on the text provided, **David Wilson Jolly** won the special election in 2014 to replace U.S. Representative Bill Young. He defeated the Democratic nominee, Alex Sink, in that race.",
+        "extracted_output": "Based on the text provided, **David Wilson Jolly** won the special election in 2014 to replace U.S. Representative Bill Young. He defeated the Democratic nominee, Alex Sink, in that race.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "How large is the shopping mall where KGOT radio station has its studios ?",
+        "right_answer": "728,000 ft²",
+        "model_output": "Based on the text provided, the KGOT radio station has its studios in the **Dimond Center** in Anchorage, Alaska. The text states that the Dimond Center is a **728,000 ft² (67,000 m²)** shopping mall.",
+        "extracted_output": "Based on the text provided, the KGOT radio station has its studios in the **Dimond Center** in Anchorage, Alaska. The text states that the Dimond Center is a **728,000 ft² (67,000 m²)** shopping mall.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Giselle Cossard was known as Mother Giselle of what type of diety?",
+        "right_answer": "major water deity",
+        "model_output": "Based on the text provided, Giselle Cossard Binon Omindarewa was known as Mother Giselle of **Yemoja**.\n\nThe text states she was \"Initiated for the Orisha Yemoja\" and that Yemoja is described as a \"major water deity from the Yoruba religion\" who is the \"mother of all orishas.\"",
+        "extracted_output": "Based on the text provided, Giselle Cossard Binon Omindarewa was known as Mother Giselle of **Yemoja**.\n\nThe text states she was \"Initiated for the Orisha Yemoja\" and that Yemoja is described as a \"major water deity from the Yoruba religion\" who is the \"mother of all orishas.\"",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What is the mascot of the oldest private university in Georgia?",
+        "right_answer": "The Bears",
+        "model_output": "Based on the text provided, the oldest private university in Georgia is **Mercer University**. The passage states that the \"Mercer Bears men's basketball team represented Mercer University,\" indicating that the mascot is the **Bears**.",
+        "extracted_output": "Based on the text provided, the oldest private university in Georgia is **Mercer University**. The passage states that the \"Mercer Bears men's basketball team represented Mercer University,\" indicating that the mascot is the **Bears**.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "When did Morrissey release a cover version of a song from the singer whose debut album was Horses?",
+        "right_answer": "2005",
+        "model_output": "Morrissey released a cover version of the song \"Redondo Beach\" by Patti Smith in **2005**.\n\nPatti Smith is the singer whose debut album was *Horses* (1975). Morrissey released his live cover of \"Redondo Beach\" as a double A-side with \"There Is a Light That Never Goes Out\" in 2005.",
+        "extracted_output": "Morrissey released a cover version of the song \"Redondo Beach\" by Patti Smith in **2005**.\n\nPatti Smith is the singer whose debut album was *Horses* (1975). Morrissey released his live cover of \"Redondo Beach\" as a double A-side with \"There Is a Light That Never Goes Out\" in 2005.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Who formed first, The Get Up Kids or Moonbabies?",
+        "right_answer": "The Get Up Kids",
+        "model_output": "Based on the text provided, **Moonbabies** formed first.\n\nThe text states that Moonbabies was formed in **1997**, whereas The Get Up Kids were formed in **1995**.\n\n*(Note: While The Get Up Kids were formed two years earlier than Moonbabies, the text explicitly lists Moonbabies' formation year as 1997 and The Get Up Kids' as 1995. Therefore, The Get Up Kids actually formed first. Let me re-read carefully.)*\n\nCorrection based on re-reading:\n- Moonbabies: \"formed in **1997**\"\n- The Get Up Kids: \"Formed in **1995**\"\n\n1995 comes before 1997. Therefore, **The Get Up Kids** formed first.\n\n**Answer:** The Get Up Kids",
+        "extracted_output": "Based on the text provided, **Moonbabies** formed first.\n\nThe text states that Moonbabies was formed in **1997**, whereas The Get Up Kids were formed in **1995**.\n\n*(Note: While The Get Up Kids were formed two years earlier than Moonbabies, the text explicitly lists Moonbabies' formation year as 1997 and The Get Up Kids' as 1995. Therefore, The Get Up Kids actually formed first. Let me re-read carefully.)*\n\nCorrection based on re-reading:\n- Moonbabies: \"formed in **1997**\"\n- The Get Up Kids: \"Formed in **1995**\"\n\n1995 comes before 1997. Therefore, **The Get Up Kids** formed first.\n\n**Answer:** The Get Up Kids",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Are Jennifer Lynch and Martin Scorsese both directors?",
+        "right_answer": "yes",
+        "model_output": "Yes, both Jennifer Lynch and Martin Scorsese are directors.\n\nAccording to the text provided:\n*   **Martin Scorsese** is described as an \"American director, producer, screenwriter, and film historian\" with a career spanning more than 50 years. He is also noted as the presenter and narrator of several documentaries in the \"Martin Scorsese Presents the Blues\" series and the \"Val Lewton\" tribute.\n*   **Jennifer Lynch** (also referred to as Jennifer Chambers Lynch) is explicitly identified as an \"American film director and screenwriter.\" The text notes that she directed the film *Surveillance* and wrote the novel *The Secret Diary of Laura Palmer*.",
+        "extracted_output": "Yes, both Jennifer Lynch and Martin Scorsese are directors.\n\nAccording to the text provided:\n*   **Martin Scorsese** is described as an \"American director, producer, screenwriter, and film historian\" with a career spanning more than 50 years. He is also noted as the presenter and narrator of several documentaries in the \"Martin Scorsese Presents the Blues\" series and the \"Val Lewton\" tribute.\n*   **Jennifer Lynch** (also referred to as Jennifer Chambers Lynch) is explicitly identified as an \"American film director and screenwriter.\" The text notes that she directed the film *Surveillance* and wrote the novel *The Secret Diary of Laura Palmer*.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "How many years of service must be performed to receive the ribbon created by the first United States Secretary of Defense?",
+        "right_answer": "ten years",
+        "model_output": "10",
+        "extracted_output": "10",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What actor in the movie Revolt also played Joe MacMillan in the series \"Halt and Catch Fire\"?",
+        "right_answer": "Lee Pace",
+        "model_output": "Based on the text provided, the actor who stars in the movie *Revolt* and also plays the protagonist Joe MacMillan in the series *Halt and Catch Fire* is **Lee Pace** (also referred to as Lee Grinner Pace).\n\nThe text states:\n*   \"Lee Grinner Pace... currently stars as protagonist Joe MacMillan in AMC's 'Halt and Catch Fire'.\"\n*   \"Revolt... stars Lee Pace and Bérénice Marlohe in the lead roles.\"",
+        "extracted_output": "Based on the text provided, the actor who stars in the movie *Revolt* and also plays the protagonist Joe MacMillan in the series *Halt and Catch Fire* is **Lee Pace** (also referred to as Lee Grinner Pace).\n\nThe text states:\n*   \"Lee Grinner Pace... currently stars as protagonist Joe MacMillan in AMC's 'Halt and Catch Fire'.\"\n*   \"Revolt... stars Lee Pace and Bérénice Marlohe in the lead roles.\"",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Melissa Crystal O'Neill starred in what series created by Joseph Mallozzi and Paul Mullie?",
+        "right_answer": "Dark Matter",
+        "model_output": "Based on the text provided, Melissa Crystal O'Neil starred in the series **Dark Matter**.\n\nThe text states that she is \"known for her role as Two/Portia Lin on 'Dark Matter'\" and notes that the series was \"created by Joseph Mallozzi and Paul Mullie.\"",
+        "extracted_output": "Based on the text provided, Melissa Crystal O'Neil starred in the series **Dark Matter**.\n\nThe text states that she is \"known for her role as Two/Portia Lin on 'Dark Matter'\" and notes that the series was \"created by Joseph Mallozzi and Paul Mullie.\"",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Simone Kirby is an Irish actress, her credits include as Tracey Moynihan in which Irish dramatic television series broadcast, on RTÉ Television, the show aired between 2010 and 2014?",
+        "right_answer": "Love/Hate",
+        "model_output": "Based on the text provided, Simone Kirby played the role of Tracey Moynihan in the Irish dramatic television series **Love/Hate**.\n\nThe text confirms that *Love/Hate* was broadcast on RTÉ Television and aired between 2010 and 2014.",
+        "extracted_output": "Based on the text provided, Simone Kirby played the role of Tracey Moynihan in the Irish dramatic television series **Love/Hate**.\n\nThe text confirms that *Love/Hate* was broadcast on RTÉ Television and aired between 2010 and 2014.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "When was the producer of Reba: Duets born who was born and raised in Tennessee?",
+        "right_answer": "January 31, 1981",
+        "model_output": "Based on the text provided, the album *Reba: Duets* was produced by Tony Brown, Dann Huff, Reba McEntire, and **Justin Timberlake**.\n\nAmong these producers, **Justin Timberlake** is the one described as being \"Born and raised in Tennessee.\" According to the text, he was born on **January 31, 1981**.",
+        "extracted_output": "Based on the text provided, the album *Reba: Duets* was produced by Tony Brown, Dann Huff, Reba McEntire, and **Justin Timberlake**.\n\nAmong these producers, **Justin Timberlake** is the one described as being \"Born and raised in Tennessee.\" According to the text, he was born on **January 31, 1981**.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "When did the Australian camp open that sits between the major dam across the Murray River and the city of Wodonga?",
+        "right_answer": "1947",
+        "model_output": "Based on the text provided, the Australian camp described is the **Bonegilla Migrant Reception and Training Centre**, which was located between the Hume Dam (the major dam across the Murray River) and the city of Wodonga. The text states that this camp **opened in 1947**.",
+        "extracted_output": "Based on the text provided, the Australian camp described is the **Bonegilla Migrant Reception and Training Centre**, which was located between the Hume Dam (the major dam across the Murray River) and the city of Wodonga. The text states that this camp **opened in 1947**.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "\"Faint\" is a song by the American rock band Linkin Park, from their second studio album \"Meteora\", the song would later be featured on the group's mashup EP, where it was mashed up with lyrics of the song Jigga What from \"Vol.  2... Hard Knock Life\", is the third studio album, by which American rapper?",
+        "right_answer": "Jay-Z",
+        "model_output": "Based on the text provided, \"Vol. 2... Hard Knock Life\" is the third studio album by the American rapper **Jay-Z**.",
+        "extracted_output": "Based on the text provided, \"Vol. 2... Hard Knock Life\" is the third studio album by the American rapper **Jay-Z**.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Who is younger  Rick Witter or Benjamin Burnley?",
+        "right_answer": "Benjamin Jackson \"Ben\" Burnley IV",
+        "model_output": "Based on the text provided:\n\n*   **Rick Witter** was born on November 23, **1972**.\n*   **Benjamin Burnley** was born on March 10, **1978**.\n\nSince 1978 is later than 1972, **Benjamin Burnley** is younger.",
+        "extracted_output": "Based on the text provided:\n\n*   **Rick Witter** was born on November 23, **1972**.\n*   **Benjamin Burnley** was born on March 10, **1978**.\n\nSince 1978 is later than 1972, **Benjamin Burnley** is younger.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Rosario Castellanos and Ivor Gurney, have which mutual occupation?",
+        "right_answer": "poet",
+        "model_output": "Based on the text provided, both **Rosario Castellanos** and **Ivor Gurney** were **poets** (and writers).\n\n*   **Rosario Castellanos** is described as a \"Mexican poet and author.\"\n*   **Ivor Gurney** is described as an \"English poet and composer, particularly of songs.\"\n\nAdditionally, the text notes that Gurney set Castellanos's work (specifically the \"Song of Ciabhán\") to music, highlighting their connection through poetry.",
+        "extracted_output": "Based on the text provided, both **Rosario Castellanos** and **Ivor Gurney** were **poets** (and writers).\n\n*   **Rosario Castellanos** is described as a \"Mexican poet and author.\"\n*   **Ivor Gurney** is described as an \"English poet and composer, particularly of songs.\"\n\nAdditionally, the text notes that Gurney set Castellanos's work (specifically the \"Song of Ciabhán\") to music, highlighting their connection through poetry.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What apartheid system opponent is the father of screenwriter Shawn Slovo?",
+        "right_answer": "Joe Slovo",
+        "model_output": "Based on the text provided, the father of screenwriter Shawn Slovo is **Joe Slovo** (born Yossel Mashel Slovo). He was a South African politician, a long-time leader of the South African Communist Party, a leading member of the African National Congress, and a commander of the ANC's military wing, all of whom he served as an **opponent of the apartheid system**.",
+        "extracted_output": "Based on the text provided, the father of screenwriter Shawn Slovo is **Joe Slovo** (born Yossel Mashel Slovo). He was a South African politician, a long-time leader of the South African Communist Party, a leading member of the African National Congress, and a commander of the ANC's military wing, all of whom he served as an **opponent of the apartheid system**.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What role is played by Sebastian Arcelus in the television series staring Téa Leoni as Dr. Elizabeth McCord?",
+        "right_answer": "Jay Whitman",
+        "model_output": "Based on the text provided, Sebastian Arcelus plays the role of **Jay Whitman** in the CBS TV series *Madam Secretary*, which stars Téa Leoni as Dr. Elizabeth McCord.",
+        "extracted_output": "Based on the text provided, Sebastian Arcelus plays the role of **Jay Whitman** in the CBS TV series *Madam Secretary*, which stars Téa Leoni as Dr. Elizabeth McCord.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Where in Turkey are the Kuleli Military High School and the Atik Valide Mosque located?",
+        "right_answer": "Istanbul",
+        "model_output": "Based on the text provided:\n\n*   **Kuleli Military High School** is located in **Çengelköy, Istanbul**, on the Asian shore of the Bosphorus strait.\n*   **Atik Valide Mosque** is located on a hill above the district of **Üsküdar**, in **Istanbul**.\n\nTherefore, both are located in **Istanbul**.",
+        "extracted_output": "Based on the text provided:\n\n*   **Kuleli Military High School** is located in **Çengelköy, Istanbul**, on the Asian shore of the Bosphorus strait.\n*   **Atik Valide Mosque** is located on a hill above the district of **Üsküdar**, in **Istanbul**.\n\nTherefore, both are located in **Istanbul**.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What is the engine type of the plane in service in AirTran JetConnect?",
+        "right_answer": "twin-engine",
+        "model_output": "**Rolls-Royce BR715** (for the Boeing 717)",
+        "extracted_output": "**Rolls-Royce BR715** (for the Boeing 717)",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Are either Jean Vigo or Richard Williams American professionals?",
+        "right_answer": "no",
+        "model_output": "No, neither Jean Vigo nor Richard Edmund Williams were American professionals.\n\nAccording to the text provided:\n*   **Jean Vigo** (1905–1934) is described as a **French** film director who helped establish poetic realism in France.\n*   **Richard Edmund Williams** is described as a **Canadian–British** animator, voice artist, and writer.",
+        "extracted_output": "No, neither Jean Vigo nor Richard Edmund Williams were American professionals.\n\nAccording to the text provided:\n*   **Jean Vigo** (1905–1934) is described as a **French** film director who helped establish poetic realism in France.\n*   **Richard Edmund Williams** is described as a **Canadian–British** animator, voice artist, and writer.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What marine vessels navigated in the swamp where Trelleborg is located?",
+        "right_answer": "Viking ships",
+        "model_output": "Based on the text provided, **Viking ships** navigated the swamp where Trelleborg is located.\n\nThe text states that the fortress was situated on a peninsula connected to the Great Belt by a lake that \"at its time could be navigated by **Viking ships**.\"",
+        "extracted_output": "Based on the text provided, **Viking ships** navigated the swamp where Trelleborg is located.\n\nThe text states that the fortress was situated on a peninsula connected to the Great Belt by a lake that \"at its time could be navigated by **Viking ships**.\"",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "Saint Paul, Minnesota, is which of the largest metropolitan areas in the US?",
+        "right_answer": "16th-largest",
+        "model_output": "Based on the text provided, Saint Paul is part of the Minneapolis–Saint Paul metropolitan area (also known as the Twin Cities), which is described as the **15th** or **16th** largest metropolitan area in the United States.\n\nThe text contains a slight inconsistency regarding the ranking:\n*   One section states: \"Minneapolis and St. Paul... are the core of the **15th** largest metropolitan area in the United States.\"\n*   Another section states: \"Minneapolis–Saint Paul... the **16th**-largest metropolitan area in the United States.\"\n\nTherefore, according to the provided context, it is the **15th or 16th** largest metropolitan area in the US.",
+        "extracted_output": "Based on the text provided, Saint Paul is part of the Minneapolis–Saint Paul metropolitan area (also known as the Twin Cities), which is described as the **15th** or **16th** largest metropolitan area in the United States.\n\nThe text contains a slight inconsistency regarding the ranking:\n*   One section states: \"Minneapolis and St. Paul... are the core of the **15th** largest metropolitan area in the United States.\"\n*   Another section states: \"Minneapolis–Saint Paul... the **16th**-largest metropolitan area in the United States.\"\n\nTherefore, according to the provided context, it is the **15th or 16th** largest metropolitan area in the US.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "In what year was the star of Ghost Whisperer born?",
+        "right_answer": "1979",
+        "model_output": "The star of the television series *Ghost Whisperer* is **Jennifer Love Hewitt**, who played the lead role of Melinda Gordon. According to the text provided, she was born on February 21, **1979**.",
+        "extracted_output": "The star of the television series *Ghost Whisperer* is **Jennifer Love Hewitt**, who played the lead role of Melinda Gordon. According to the text provided, she was born on February 21, **1979**.",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What did John T. Thompson invent and lend his name to, a notorious feature of the Prohibition era that earned nicknames including the \"Chicago Typewriter\" and \"Trench Sweeper\"?",
+        "right_answer": "Thompson submachine gun",
+        "model_output": "Based on the text provided, John T. Thompson invented the **Thompson submachine gun** (also known as the \"Tommy Gun\"). This weapon became infamous during the Prohibition era and was given various nicknames, including the \"Chicago Typewriter\" and \"Trench Sweeper.\"",
+        "extracted_output": "Based on the text provided, John T. Thompson invented the **Thompson submachine gun** (also known as the \"Tommy Gun\"). This weapon became infamous during the Prohibition era and was given various nicknames, including the \"Chicago Typewriter\" and \"Trench Sweeper.\"",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What type of programming language was created by Tony Hoare and can be seen implemented in the Elliot ALGOL complier?",
+        "right_answer": "occam programming language",
+        "model_output": "Based on the text provided, Tony Hoare (along with others) implemented the **Elliott ALGOL** compiler, which was a compiler for the **ALGOL 60** programming language.\n\nTherefore, the type of programming language created by Tony Hoare (in the context of the Elliott ALGOL compiler) is **ALGOL 60**.\n\n*(Note: While Tony Hoare is also credited in the text with developing ALGOL W, the specific compiler mentioned in your question, \"Elliott ALGOL,\" is explicitly described as an implementation of ALGOL 60.)*",
+        "extracted_output": "Based on the text provided, Tony Hoare (along with others) implemented the **Elliott ALGOL** compiler, which was a compiler for the **ALGOL 60** programming language.\n\nTherefore, the type of programming language created by Tony Hoare (in the context of the Elliott ALGOL compiler) is **ALGOL 60**.\n\n*(Note: While Tony Hoare is also credited in the text with developing ALGOL W, the specific compiler mentioned in your question, \"Elliott ALGOL,\" is explicitly described as an implementation of ALGOL 60.)*",
+        "extract_answer_code": "None"
+    },
+    {
+        "question": "What new character was introduced in Yarrow Cheney's 2012 production of \"The Lorax\"?",
+        "right_answer": "Audrey",
+        "model_output": "Based on the text provided, the new characters introduced in the 2012 film *The Lorax* (for which Yarrow Cheney served as production designer) are **Audrey** (voiced by Taylor Swift), **Aloysius O'Hare** (voiced by Rob Riggle), **Mrs. Wiggins**, **Ted's mother** (voiced by Jenny Slate), and **Grammy Norma** (voiced by Betty White).\n\nThe text specifically notes that the film builds on the book by expanding the story of Ted, who was previously unnamed, but lists the above as the specific \"new characters introduced in the film.\"",
+        "extracted_output": "Based on the text provided, the new characters introduced in the 2012 film *The Lorax* (for which Yarrow Cheney served as production designer) are **Audrey** (voiced by Taylor Swift), **Aloysius O'Hare** (voiced by Rob Riggle), **Mrs. Wiggins**, **Ted's mother** (voiced by Jenny Slate), and **Grammy Norma** (voiced by Betty White).\n\nThe text specifically notes that the film builds on the book by expanding the story of Ted, who was previously unnamed, but lists the above as the specific \"new characters introduced in the film.\"",
+        "extract_answer_code": "None"
+    }
+]

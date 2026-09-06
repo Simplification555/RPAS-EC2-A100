@@ -1,0 +1,7 @@
+{
+    "father node": 1,
+    "modification": "Added a structured 'AnswerExtract' step using the `custom` method to force the model to output the final answer in a specific JSON format (`{\"answer\": \"...\"}`) after reasoning. This addresses the `extract_answer_code: None` error by ensuring the output contains a parseable key, rather than relying on the model to output just the raw answer which the extraction logic failed to find. The graph now chains: Reasoning -> Extraction -> Final Return.",
+    "before": 0.32157210392095287,
+    "after": 0.17994505494505492,
+    "succeed": false
+}

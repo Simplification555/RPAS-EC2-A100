@@ -1,0 +1,112 @@
+{
+  "calls": {
+    "by_phase": {
+      "calib_quality": {
+        "calls": 40,
+        "completion_tokens": 2898,
+        "latency_ms": 322282,
+        "prompt_tokens": 52788,
+        "total_tokens": 55686
+      },
+      "search": {
+        "calls": 25,
+        "completion_tokens": 2793,
+        "latency_ms": 267189,
+        "prompt_tokens": 25838,
+        "total_tokens": 28631
+      },
+      "select": {
+        "calls": 24,
+        "completion_tokens": 1371,
+        "latency_ms": 165924,
+        "prompt_tokens": 21019,
+        "total_tokens": 22390
+      }
+    },
+    "by_phase_count": {
+      "calib_quality": 40,
+      "search": 25,
+      "select": 24
+    },
+    "finish_reasons": {},
+    "model_errors": 0,
+    "total": 89
+  },
+  "completion_tokens": 7062,
+  "dataset": "hotpotqa",
+  "finished_at_epoch": 1788702241.3097453,
+  "generated_at_epoch": 1788702242.249602,
+  "job_id": "133521",
+  "job_root": "$REPO_ROOT/outputs/scir_ec3_v3/133521",
+  "method": "aflow",
+  "model": "Qwen/Qwen3.5-9B",
+  "models_seen": {
+    "Qwen/Qwen3.5-9B": 89
+  },
+  "parameters": {
+    "data_seed": 2026,
+    "manifest_snapshot": {
+      "aflow_search": {
+        "executor_calls": 88,
+        "finalists": 2,
+        "new_workflow_rounds": 1,
+        "optimizer_calls": 1,
+        "workflow_executable_rate": 1.0
+      },
+      "calibration_answer_em": 0.4,
+      "calibration_answer_f1": 0.45163536275839994,
+      "calibration_calls": 40,
+      "calibration_tokens": 55686,
+      "code_commit": "21af326",
+      "d_test_accessed": false,
+      "data_seed": 2026,
+      "dataset": "hotpotqa",
+      "executor_generation_truncation_rate": 0.0,
+      "executor_max_tokens": 512,
+      "executor_model": "Qwen/Qwen3.5-9B",
+      "formal_result": false,
+      "meta_max_tokens": 4096,
+      "method": "aflow",
+      "protocol_version": "EC3_HOTPOTQA_V3",
+      "run_id": "ec3-hotpotqa-aflow-seed-0",
+      "run_kind": "minimum_search_select_calib_pilot",
+      "runtime_cuda_visible_devices": "0",
+      "search_calls": 25,
+      "search_examples": 8,
+      "search_tokens": 28631,
+      "search_wall_clock_seconds": 760.9843723773956,
+      "seed": 0,
+      "select_examples": 8,
+      "selection_calls": 24,
+      "selection_tokens": 22390,
+      "split_manifest_sha256": "1940fbef3792b691f60fe56c604d8e12f81e8f5ac71f444a7239462c0f3dd54c",
+      "split_protocol": "calib__search__select__test_locked",
+      "status": "passed",
+      "subset_policy": "first_eight_frozen_fixture_rows",
+      "temperature": 0.0,
+      "total_model_calls": 89,
+      "total_tokens": 106707
+    },
+    "search_examples": 8,
+    "select_examples": 8
+  },
+  "prompt_tokens": 99645,
+  "rounds": {
+    "configured": null,
+    "observed_max": null,
+    "observed_values": []
+  },
+  "schema_version": "rpas-run-metrics-v1",
+  "seed": 0,
+  "source_files": {
+    "calls": "$REPO_ROOT/outputs/ec3_hotpotqa_v3_v4e_native_seed0/aflow/seed_0/calls.jsonl",
+    "run_manifest": "$REPO_ROOT/outputs/ec3_hotpotqa_v3_v4e_native_seed0/aflow/seed_0/run_manifest.json",
+    "test_calls": "$REPO_ROOT/outputs/ec3_hotpotqa_v3_v4e_native_seed0/aflow/seed_0/test_calls.jsonl"
+  },
+  "stage": "pilot",
+  "started_at_epoch": 1788701429.31961,
+  "total_model_calls": 89,
+  "total_tokens": 106707,
+  "wall_clock_seconds": 811.9901351928711,
+  "wall_clock_seconds_observed": 811.9901351928711
+}

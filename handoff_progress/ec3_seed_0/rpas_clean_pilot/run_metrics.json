@@ -1,0 +1,166 @@
+{
+  "calls": {
+    "by_phase": {
+      "calib_quality": {
+        "calls": 40,
+        "completion_tokens": 357,
+        "latency_ms": 151752,
+        "prompt_tokens": 60843,
+        "total_tokens": 61200
+      },
+      "search": {
+        "calls": 96,
+        "completion_tokens": 1649,
+        "latency_ms": 408163,
+        "prompt_tokens": 154292,
+        "total_tokens": 155941
+      },
+      "search_reflection": {
+        "calls": 6,
+        "completion_tokens": 3990,
+        "latency_ms": 286370,
+        "prompt_tokens": 11186,
+        "total_tokens": 15176
+      },
+      "select": {
+        "calls": 24,
+        "completion_tokens": 249,
+        "latency_ms": 88086,
+        "prompt_tokens": 35379,
+        "total_tokens": 35628
+      }
+    },
+    "by_phase_count": {
+      "calib_quality": 40,
+      "search": 96,
+      "search_reflection": 6,
+      "select": 24
+    },
+    "finish_reasons": {
+      "length": 3,
+      "stop": 163
+    },
+    "model_errors": 0,
+    "total": 166
+  },
+  "completion_tokens": 6245,
+  "dataset": "hotpotqa",
+  "finished_at_epoch": 1788703920.0819032,
+  "generated_at_epoch": 1788703921.0127861,
+  "job_id": "133532",
+  "job_root": "$REPO_ROOT/outputs/scir_ec3_v3/133532",
+  "method": "rpas",
+  "model": "Qwen/Qwen3.5-9B",
+  "models_seen": {
+    "qwen35_9b": 166
+  },
+  "parameters": {
+    "data_seed": 2026,
+    "manifest_snapshot": {
+      "calibration_answer_f1": 0.8938311688311689,
+      "calibration_calls": 40,
+      "calibration_tokens": 61200,
+      "code_commit": "447ea58",
+      "config_sha256": "79d85b163bca4b88a63b16975bdedc716c6a96908e6cb8798a4afb3819c701db",
+      "d_test_accessed": false,
+      "d_test_substitute": "D_calib validity check after Q/E freeze; held-out D_test remains unopened",
+      "data_seed": 2026,
+      "dataset": "hotpotqa",
+      "dataset_setting": "HotpotQA distractor / provided-context",
+      "executor_max_tokens": 512,
+      "executor_model": "Qwen/Qwen3.5-9B",
+      "fidelity_scope": "repository-native phase2 run_search; HotpotQA evaluator injection only",
+      "formal_result": false,
+      "meta_max_tokens": 4096,
+      "method": "rpas",
+      "native_control_flow": "experiments.phase2_wan_agent_search.run_search",
+      "native_core_result": "native_core/result.json",
+      "native_core_sha256": "a7a25245cef7d75fb97545d395d50d470d7648a283d135f1a9b69a8b232febbf",
+      "new_candidate_budget": 3,
+      "parent_selection": "repository_native_run_search.select_parent",
+      "protocol_version": "EC3_HOTPOTQA_V3",
+      "rpas_search": {
+        "efficiency_candidate_id": "45c0167f778d",
+        "finalists": 3,
+        "mode": "wan_pareto",
+        "mutation_logs": 3,
+        "new_candidates": 3,
+        "parent_score_band": 0.05,
+        "parent_selection": "repository_native_run_search.select_parent",
+        "parent_top_k": 6,
+        "pareto_archive_size": 3,
+        "pareto_front_constructed": true,
+        "pareto_parent_prob": 0.5,
+        "quality_candidate_id": "45c0167f778d",
+        "reflection_calls": 6,
+        "rule_fallbacks": 0,
+        "seed_archive_size": 2,
+        "seed_policy": "first_four_distinct_native_ids",
+        "selection_policy": "protocol_q_e.delta=0.05",
+        "selection_strategy": "quality_band_cost",
+        "shortlist_policy": "pareto_front_quality_band_cost_selection_shortlist.band=0.05"
+      },
+      "run_id": "ec3-hotpotqa-rpas-seed-0",
+      "run_kind": "minimum_search_select_calib_pilot",
+      "runner_sha256": "c045f72b77db17bee4242219a0b7882c7754f2ddfe542f9805fa89c12ed3103a",
+      "runtime_cuda_visible_devices": "0",
+      "search_calls": 126,
+      "search_examples": 8,
+      "search_ids": [
+        "5adf0ae45542992d7e9f9286",
+        "5a79118755429974737f7962",
+        "5a7ce444554299683c1c63c1",
+        "5a80b4d1554299260e20a134",
+        "5a7280105542994cef4bc2e4",
+        "5ab9b2c7554299743d22ebaf",
+        "5a8eea4a5542990e94052bb7",
+        "5a79caad5542994f819ef09f"
+      ],
+      "search_tokens": 206745,
+      "search_wall_clock_seconds": 934.6902289390564,
+      "seed": 0,
+      "seed_candidates": 4,
+      "select_examples": 8,
+      "select_ids": [
+        "5ae4d2a55542990ba0bbb161",
+        "5ab29cef554299449642c936",
+        "5a776fc15542997042120a3a",
+        "5ab531cc5542990594ba9d23",
+        "5ab3c53955429969a97a81b9",
+        "5a89dd4d554299669944a5e3",
+        "5a8db348554299068b959dc2",
+        "5a8a5a1955429930ff3c0da7"
+      ],
+      "split_manifest_sha256": "1940fbef3792b691f60fe56c604d8e12f81e8f5ac71f444a7239462c0f3dd54c",
+      "split_protocol": "calib__search__select__test_locked",
+      "status": "passed",
+      "subset_policy": "first_eight_frozen_fixture_rows",
+      "temperature": 0.0,
+      "total_model_calls": 166,
+      "total_tokens": 267945
+    },
+    "new_candidate_budget": 3,
+    "search_examples": 8,
+    "seed_candidates": 4,
+    "select_examples": 8
+  },
+  "prompt_tokens": 261700,
+  "rounds": {
+    "configured": null,
+    "observed_max": null,
+    "observed_values": []
+  },
+  "schema_version": "rpas-run-metrics-v1",
+  "seed": 0,
+  "source_files": {
+    "calls": "$REPO_ROOT/outputs/ec3_hotpotqa_v3_v4f_locked_seed0/rpas/seed_0/calls.jsonl",
+    "run_manifest": "$REPO_ROOT/outputs/ec3_hotpotqa_v3_v4f_locked_seed0/rpas/seed_0/run_manifest.json",
+    "test_calls": "$REPO_ROOT/outputs/ec3_hotpotqa_v3_v4f_locked_seed0/rpas/seed_0/test_calls.jsonl"
+  },
+  "stage": "pilot",
+  "started_at_epoch": 1788702930.33815,
+  "total_model_calls": 166,
+  "total_tokens": 267945,
+  "wall_clock_seconds": 989.743753194809,
+  "wall_clock_seconds_observed": 989.743753194809
+}

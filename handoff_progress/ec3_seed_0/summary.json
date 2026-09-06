@@ -1,0 +1,63 @@
+{
+  "schema_version": "rpas-ec3-v4f-one-seed-gate-v1",
+  "experiment": "EC-3",
+  "benchmark": "HotpotQA distractor provided-context",
+  "seed": 0,
+  "code_baseline": "447ea58",
+  "split_manifest_sha256": "1940fbef3792b691f60fe56c604d8e12f81e8f5ac71f444a7239462c0f3dd54c",
+  "formal_result": false,
+  "d_test_accessed": false,
+  "subset": {
+    "search": 8,
+    "select": 8,
+    "calib": 40,
+    "test": 0
+  },
+  "aflow": {
+    "job_id": "133521",
+    "selection_f1": 0.5595741901776384,
+    "selection_em": 0.5,
+    "calibration_f1": 0.45163536275839994,
+    "calibration_em": 0.4,
+    "model_calls": 89,
+    "prompt_tokens": 99645,
+    "completion_tokens": 7062,
+    "total_tokens": 106707,
+    "runner_wall_seconds": 811.9901351928711,
+    "slurm_elapsed": "00:13:35",
+    "model_errors": 0
+  },
+  "rpas": {
+    "calibration_job_id": "133531",
+    "pilot_job_id": "133532",
+    "selection_f1": 0.7083333333333333,
+    "selection_em": 0.625,
+    "calibration_f1": 0.8938311688311689,
+    "calibration_em": 0.875,
+    "selected_quality_candidate_id": "45c0167f778d",
+    "selected_efficiency_candidate_id": "45c0167f778d",
+    "pilot_model_calls": 166,
+    "pilot_prompt_tokens": 261700,
+    "pilot_completion_tokens": 6245,
+    "pilot_total_tokens": 267945,
+    "pilot_runner_wall_seconds": 989.743753194809,
+    "pilot_slurm_elapsed": "00:16:33",
+    "prerequisite_calibration_calls": 160,
+    "prerequisite_calibration_tokens": 247415,
+    "end_to_end_calls": 326,
+    "end_to_end_tokens": 515360,
+    "seed_candidates_attempted": 4,
+    "new_candidates": 3,
+    "accepted_typed_mutations": 3,
+    "llm_reflection_calls": 6,
+    "rule_fallbacks": 0,
+    "pareto_entries": 3,
+    "pareto_unique_candidate_ids": 2,
+    "model_errors": 0
+  },
+  "gate": {
+    "status": "SATURATION_TRIGGERED",
+    "hotpotqa_d_test_unlocked": false,
+    "next_action": "written MuSiQue amendment or explicit protocol decision"
+  }
+}
