@@ -5,6 +5,16 @@ from external_comparison.runners.ec2_v2 import OfficialGDesignerRuntime
 from external_comparison.runners.mmlu import MMLUExample
 
 
+def test_probe_cli_accepts_a_single_targeted_cap(monkeypatch):
+    captured = {}
+    monkeypatch.setattr(probe, "run", lambda args: captured.update(caps=args.caps, methods=args.methods))
+    monkeypatch.setattr("sys.argv", ["ec2_decode_probe", "--data-dir", "data", "--gdesigner-root", "gd",
+                                      "--output", "out", "--caps", "2048", "--methods", "full_connected"])
+    monkeypatch.setattr(probe.asyncio, "run", lambda value: value)
+    probe.main()
+    assert captured == {"caps": [2048], "methods": ["full_connected"]}
+
+
 def test_probe_reads_only_dev_and_freezes_same_ids(tmp_path, monkeypatch):
     def loader(path, split, **kwargs):
         assert split == "dev"

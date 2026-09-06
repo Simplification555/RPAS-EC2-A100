@@ -56,8 +56,8 @@ async def run(args: argparse.Namespace) -> None:
     contract = {
         "protocol": "ec2-dev-decode-probe-v1", "formal_result": False,
         "d_test_accessed": False, "dataset_split": "dev", "seed": 0,
-        "data_seed": 2026, "num_examples": len(rows), "caps": [256, 1024],
-        "methods": ["single_agent", "full_connected"], "model": BACKBONE,
+        "data_seed": 2026, "num_examples": len(rows), "caps": args.caps,
+        "methods": args.methods, "model": BACKBONE,
         "temperature": 0.0, "communication_rounds": ROUNDS, "concurrency": 1,
         "max_retries": 0, "request_timeout_seconds": 180,
         "gpu": gpu, "roles": list(ROLES), "official_commit": git_commit(args.gdesigner_root),
@@ -104,7 +104,15 @@ def main() -> None:
     parser.add_argument("--gdesigner-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--count", type=int, default=8)
-    asyncio.run(run(parser.parse_args()))
+    parser.add_argument("--caps", type=int, nargs="+", default=[256, 1024])
+    parser.add_argument("--methods", choices=("single_agent", "full_connected"), nargs="+",
+                        default=["single_agent", "full_connected"])
+    args = parser.parse_args()
+    if any(cap < 1 for cap in args.caps) or len(set(args.caps)) != len(args.caps):
+        parser.error("--caps must contain unique positive integers")
+    if len(set(args.methods)) != len(args.methods):
+        parser.error("--methods must not repeat a method")
+    asyncio.run(run(args))
 
 
 if __name__ == "__main__":

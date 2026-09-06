@@ -24,6 +24,17 @@ export RPAS_GDESIGNER_EMBEDDING_MODEL=/home/jianbaizhao/model/sentence-transform
 export RPAS_EXTERNAL_API_KEY=EMPTY
 export GEPA_QWEN_DISABLE_THINKING=1
 export PYTHONUNBUFFERED=1
+read -r -a probe_caps <<< "${RPAS_EC2_PROBE_CAPS:-256 1024}"
+read -r -a probe_methods <<< "${RPAS_EC2_PROBE_METHODS:-single_agent full_connected}"
+(( ${#probe_caps[@]} > 0 && ${#probe_methods[@]} > 0 )) || { echo 'probe caps/methods cannot be empty' >&2; exit 2; }
+max_probe_cap=0
+for cap in "${probe_caps[@]}"; do
+  [[ "$cap" =~ ^[1-9][0-9]*$ ]] || { echo "invalid probe cap: $cap" >&2; exit 2; }
+  (( cap > max_probe_cap )) && max_probe_cap=$cap
+done
+for method in "${probe_methods[@]}"; do
+  [[ "$method" == single_agent || "$method" == full_connected ]] || { echo "invalid probe method: $method" >&2; exit 2; }
+done
 port=$((31000 + SLURM_JOB_ID % 1000))
 export RPAS_EXTERNAL_API_BASE="http://127.0.0.1:$port/v1"
 job_root="$repo/outputs/ec2_decode_probe/$SLURM_JOB_ID"
@@ -31,13 +42,13 @@ mkdir -p "$job_root"
 {
   date --iso-8601=seconds
   hostname
-  echo "job_id=$SLURM_JOB_ID; formal_result=false; caps=256,1024; dev_count=8"
+  echo "job_id=$SLURM_JOB_ID; formal_result=false; caps=${probe_caps[*]}; methods=${probe_methods[*]}; dev_count=8"
   nvidia-smi --query-gpu=uuid,name,memory.total --format=csv
   sha256sum external_comparison/runners/ec2_v2.py external_comparison/runners/ec2_decode_probe.py
 } > "$job_root/environment.txt"
 "${run[@]}" scripts/serve_transformers_qwen35_openai.py \
   --model "$RPAS_TOKENIZER_PATH" --served-model-name Qwen/Qwen3.5-9B \
-  --host 127.0.0.1 --port "$port" --max-new-tokens 1024 \
+  --host 127.0.0.1 --port "$port" --max-new-tokens "$max_probe_cap" \
   --max-batch-size 1 --batch-wait-ms 0 --dtype float16 \
   --stop-string '<<RPAS_END>>' > "$job_root/service.log" 2>&1 &
 service_pid=$!
@@ -53,6 +64,6 @@ done
 "${run[@]}" -m external_comparison.runners.ec2_decode_probe \
   --data-dir /home/jianbaizhao/RPAS/data/mmlu \
   --gdesigner-root /home/jianbaizhao/external_baselines/GDesigner \
-  --output "$job_root/result" --count 8 > "$job_root/runner.log" 2>&1
+  --output "$job_root/result" --count 8 --caps "${probe_caps[@]}" --methods "${probe_methods[@]}" > "$job_root/runner.log" 2>&1
 test -s "$job_root/result/summary.json"
 echo 'probe_completed=true; formal_result=false'
