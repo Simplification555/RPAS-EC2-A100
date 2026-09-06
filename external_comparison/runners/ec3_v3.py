@@ -252,6 +252,17 @@ def _manifest_base(manifest: dict[str, Any], *, method: str, seed: int, config: 
     }
 
 
+def _calibration_seeds(config: dict[str, Any]) -> list[dict[str, Any]]:
+    # Singleton model/site pools can collapse differently named native seeds.
+    unique: dict[str, dict[str, Any]] = {}
+    for candidate in seed_architectures(config):
+        unique.setdefault(candidate["id"], candidate)
+    seeds = list(unique.values())[:2]
+    if len(seeds) != 2:
+        raise RuntimeError("EC-3 calibration requires two distinct RPAS seed workflows")
+    return seeds
+
+
 def run_calibration(args: argparse.Namespace) -> Path:
     gpu = _require_one_allocated_gpu()
     manifest = _read_json(args.manifest)
@@ -259,9 +270,7 @@ def run_calibration(args: argparse.Namespace) -> Path:
         raise ValueError("EC-3 requires a V3 frozen manifest")
     raw_config, models, profile = _runtime(Path(args.config))
     calibration = _load_split(manifest, "calib")
-    seeds = seed_architectures(raw_config)[:2]
-    if len(seeds) != 2:
-        raise RuntimeError("EC-3 calibration requires two RPAS seed workflows")
+    seeds = _calibration_seeds(raw_config)
     root = Path(args.output_root) / "calibration" / "rpas"
     if root.exists() and any(root.iterdir()):
         raise FileExistsError(f"refusing to overwrite EC-3 calibration artifact: {root}")
@@ -281,6 +290,8 @@ def run_calibration(args: argparse.Namespace) -> Path:
     payload = {
         **_manifest_base(manifest, method="rpas", seed=-1, config=raw_config, gpu=gpu),
         "run_kind": "calibration", "d_test_accessed": False, "calibration_candidates": len(rows),
+        "calibration_candidate_ids": [candidate["id"] for candidate in seeds],
+        "calibration_seed_policy": "first_two_distinct_native_ids",
         "executor_generation_truncation_rate": truncation, "valid_answer_rate": valid_rate,
         "status": "passed" if truncation < MAX_TRUNCATION_RATE and valid_rate >= MIN_VALID_ANSWER_RATE else "failed",
     }

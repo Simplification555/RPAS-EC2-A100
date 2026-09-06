@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from external_comparison.runners.ec3_v3 import _read_json, _require_unlock, _select, _shortlist
+from external_comparison.runners.ec3_v3 import _calibration_seeds, _read_json, _require_unlock, _select, _shortlist
 from external_comparison.runners.native_ec3_aflow import _truncation_rate
 from experiments.phase2_wan_agent_search import (
     extract_prediction_for_dataset,
@@ -63,6 +63,30 @@ def test_ec3_json_reader_accepts_cli_string_paths(tmp_path: Path) -> None:
     path = tmp_path / "manifest.json"
     path.write_text(json.dumps({"protocol_version": "EC3_HOTPOTQA_V3"}), encoding="utf-8")
     assert _read_json(str(path))["protocol_version"] == "EC3_HOTPOTQA_V3"
+
+
+def test_calibration_skips_duplicate_native_ids(monkeypatch) -> None:
+    candidates = [
+        {"id": "single", "name": "local"},
+        {"id": "single", "name": "remote"},
+        {"id": "multi", "name": "self_consistency"},
+    ]
+    monkeypatch.setattr("external_comparison.runners.ec3_v3.seed_architectures", lambda _: candidates)
+    assert _calibration_seeds({}) == [candidates[0], candidates[2]]
+
+
+def test_calibration_rejects_only_one_distinct_candidate(monkeypatch) -> None:
+    monkeypatch.setattr("external_comparison.runners.ec3_v3.seed_architectures", lambda _: [{"id": "a"}] * 2)
+    with pytest.raises(RuntimeError, match="two distinct"):
+        _calibration_seeds({})
+
+
+def test_calibration_real_singleton_config_has_distinct_seeds() -> None:
+    config = _read_json(Path(__file__).resolve().parents[1] / "experiments/ec3_hotpotqa_qwen35_9b.json")
+    seeds = _calibration_seeds(config)
+    assert len({candidate["id"] for candidate in seeds}) == 2
+    assert seeds[0]["topology"] == "single"
+    assert seeds[1]["topology"] != "single"
 
 
 def test_aflow_truncation_rate_uses_the_frozen_executor_cap(tmp_path: Path) -> None:
