@@ -33,6 +33,7 @@ from experiments.phase2_wan_agent_search import (
     load_sites,
     mutate_candidate,
     pareto_front,
+    run_search,
     scientific_config_payload,
     select_operating_points,
     select_parent,
@@ -62,6 +63,16 @@ def _read_json(path: Path | str) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise ValueError(f"expected JSON object: {path}")
     return payload
+
+
+def _read_jsonl(path: Path) -> list[dict[str, Any]]:
+    if not path.is_file():
+        return []
+    return [
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
 
 
 def _append_jsonl(path: Path, rows: Iterable[dict[str, Any]]) -> None:
@@ -113,6 +124,20 @@ def _generic_examples(rows: list[HotpotExample]) -> list[dict[str, Any]]:
             "dataset": "hotpotqa",
             "input": render_prompt(row),
             "answer": row.answer,
+        }
+        for row in rows
+    ]
+
+
+def _core_examples(rows: list[HotpotExample], split: str) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": row.task_id,
+            "dataset": "hotpotqa",
+            "input": render_prompt(row),
+            "answer": row.answer,
+            "official_split": split,
+            "hotpot_task": asdict(row),
         }
         for row in rows
     ]
@@ -326,6 +351,7 @@ def run_pretest(args: argparse.Namespace) -> Path:
     raw_config, models, profile = _runtime(Path(args.config))
     search = _load_split(manifest, "search")
     select = _load_split(manifest, "select")
+    calibration = _load_split(manifest, "calib")
     pilot = args.command == "pilot"
     if pilot:
         # Frozen fixture order, chosen without examining answer scores.
@@ -347,117 +373,85 @@ def run_pretest(args: argparse.Namespace) -> Path:
         "seed_candidates": 4, "new_candidate_budget": 3,
         "subset_policy": "first_eight_frozen_fixture_rows" if pilot else "full_frozen_splits",
         "search_ids": [row.task_id for row in search], "select_ids": [row.task_id for row in select],
-        "parent_selection": "native.select_parent",
-        "fidelity_scope": "native executor/reflection/mutation/selection components; adapter search loop",
+        "parent_selection": "repository_native_run_search.select_parent",
+        "fidelity_scope": "repository-native phase2 run_search; HotpotQA evaluator injection only",
+        "native_control_flow": "experiments.phase2_wan_agent_search.run_search",
+        "d_test_substitute": "D_calib validity check after Q/E freeze; held-out D_test remains unopened",
     }
     _write_json(root / "minimum_run_contract.json", run_contract)
-    rng = random.Random(args.seed)
-    candidates = _native_seeds(raw_config, 4)
-    evaluated: list[dict[str, Any]] = []
-    search_calls: list[dict[str, Any]] = []
-    def record_evaluation(result: dict[str, Any], calls: list[dict[str, Any]], candidate: dict[str, Any], origin: str) -> None:
-        split = result["split"]
-        filename = {"search": "search_rows.jsonl", "select": "selection_rows.jsonl", "calib": "pilot_calibration_rows.jsonl"}[split]
-        _append_jsonl(root / filename, [_candidate_row(candidate, result, origin)])
-        _append_jsonl(root / "search_outputs.jsonl", [
-            {**output, "candidate_id": candidate["id"], "split": split} for output in result["outputs"]
-        ])
-        _append_jsonl(root / "calls.jsonl", calls)
-        print(json.dumps({"stage": split, "candidate_id": candidate["id"],
-                          "answer_f1": result["answer_f1"], "valid": result["is_valid_candidate"],
-                          "calls": len(calls)}, sort_keys=True), flush=True)
-    for candidate in candidates:
-        errors = validate_candidate_contract(candidate, raw_config, models)
-        if errors:
-            raise ValueError(f"invalid RPAS seed candidate: {errors}")
-        result, call_rows = _evaluate(candidate=candidate, rows=search, models=models, profile=profile, config=raw_config, split="search", run_id=run_id, method="rpas")
-        evaluated.append(_candidate_row(candidate, result, "seed"))
-        search_calls.extend(call_rows)
-        record_evaluation(result, call_rows, candidate, "seed")
-    seed_archive_size = len(pareto_front(evaluated))
-    mutation_logs: list[dict[str, Any]] = []
-    generated = 0
-    reflection_attempts = 0
-    max_reflection_attempts = int(os.environ.get("RPAS_EC3_MAX_REFLECTION_ATTEMPTS", "8"))
-    if max_reflection_attempts < 3:
-        raise ValueError("EC-3 RPAS requires at least three reflection attempts")
-    while generated < 3 and reflection_attempts < max_reflection_attempts:
-        reflection_attempts += 1
-        parent, parent_source = _select_search_parent(evaluated, rng)
-        started = time.perf_counter()
-        plan = build_reflection_plan(
-            row=parent, config=raw_config, models=models, profile=profile, reflection_mode="llm",
-            reflection_model="qwen35_9b", reflection_max_tokens=int(raw_config["reflection"]["max_tokens"]), max_proposals=3,
+    if raw_config.get("reflection", {}).get("allow_rule_fallback") is not False:
+        raise ValueError("EC-3 RPAS requires LLM reflection with rule fallback disabled")
+    all_calls: list[dict[str, Any]] = []
+    calibration_evaluations = 0
+
+    def task_evaluator(**kwargs: Any) -> dict[str, Any]:
+        nonlocal calibration_evaluations
+        dataset = kwargs.pop("dataset")
+        nominal_split = str(dataset[0]["official_split"])
+        split = nominal_split
+        if nominal_split == "calib":
+            split = "calib_quality" if calibration_evaluations == 0 else "calib_efficiency"
+            calibration_evaluations += 1
+        tasks = [HotpotExample(**row["hotpot_task"]) for row in dataset]
+        result, calls = _evaluate(
+            candidate=kwargs["candidate"], rows=tasks, models=kwargs["models"],
+            profile=kwargs["profile"], config=raw_config, split=split,
+            run_id=run_id, method="rpas",
         )
-        _append_jsonl(root / "reflection_plans.jsonl", [{
-            "attempt": reflection_attempts, "parent_candidate_id": parent["candidate_id"],
-            "parent_source": parent_source, "plan": plan,
-        }])
-        if plan.get("mode") != "llm":
-            raise RuntimeError("EC-3 RPAS forbids rule-based reflection fallback")
-        reflection_calls = _reflection_call_rows(run_id, parent["candidate_id"], plan)
-        search_calls.extend(reflection_calls)
-        _append_jsonl(root / "calls.jsonl", reflection_calls)
-        proposals = choose_planned_mutations(plan, parent["candidate"], raw_config, limit=3)
-        if not proposals:
-            raise RuntimeError("EC-3 RPAS reflection returned no applicable typed mutation")
-        enqueued = False
-        for proposal in proposals:
-            if generated >= 3:
-                break
-            child = mutate_candidate(
-                parent["candidate"], raw_config, rng, parent_row=parent, mode="wan_pareto",
-                reflection_plan=plan, planned_mutation_override=proposal,
-            )
-            child["parent_source"] = parent_source
-            errors = validate_candidate_contract(child, raw_config, models)
-            mutation_log = {
-                "parent_candidate_id": parent["candidate_id"], "child_candidate_id": child["id"],
-                "parent_source": parent_source,
-                "applied_mutation": child.get("applied_mutation"), "reflection_mode": plan["mode"],
-                "reflection_wall_time_ms": (time.perf_counter() - started) * 1000, "contract_errors": errors,
-            }
-            if errors or any(child["id"] == row["candidate_id"] for row in evaluated):
-                mutation_log["status"] = "rejected"
-                mutation_logs.append(mutation_log)
-                _append_jsonl(root / "mutation_logs.jsonl", [mutation_log])
-                continue
-            result, call_rows = _evaluate(candidate=child, rows=search, models=models, profile=profile, config=raw_config, split="search", run_id=run_id, method="rpas")
-            evaluated.append(_candidate_row(child, result, "generated"))
-            search_calls.extend(call_rows)
-            record_evaluation(result, call_rows, child, "generated")
-            mutation_log["status"] = "evaluated"
-            mutation_logs.append(mutation_log)
-            _append_jsonl(root / "mutation_logs.jsonl", [mutation_log])
-            generated += 1
-            enqueued = True
-        if not enqueued:
-            # A single deterministic reflection can propose an already-used or
-            # contract-invalid mutation. Retry the LLM reflection within a
-            # bounded budget; rule-based fallback remains forbidden.
-            continue
-    if generated < 3:
-        raise RuntimeError(
-            "EC-3 RPAS could not materialize three LLM-planned valid mutations "
-            f"within {max_reflection_attempts} reflection attempts"
-        )
-    finalists, shortlist_policy = shortlist_rows_for_selection(
-        evaluated,
+        all_calls.extend(calls)
+        if not kwargs.get("capture_outputs", False):
+            result.pop("outputs", None)
+        return result
+
+    native_output = root / "native_core"
+    core = run_search(
+        config=raw_config,
+        models=models,
+        profile=profile,
+        searchset=_core_examples(search, "search"),
+        selectionset=_core_examples(select, "select"),
+        # The native executor requires a terminal evaluation split. D_calib is
+        # disjoint and is used only after Q/E selection; D_test remains locked.
+        testset=_core_examples(calibration, "calib"),
         mode=RPAS_MODE,
-        shortlist_size=5,
+        seed_candidate_budget=4,
+        new_candidate_budget=3,
+        search_examples=None,
+        selection_shortlist_size=5,
+        test_top_k=2,
+        eval_concurrency=1,
+        output_dir=native_output,
+        seed=args.seed,
         selection_strategy=SELECTION_STRATEGY,
         quality_band=SELECTION_QUALITY_BAND,
+        pareto_parent_prob=PARETO_PARENT_PROB,
+        parent_score_band=PARENT_SCORE_BAND,
+        parent_top_k=PARENT_TOP_K,
+        reflection_mode="llm",
+        reflection_model="qwen35_9b",
+        reflection_max_tokens=META_MAX_TOKENS,
+        reflection_children=3,
+        reflection_example_limit=3,
+        evaluation_cache_dir=None,
+        resume=False,
+        metadata={
+            "dataset": "hotpotqa",
+            "test_name": "distractor_provided_context",
+            "data_seed": manifest["data_seed"],
+            "split_manifest_sha256": manifest["split_manifest_sha256"],
+            "d_test_accessed": False,
+            "task_adapter": "external_comparison.runners.ec3_v3.task_evaluator",
+        },
+        candidate_evaluator=task_evaluator,
     )
-    selection_rows: list[dict[str, Any]] = []
-    selection_calls: list[dict[str, Any]] = []
-    for row in finalists:
-        result, call_rows = _evaluate(candidate=row["candidate"], rows=select, models=models, profile=profile, config=raw_config, split="select", run_id=run_id, method="rpas")
-        selection_rows.append(_candidate_row(row["candidate"], result, row["candidate_origin"]))
-        selection_calls.extend(call_rows)
-        record_evaluation(result, call_rows, row["candidate"], row["candidate_origin"])
-    operating_points = select_operating_points(selection_rows)
-    selected = operating_points["quality"]
-    efficient = operating_points["efficiency"]
+    for record in _read_jsonl(native_output / "search_overhead_rows.jsonl"):
+        plan = {"call_traces": record.get("call_traces", [])}
+        all_calls.extend(_reflection_call_rows(run_id, str(record.get("parent_candidate_id", "unknown")), plan))
+    selected_tests = core["selected_test_rows"]
+    selected_test = selected_tests[0]
+    efficient_test = next(row for row in selected_tests if "E" in row.get("operating_points", []))
+    selected = selected_test["selection"]
+    efficient = efficient_test["selection"]
     selected_payload = {
         "candidate": selected["candidate"], "candidate_id": selected["candidate_id"],
         "selection_answer_f1": selected["answer_f1"], "selection_answer_em": selected["answer_em"],
@@ -471,59 +465,64 @@ def run_pretest(args: argparse.Namespace) -> Path:
             "candidate": efficient["candidate"], "candidate_id": efficient["candidate_id"],
             "answer_f1": efficient["answer_f1"], "answer_em": efficient["answer_em"],
         },
-        "finalists": [row["candidate_id"] for row in finalists],
+        "finalists": [row["candidate_id"] for row in core["selection_rows"]],
+        "native_core_result": "native_core/result.json",
     }
     _write_json(root / "selected_candidate.json", selected_payload)
-    calibration_calls: list[dict[str, Any]] = []
-    calibration_result: dict[str, Any] | None = None
-    if pilot:
-        # Selection is fixed before calibration; no reselection from its scores.
-        selected_sha = sha256_file(root / "selected_candidate.json")
-        _write_json(root / "pilot_selection_lock.json", {
-            "selected_candidate_sha256": selected_sha, "d_test_accessed": False,
-            "selected_candidate_id": selected["candidate_id"], "frozen_at_epoch": time.time(),
-        })
-        calibration = _load_split(manifest, "calib")
-        calibration_result, calibration_calls = _evaluate(
-            candidate=selected["candidate"], rows=calibration, models=models, profile=profile,
-            config=raw_config, split="calib", run_id=run_id, method="rpas",
-        )
-        record_evaluation(calibration_result, calibration_calls, selected["candidate"], "selected_pilot")
-        if sha256_file(root / "selected_candidate.json") != selected_sha:
-            raise RuntimeError("pilot selection changed during calibration")
-    archive_size = len(pareto_front(evaluated))
+    selected_sha = sha256_file(root / "selected_candidate.json")
+    _write_json(root / "pilot_selection_lock.json", {
+        "selected_candidate_sha256": selected_sha,
+        "d_test_accessed": False,
+        "selected_candidate_id": selected["candidate_id"],
+        "frozen_at_epoch": time.time(),
+    })
+    seed_rows = [row for row in core["search_rows"] if row.get("candidate_origin") == "seed"]
+    seed_archive_size = len(pareto_front(seed_rows))
+    archive_size = len(core["search_pareto_front_ids"])
+    search_calls = [row for row in all_calls if row["split"] in {"search", "select", "search_reflection"}]
+    calibration_calls = [row for row in all_calls if row["split"].startswith("calib_")]
+    calibration_result = selected_test["test"]
+    _append_jsonl(root / "calls.jsonl", all_calls)
+    _append_jsonl(root / "pilot_calibration_rows.jsonl", calibration_result.get("outputs", []))
     payload = {
         **_manifest_base(manifest, method="rpas", seed=args.seed, config=raw_config, gpu=gpu),
         **run_contract,
-        "status": "passed" if calibration_result is None or calibration_result["is_valid_candidate"] else "failed",
-        "search_calls": len(search_calls) + len(selection_calls),
-        "search_tokens": sum(int(row["total_tokens"]) for row in [*search_calls, *selection_calls]),
+        "status": "passed" if calibration_result["is_valid_candidate"] else "failed",
+        "search_calls": len(search_calls),
+        "search_tokens": sum(int(row["total_tokens"]) for row in search_calls),
         "search_wall_clock_seconds": float(time.time() - args.started_at),
         "calibration_calls": len(calibration_calls),
         "calibration_tokens": sum(int(row["total_tokens"]) for row in calibration_calls),
-        "calibration_answer_f1": calibration_result["answer_f1"] if calibration_result else None,
-        "total_model_calls": len(search_calls) + len(selection_calls) + len(calibration_calls),
-        "total_tokens": sum(int(row["total_tokens"]) for row in [*search_calls, *selection_calls, *calibration_calls]),
+        "calibration_answer_f1": calibration_result["answer_f1"],
+        "total_model_calls": len(all_calls),
+        "total_tokens": sum(int(row["total_tokens"]) for row in all_calls),
+        "native_core_sha256": sha256_file(Path(args.repo_root) / "experiments/phase2_wan_agent_search.py"),
+        "native_core_result": "native_core/result.json",
         "rpas_search": {
             "reflection_calls": sum(row["split"] == "search_reflection" for row in search_calls),
-            "new_candidates": generated, "mutation_logs": len([row for row in mutation_logs if row["status"] == "evaluated"]),
+            "new_candidates": core["num_new_candidates"],
+            "mutation_logs": core["num_new_candidates"],
             "seed_archive_size": seed_archive_size, "pareto_archive_size": archive_size,
-            "rule_fallbacks": 0, "finalists": len(finalists),
+            "pareto_front_constructed": archive_size > 0,
+            "rule_fallbacks": core["search_overhead"]["rule_fallbacks"],
+            "finalists": len(core["selection_rows"]),
             "mode": RPAS_MODE, "selection_strategy": SELECTION_STRATEGY,
             "seed_policy": "first_four_distinct_native_ids",
-            "parent_selection": "native.select_parent",
+            "parent_selection": "repository_native_run_search.select_parent",
             "pareto_parent_prob": PARETO_PARENT_PROB,
             "parent_score_band": PARENT_SCORE_BAND, "parent_top_k": PARENT_TOP_K,
-            "shortlist_policy": shortlist_policy, "selection_policy": "protocol_q_e.delta=0.05",
+            "shortlist_policy": core["search_shortlist_policy"],
+            "selection_policy": core["selection_policy"],
             "quality_candidate_id": selected["candidate_id"],
             "efficiency_candidate_id": efficient["candidate_id"],
         },
     }
     _write_json(root / "run_manifest.json", payload)
-    if pilot:
-        if payload["status"] != "passed":
-            raise RuntimeError("EC-3 selected pilot candidate failed calibration validity")
-    else:
+    if sha256_file(root / "selected_candidate.json") != selected_sha:
+        raise RuntimeError("EC-3 selection changed after native Q/E freeze")
+    if payload["status"] != "passed":
+        raise RuntimeError("EC-3 selected candidate failed frozen D_calib validity")
+    if not pilot:
         freeze_state(root)
     return root
 

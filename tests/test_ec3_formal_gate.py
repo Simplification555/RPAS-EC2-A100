@@ -19,6 +19,7 @@ def _manifest(method: str, seed: int) -> dict:
         payload["rpas_search"] = {
             "reflection_calls": 1, "new_candidates": 1, "mutation_logs": 1,
             "seed_archive_size": 2, "pareto_archive_size": 3, "mode": "wan_pareto",
+            "pareto_front_constructed": True,
             "selection_strategy": "quality_band_cost", "shortlist_policy": "native",
             "selection_policy": "protocol_q_e.delta=0.05", "quality_candidate_id": "q",
             "efficiency_candidate_id": "e",
@@ -89,3 +90,12 @@ def test_ec3_freeze_rejects_a_top_level_candidate_that_is_not_the_quality_point(
     (run / "selected_candidate.json").write_text(json.dumps(candidate), encoding="utf-8")
     with pytest.raises(ValueError, match="differs from the quality"):
         freeze_state(run)
+
+
+def test_ec3_freeze_accepts_a_constructed_front_even_when_mutations_are_dominated(tmp_path: Path):
+    run = _write_run(tmp_path, "rpas", 0)
+    manifest = json.loads((run / "run_manifest.json").read_text())
+    manifest["rpas_search"]["seed_archive_size"] = 3
+    manifest["rpas_search"]["pareto_archive_size"] = 2
+    (run / "run_manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    assert freeze_state(run).is_file()

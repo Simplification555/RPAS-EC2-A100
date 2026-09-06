@@ -13,7 +13,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 try:
     import litellm
@@ -89,6 +89,15 @@ HUMANEVAL_INSTRUCTION = (
     "Complete the Python programming task below. Return only executable Python code, including the requested "
     "function definition. Do not include Markdown fences, explanations, tests, or a final-answer marker. Preserve "
     "the function name and signature from the prompt.\n\n"
+)
+LIVECODEBENCH_INSTRUCTION = (
+    "Solve the programming problem in Python 3. Return only the complete executable program, including imports. "
+    "Read from standard input and write the required output to standard output. Do not use markdown fences, "
+    "explanations, or a FINAL ANSWER wrapper.\n"
+)
+LIVECODEBENCH_FUNCTIONAL_INSTRUCTION = (
+    "Solve the programming problem in Python 3. Return only complete Python code that preserves the provided "
+    "class/function contract. Do not read standard input, print an answer, use markdown, or add explanations.\n"
 )
 
 MMLU_INSTRUCTION = (
@@ -583,6 +592,10 @@ def extract_final_answer(text: str) -> str:
 def task_instruction(dataset: str | None = None) -> str:
     if dataset == "humaneval":
         return HUMANEVAL_INSTRUCTION
+    if dataset in {"livecodebench", "livecodebench_stdin"}:
+        return LIVECODEBENCH_INSTRUCTION
+    if dataset == "livecodebench_functional":
+        return LIVECODEBENCH_FUNCTIONAL_INSTRUCTION
     if dataset == "mmlu":
         return MMLU_INSTRUCTION
     if dataset == "hotpotqa":
@@ -3829,6 +3842,7 @@ def run_search(
     evaluation_cache_dir: Path | None = None,
     resume: bool = False,
     metadata: dict[str, Any] | None = None,
+    candidate_evaluator: Callable[..., dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     rng = random.Random(seed)
     start_time = time.time()
@@ -3838,6 +3852,54 @@ def run_search(
     checkpoint_path = output_dir / "search_checkpoint.json"
     proposal_rows_path = output_dir / "proposal_rows.jsonl"
     search_overhead_rows_path = output_dir / "search_overhead_rows.jsonl"
+    reflection_config = config.get("reflection", {})
+    llm_only_reflection = reflection_mode == "llm" and not bool(
+        reflection_config.get("allow_rule_fallback", True)
+    )
+    empty_plan_retry_limit = max(
+        1,
+        int(reflection_config.get("empty_plan_retry_limit", max(6, reflection_children * 2))),
+    )
+    consecutive_llm_no_progress = 0
+
+    def evaluate_for_split(
+        *,
+        candidate: dict[str, Any],
+        dataset: list[dict[str, Any]],
+        max_examples: int | None = None,
+        capture_outputs: bool = False,
+    ) -> tuple[dict[str, Any], str]:
+        """Evaluate without changing the native search/selection controller.
+
+        External benchmarks may inject only their task evaluator. Candidate
+        generation, parent selection, reflection, mutation, shortlisting, and
+        operating-point selection remain owned by this function.
+        """
+        if candidate_evaluator is not None:
+            examples = dataset[: max_examples or len(dataset)]
+            return (
+                candidate_evaluator(
+                    candidate=candidate,
+                    dataset=examples,
+                    models=models,
+                    profile=profile,
+                    capture_outputs=capture_outputs,
+                    eval_concurrency=eval_concurrency,
+                    reflection_example_limit=reflection_example_limit,
+                ),
+                "external_task_adapter",
+            )
+        return evaluate_candidate_cached(
+            candidate=candidate,
+            dataset=dataset,
+            models=models,
+            profile=profile,
+            cache_dir=evaluation_cache_dir,
+            max_examples=max_examples,
+            capture_outputs=capture_outputs,
+            eval_concurrency=eval_concurrency,
+            reflection_example_limit=reflection_example_limit,
+        )
     if seed_candidate_budget < 0:
         raise ValueError("seed_candidate_budget must be non-negative")
     if new_candidate_budget < 0:
@@ -4010,6 +4072,28 @@ def run_search(
                     for proposal in proposals
                 ]
                 if not children:
+                    if llm_only_reflection:
+                        consecutive_llm_no_progress += 1
+                        proposal_row = {
+                            "index": len(proposal_rows),
+                            "mode": mode,
+                            "status": "empty_llm_plan",
+                            "candidate_id": "",
+                            "candidate_name": "",
+                            "candidate": {},
+                            "parent_candidate_id": parent_row["candidate_id"],
+                            "reasons": ["no_new_applicable_typed_mutation"],
+                            "retry": consecutive_llm_no_progress,
+                            "retry_limit": empty_plan_retry_limit,
+                        }
+                        proposal_rows.append(proposal_row)
+                        append_jsonl(proposal_rows_path, proposal_row)
+                        if consecutive_llm_no_progress >= empty_plan_retry_limit:
+                            raise RuntimeError(
+                                "LLM reflection exhausted the bounded no-progress retry limit "
+                                "without an applicable typed mutation; rule fallback remains disabled"
+                            )
+                        continue
                     fallback_child = mutate_candidate(
                         parent_row["candidate"],
                         config,
@@ -4067,18 +4151,21 @@ def run_search(
                 append_jsonl(proposal_rows_path, proposal_row)
                 enqueued = True
             if not enqueued:
+                if llm_only_reflection:
+                    consecutive_llm_no_progress += 1
+                    if consecutive_llm_no_progress >= empty_plan_retry_limit:
+                        raise RuntimeError(
+                            "LLM reflection exhausted the bounded no-progress retry limit because "
+                            "all typed mutations were duplicate or invalid; rule fallback remains disabled"
+                        )
                 continue
+            consecutive_llm_no_progress = 0
 
         candidate = candidate_queue.pop(0)
-        eval_result, cache_status = evaluate_candidate_cached(
+        eval_result, cache_status = evaluate_for_split(
             candidate=candidate,
             dataset=searchset,
-            models=models,
-            profile=profile,
-            cache_dir=evaluation_cache_dir,
             max_examples=effective_search_examples,
-            eval_concurrency=eval_concurrency,
-            reflection_example_limit=reflection_example_limit,
         )
         parent_id = candidate.get("parent_id")
         parent_row = next(
@@ -4150,14 +4237,9 @@ def run_search(
         selection_rows_path.unlink()
     for selection_index, search_row in enumerate(shortlisted_rows):
         candidate = search_row["candidate"]
-        selection_result, selection_cache_status = evaluate_candidate_cached(
+        selection_result, selection_cache_status = evaluate_for_split(
             candidate=candidate,
             dataset=selectionset,
-            models=models,
-            profile=profile,
-            cache_dir=evaluation_cache_dir,
-            eval_concurrency=eval_concurrency,
-            reflection_example_limit=reflection_example_limit,
         )
         selection_row = {
             "index": selection_index,
@@ -4208,14 +4290,10 @@ def run_search(
     test_rows: list[dict[str, Any]] = []
     for selected_rank, row in enumerate(selected_rows):
         candidate = row["candidate"]
-        test_result, test_cache_status = evaluate_candidate_cached(
+        test_result, test_cache_status = evaluate_for_split(
             candidate=candidate,
             dataset=testset,
-            models=models,
-            profile=profile,
-            cache_dir=evaluation_cache_dir,
             capture_outputs=True,
-            eval_concurrency=eval_concurrency,
         )
         test_validity = candidate_validity(
             test_result,
@@ -4258,6 +4336,8 @@ def run_search(
         "accepted": sum(row.get("status") == "accepted" for row in proposal_rows),
         "duplicates": sum(row.get("status") == "duplicate" for row in proposal_rows),
         "invalid": sum(row.get("status") == "invalid" for row in proposal_rows),
+        "empty_llm_plans": sum(row.get("status") == "empty_llm_plan" for row in proposal_rows),
+        "llm_no_progress_retry_limit": empty_plan_retry_limit,
     }
     candidate_evaluation_overhead = {
         "calls": sum(float(row.get("sum_calls", 0.0)) for row in evaluated_rows),

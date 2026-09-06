@@ -1,4 +1,5 @@
 import json
+import inspect
 import random
 from pathlib import Path
 
@@ -6,7 +7,7 @@ import pytest
 
 from external_comparison.runners.ec3_v3 import (
     _calibration_seeds, _native_seeds, _read_json, _require_unlock,
-    _select, _select_search_parent, _shortlist,
+    _select, _select_search_parent, _shortlist, run_pretest,
 )
 from external_comparison.runners.native_ec3_aflow import _truncation_rate
 from experiments.phase2_wan_agent_search import (
@@ -128,6 +129,14 @@ def test_search_parent_excludes_invalid_high_score_and_is_reproducible() -> None
     assert {row["candidate_id"] for row, _ in first} == {"quality", "cheap"}
     with pytest.raises(ValueError, match="No valid"):
         _select_search_parent([rows[0]], random.Random(0))
+
+
+def test_ec3_pretest_delegates_the_controller_to_native_run_search() -> None:
+    source = inspect.getsource(run_pretest)
+    assert "core = run_search(" in source
+    assert 'candidate_evaluator=task_evaluator' in source
+    assert "build_reflection_plan(" not in source
+    assert "mutate_candidate(" not in source
 
 
 @pytest.mark.parametrize("dataset,expected", [("hotpotqa", "FINAL ANSWER: German"), ("aime", "### German")])

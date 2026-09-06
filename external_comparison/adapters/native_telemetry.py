@@ -41,10 +41,11 @@ def _timeout_fields(value: Any) -> dict[str, Any] | float | None:
 
 
 class NativeCallRecorder:
-    def __init__(self, path: Path, *, method: str, seed: int) -> None:
+    def __init__(self, path: Path, *, method: str, seed: int, dataset: str = "humaneval") -> None:
         self.path = path
         self.method = method
         self.seed = seed
+        self.dataset = dataset
         self.context = contextvars.ContextVar("native_ec1_task", default=None)
         self.sequence = 0
         self.patches: list[tuple[type, str, Any, Any]] = []
@@ -65,7 +66,10 @@ class NativeCallRecorder:
 
         @wraps(original)
         async def evaluate(benchmark, data, graph, *args, **kwargs):
-            task = data.get("task_id", data.get("problem_id", data.get("id")))
+            task = data.get(
+                "task_id",
+                data.get("problem_id", data.get("question_id", data.get("id"))),
+            )
             if not isinstance(task, str) or not task:
                 raise ValueError("Native EC1 benchmark row lacks a task ID for telemetry")
             kind = type(graph)
@@ -90,8 +94,8 @@ class NativeCallRecorder:
                                              "candidate_id": "native_optimizer"}
             started = time.perf_counter()
             record = {
-                "telemetry_schema": SCHEMA, "method": self.method, "dataset": "humaneval", "seed": self.seed,
-                "run_id": f"humaneval-{self.method}-seed-{self.seed}", "call_sequence": sequence,
+                "telemetry_schema": SCHEMA, "method": self.method, "dataset": self.dataset, "seed": self.seed,
+                "run_id": f"{self.dataset}-{self.method}-seed-{self.seed}", "call_sequence": sequence,
                 "phase": os.environ.get("RPAS_EC1_PHASE", "unknown"), **context,
                 "agent": _operator_frame(), "operator_provenance": "observed_python_call_frame",
                 "model": kwargs.get("model"), "requested_max_tokens": kwargs.get("max_tokens"),

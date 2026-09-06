@@ -46,8 +46,8 @@ def validate_pretest_manifest(manifest: dict[str, Any]) -> None:
         evidence = manifest.get("rpas_search", {})
         if any(int(evidence.get(key, 0)) <= 0 for key in ("reflection_calls", "new_candidates", "mutation_logs")):
             raise ValueError("EC-3 RPAS requires reflection, typed mutation, and new candidate evidence")
-        if int(evidence.get("pareto_archive_size", 0)) <= int(evidence.get("seed_archive_size", 0)):
-            raise ValueError("EC-3 RPAS Pareto archive must exceed the seed archive")
+        if not evidence.get("pareto_front_constructed") or int(evidence.get("pareto_archive_size", 0)) <= 0:
+            raise ValueError("EC-3 RPAS requires an actually constructed non-empty Pareto front")
         if evidence.get("mode") != "wan_pareto" or evidence.get("selection_strategy") != "quality_band_cost":
             raise ValueError("EC-3 RPAS requires native wan_pareto / quality-band-cost selection")
         if evidence.get("selection_policy") != "protocol_q_e.delta=0.05":

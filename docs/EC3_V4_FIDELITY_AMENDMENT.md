@@ -35,9 +35,13 @@ the frozen quality point.
 
 Each of the six AFlow/RPAS seed states must have the same split hash and
 non-zero pretest telemetry. RPAS states additionally require evidence of LLM
-reflection, typed mutations, an expanded Pareto archive, native shortlist
+reflection, typed mutations, a constructed non-empty Pareto front, native shortlist
 policy, and both operating points. The gate rejects missing or altered
 evidence before it can create `d_test_unlock.json`.
+
+The Pareto-front gate is structural rather than outcome-directed: a valid
+mutation may be dominated, so the final front is not required to be larger
+than the seed-only front.
 
 This is a fidelity correction, not an outcome-directed adjustment: no
 held-out output is used by search, selection, calibration, or this amendment.

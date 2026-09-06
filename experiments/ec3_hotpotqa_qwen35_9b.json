@@ -56,6 +56,7 @@
     "children": 3,
     "failure_examples": 3,
     "max_attempts": 3,
+    "empty_plan_retry_limit": 12,
     "retry_backoff_seconds": 1.0,
     "allow_rule_fallback": false
   },

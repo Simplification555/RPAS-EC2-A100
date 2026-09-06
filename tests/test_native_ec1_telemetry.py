@@ -74,6 +74,25 @@ def test_concurrent_benchmark_ids_do_not_leak_between_coroutines(tmp_path, monke
     assert {record["call_sequence"] for record in records} == {0, 1}
 
 
+def test_livecodebench_question_id_is_bound_to_telemetry(tmp_path):
+    class Benchmark:
+        async def evaluate_problem(self, data, graph):
+            return data["question_id"]
+
+    recorder = NativeCallRecorder(
+        tmp_path / "calls.jsonl", method="aflow", seed=0, dataset="livecodebench"
+    )
+    recorder.bind_benchmark(Benchmark)
+    try:
+        result = asyncio.run(
+            Benchmark().evaluate_problem({"question_id": "lcb-problem-1"}, object())
+        )
+    finally:
+        recorder.restore()
+    assert result == "lcb-problem-1"
+    assert recorder.context.get() is None
+
+
 @pytest.mark.parametrize("error", [RuntimeError("sensitive diagnostic"), asyncio.CancelledError()])
 def test_errors_and_cancellation_are_recorded_then_propagated(tmp_path, error):
     class Resource:

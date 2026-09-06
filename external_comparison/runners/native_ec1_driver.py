@@ -140,7 +140,7 @@ def _install_aflow_runtime_compatibility() -> str:
     return "aflow_runtime: max_concurrent_tasks=1; HumanEval timeout worker daemonized"
 
 
-def _install_aflow_prompt_fallback(optimizer: Any) -> str:
+def _install_aflow_prompt_fallback(optimizer: Any, code_prompt: str | None = None) -> str:
     """Patch missing generated prompt constants at each AFlow graph load.
 
     The pinned meta-model occasionally emits a commented ``REFINE_PROMPT``
@@ -149,7 +149,7 @@ def _install_aflow_prompt_fallback(optimizer: Any) -> str:
     optimizer and evaluator while preventing avoidable per-example skips.
     """
     original_load_graph = optimizer.graph_utils.load_graph
-    code_prompt = (
+    code_prompt = code_prompt or (
         "You are a Python code formatter. Return ONLY valid corrected Python "
         "code, with no markdown, quotes, or explanation. Preserve the requested "
         "function signature.\n\nInput code:\n{input}"
