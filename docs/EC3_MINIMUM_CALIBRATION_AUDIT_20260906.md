@@ -55,3 +55,18 @@ Single F1 is above the V4 0.80 saturation threshold. A distinct workflow probe
 is needed before assessing the 0.02 improvement threshold. A seed probe is
 still not a searched RPAS-Full operating point, so it cannot establish a final
 method comparison or justify a benchmark switch by itself.
+
+## Distinct-Candidate Probe (133224)
+
+The corrected probe completed its calls but failed the validity gate after
+00:11:03. Single again scored F1 0.893831 (40 calls, 61200 tokens).
+Self-consistency scored F1 0 with valid_answer_rate=0 (120 calls, 186219 tokens).
+The saved output contains, for example, `### German` while the HotpotQA parser
+requires `FINAL ANSWER: German`. This is a native aggregation serialization
+defect, not evidence that all underlying model answers are wrong.
+
+The repair adds HotpotQA to the existing dataset-specific majority-output
+format branch. It leaves vote counts, tie-breaking, prompts, and grading
+unchanged. Tests cover the HotpotQA contract and unchanged math formatting.
+Original outputs remain untouched; a fresh diagnostic run is required. No
+rescored diagnostic output may replace the failed run's original manifest.

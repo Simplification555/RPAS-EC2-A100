@@ -246,9 +246,12 @@ class _RowsDataset:
 class OfficialGDesignerRuntime:
     """Thin instrumentation layer around G-Designer at the pinned upstream commit."""
 
-    def __init__(self, root: Path, *, seed: int) -> None:
+    def __init__(self, root: Path, *, seed: int, max_tokens: int = MAX_TOKENS) -> None:
+        if isinstance(max_tokens, bool) or not isinstance(max_tokens, int) or max_tokens < 1:
+            raise ValueError("max_tokens must be a positive integer")
         self.root = root
         self.seed = seed
+        self.max_tokens = max_tokens
         self.usage: list[dict[str, Any]] = []
         self.phase = contextvars.ContextVar("ec2_v2_phase", default="test")
         self.example_id = contextvars.ContextVar("ec2_v2_example_id", default="")
@@ -366,7 +369,7 @@ class OfficialGDesignerRuntime:
                     model=BACKBONE,
                     messages=normalized,
                     temperature=0.0,
-                    max_tokens=MAX_TOKENS,
+                    max_tokens=self.max_tokens,
                     extra_body={"chat_template_kwargs": {"enable_thinking": False}},
                 )
             except Exception as exc:
@@ -386,6 +389,7 @@ class OfficialGDesignerRuntime:
                     "seed": self.seed,
                     "round": 0,
                     "training_iteration": self.training_iteration.get(),
+                    "requested_max_tokens": self.max_tokens,
                     "model": BACKBONE,
                     "prompt_tokens": int(getattr(usage, "prompt_tokens", 0) or 0),
                     "completion_tokens": int(getattr(usage, "completion_tokens", 0) or 0),

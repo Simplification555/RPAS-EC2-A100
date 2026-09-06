@@ -89,6 +89,23 @@ def test_calibration_real_singleton_config_has_distinct_seeds() -> None:
     assert seeds[1]["topology"] != "single"
 
 
+@pytest.mark.parametrize("dataset,expected", [("hotpotqa", "FINAL ANSWER: German"), ("aime", "### German")])
+def test_majority_vote_preserves_dataset_output_contract(monkeypatch, dataset, expected):
+    import experiments.phase2_wan_agent_search as native
+    candidate = {"topology": "self_consistency", "samples": 3,
+                 "agents": [{"name": "solver", "site": "center_a"}]}
+    answers = iter(["FINAL ANSWER: German", "FINAL ANSWER: French", "FINAL ANSWER: German"])
+    monkeypatch.setattr(native, "call_agent", lambda **kwargs: (next(answers), candidate["agents"][0]))
+    monkeypatch.setattr(native, "add_message_trace", lambda *args, **kwargs: None)
+    output, _ = native.run_single_architecture(
+        candidate=candidate, example={"input": "fixture", "dataset": dataset}, models={}, profile=None,
+    )
+    assert expected in output
+    if dataset == "hotpotqa":
+        assert native.extract_prediction_for_dataset(output, dataset) == "German"
+        assert native.score_example_answer(output, "German", dataset) == 1.0
+
+
 def test_aflow_truncation_rate_uses_the_frozen_executor_cap(tmp_path: Path) -> None:
     path = tmp_path / "calls.jsonl"
     rows = [

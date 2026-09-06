@@ -1580,6 +1580,8 @@ def run_single_architecture(
                 return f"Selected by majority over {samples} attempts.\nFINAL ANSWER: {best_answer}", trace
             if dataset_name == "gaia":
                 return f"Selected by majority over {samples} attempts.\nFINAL ANSWER: {best_answer}", trace
+            if dataset_name == "hotpotqa":
+                return f"Selected by majority over {samples} attempts.\nFINAL ANSWER: {best_answer}", trace
             return f"### {best_answer}\nSelected by majority over {samples} attempts.", trace
         return outputs[-1] if outputs else "", trace
 
