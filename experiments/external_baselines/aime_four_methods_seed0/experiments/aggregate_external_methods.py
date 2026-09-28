@@ -15,6 +15,7 @@ from typing import Any
 METHODS = ("adas", "gdesigner")
 AXES = ("breadth", "depth", "horizon", "parallel", "robustness")
 MODEL = "Qwen/Qwen3.5-9B"
+FROZEN_AIME_MANIFEST_SHA256 = "7e6501210c7689e1702e9786a9652222c5ca33193d11d4cde531ea84bdee2cfe"
 UPSTREAMS = {
     "adas": ("https://github.com/ShengranHu/ADAS.git", "2702bee8fefda42255efc5be9f60e3bd3db96ae4"),
     "gdesigner": ("https://github.com/yanweiyue/GDesigner.git", "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251"),
@@ -49,8 +50,10 @@ def _verify_aime_freeze(run_dir: Path, manifest: dict[str, Any], result: dict[st
             or lock.get("source_provenance") != provenance):
         raise ValueError(f"{run_dir}: unpinned or inconsistent upstream provenance")
     lock_hash = _sha256_file(lock_path)
-    if (lock.get("schema") != "aime_dtest_blind_selection_lock_v1"
-            or lock.get("protocol_version") != "aime_external_methods_v2_dtest_blind_freeze"
+    if (lock.get("schema") != "aime_dtest_blind_selection_lock_v2"
+            or lock.get("protocol_version") != "aime_external_methods_v3_canonical_frozen_data"
+            or lock.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256
+            or manifest.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256
             or lock.get("method") != method
             or lock.get("dtest_loaded_before_lock") is not False
             or lock.get("search_size") != 60 or lock.get("selection_size") != 30
@@ -61,7 +64,36 @@ def _verify_aime_freeze(run_dir: Path, manifest: dict[str, Any], result: dict[st
     if (manifest.get("selection_lock_sha256") != lock_hash
             or manifest.get("dtest_access_manifest_sha256") != _sha256_file(access_path)):
         raise ValueError(f"{run_dir}: D_test evidence hash differs from run manifest")
+    data_dir_value = manifest.get("data_dir")
+    if not data_dir_value:
+        raise ValueError(f"{run_dir}: run manifest has no frozen AIME data directory")
+    data_dir = Path(data_dir_value)
+    manifest_file = data_dir / "frozen_aime_manifest.json"
+    if not manifest_file.is_file() or _sha256_file(manifest_file) != FROZEN_AIME_MANIFEST_SHA256:
+        raise ValueError(f"{run_dir}: frozen AIME data manifest is missing or has changed")
+    frozen_data = _read(manifest_file)
+    expected_data_hashes = {
+        "aimo-validation-aime.jsonl": frozen_data["validation"]["source"]["sha256_git_content"],
+        frozen_data["validation"]["search"]["path"]: frozen_data["validation"]["search"]["sha256_git_content"],
+        frozen_data["validation"]["select"]["path"]: frozen_data["validation"]["select"]["sha256_git_content"],
+    }
+    for filename, spec in frozen_data["test"].items():
+        expected_data_hashes[filename] = spec["source_sha256_git_content"]
+        expected_data_hashes[spec["split_path"]] = spec["split_sha256_git_content"]
+    if manifest.get("data_sha256") != expected_data_hashes:
+        raise ValueError(f"{run_dir}: run manifest data hashes differ from pinned AIME manifest")
+    for relative_path, expected_hash in manifest.get("data_sha256", {}).items():
+        data_file = data_dir / relative_path
+        if not data_file.is_file() or _sha256_file(data_file) != expected_hash:
+            raise ValueError(f"{run_dir}: frozen AIME data hash mismatch: {relative_path}")
     ids_by_split = manifest.get("split_row_ids", {})
+    canonical_validation = frozen_data["validation"]
+    for name, split_key in (("search", "search"), ("select", "select")):
+        spec = canonical_validation[split_key]
+        rows = [json.loads(line) for line in (data_dir / spec["path"]).read_text(encoding="utf-8").splitlines() if line.strip()]
+        expected_ids = ["validation:" + str(row.get("id", row.get("problem_idx", ""))) for row in rows]
+        if ids_by_split.get(name) != expected_ids:
+            raise ValueError(f"{run_dir}: {name} IDs do not match the canonical frozen AIME split")
     search_ids = ids_by_split.get("search", [])
     select_ids = ids_by_split.get("select", [])
     if (len(search_ids) != 60 or len(set(search_ids)) != 60
@@ -90,6 +122,14 @@ def _verify_aime_freeze(run_dir: Path, manifest: dict[str, Any], result: dict[st
             raise ValueError(f"{run_dir}: run manifest D_test IDs differ from access ledger for {filename}")
         if manifest.get("data_sha256", {}).get(filename) != record.get("sha256"):
             raise ValueError(f"{run_dir}: test data hash differs from access ledger for {filename}")
+        test_spec = frozen_data["test"].get(filename)
+        if (test_spec is None
+                or record.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256
+                or record.get("frozen_split_path") != test_spec["split_path"]
+                or record.get("frozen_split_sha256") != test_spec["split_sha256_git_content"]
+                or manifest.get("data_sha256", {}).get(test_spec["split_path"])
+                != test_spec["split_sha256_git_content"]):
+            raise ValueError(f"{run_dir}: canonical frozen test split differs from audit for {filename}")
         seen_ids.update(ids)
         seen_questions.update(questions)
     selected = lock.get("selected", {})
@@ -166,7 +206,7 @@ def load_run(run_dir: Path, method: str, dataset: str, seed: int,
     runner_path = Path(__file__).with_name("native_external_methods.py")
     if manifest.get("runner_sha256") != _sha256_file(runner_path):
         raise ValueError(f"{run_dir}: external-method runner differs from the hashed execution source")
-    expected_protocol = "aime_external_methods_v2_dtest_blind_freeze" if dataset == "aime" else "masbench_external_five_axis_v1"
+    expected_protocol = "aime_external_methods_v3_canonical_frozen_data" if dataset == "aime" else "masbench_external_five_axis_v1"
     if (manifest.get("method") != method or manifest.get("dataset") != dataset
             or int(manifest.get("seed", -1)) != seed or manifest.get("protocol_version") != expected_protocol
             or manifest.get("model") != MODEL or int(manifest.get("context_limit", -1)) != 8192

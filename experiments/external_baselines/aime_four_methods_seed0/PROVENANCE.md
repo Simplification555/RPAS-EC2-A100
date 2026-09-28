@@ -17,8 +17,14 @@ project-local compatibility files, not files from the MaAS upstream commit.
 Their byte hashes and limitations are recorded in
 `../masbench_aflow_maas_seed0/experiments/MAAS_HELPER_PROVENANCE.md`.
 
-No AIME dataset is redistributed here. The user/operator must supply a legally
-authorized frozen dataset privately and record its source revision and hashes.
+The frozen AIME data files are included with the user's explicit publication
+authorization. They were copied from the private source repository
+`JiangyueAnn/RPAS` at revision
+`e12f58823be5f91a32f05f9af4d36e54838ffe59`; `data/frozen_aime_manifest.json`
+records each source/split path, SHA-256, and row count. The runner pins the
+manifest hash and verifies the canonical validation and test files before
+using them. Test data is not opened until the durable D_select candidate lock
+exists.
 
 The upstream repositories are fetched rather than vendored. License inspection
 of the pinned snapshots found an MIT license in AFlow and Apache-2.0 in ADAS;

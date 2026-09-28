@@ -36,9 +36,12 @@ from typing import Any
 MODEL = "Qwen/Qwen3.5-9B"
 CONTEXT_LIMIT = 8192
 OUTPUT_LIMIT = 6144
-PROTOCOL_VERSION = "aime_main_protocol_v5_dtest_blind_freeze"
+PROTOCOL_VERSION = "aime_main_protocol_v6_canonical_frozen_data"
+EXTERNAL_AIME_PROTOCOL_VERSION = "aime_external_methods_v3_canonical_frozen_data"
 ANSWER_PARSER = "answer_protocol_v4.extract_aime_answer"
 MAX_SAMPLE_FAILURE_RATE = 0.05
+FROZEN_AIME_MANIFEST = "frozen_aime_manifest.json"
+FROZEN_AIME_MANIFEST_SHA256 = "7e6501210c7689e1702e9786a9652222c5ca33193d11d4cde531ea84bdee2cfe"
 UPSTREAMS = {
     "aflow": {
         "repo": "https://github.com/FoundationAgents/AFlow.git",
@@ -293,6 +296,47 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
         return [json.loads(line) for line in stream if line.strip()]
 
 
+def load_frozen_aime_manifest(data_dir: Path) -> dict[str, Any]:
+    """Load the published, hash-pinned manifest; reject incomplete data bundles."""
+    path = data_dir / FROZEN_AIME_MANIFEST
+    actual = sha256_file(path)
+    if actual != FROZEN_AIME_MANIFEST_SHA256:
+        raise ValueError(f"frozen AIME manifest hash mismatch: {actual}")
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    if (manifest.get("schema") != "rpas_frozen_aime_external_v1"
+            or manifest.get("source_repository") != "JiangyueAnn/RPAS"
+            or manifest.get("source_revision") != "e12f58823be5f91a32f05f9af4d36e54838ffe59"
+            or manifest.get("data_seed") != 2026):
+        raise ValueError("frozen AIME manifest has an unsupported source or split protocol")
+    return manifest
+
+
+def read_verified_jsonl(
+    data_dir: Path, relative_path: str, expected_sha256: str, expected_rows: int
+) -> tuple[list[dict[str, Any]], str]:
+    """Read one manifest-pinned JSONL file and enforce its exact row count."""
+    path = data_dir / relative_path
+    raw = path.read_bytes()
+    actual = hashlib.sha256(raw).hexdigest()
+    if actual != expected_sha256:
+        raise ValueError(f"frozen AIME data hash mismatch for {relative_path}: {actual}")
+    rows = [json.loads(line) for line in raw.decode("utf-8").splitlines() if line.strip()]
+    if len(rows) != expected_rows:
+        raise ValueError(f"{relative_path} has {len(rows)} rows; expected {expected_rows}")
+    return rows, actual
+
+
+def _question_answer_map(rows: list[dict[str, Any]], label: str) -> dict[str, str]:
+    mapping: dict[str, str] = {}
+    for row in rows:
+        question = " ".join(str(row.get("problem", row.get("input", ""))).casefold().split())
+        answer = str(row.get("answer", "")).strip()
+        if not question or not answer or question in mapping:
+            raise ValueError(f"{label} contains an empty answer/question or duplicate question")
+        mapping[question] = answer
+    return mapping
+
+
 def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as stream:
@@ -301,15 +345,29 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
 
 
 def freeze_split(data_dir: Path, seed: int, search_size: int, selection_size: int) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    rows = read_jsonl(data_dir / "aimo-validation-aime.jsonl")
-    if len(rows) != 90:
-        raise ValueError(f"expected 90 AIME validation rows, found {len(rows)}")
-    rng = random.Random(seed)
-    shuffled = list(rows)
-    rng.shuffle(shuffled)
-    if search_size < 1 or selection_size < 1 or search_size + selection_size > len(shuffled):
-        raise ValueError("search/selection sizes must be positive and fit within the 90-row validation set")
-    return shuffled[:search_size], shuffled[search_size : search_size + selection_size]
+    if (seed, search_size, selection_size) != (2026, 60, 30):
+        raise ValueError("the published AIME protocol requires data_seed=2026 and frozen 60/30 splits")
+    manifest = load_frozen_aime_manifest(data_dir)
+    validation = manifest["validation"]
+    raw_rows, _ = read_verified_jsonl(
+        data_dir, validation["source"]["path"],
+        validation["source"]["sha256_git_content"], 90,
+    )
+    search_rows, _ = read_verified_jsonl(
+        data_dir, validation["search"]["path"],
+        validation["search"]["sha256_git_content"], 60,
+    )
+    select_rows, _ = read_verified_jsonl(
+        data_dir, validation["select"]["path"],
+        validation["select"]["sha256_git_content"], 30,
+    )
+    raw_mapping = _question_answer_map(raw_rows, "AIME validation source")
+    search_mapping = _question_answer_map(search_rows, "frozen D_search")
+    select_mapping = _question_answer_map(select_rows, "frozen D_select")
+    if (set(search_mapping) & set(select_mapping)
+            or {**search_mapping, **select_mapping} != raw_mapping):
+        raise ValueError("canonical D_search/D_select do not partition the exact frozen validation source")
+    return search_rows, select_rows
 
 
 def canonical_aime_id(row: dict[str, Any], namespace: str) -> str:
@@ -404,9 +462,14 @@ def freeze_aime_selection(
     path = run_dir / "selection_frozen.json"
     if (run_dir / "dtest_access_manifest.json").exists():
         raise RuntimeError("cannot freeze selection after any D_test access has been recorded")
+    if method not in {"aflow", "maas", "adas", "gdesigner"}:
+        raise ValueError(f"unsupported AIME method for selection freeze: {method}")
+    method_protocol = (PROTOCOL_VERSION if method in {"aflow", "maas"}
+                       else EXTERNAL_AIME_PROTOCOL_VERSION)
     payload = {
-        "schema": "aime_dtest_blind_selection_lock_v1",
-        "protocol_version": PROTOCOL_VERSION,
+        "schema": "aime_dtest_blind_selection_lock_v2",
+        "protocol_version": method_protocol,
+        "frozen_data_manifest_sha256": FROZEN_AIME_MANIFEST_SHA256,
         "method": method,
         "search_size": len(search_rows),
         "selection_size": len(select_rows),
@@ -440,19 +503,35 @@ def load_aime_test_rows_after_freeze(
         raise RuntimeError("refusing D_test access before selection_frozen.json exists")
     lock_bytes = lock_path.read_bytes()
     lock = json.loads(lock_bytes)
-    if (lock.get("schema") != "aime_dtest_blind_selection_lock_v1"
+    expected_protocol = (PROTOCOL_VERSION if method in {"aflow", "maas"}
+                         else EXTERNAL_AIME_PROTOCOL_VERSION)
+    if (lock.get("schema") != "aime_dtest_blind_selection_lock_v2"
             or lock.get("method") != method
+            or lock.get("protocol_version") != expected_protocol
+            or lock.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256
             or lock.get("dtest_loaded_before_lock") is not False):
         raise RuntimeError("D_test selection lock is invalid or belongs to another method")
     if filename not in {"aime_2025.jsonl", "aime_2026.jsonl"}:
         raise ValueError(f"unsupported frozen AIME test split: {filename}")
 
+    frozen_manifest = load_frozen_aime_manifest(data_dir)
+    test_spec = frozen_manifest["test"].get(filename)
+    if test_spec is None:
+        raise ValueError(f"{filename} is absent from the frozen AIME data manifest")
+    if expected_count != test_spec["rows"]:
+        raise ValueError(f"{filename} expected_count conflicts with the frozen data manifest")
     path = data_dir / filename
     opened_at = time.time()
     raw = path.read_bytes()
     rows = [json.loads(line) for line in raw.decode("utf-8").splitlines() if line.strip()]
-    if len(rows) != expected_count:
-        raise ValueError(f"expected exactly {expected_count} rows in {filename}; found {len(rows)}")
+    source_hash = hashlib.sha256(raw).hexdigest()
+    if source_hash != test_spec["source_sha256_git_content"] or len(rows) != expected_count:
+        raise ValueError(f"{filename} differs from the exact frozen AIME source")
+    frozen_rows, frozen_hash = read_verified_jsonl(
+        data_dir, test_spec["split_path"], test_spec["split_sha256_git_content"], expected_count
+    )
+    if _question_answer_map(rows, filename) != _question_answer_map(frozen_rows, test_spec["split_path"]):
+        raise ValueError(f"{filename} does not match its canonical frozen D_test split")
     namespace = Path(filename).stem
     qualified = namespace_aime_rows(rows, namespace)
     question_hashes = [_question_sha256(row) for row in qualified]
@@ -482,7 +561,10 @@ def load_aime_test_rows_after_freeze(
         raise ValueError(f"{filename} contains duplicate problem text from another D_test year")
     audit["test_splits"][filename] = {
         "opened_at_epoch": opened_at,
-        "sha256": hashlib.sha256(raw).hexdigest(),
+        "sha256": source_hash,
+        "frozen_split_path": test_spec["split_path"],
+        "frozen_split_sha256": frozen_hash,
+        "frozen_data_manifest_sha256": FROZEN_AIME_MANIFEST_SHA256,
         "ids": [str(row["id"]) for row in qualified],
         "question_sha256": question_hashes,
         "row_count": len(qualified),
@@ -2004,11 +2086,20 @@ def main() -> None:
     if len(set(validation_ids)) != 90:
         raise ValueError("the frozen AIME search/selection pool must have 90 unique IDs")
     verify_served_model(args.endpoint)
-    validation_sha256 = sha256_file(args.data_dir / "aimo-validation-aime.jsonl")
+    frozen_data_manifest = load_frozen_aime_manifest(args.data_dir)
+    validation_hashes = {
+        frozen_data_manifest["validation"][key]["path"]:
+            frozen_data_manifest["validation"][key]["sha256_git_content"]
+        for key in ("source", "search", "select")
+    }
+    validation_hashes["aimo-validation-aime.jsonl"] = validation_hashes.pop(
+        frozen_data_manifest["validation"]["source"]["path"]
+    )
     split_manifest = {
         "protocol_version": PROTOCOL_VERSION,
         "task_contract": task_contract_manifest(),
         "method": args.method,
+        "frozen_data_manifest_sha256": FROZEN_AIME_MANIFEST_SHA256,
         "upstream_provenance": args.baseline_provenance,
         "search_seed": args.seed,
         "data_seed": args.data_seed,
@@ -2023,7 +2114,7 @@ def main() -> None:
         "answer_protocol": ANSWER_PARSER,
         "answer_protocol_sha256": sha256_file(Path(__file__).with_name("answer_protocol.py")),
         # D_test IDs and hashes are intentionally absent until after selection lock.
-        "data_sha256": {"aimo-validation-aime.jsonl": validation_sha256},
+        "data_sha256": validation_hashes,
     }
     run_manifest = {
         "protocol_version": PROTOCOL_VERSION,
@@ -2074,10 +2165,13 @@ def main() -> None:
                 raise RuntimeError(f"D_test was opened before candidate freeze: {filename}")
             test_ids_by_name[Path(filename).stem] = ids
             split_manifest["data_sha256"][filename] = record["sha256"]
+            split_manifest["data_sha256"][record["frozen_split_path"]] = record["frozen_split_sha256"]
+        split_manifest["frozen_data_manifest_sha256"] = FROZEN_AIME_MANIFEST_SHA256
         split_manifest["test_ids"] = test_ids_by_name
         split_manifest["selection_lock_sha256"] = sha256_file(lock_path)
         split_manifest["dtest_access_manifest_sha256"] = sha256_file(access_path)
         run_manifest["data_sha256"] = dict(split_manifest["data_sha256"])
+        run_manifest["frozen_data_manifest_sha256"] = FROZEN_AIME_MANIFEST_SHA256
         run_manifest["selection_lock_sha256"] = split_manifest["selection_lock_sha256"]
         run_manifest["dtest_access_manifest_sha256"] = split_manifest["dtest_access_manifest_sha256"]
         run_manifest["status"] = "results_ready"

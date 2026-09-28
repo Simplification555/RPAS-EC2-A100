@@ -10,18 +10,26 @@ reproductions.
 
 ## What is and is not included
 
-- Included: runner/adapters, scoring and quality gates, tests, and exact source
-  commit pins for all four method repositories.
-- Not included: AIME question/answer files, model weights, tokenizer weights,
-  MiniLM weights, API credentials, generated predictions, or experiment
-  outputs. Do not add AIME `D_test` to a public branch. Obtain the frozen data
-  through an authorized channel, place the three files below in a private
-  directory, and verify their hashes against the project’s controlled data
-  manifest before starting.
-- Required local files: `aimo-validation-aime.jsonl` (90 rows),
-  `aime_2025.jsonl` (30 rows), and `aime_2026.jsonl` (30 rows). The launcher
-  checks that the two test filenames exist but does **not** read their content;
-  the runner opens each test file only after writing `selection_frozen.json`.
+- Included: runner/adapters, scoring and quality gates, tests, exact source
+  commit pins for all four method repositories, and the authorized frozen AIME
+  data files used by this seed-0 pilot.
+- Data provenance: AIMO validation plus its canonical `search_60` and
+  `select_30`, and the canonical AIME2025/AIME2026 `test_30` files are copied
+  from `JiangyueAnn/RPAS` revision
+  `e12f58823be5f91a32f05f9af4d36e54838ffe59`. The exact file hashes and row
+  counts are in `data/frozen_aime_manifest.json`; runtime verifies the
+  manifest and every file before use. `.gitattributes` fixes JSONL line endings
+  so these hashes remain portable across Windows and Linux.
+- Not included: model weights, tokenizer weights, MiniLM weights, API
+  credentials, generated predictions, or experiment outputs. Publishing the
+  frozen test questions/answers is intentional and was authorized by the data
+  owner; users should still avoid using `D_test` for tuning or selection.
+- Required data directory: `data/`, containing the three raw source JSONL
+  files plus the canonical split subdirectories. Search/select load the exact
+  frozen 60/30 files (the runner no longer re-shuffles the 90-row source).
+  Test files are existence-checked by the launcher; the runner reads and
+  verifies their source and canonical split contents only after writing the
+  durable `selection_frozen.json` candidate lock.
 
 ## Frozen one-seed protocol
 
@@ -29,7 +37,7 @@ reproductions.
 |---|---|
 | Search seed | `0` (single-seed pilot only; not a 3-seed result) |
 | Split seed | `2026` |
-| Validation and test split | 90 validation rows split into `D_search=60` and `D_select=30`; AIME2025 and AIME2026 each have a separate 30-row `D_test` |
+| Validation and test split | Canonical frozen `D_search=60` and `D_select=30` files from the pinned manifest; AIME2025 and AIME2026 each have a separate canonical 30-row `D_test` |
 | Task model | `Qwen/Qwen3.5-9B` |
 | Server context / method output cap | `8192 / 6144` tokens |
 | Request concurrency | `8` |
@@ -78,7 +86,7 @@ the method-specific Python paths if the methods cannot share one environment:
 
 ```bash
 export AIME_MODEL_PATH=/local/models/Qwen3.5-9B
-export AIME_DATA_DIR=/local/private/frozen_aime
+export AIME_DATA_DIR="$PWD/data"
 export AIME_MINILM_PATH=/local/models/all-MiniLM-L6-v2
 export AIME_VLLM_BIN=/path/to/vllm-environment/bin/vllm
 export AIME_PYTHON=/path/to/vllm-environment/bin/python

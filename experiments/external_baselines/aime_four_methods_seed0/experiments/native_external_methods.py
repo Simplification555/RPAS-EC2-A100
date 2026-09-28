@@ -45,7 +45,7 @@ MAX_SAMPLE_FAILURE_RATE = 0.05
 METHODS = ("adas", "gdesigner")
 MASBENCH_AXES = ("breadth", "depth", "horizon", "parallel", "robustness")
 MASBENCH_PROTOCOL = "masbench_external_five_axis_v1"
-AIME_PROTOCOL = "aime_external_methods_v2_dtest_blind_freeze"
+AIME_PROTOCOL = "aime_external_methods_v3_canonical_frozen_data"
 UPSTREAM_COMMITS = {
     "adas": "2702bee8fefda42255efc5be9f60e3bd3db96ae4",
     "gdesigner": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
@@ -1182,8 +1182,24 @@ def main() -> int:
     if set(id_lists[0]) & set(id_lists[1]):
         raise ValueError("AIME D_search and D_select overlap")
     manifest["pairwise_disjoint"] = None  # completed only after the post-lock test audit
-    data_files = ["aimo-validation-aime.jsonl"]
-    manifest["data_sha256"] = {name: sha256_file(args.data_dir / name) for name in data_files}
+    if args.dataset == "aime":
+        from native_aime_formal import (
+            FROZEN_AIME_MANIFEST_SHA256, load_frozen_aime_manifest,
+        )
+        frozen_data = load_frozen_aime_manifest(args.data_dir)
+        manifest["data_dir"] = str(args.data_dir)
+        manifest["frozen_data_manifest_sha256"] = FROZEN_AIME_MANIFEST_SHA256
+        data_files = {
+            "aimo-validation-aime.jsonl": frozen_data["validation"]["source"]["sha256_git_content"],
+            frozen_data["validation"]["search"]["path"]: frozen_data["validation"]["search"]["sha256_git_content"],
+            frozen_data["validation"]["select"]["path"]: frozen_data["validation"]["select"]["sha256_git_content"],
+        }
+        manifest["data_sha256"] = {name: sha256_file(args.data_dir / name) for name in data_files}
+        if manifest["data_sha256"] != data_files:
+            raise ValueError("AIME files differ from the pinned frozen data manifest")
+    else:
+        data_files = ["aimo-validation-aime.jsonl"]
+        manifest["data_sha256"] = {name: sha256_file(args.data_dir / name) for name in data_files}
     parser_file = (Path(aime_answer_protocol.__file__).resolve() if args.dataset == "aime"
                    else Path(__file__).resolve().with_name("masbench_answer_protocol.py"))
     manifest["answer_parser"] = parser_file.name
@@ -1212,6 +1228,7 @@ def main() -> int:
                 raise RuntimeError(f"AIME D_test opened before the selection lock: {filename}")
             manifest["split_row_ids"][Path(filename).stem] = ids
             manifest["data_sha256"][filename] = record["sha256"]
+            manifest["data_sha256"][record["frozen_split_path"]] = record["frozen_split_sha256"]
         manifest["pairwise_disjoint"] = True
         manifest["selection_lock_sha256"] = sha256_file(lock_path)
         manifest["dtest_access_manifest_sha256"] = sha256_file(access_path)

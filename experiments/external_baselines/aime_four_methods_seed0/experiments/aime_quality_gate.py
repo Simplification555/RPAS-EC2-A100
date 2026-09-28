@@ -5,11 +5,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import random
 from pathlib import Path
 
 ANSWER_PARSER = "answer_protocol_v4.extract_aime_answer"
-PROTOCOL_VERSION = "aime_main_protocol_v5_dtest_blind_freeze"
+PROTOCOL_VERSION = "aime_main_protocol_v6_canonical_frozen_data"
+FROZEN_AIME_MANIFEST_SHA256 = "7e6501210c7689e1702e9786a9652222c5ca33193d11d4cde531ea84bdee2cfe"
 MAX_SAMPLE_FAILURE_RATE = 0.05
 UPSTREAMS = {
     "aflow": ("https://github.com/FoundationAgents/AFlow.git", "3f457218fc716093fe53f6df8a5d5e6379d66346"),
@@ -97,9 +97,10 @@ def main() -> int:
         lock = json.loads(lock_bytes)
         access = load(access_path)
         lock_hash = hashlib.sha256(lock_bytes).hexdigest()
-        if (lock.get("schema") != "aime_dtest_blind_selection_lock_v1"
+        if (lock.get("schema") != "aime_dtest_blind_selection_lock_v2"
                 or lock.get("method") != args.method
                 or lock.get("protocol_version") != PROTOCOL_VERSION
+                or lock.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256
                 or lock.get("dtest_loaded_before_lock") is not False
                 or lock.get("search_size") != 60 or lock.get("selection_size") != 30):
             errors.append("selection lock does not match the frozen method/protocol/split sizes")
@@ -156,31 +157,72 @@ def main() -> int:
 
     data_dir_value = split.get("data_dir")
     data_hashes = split.get("data_sha256", {})
+    if (manifest.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256
+            or split.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256):
+        errors.append("run/split manifest does not bind the published frozen AIME data manifest")
     if not data_dir_value:
         errors.append("split manifest is missing data_dir")
     else:
         data_dir = Path(data_dir_value)
-        for filename in ("aimo-validation-aime.jsonl", "aime_2025.jsonl", "aime_2026.jsonl"):
+        frozen_manifest_path = data_dir / "frozen_aime_manifest.json"
+        if (not frozen_manifest_path.is_file()
+                or sha256_file(frozen_manifest_path) != FROZEN_AIME_MANIFEST_SHA256):
+            errors.append("frozen AIME data manifest is missing or has the wrong hash")
+        data_manifest = None
+        if frozen_manifest_path.is_file():
+            try:
+                data_manifest = json.loads(frozen_manifest_path.read_text(encoding="utf-8"))
+                expected_hashes = {
+                    "aimo-validation-aime.jsonl": data_manifest["validation"]["source"]["sha256_git_content"],
+                    data_manifest["validation"]["search"]["path"]: data_manifest["validation"]["search"]["sha256_git_content"],
+                    data_manifest["validation"]["select"]["path"]: data_manifest["validation"]["select"]["sha256_git_content"],
+                }
+                for filename, spec in data_manifest["test"].items():
+                    expected_hashes[filename] = spec["source_sha256_git_content"]
+                    expected_hashes[spec["split_path"]] = spec["split_sha256_git_content"]
+                for filename, expected_hash in expected_hashes.items():
+                    if data_hashes.get(filename) != expected_hash:
+                        errors.append(f"run/split manifest does not match pinned AIME hash: {filename}")
+            except (KeyError, TypeError, json.JSONDecodeError) as exc:
+                errors.append(f"frozen AIME data manifest has invalid structure: {exc}")
+        for filename in (
+            "aimo-validation-aime.jsonl", "aimo_validation/search_60.jsonl",
+            "aimo_validation/select_30.jsonl", "aime_2025.jsonl",
+            "aime2025/test_30.jsonl", "aime_2026.jsonl", "aime2026/test_30.jsonl",
+        ):
             path = data_dir / filename
             if not path.exists():
-                errors.append(f"frozen input data missing: {path}")
+                if filename in data_hashes:
+                    errors.append(f"frozen input data missing: {path}")
                 continue
             actual_hash = sha256_file(path)
             if data_hashes.get(filename) != actual_hash:
-                errors.append(f"input data hash mismatch: {filename}")
+                if filename in data_hashes:
+                    errors.append(f"input data hash mismatch: {filename}")
         if manifest.get("data_sha256") != data_hashes:
             errors.append("run and split manifest data hashes differ")
 
         try:
-            validation = read_jsonl(data_dir / "aimo-validation-aime.jsonl")
-            if len(validation) != 90:
-                errors.append(f"frozen validation set has {len(validation)} rows, expected 90")
-            shuffled = list(validation)
-            random.Random(2026).shuffle(shuffled)
-            expected_search = [str(row.get("id", row.get("problem_idx", ""))) for row in shuffled[:60]]
-            expected_select = [str(row.get("id", row.get("problem_idx", ""))) for row in shuffled[60:90]]
+            if data_manifest is None:
+                raise ValueError("frozen AIME data manifest could not be loaded")
+            validation = read_jsonl(data_dir / data_manifest["validation"]["source"]["path"])
+            canonical_search = read_jsonl(data_dir / data_manifest["validation"]["search"]["path"])
+            canonical_select = read_jsonl(data_dir / data_manifest["validation"]["select"]["path"])
+            if len(validation) != 90 or len(canonical_search) != 60 or len(canonical_select) != 30:
+                errors.append("frozen validation source or canonical 60/30 split has an unexpected row count")
+            expected_search = ["validation:" + str(row.get("id", row.get("problem_idx", "")))
+                               for row in canonical_search]
+            expected_select = ["validation:" + str(row.get("id", row.get("problem_idx", "")))
+                               for row in canonical_select]
             if split.get("search_ids") != expected_search or split.get("selection_ids") != expected_select:
-                errors.append("D_search/D_select IDs do not match the frozen 60/30 split")
+                errors.append("D_search/D_select IDs do not match the canonical frozen 60/30 files")
+            normalize = lambda row: (" ".join(str(row.get("problem", row.get("input", ""))).casefold().split()),
+                                     str(row.get("answer", "")).strip())
+            raw_map = {normalize(row)[0]: normalize(row)[1] for row in validation}
+            canonical_rows = canonical_search + canonical_select
+            canonical_map = {normalize(row)[0]: normalize(row)[1] for row in canonical_rows}
+            if len(raw_map) != len(validation) or canonical_map != raw_map:
+                errors.append("canonical validation split does not exactly partition the pinned source questions/answers")
             for filename in ("aime_2025.jsonl", "aime_2026.jsonl"):
                 rows = read_jsonl(data_dir / filename)
                 namespace = Path(filename).stem
@@ -195,6 +237,18 @@ def main() -> int:
                 access_record = (access.get("test_splits", {}) if access_path.is_file() else {}).get(filename, {})
                 if access_record.get("sha256") != sha256_file(path):
                     errors.append(f"D_test opened-data hash mismatch for {filename}")
+                spec = data_manifest["test"][filename]
+                frozen_path = data_dir / spec["split_path"]
+                if (not frozen_path.is_file()
+                        or access_record.get("frozen_split_path") != spec["split_path"]
+                        or access_record.get("frozen_split_sha256") != sha256_file(frozen_path)
+                        or data_hashes.get(spec["split_path"]) != sha256_file(frozen_path)):
+                    errors.append(f"D_test canonical frozen split hash mismatch for {filename}")
+                if access_record.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256:
+                    errors.append(f"D_test audit does not bind the frozen data manifest for {filename}")
+                frozen_test_rows = read_jsonl(frozen_path)
+                if {normalize(row) for row in rows} != {normalize(row) for row in frozen_test_rows}:
+                    errors.append(f"D_test source and canonical frozen split differ for {filename}")
         except Exception as exc:
             errors.append(f"cannot verify frozen split IDs: {type(exc).__name__}: {exc}")
 
