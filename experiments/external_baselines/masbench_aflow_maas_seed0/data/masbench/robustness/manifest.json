@@ -1,0 +1,33 @@
+{
+  "schema": "rpas_frozen_splits_v1",
+  "group": "robustness",
+  "seed": 2026,
+  "source": {
+    "dataset": "Salesforce/MASBench",
+    "axis": "robustness",
+    "files": {
+      "robustness/train-00000-of-00001.parquet": "0edc2212cd2964568f7215f56c7b77a7cfc42ece329f41f7b9c6c3b46c521c2d",
+      "robustness/test-00000-of-00001.parquet": "744f4d00b9dad47cad73cc39b6419d61f83bd9a6363ead1109381e7c52be2b40"
+    }
+  },
+  "counts": {
+    "search": 24,
+    "select": 24,
+    "test": 60
+  },
+  "files": {
+    "search": "robustness/search_24.jsonl",
+    "select": "robustness/select_24.jsonl",
+    "test": "robustness/test_60.jsonl"
+  },
+  "id_sha256": {
+    "search": "e5b9c22fdebf8e3e3e688df05ee09df4d3155f70ba6ae3bed79d92f39264e44f",
+    "select": "98895633cfeedb51d3bc15235c3eb04c6e7a4b4c11abbb836d257750822ca3fb",
+    "test": "433d31668f140a1792ad2ecc8185fb7aaca3ffea68012327cbc18e831b2983a5"
+  },
+  "content_sha256": {
+    "search": "1ed2df98883006a58a3354b4e2e7b6d56517cf587eefb6ef2ad5cf39531e560b",
+    "select": "5121cd77936ab7506e82fd3d5deb9529212d1a6a7a8b8c067373da5a43541128",
+    "test": "f71c9830272d7816f1f4a84ee367fc4091b42419de4cce0df58f45245b0533f1"
+  }
+}

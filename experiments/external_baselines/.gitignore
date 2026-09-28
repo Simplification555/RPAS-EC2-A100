@@ -1,0 +1,14 @@
+# Runtime checkouts and local-only artifacts
+*/upstream/
+*/embeddings/
+*/logs/
+*/outputs/
+*/.venv/
+*/__pycache__/
+*.py[cod]
+*/data/aime/
+*/data/gaia/
+**/__pycache__/
+**/.pytest_cache/
+*.pyc
+*.pyo

@@ -1,0 +1,120 @@
+# Four external-method AIME runner (seed 0)
+
+This folder contains **only external baseline adapters** for AFlow, MaAS, ADAS,
+and G-Designer. It does not contain or invoke the RPAS method. The wrappers
+preserve the pinned upstream search/controller logic where possible and adapt
+the frozen AIME rows, OpenAI-compatible model transport, shared answer parser,
+telemetry, and post-run checks. Therefore report these as *external methods
+under a shared AIME adapter protocol*, not as byte-for-byte upstream benchmark
+reproductions.
+
+## What is and is not included
+
+- Included: runner/adapters, scoring and quality gates, tests, and exact source
+  commit pins for all four method repositories.
+- Not included: AIME question/answer files, model weights, tokenizer weights,
+  MiniLM weights, API credentials, generated predictions, or experiment
+  outputs. Do not add AIME `D_test` to a public branch. Obtain the frozen data
+  through an authorized channel, place the three files below in a private
+  directory, and verify their hashes against the project’s controlled data
+  manifest before starting.
+- Required local files: `aimo-validation-aime.jsonl` (90 rows),
+  `aime_2025.jsonl` (30 rows), and `aime_2026.jsonl` (30 rows). The launcher
+  checks that the two test filenames exist but does **not** read their content;
+  the runner opens each test file only after writing `selection_frozen.json`.
+
+## Frozen one-seed protocol
+
+| Setting | Value |
+|---|---|
+| Search seed | `0` (single-seed pilot only; not a 3-seed result) |
+| Split seed | `2026` |
+| Validation and test split | 90 validation rows split into `D_search=60` and `D_select=30`; AIME2025 and AIME2026 each have a separate 30-row `D_test` |
+| Task model | `Qwen/Qwen3.5-9B` |
+| Server context / method output cap | `8192 / 6144` tokens |
+| Request concurrency | `8` |
+| Shared reported score | `0` unparseable, `1` parseable but wrong, `2` exact match |
+| Pair execution | Two methods in the selected pair, serially on one visible GPU |
+
+The AFlow/MaAS and ADAS/G-Designer adapters each require a fresh output root
+for a new run. A partial member makes that pair stop rather than silently
+mixing old and new results. Existing complete members are accepted only after
+their quality gate passes. Freeze/access manifests bind the exact validation
+IDs, method-specific selection, baseline provenance, test-file hashes/IDs,
+question fingerprints, and timestamps. These checks reduce accidental leakage;
+they are not an OS-level audit against a malicious process reading files.
+
+## Install upstream source pins
+
+Run once from this directory:
+
+```bash
+bash scripts/setup_upstreams.sh
+```
+
+The script clones and verifies these exact commits:
+
+| Method | Upstream | Commit |
+|---|---|---|
+| AFlow | `FoundationAgents/AFlow` | `3f457218fc716093fe53f6df8a5d5e6379d66346` |
+| MaAS | `bingreeky/MaAS` | `987f3c1bc9a96e844fe090db3791446e3ef0f5c7` |
+| ADAS | `ShengranHu/ADAS` | `2702bee8fefda42255efc5be9f60e3bd3db96ae4` |
+| G-Designer | `yanweiyue/GDesigner` | `a6efcfa3b40bb4d9cbf46f883a95d62020bd8251` |
+
+Before any model request, each wrapper fails closed unless the checkout has the
+expected upstream URL, exact commit, and a clean worktree. Upstream source is
+not copied into this repository. The setup script does not install Python
+dependencies: the four upstream dependency sets and a current vLLM/PyTorch
+stack are not a verified single environment. In particular, MaAS’s upstream
+requirements pin an old CUDA/PyTorch stack. Use separate method environments
+(`AIME_AFLOW_PYTHON`, `AIME_MAAS_PYTHON`, `AIME_ADAS_PYTHON`,
+`AIME_GDESIGNER_PYTHON`) and a separate model-serving environment where needed;
+do not blindly install upstream requirements over vLLM’s environment.
+
+## Run one pair on one GPU
+
+Prepare a tested Linux/CUDA environment and local model/embedding weights. Set
+the method-specific Python paths if the methods cannot share one environment:
+
+```bash
+export AIME_MODEL_PATH=/local/models/Qwen3.5-9B
+export AIME_DATA_DIR=/local/private/frozen_aime
+export AIME_MINILM_PATH=/local/models/all-MiniLM-L6-v2
+export AIME_VLLM_BIN=/path/to/vllm-environment/bin/vllm
+export AIME_PYTHON=/path/to/vllm-environment/bin/python
+export AIME_AFLOW_PYTHON=/path/to/aflow-environment/bin/python
+export AIME_MAAS_PYTHON=/path/to/maas-environment/bin/python
+export AIME_ADAS_PYTHON=/path/to/adas-environment/bin/python
+export AIME_GDESIGNER_PYTHON=/path/to/gdesigner-environment/bin/python
+export CUDA_VISIBLE_DEVICES=0
+export AIME_OUTPUT_DIR="$PWD/outputs/aime_seed0_pair1"
+bash scripts/run_pair.sh aflow_maas
+```
+
+For the other pair, select a new output directory and run:
+
+```bash
+export AIME_OUTPUT_DIR="$PWD/outputs/aime_seed0_pair2"
+bash scripts/run_pair.sh adas_gdesigner
+```
+
+The runner starts one local vLLM server (`TP=1`, context 8192, max-num-seqs
+24, GPU utilization 0.92), sends a disposable model smoke request, then runs
+the two selected methods one at a time. Its smoke request is outside the
+experiment telemetry. Logs are under `logs/`; result artifacts remain under
+the chosen output directory. The script does not submit to Slurm and offers no
+wall-time guarantee. **RTX PRO 6000 hardware/runtime compatibility has not
+been tested.** Establish a real model-load and request smoke test on that
+machine before starting the long run.
+
+## Local checks
+
+```bash
+python -m compileall -q experiments
+PYTHONPATH=experiments python -m pytest -q experiments
+```
+
+The authoring-machine checks are CPU/offline tests only. They do not establish
+that the four upstream methods, vLLM, Qwen3.5-9B, and this GPU work together.
+The 1-seed output is a pilot; it cannot fill a three-seed mean±standard-
+deviation table.
