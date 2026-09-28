@@ -14,11 +14,13 @@ is extracted into a small task-contract module; the RPAS optimizer/search source
 file that previously hosted the instruction is intentionally excluded. Generic
 Q/E selection helpers and task/evaluation adapters are not the RPAS method.
 
-The AIME package intentionally excludes raw questions/answers, model weights,
-embeddings, credentials, predictions, and result outputs. MASBench's five-axis
-dataset is included from its frozen, licensed upstream snapshot. See each
-package README for upstream pins, adapter disclosures, setup commands, protocol
-values, and hardware validation limits.
+The AIME package includes the authorized frozen AIME 2025/2026 test files and
+the canonical AIMO-validation search/select split, pinned to the exact RPAS
+data revision and SHA-256 manifest. It excludes model weights, tokenizer and
+embedding weights, credentials, predictions, and experiment outputs.
+MASBench's five-axis dataset is included from its frozen upstream snapshot.
+See each package README for upstream pins, adapter disclosures, setup commands,
+protocol values, data provenance, and hardware validation limits.
 
 Both packages are single-seed pilots (`seed=0`). They do not provide a
 three-seed mean±standard-deviation result. Tests are local CPU/offline tests;
