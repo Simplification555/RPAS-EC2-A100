@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "case": "all_pass",
+      "exit_code": 0,
+      "overall_status": "passed",
+      "aggregate_status": "passed",
+      "computed_methods": [
+        "maas",
+        "adas",
+        "gdesigner",
+        "aflow"
+      ],
+      "live_children_after_cleanup": 0,
+      "existing_output_refused_without_changes": true
+    },
+    {
+      "case": "compute_and_gate_fail",
+      "exit_code": 1,
+      "overall_status": "failed",
+      "aggregate_status": "blocked_incomplete",
+      "computed_methods": [
+        "maas",
+        "adas",
+        "gdesigner",
+        "aflow"
+      ],
+      "live_children_after_cleanup": 0,
+      "existing_output_refused_without_changes": true
+    },
+    {
+      "case": "diagnostic_fail",
+      "exit_code": 1,
+      "overall_status": "failed",
+      "aggregate_status": "blocked_incomplete",
+      "computed_methods": [
+        "maas",
+        "adas",
+        "aflow"
+      ],
+      "live_children_after_cleanup": 0,
+      "existing_output_refused_without_changes": true
+    },
+    {
+      "case": "missing_aggregate_member",
+      "exit_code": 1,
+      "overall_status": "failed",
+      "aggregate_status": "failed",
+      "computed_methods": [
+        "maas",
+        "adas",
+        "gdesigner",
+        "aflow"
+      ],
+      "live_children_after_cleanup": 0,
+      "existing_output_refused_without_changes": true
+    }
+  ]
+}

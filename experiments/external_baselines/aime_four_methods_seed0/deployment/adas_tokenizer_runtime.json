@@ -1,0 +1,9 @@
+{
+  "python": "/data/jxc/envs/rpas-aime-adas/bin/python",
+  "tokenizer_runtime": "passed",
+  "chat_template_count": "exact",
+  "input_tokens": 27,
+  "output_budget": 6144,
+  "model_calls": 0,
+  "dtest_opened": false
+}

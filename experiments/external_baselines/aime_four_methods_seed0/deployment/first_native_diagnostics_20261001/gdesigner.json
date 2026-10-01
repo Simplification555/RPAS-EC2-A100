@@ -1,0 +1,37 @@
+{
+  "status": "failed",
+  "method": "gdesigner",
+  "synthetic_only": true,
+  "sample_count": 2,
+  "concurrency": 2,
+  "max_tokens": 6144,
+  "source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-upstream-ba1ca711/experiments/external_baselines/aime_four_methods_seed0/upstream/GDesigner",
+  "source_info": {
+    "commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+    "clean_worktree": true,
+    "origin": "https://github.com/yanweiyue/GDesigner.git",
+    "repository": "https://github.com/yanweiyue/GDesigner.git"
+  },
+  "script_sha256": "55ad667895c97e85a46feae6172801d31a1c6d65308c7a51de56d9d338b8f950",
+  "check_only": false,
+  "started_at_utc": "2026-10-01T03:29:03.508401+00:00",
+  "runtime_overrides": {
+    "AIME_AFLOW_CODE_TIMEOUT_S": "30",
+    "AIME_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MAAS_REQUEST_TIMEOUT_S": "600",
+    "AIME_MAAS_CODE_TIMEOUT_S": "60",
+    "RPAS_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "AIME_MAAS_SAMPLE_TIMEOUT_S": "1500",
+    "AIME_AFLOW_REQUEST_TIMEOUT_S": "600",
+    "RPAS_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MINILM_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MAAS_SAMPLE_RETRIES": "3",
+    "AIME_AFLOW_SAMPLE_TIMEOUT_S": "1200",
+    "AIME_TOKENIZER_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "AIME_EXTERNAL_REQUEST_TIMEOUT_S": "600",
+    "AIME_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B"
+  },
+  "error": "RuntimeError: native G-Designer produced a nonfinite topology log probability",
+  "traceback": "Traceback (most recent call last):\n  File \"/data/jxc/RPAS-AIME-FourMethods-Seed0-frozen-f57c121/experiments/external_baselines/aime_four_methods_seed0/scripts/diagnose_native_methods.py\", line 328, in worker\n    report[\"result\"] = adapter.smoke_native_source(args.method, source) if args.check_only else run_external(args.method, source, args)\n                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/jxc/RPAS-AIME-FourMethods-Seed0-frozen-f57c121/experiments/external_baselines/aime_four_methods_seed0/scripts/diagnose_native_methods.py\", line 298, in run_external\n    predictions = asyncio.run(batch())\n                  ^^^^^^^^^^^^^^^^^^^^\n  File \"/data/jxc/envs/pbfm_isaaclab/lib/python3.11/asyncio/runners.py\", line 190, in run\n    return runner.run(main)\n           ^^^^^^^^^^^^^^^^\n  File \"/data/jxc/envs/pbfm_isaaclab/lib/python3.11/asyncio/runners.py\", line 118, in run\n    return self._loop.run_until_complete(task)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/jxc/envs/pbfm_isaaclab/lib/python3.11/asyncio/base_events.py\", line 654, in run_until_complete\n    return future.result()\n           ^^^^^^^^^^^^^^^\n  File \"/data/jxc/RPAS-AIME-FourMethods-Seed0-frozen-f57c121/experiments/external_baselines/aime_four_methods_seed0/scripts/diagnose_native_methods.py\", line 297, in batch\n    return await asyncio.gather(*(one(task) for task in TASKS))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/data/jxc/RPAS-AIME-FourMethods-Seed0-frozen-f57c121/experiments/external_baselines/aime_four_methods_seed0/scripts/diagnose_native_methods.py\", line 291, in one\n    raise RuntimeError(\"native G-Designer produced a nonfinite topology log probability\")\nRuntimeError: native G-Designer produced a nonfinite topology log probability\n",
+  "finished_at_utc": "2026-10-01T03:29:24.827139+00:00"
+}
