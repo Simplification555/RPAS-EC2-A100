@@ -10,6 +10,8 @@ from pathlib import Path
 import time
 from unittest.mock import patch
 
+import pytest
+
 import native_aime_formal as runner
 
 
@@ -29,6 +31,46 @@ def test_aime_contract_is_self_contained_and_not_masbench_metadata():
     assert contract["version"] == "AIME_TASK_CONTRACT_v1"
     assert "MASBENCH" not in contract["version"]
     assert contract["sha256"] == runner.AIME_TASK_CONTRACT_SHA256
+
+
+def test_output_audit_counts_native_attribute_and_worker_failures_only(tmp_path: Path):
+    failures = [
+        "'Workflow' object has no attribute 'custom'",
+        "AttributeError: 'Workflow' object has no attribute 'custom'",
+        "Code execution failed: ValueError: fixture failure",
+    ]
+    solutions = [
+        "An error in the first calculation is corrected below.\nFINAL ANSWER: 7",
+        "Error bounds give the same integer.\nFINAL ANSWER: 7",
+        "A discarded approach reported 'Workflow' object has no attribute 'custom'.\nFINAL ANSWER: 7",
+        "The previous code execution failed: its assumption was wrong.\nFINAL ANSWER: 7",
+    ]
+    output = tmp_path / "predictions.csv"
+    with output.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=["prediction"])
+        writer.writeheader()
+        writer.writerows({"prediction": value} for value in failures + solutions)
+
+    audit = runner.audit_aflow_outputs(tmp_path)
+    assert audit["csv_rows"] == len(failures) + len(solutions)
+    assert audit["failure_predictions"] == len(failures)
+    assert audit["failure_markers"] == failures
+    assert audit["failure_fraction"] == len(failures) / (len(failures) + len(solutions))
+
+
+@pytest.mark.parametrize(
+    ("environment", "expected"),
+    [
+        ({"AIME_RUN_ID": "aime:seed_0", "MASBENCH_RUN_ID": "legacy"}, "aime:seed_0"),
+        ({"AIME_RUN_ID": "aime:seed_0"}, "aime:seed_0"),
+        ({"MASBENCH_RUN_ID": "legacy"}, "legacy"),
+        ({"AIME_RUN_ID": "", "MASBENCH_RUN_ID": "legacy"}, "legacy"),
+        ({}, ""),
+    ],
+)
+def test_aime_run_id_precedence_and_legacy_fallback(environment, expected):
+    with patch.dict(os.environ, environment, clear=True):
+        assert runner.current_run_id() == expected
 
 
 def test_process_executor_success_and_failure_are_cleanly_closed():

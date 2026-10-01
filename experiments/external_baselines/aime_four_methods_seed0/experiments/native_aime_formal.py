@@ -720,6 +720,7 @@ def audit_aflow_outputs(log_dir: Path) -> dict[str, Any]:
         "code execution timed out",
         "code execution exited with code",
         "code execution returned invalid output",
+        "code execution failed:",
         "unknown error:",
         "error:",
     )
@@ -729,10 +730,18 @@ def audit_aflow_outputs(log_dir: Path) -> dict[str, Any]:
     for row in rows:
         prediction = str(row.get("prediction", "") or "").strip()
         lowered = prediction.lower()
+        # Native evaluators persist str(exc), which can omit the exception
+        # class entirely. Match the complete AttributeError shape so ordinary
+        # solution prose mentioning an error remains eligible for scoring.
+        bare_attribute_error = re.fullmatch(
+            r"(?:attributeerror:\s*)?'[\w.]+' object has no attribute '\w+'", lowered
+        ) is not None
         if not prediction:
             empty += 1
             failure_rows.append("<empty prediction>")
-        elif any(lowered == marker or lowered.startswith(marker) for marker in marker_prefixes):
+        elif bare_attribute_error or any(
+            lowered == marker or lowered.startswith(marker) for marker in marker_prefixes
+        ):
             failure_rows.append(prediction[:160])
             if lowered.startswith("aflow sample timeout"):
                 sample_timeouts += 1
@@ -814,6 +823,11 @@ def empty_phase_usage() -> dict[str, int]:
 
 def new_phase_totals() -> dict[str, dict[str, int]]:
     return {phase: empty_phase_usage() for phase in PHASES}
+
+
+def current_run_id() -> str:
+    """Prefer the AIME launcher ID while retaining legacy bridge callers."""
+    return os.environ.get("AIME_RUN_ID", "") or os.environ.get("MASBENCH_RUN_ID", "")
 
 
 def current_phase() -> str:
@@ -1004,7 +1018,7 @@ def patch_aflow_runtime(max_tokens: int, concurrency: int) -> dict[str, int]:
                 max_tokens=effective_max_tokens,
                 extra_body={
                     "audit_metadata": {
-                        "run_id": os.environ.get("MASBENCH_RUN_ID", ""),
+                        "run_id": current_run_id(),
                         "method": "aflow",
                         "agent": "task_model",
                         "phase": phase,
@@ -1420,7 +1434,7 @@ def run_aflow(args: argparse.Namespace, search_rows: list[dict[str, Any]], selec
                 "max_num_seqs": int(os.environ.get("AIME_MAX_NUM_SEQS", "24")),
                 "tensor_parallel_size": int(os.environ.get("AIME_TP_SIZE", "1")),
                 "sample_timeout_s": float(os.environ.get("AIME_AFLOW_SAMPLE_TIMEOUT_S", "1200")),
-                "request_timeout_s": float(os.environ.get("AIME_AFLOW_REQUEST_TIMEOUT_S", "900")),
+                "request_timeout_s": float(os.environ.get("AIME_AFLOW_REQUEST_TIMEOUT_S", "600")),
                 "data_seed": args.data_seed,
                 "search_seed": args.seed,
                 "search_size": len(search_rows),
@@ -1553,7 +1567,7 @@ def patch_maas_runtime(concurrency: int, max_tokens: int) -> dict[str, int]:
         kwargs["max_tokens"] = effective_max_tokens
         kwargs["extra_body"] = {
             "audit_metadata": {
-                "run_id": os.environ.get("MASBENCH_RUN_ID", ""),
+                "run_id": current_run_id(),
                 "method": "maas",
                 "agent": "task_model",
                 "phase": current_phase(),
@@ -2016,6 +2030,7 @@ def run_maas(args: argparse.Namespace, search_rows: list[dict[str, Any]], select
                 "max_num_seqs": int(os.environ.get("AIME_MAX_NUM_SEQS", "24")),
                 "tensor_parallel_size": int(os.environ.get("AIME_TP_SIZE", "1")),
                 "sample_timeout_s": float(os.environ.get("AIME_MAAS_SAMPLE_TIMEOUT_S", "300")),
+                "request_timeout_s": int(os.environ.get("AIME_MAAS_REQUEST_TIMEOUT_S", "180")),
                 "code_timeout_s": float(os.environ.get("AIME_MAAS_CODE_TIMEOUT_S", "60")),
                 "sample_retries": int(os.environ.get("AIME_MAAS_SAMPLE_RETRIES", "3")),
                 "data_seed": args.data_seed,
@@ -2133,7 +2148,7 @@ def main() -> None:
         "selection_size": len(select_rows),
         "test_size_each": args.test_size,
         "endpoint": args.endpoint,
-        "run_id": os.environ.get("MASBENCH_RUN_ID", ""),
+        "run_id": current_run_id(),
         "attempt": os.environ.get("MASBENCH_ATTEMPT", "main"),
         "status": "running",
         "runner_sha256": sha256_file(Path(__file__).resolve()),

@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import unittest
+from types import SimpleNamespace
+from unittest.mock import Mock, patch
 
 from native_aime_formal import namespace_aime_rows, validate_aime_partitions
 from native_external_methods import (
     MASBENCH_AXES,
+    ModelRuntime,
     UnsafeCandidate,
     _sha256_json,
     compile_candidate,
@@ -15,6 +18,42 @@ from native_external_methods import (
 
 
 class NativeExternalAdapterTests(unittest.TestCase):
+    def _fake_model_runtime(self, environment):
+        sync_factory = Mock(return_value=SimpleNamespace())
+        async_factory = Mock(return_value=SimpleNamespace())
+        tokenizer_loader = Mock(return_value=object())
+        modules = {
+            "huggingface_hub": SimpleNamespace(snapshot_download=Mock()),
+            "transformers": SimpleNamespace(AutoTokenizer=SimpleNamespace(from_pretrained=tokenizer_loader)),
+            "openai": SimpleNamespace(OpenAI=sync_factory, AsyncOpenAI=async_factory),
+        }
+        with patch.dict("os.environ", {"AIME_TOKENIZER_PATH": "/fixture/tokenizer", **environment}, clear=True), \
+                patch.dict("sys.modules", modules):
+            runtime = ModelRuntime("http://fixture/v1/", "adas", "fixture-run")
+        return runtime, sync_factory, async_factory
+
+    def test_external_clients_keep_default_request_timeout(self):
+        runtime, sync_factory, async_factory = self._fake_model_runtime({})
+        self.assertEqual(runtime.request_timeout_s, 180.0)
+        self.assertEqual(runtime.summary()["request_timeout_s"], 180.0)
+        for factory in (sync_factory, async_factory):
+            self.assertEqual(factory.call_args.kwargs["timeout"], 180.0)
+            self.assertEqual(factory.call_args.kwargs["max_retries"], 0)
+
+    def test_external_clients_share_configured_finite_request_timeout(self):
+        runtime, sync_factory, async_factory = self._fake_model_runtime({"AIME_EXTERNAL_REQUEST_TIMEOUT_S": "600.5"})
+        self.assertEqual(runtime.request_timeout_s, 600.5)
+        self.assertEqual(runtime.summary()["request_timeout_s"], 600.5)
+        for factory in (sync_factory, async_factory):
+            self.assertEqual(factory.call_args.kwargs["timeout"], 600.5)
+
+    def test_external_request_timeout_rejects_invalid_values_before_model_loading(self):
+        for value in ("", "0", "-1", "nan", "inf", "-inf", "not-a-number"):
+            with self.subTest(value=value), \
+                    patch.dict("os.environ", {"AIME_EXTERNAL_REQUEST_TIMEOUT_S": value}, clear=True), \
+                    self.assertRaisesRegex(ValueError, "AIME_EXTERNAL_REQUEST_TIMEOUT_S.*positive finite"):
+                ModelRuntime("http://fixture/v1", "gdesigner", "fixture-run")
+
     def test_aime_source_local_ids_are_qualified_and_content_is_checked(self):
         validation = namespace_aime_rows(
             [{"id": 1, "problem": "validation problem", "answer": "2"}], "validation"

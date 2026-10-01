@@ -17,6 +17,7 @@ from contextlib import contextmanager
 import copy
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import random
@@ -233,6 +234,14 @@ class ModelRuntime:
     """One audited OpenAI-compatible client with an enforced 8192-token window."""
 
     def __init__(self, endpoint: str, method: str, run_id: str, *, temperature: float = 0.0):
+        try:
+            request_timeout_s = float(os.environ.get("AIME_EXTERNAL_REQUEST_TIMEOUT_S", "180"))
+        except ValueError as exc:
+            raise ValueError("AIME_EXTERNAL_REQUEST_TIMEOUT_S must be a positive finite number") from exc
+        if not math.isfinite(request_timeout_s) or request_timeout_s <= 0:
+            raise ValueError("AIME_EXTERNAL_REQUEST_TIMEOUT_S must be a positive finite number")
+        self.request_timeout_s = request_timeout_s
+
         from huggingface_hub import snapshot_download
         from transformers import AutoTokenizer
         from maas_context_guard import PromptGuard
@@ -242,8 +251,8 @@ class ModelRuntime:
         tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, local_files_only=True)
         self.guard = PromptGuard(tokenizer, context_limit=CONTEXT_LIMIT)
         self.endpoint, self.method, self.run_id = endpoint.rstrip("/"), method, run_id
-        self.sync = OpenAI(base_url=self.endpoint, api_key="EMPTY", timeout=180.0, max_retries=0)
-        self.async_client = AsyncOpenAI(base_url=self.endpoint, api_key="EMPTY", timeout=180.0, max_retries=0)
+        self.sync = OpenAI(base_url=self.endpoint, api_key="EMPTY", timeout=self.request_timeout_s, max_retries=0)
+        self.async_client = AsyncOpenAI(base_url=self.endpoint, api_key="EMPTY", timeout=self.request_timeout_s, max_retries=0)
         self.temperature = temperature
         self.usage: dict[str, Any] = {"totals": empty_usage(), "phases": {}, "finish_reason_counts": {},
                                      "guard_events": 0, "context_limit": CONTEXT_LIMIT}
@@ -318,7 +327,7 @@ class ModelRuntime:
 
     def summary(self) -> dict[str, Any]:
         return {**self.usage, "context_limit": CONTEXT_LIMIT, "output_limit": OUTPUT_LIMIT,
-                "max_concurrency": CONCURRENCY}
+                "max_concurrency": CONCURRENCY, "request_timeout_s": self.request_timeout_s}
 
 
 def _parse_json_object(content: str) -> dict[str, Any]:
@@ -527,11 +536,12 @@ def run_adas(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse
     sys.path.insert(0, str(mgsm_dir))
     os.environ["OPENAI_API_KEY"] = "EMPTY"
     os.environ["OPENAI_BASE_URL"] = args.endpoint.rstrip("/")
-    os.environ["OPENAI_TIMEOUT"] = "180"
+    os.environ["OPENAI_TIMEOUT"] = str(runtime.request_timeout_s)
     import importlib
     adas = importlib.import_module("search")
     from openai import OpenAI
-    adas.client = OpenAI(base_url=args.endpoint.rstrip("/"), api_key="EMPTY", timeout=180.0, max_retries=0)
+    adas.client = OpenAI(base_url=args.endpoint.rstrip("/"), api_key="EMPTY",
+                         timeout=runtime.request_timeout_s, max_retries=0)
 
     info_cls = adas.Info
     active_rows = rows["search"]
@@ -1236,6 +1246,7 @@ def main() -> int:
         result["run_id"] = run_id
         result["controls"] = {"model": MODEL, "endpoint": args.endpoint, "max_model_len": CONTEXT_LIMIT,
             "max_tokens": OUTPUT_LIMIT, "temperature_policy": "native method/agent settings",
+            "request_timeout_s": runtime.request_timeout_s,
             "top_p": 1.0, "thinking": False, "concurrency": CONCURRENCY, "seed": args.seed,
             "data_seed": 2026, "selection_split": "D_select", "test_split": "D_test",
             "score_mapping": "2=exact match; 1=parseable wrong; 0=unparseable",

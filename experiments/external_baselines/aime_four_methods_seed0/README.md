@@ -1,5 +1,12 @@
 # Four external-method AIME runner (seed 0)
 
+The [single RTX 5880 Ada 48 GB host record](deployment/SINGLE_48G_2026-10-01.md)
+documents the prepared environments, model verification, runtime limits,
+audit fixes, synthetic diagnostics, and four-method orchestrator used by the
+2026-10-01 host run. This local source variant retains the package's native
+search settings and quality gates. Read that record for the host launch;
+the original two-pair commands below remain the package interface.
+
 This folder contains **only external baseline adapters** for AFlow, MaAS, ADAS,
 and G-Designer. It does not contain or invoke the RPAS method. The wrappers
 preserve the pinned upstream search/controller logic where possible and adapt
