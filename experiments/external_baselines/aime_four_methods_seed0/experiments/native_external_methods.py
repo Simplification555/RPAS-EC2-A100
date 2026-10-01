@@ -791,10 +791,22 @@ def run_adas(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse
     }
 
 
-def _register_gdesigner_prompt() -> None:
+def _register_gdesigner_prompt() -> dict[str, Any]:
     from GDesigner.prompt.prompt_set_registry import PromptSetRegistry
+    from GDesigner.prompt.gsm8k_prompt_set import ROLE_CONNECTION
 
     roles = ["Algebraic Decomposer", "Independent Solver", "Consistency Checker", "Solution Synthesizer"]
+    role_mapping = {
+        "Math Solver": "Independent Solver",
+        "Mathematical Analyst": "Algebraic Decomposer",
+        "Programming Expert": "Solution Synthesizer",
+        "Inspector": "Consistency Checker",
+    }
+    native_edges = [tuple(edge) for edge in ROLE_CONNECTION]
+    if (len(native_edges) != 9 or len(set(native_edges)) != 9
+            or any(left not in role_mapping or right not in role_mapping for left, right in native_edges)):
+        raise RuntimeError("G-Designer pinned GSM8K role connections do not match the audited nine-edge graph")
+    mapped_edges = [(role_mapping[left], role_mapping[right]) for left, right in native_edges]
     descriptions = {
         roles[0]: "You decompose the mathematical task into explicit equations and constraints.",
         roles[1]: "You solve the task independently and verify each arithmetic step.",
@@ -814,7 +826,9 @@ def _register_gdesigner_prompt() -> None:
             return descriptions.get(role, "Solve the task carefully.")
         @staticmethod
         def get_role_connection():
-            return [(left, right) for left in roles for right in roles if left != right]
+            # Preserve native role-conditioning connectivity. The earlier
+            # AIME complete role graph collapsed GCN features to rank one.
+            return mapped_edges
         @staticmethod
         def get_format():
             return "natural language"
@@ -852,6 +866,76 @@ def _register_gdesigner_prompt() -> None:
         def get_decision_few_shot():
             return ""
 
+    return {
+        "variant": "aime_native_gsm8k_role_graph_semantic_mapping_v1",
+        "role_names": roles,
+        "role_mapping": role_mapping,
+        "native_role_edges": native_edges,
+        "mapped_role_edges": mapped_edges,
+        "upstream_repository": UPSTREAM_REPOSITORIES["gdesigner"],
+        "upstream_commit": UPSTREAM_COMMITS["gdesigner"],
+        "upstream_source": "GDesigner/prompt/gsm8k_prompt_set.py:ROLE_CONNECTION",
+        "adapter_change": "replace the author AIME package's complete role graph with mapped native nine-edge role conditioning",
+    }
+
+
+class GDesignerNumericalError(FloatingPointError):
+    """A non-finite controller value invalidates the entire native run."""
+
+
+def require_finite_gdesigner(value: Any, label: str) -> None:
+    import torch
+
+    if not bool(torch.isfinite(torch.as_tensor(value)).all()):
+        raise GDesignerNumericalError(f"G-Designer non-finite {label}")
+
+
+def require_finite_gdesigner_model(graph: Any, label: str, *, gradients: bool = False) -> None:
+    for module_name in ("gcn", "mlp"):
+        for parameter_name, parameter in getattr(graph, module_name).named_parameters():
+            require_finite_gdesigner(parameter, f"{label} {module_name}.{parameter_name}")
+            if gradients and parameter.grad is not None:
+                require_finite_gdesigner(parameter.grad, f"{label} gradient {module_name}.{parameter_name}")
+
+
+def patch_gdesigner_numerics(graph_module: Any) -> dict[str, Any]:
+    """Install an explicit numerical compatibility adapter in this process.
+
+    The pinned Graph.arun normalizes flattened Gram values with an undefined
+    zero denominator when every value is equal. Only that exact degenerate
+    case receives neutral zero logits; every nonzero span retains the upstream
+    formula without an epsilon or altered gradient.
+    """
+    import torch
+
+    audit = {
+        "variant": "gdesigner_exact_zero_span_numerical_compatibility_v1",
+        "upstream_function": "GDesigner.graph.graph.min_max_norm",
+        "degenerate_policy": "exact zero span maps to zero logits (edge probability 0.5)",
+        "nondegenerate_policy": "unchanged upstream min-max formula; no epsilon",
+        "zero_span_calls": 0,
+        "finite_checks": "normalization, log probability, loss, gradients, parameters; fail closed",
+    }
+
+    def finite_min_max_norm(tensor: Any):
+        require_finite_gdesigner(tensor, "normalization input")
+        min_val, max_val = tensor.min(), tensor.max()
+        span = max_val - min_val
+        require_finite_gdesigner(span, "normalization span")
+        degenerate = span == 0
+        if bool(degenerate):
+            audit["zero_span_calls"] += 1
+        # Avoid evaluating division by zero in either autograd branch. The
+        # constant branch remains connected to the input with zero gradient.
+        denominator = torch.where(degenerate, torch.ones_like(span), span)
+        normalized = (tensor - min_val) / denominator * 2 - 1
+        result = torch.where(degenerate, torch.zeros_like(normalized), normalized)
+        require_finite_gdesigner(result, "normalized logits")
+        return result
+
+    graph_module.min_max_norm = finite_min_max_norm
+    return audit
+
 
 def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse.Namespace,
                   run_id: str, runtime: ModelRuntime, source: Path) -> dict[str, Any]:
@@ -872,7 +956,8 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
     import numpy as np
     import torch
 
-    _register_gdesigner_prompt()
+    numerical_adapter = patch_gdesigner_numerics(graph_module)
+    role_graph_adapter = _register_gdesigner_prompt()
     embedding_dir = Path(os.environ.get(
         "AIME_MINILM_PATH", str(Path(__file__).resolve().parent / "embeddings" / "all-MiniLM-L6-v2")
     ))
@@ -896,7 +981,7 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
 
     seed_everything(args.seed)
     agent_names = ["MathSolver"] * 4
-    role_names = ["Algebraic Decomposer", "Independent Solver", "Consistency Checker", "Solution Synthesizer"]
+    role_names = role_graph_adapter["role_names"]
     spatial_masks = [[0 if i == j else 1 for j in range(4)] for i in range(4)]
     temporal_masks = [[0 for _ in range(4)] for _ in range(4)]
     graph = Graph(domain="rpas_external", llm_name="GPTChat", agent_names=agent_names,
@@ -904,7 +989,11 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
         fixed_spatial_masks=spatial_masks, fixed_temporal_masks=temporal_masks,
         node_kwargs=[{"role": role} for role in role_names])
     graph.gcn.train()
+    require_finite_gdesigner_model(graph, "initial parameters")
     optimizer = torch.optim.Adam(graph.gcn.parameters(), lr=0.1)
+    controller_path = args.run_dir / "gdesigner_controller.pt"
+    controller_sha256 = ""
+    frozen_controller_state: dict[str, dict[str, Any]] = {}
 
     def records(split: list[dict[str, Any]]) -> list[dict[str, Any]]:
         return [{"task": task_text(dataset, row), "gold": str(row.get("answer", "")),
@@ -912,6 +1001,7 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
                 for index, row in enumerate(split)]
 
     async def infer(batch: list[dict[str, Any]], phase: str, train: bool = False) -> tuple[list[dict[str, Any]], list[Any]]:
+        require_finite_gdesigner_model(graph, f"{phase} parameters before inference")
         before = dict(runtime.usage["totals"])
         previous = os.environ.get("MASBENCH_PHASE")
         os.environ["MASBENCH_PHASE"] = phase
@@ -922,6 +1012,7 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
                 realized.mlp = graph.mlp
                 try:
                     response, log_prob = await realized.arun({"task": item["task"]}, num_rounds=1, max_tries=3, max_time=180)
+                    require_finite_gdesigner(log_prob, f"{phase} log probability")
                     raw = response[0] if response else ""
                     score = score_row(dataset, raw, item["gold"])
                     audit = {"id": item["id"], "prediction": score["prediction"], "gold": score["gold"],
@@ -929,6 +1020,8 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
                         "score_0_1_2": int(score["score_0_1_2"]),
                         "sample_failed": not bool(score["parser_valid"]), "raw_output": str(raw)}
                     return audit, log_prob
+                except GDesignerNumericalError:
+                    raise
                 except Exception as exc:
                     return {"id": item["id"], "prediction": "", "gold": item["gold"],
                         "parser_valid": False, "correct": False, "score_0_1_2": 0,
@@ -943,9 +1036,13 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
                 losses = [-log_prob * utility for log_prob, utility in zip(log_probs, utilities)]
                 losses = [loss for loss in losses if getattr(loss, "requires_grad", False)]
                 if losses:
+                    loss = torch.mean(torch.stack(losses))
+                    require_finite_gdesigner(loss, f"{phase} REINFORCE loss")
                     optimizer.zero_grad()
-                    torch.mean(torch.stack(losses)).backward()
+                    loss.backward()
+                    require_finite_gdesigner_model(graph, f"{phase} before Adam update", gradients=True)
                     optimizer.step()
+                    require_finite_gdesigner_model(graph, f"{phase} after Adam update", gradients=True)
             after = dict(runtime.usage["totals"])
             phase_usage = runtime.usage["phases"].get(phase, empty_usage())
             return list(audit), list(log_probs)
@@ -1006,10 +1103,27 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
             "total_tokens": int(phase_usage["total_tokens"])}
 
     async def full_run() -> tuple[list[dict[str, Any]], list[list[str]], float, dict[str, Any], dict[str, Any]]:
+        nonlocal controller_sha256, frozen_controller_state
         runtime.async_semaphore = asyncio.Semaphore(CONCURRENCY)
         started = time.time()
         search_result, training_row_ids = await training_loop()
         elapsed = time.time() - started
+        require_finite_gdesigner_model(graph, "controller frozen after D_search", gradients=True)
+        frozen_controller_state = {
+            name: {key: value.detach().cpu().clone() for key, value in getattr(graph, name).state_dict().items()}
+            for name in ("gcn", "mlp")
+        }
+        with controller_path.open("xb") as stream:
+            torch.save({
+                "schema": "aime_gdesigner_controller_v1", "seed": args.seed,
+                "state_dicts": frozen_controller_state,
+                "role_graph_adapter": role_graph_adapter,
+                "role_adjacency_edge_index": graph.role_adj_matrix.detach().cpu().clone(),
+                "numerical_compatibility_adapter": dict(numerical_adapter),
+                "module_training_modes": {name: getattr(graph, name).training for name in ("gcn", "mlp")},
+                "frozen_phase": "after D_search and before D_select/D_test",
+            }, stream)
+        controller_sha256 = sha256_file(controller_path)
         selected = await evaluate_split(rows["select"], "select")
         if (selected["failure_fraction"] > MAX_SAMPLE_FAILURE_RATE
                 or selected["request_failure_fraction"] > MAX_SAMPLE_FAILURE_RATE
@@ -1022,7 +1136,9 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
             args.run_dir, "gdesigner", rows["search"], rows["select"],
             {"candidate_id": "trained_gdesigner_graph",
              "selection_accuracy": float(selected["accuracy"]),
-             "selection_rows": int(selected["num_examples"])},
+             "selection_rows": int(selected["num_examples"]),
+             "controller_path": str(controller_path),
+             "controller_sha256": controller_sha256},
             source_provenance=args.upstream_provenance,
         )
         test_results: dict[str, Any] = {}
@@ -1040,6 +1156,13 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
             point["selected_candidate"] = "trained_gdesigner_graph"
             point_e = {**point, "operating_point": "E", "same_candidate_as": "Q"}
             test_results[name] = {**point, "Q": point, "E": point_e}
+        require_finite_gdesigner_model(graph, "final inference parameters", gradients=True)
+        for module_name, state in frozen_controller_state.items():
+            observed = getattr(graph, module_name).state_dict()
+            if any(not torch.equal(value, observed[key].detach().cpu()) for key, value in state.items()):
+                raise RuntimeError("G-Designer controller changed after its D_search freeze")
+        if sha256_file(controller_path) != controller_sha256:
+            raise RuntimeError("G-Designer frozen controller artifact changed during evaluation")
         return search_result, training_row_ids, elapsed, selected, test_results
 
     search_audit, training_row_ids, search_seconds, selection, tests = asyncio.run(full_run())
@@ -1051,6 +1174,10 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
             "training_iterations": 10, "training_batch_size": 4, "training_row_ids": training_row_ids,
             "num_rounds": 1, "post_training_inference": "native task-conditioned GCN with optimized spatial sampling enabled",
             "utility": "native exact-match binary REINFORCE reward; shared 0/1/2 score reported separately",
+            "numerical_compatibility_adapter": numerical_adapter,
+            "role_graph_adapter": role_graph_adapter,
+            "controller_checkpoint": str(controller_path), "controller_sha256": controller_sha256,
+            "controller_unchanged_after_search": True,
             "embedding_model": str(embedding_dir)},
         "search_seconds": search_seconds, "search": {"rows": search_audit,
             "accuracy": sum(int(x["correct"]) for x in search_audit) / len(search_audit),

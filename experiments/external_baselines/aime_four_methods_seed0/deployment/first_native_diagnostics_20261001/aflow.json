@@ -1,0 +1,133 @@
+{
+  "status": "passed",
+  "method": "aflow",
+  "synthetic_only": true,
+  "sample_count": 2,
+  "concurrency": 2,
+  "max_tokens": 6144,
+  "source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-upstream-ba1ca711/experiments/external_baselines/aime_four_methods_seed0/upstream/AFlow",
+  "source_info": {
+    "repository": "https://github.com/FoundationAgents/AFlow.git",
+    "origin": "https://github.com/FoundationAgents/AFlow.git",
+    "commit": "3f457218fc716093fe53f6df8a5d5e6379d66346",
+    "clean_worktree": true,
+    "python_tree_sha256": "fcdfa2e8e4fc313b36d8d5a9d204d71e4a605ffd8a4de45b9befbdb396c621b4"
+  },
+  "script_sha256": "55ad667895c97e85a46feae6172801d31a1c6d65308c7a51de56d9d338b8f950",
+  "check_only": false,
+  "started_at_utc": "2026-10-01T03:26:56.755970+00:00",
+  "runtime_overrides": {
+    "AIME_AFLOW_CODE_TIMEOUT_S": "30",
+    "AIME_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MAAS_REQUEST_TIMEOUT_S": "600",
+    "AIME_MAAS_CODE_TIMEOUT_S": "60",
+    "RPAS_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "AIME_MAAS_SAMPLE_TIMEOUT_S": "1500",
+    "AIME_AFLOW_REQUEST_TIMEOUT_S": "600",
+    "RPAS_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MINILM_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MAAS_SAMPLE_RETRIES": "3",
+    "AIME_AFLOW_SAMPLE_TIMEOUT_S": "1200",
+    "AIME_TOKENIZER_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "AIME_EXTERNAL_REQUEST_TIMEOUT_S": "600",
+    "AIME_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B"
+  },
+  "staging": {
+    "synthetic_rows": 2,
+    "workflow": "workspace/rpas_aime_native/MATH/workflows"
+  },
+  "result": {
+    "entrypoint": "native AFlow Evaluator/Workflow",
+    "mutation": false,
+    "rounds": {
+      "round_1": {
+        "csv": "/data/jxc/tmp/rpas/diagnostics/aime_four_methods_6144_20261001/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/1.00000_20261001_112704.csv",
+        "rows": 2,
+        "correct": 2,
+        "parser_valid": 2,
+        "scores": [
+          {
+            "id": "synthetic_add",
+            "native_score": "1",
+            "prediction": "7",
+            "gold": "7",
+            "parser_valid": true,
+            "correct": true,
+            "score": 1.0,
+            "score_0_1_2": 2
+          },
+          {
+            "id": "synthetic_multiply",
+            "native_score": "1",
+            "prediction": "12",
+            "gold": "12",
+            "parser_valid": true,
+            "correct": true,
+            "score": 1.0,
+            "score_0_1_2": 2
+          }
+        ]
+      }
+    },
+    "telemetry": {
+      "calls": 2,
+      "prompt_tokens": 54,
+      "completion_tokens": 73,
+      "total_tokens": 127,
+      "failed_calls": 0,
+      "sample_timeouts": 0,
+      "phase_totals": {
+        "search": {
+          "calls": 2,
+          "prompt_tokens": 54,
+          "completion_tokens": 73,
+          "total_tokens": 127,
+          "failed_calls": 0
+        },
+        "select": {
+          "calls": 0,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0,
+          "failed_calls": 0
+        },
+        "test:aime_2025": {
+          "calls": 0,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0,
+          "failed_calls": 0
+        },
+        "test:aime_2026": {
+          "calls": 0,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0,
+          "failed_calls": 0
+        }
+      },
+      "finish_reason_counts": {
+        "stop": 2
+      },
+      "completion_truncated": 0,
+      "phase_wall_seconds": {
+        "search": 4.945956137962639
+      },
+      "code_execution_timeouts": 0,
+      "code_execution_errors": 0,
+      "context_guard": {
+        "version": "maas_context_guard_v1",
+        "target_input_tokens": 4096,
+        "context_limit": 8192,
+        "calls_seen": 2,
+        "compacted_calls": 0,
+        "original_input_tokens": 54,
+        "final_input_tokens": 54,
+        "compacted_input_tokens": 0,
+        "max_input_tokens_seen": 27,
+        "events_sample": []
+      }
+    }
+  },
+  "finished_at_utc": "2026-10-01T03:27:04.624668+00:00"
+}

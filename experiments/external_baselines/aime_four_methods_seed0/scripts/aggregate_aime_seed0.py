@@ -122,7 +122,19 @@ def recompute(root: Path) -> dict:
             "checker_source": str(checker.relative_to(BUNDLE_ROOT)),
             "checker_sha256": sha256(checker),
             "controls": result.get("controls"),
+            "native_method_config": result.get("native_method_config"),
+            "result_scope": "Shared AIME compatibility adapter; inspect method config and source fixes before comparing upstream results.",
         }
+        if method == "gdesigner":
+            config = result["native_method_config"]
+            checkpoint = run_dir / "gdesigner_controller.pt"
+            lock = read_json(run_dir / "selection_frozen.json")
+            observed = sha256(checkpoint)
+            if (config.get("controller_sha256") != observed
+                    or lock.get("selected", {}).get("controller_sha256") != observed):
+                raise ValueError("G-Designer saved controller differs from its selection lock or result")
+            sources[method]["controller_checkpoint"] = f"{relative_dir}/{checkpoint.name}"
+            sources[method]["controller_sha256"] = observed
     return {
         "schema": "aime_four_external_methods_seed0_summary_v1", "dataset": "aime",
         "seed": 0, "n_seeds": 1, "num_runs": 4, "num_rows": len(rows),

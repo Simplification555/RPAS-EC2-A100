@@ -1,0 +1,42 @@
+{
+  "schema": "gdesigner_synthetic_cpu_twenty_seed_comparison_v1",
+  "model_calls": 0,
+  "dtest_opened": false,
+  "upstream_commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+  "torch": "2.10.0+cu130",
+  "dtype": "float32",
+  "synthetic_query": "Compute 2 + 3. Return FINAL ANSWER: 5.",
+  "parameter_initialization_seed": 0,
+  "dropout_seeds": {"start": 0, "end_inclusive": 19, "count": 20},
+  "reward": 1.0,
+  "optimizer": "native Adam(graph.gcn.parameters(), lr=0.1)",
+  "normalization": "native min/max when span is positive; exact zero span receives connected zero logits",
+  "reproduction_script": "gdesigner_controller_numerics_audit.py --full",
+  "complete_aime_role_graph_12_edges": {
+    "propagation_rank_after_native_self_loops": 1,
+    "propagation_matrix": [[0.25, 0.25, 0.25, 0.25], [0.25, 0.25, 0.25, 0.25], [0.25, 0.25, 0.25, 0.25], [0.25, 0.25, 0.25, 0.25]],
+    "zero_gram_span_trials": 13,
+    "zero_gcn_gradient_trials": 13,
+    "zero_parameter_update_trials": 13,
+    "maximum_gcn_node_row_difference": 4.76837158203125e-7,
+    "maximum_gram_span": 2.86102294921875e-6,
+    "other_trials": 7,
+    "other_trials_parameter_max_delta_approx": 0.1,
+    "interpretation": "Exact arithmetic gives identical node vectors. The seven nonzero float32 updates are caused by rounding differences magnified by min/max normalization; they do not establish a working task-conditioned controller."
+  },
+  "upstream_native_gsm8k_role_graph_9_edges": {
+    "propagation_rank_after_native_self_loops": 3,
+    "zero_gram_span_trials": 0,
+    "zero_gcn_gradient_trials": 0,
+    "zero_parameter_update_trials": 0,
+    "finite_nonzero_gradient_and_update_trials": 20,
+    "gcn_node_row_difference_min": 0.0124053955078125,
+    "gcn_node_row_difference_max": 0.03914165496826172,
+    "gram_span_min": 0.0032806396484375,
+    "gram_span_max": 0.026579856872558594,
+    "gcn_gradient_l1_min": 43.74468170106411,
+    "gcn_gradient_l1_max": 3770.9277305603027,
+    "parameter_max_delta_approx": 0.1,
+    "interpretation": "The native sparse role graph preserves node differences and supports positive-reward REINFORCE parameter updates. This checks mechanical learning capability, not actual AIME rewards or accuracy."
+  }
+}

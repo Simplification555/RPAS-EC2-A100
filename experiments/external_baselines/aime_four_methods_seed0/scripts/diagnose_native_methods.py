@@ -4,7 +4,9 @@
 No frozen AIME file or formal selection/test artifact is opened. The diagnostic
 uses the formal transport/template patches, but its concurrency is two, MaAS
 trains for one repetition, ADAS executes one seed architecture, and G-Designer
-only performs forward inference. These are compatibility checks, not scores.
+executes one GCN-only Adam step plus post-training inference. The offline
+G-Designer check uses an explicit synthetic reward without model requests.
+These are compatibility checks, not benchmark scores or proof of learning.
 """
 
 from __future__ import annotations
@@ -12,6 +14,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import ast
+import copy
 import csv
 from datetime import datetime, timezone
 import hashlib
@@ -217,13 +220,191 @@ def run_maas(repo: Path, args: argparse.Namespace) -> dict[str, Any]:
             "telemetry": export_telemetry(telemetry)}
 
 
+def gdesigner_graph(source: Path) -> tuple[Any, Any, dict[str, Any]]:
+    """Load the native graph and the formal adapter's numerical boundary."""
+    import native_external_methods as adapter
+    sys.path.insert(0, str(source))
+    os.chdir(source)
+    import GDesigner.prompt.gsm8k_prompt_set
+    import GDesigner.agents.math_solver
+    import GDesigner.agents.final_decision
+    import GDesigner.graph.graph as graph_module
+    from GDesigner.graph.graph import Graph
+    from sentence_transformers import SentenceTransformer
+    import torch
+    embedding_path = os.environ.get("AIME_MINILM_PATH", "")
+    if not embedding_path or not Path(embedding_path).is_dir():
+        raise FileNotFoundError("AIME_MINILM_PATH must name the local MiniLM directory")
+    encoder = SentenceTransformer(embedding_path, device="cpu")
+    graph_module.get_sentence_embedding = lambda text: encoder.encode(text, convert_to_numpy=True)
+    role_graph = adapter._register_gdesigner_prompt()
+    numerics = adapter.patch_gdesigner_numerics(graph_module)
+    numerics["role_graph"] = role_graph
+    # Formal G-Designer seeds after the encoder has finished loading.
+    adapter.seed_everything(0)
+    roles = role_graph["role_names"]
+    assert len(roles) == 4
+    graph = Graph(domain="rpas_external", llm_name="GPTChat", agent_names=["MathSolver"] * 4,
+        decision_method="FinalRefer", optimized_spatial=True, optimized_temporal=False,
+        fixed_spatial_masks=[[int(i != j) for j in range(4)] for i in range(4)],
+        fixed_temporal_masks=[[0] * 4 for _ in range(4)], node_kwargs=[{"role": role} for role in roles])
+    assert graph.features.shape == (4, 384)
+    adapter.require_finite_gdesigner(graph.features, "diagnostic role features")
+    return graph, graph_module, numerics
+
+
+def gdesigner_adam_step(graph: Any, log_probs: list[Any], rewards: list[float], optimizer: Any) -> dict[str, Any]:
+    """Audit the same REINFORCE loss and GCN-only Adam step as formal runs."""
+    import native_external_methods as adapter
+    import torch
+    assert len(log_probs) == len(rewards) == len(TASKS)
+    before = {name: value.detach().clone() for name, value in graph.gcn.named_parameters()}
+    adapter.require_finite_gdesigner_model(graph, "diagnostic model before Adam")
+    for log_prob in log_probs:
+        assert log_prob.numel() == 1
+        adapter.require_finite_gdesigner(log_prob, "diagnostic topology log probability")
+    loss = torch.mean(torch.stack([-log_prob * reward for log_prob, reward in zip(log_probs, rewards)]))
+    adapter.require_finite_gdesigner(loss, "diagnostic REINFORCE loss")
+    if not loss.requires_grad:
+        raise RuntimeError("native diagnostic REINFORCE loss has no autograd path")
+    optimizer.zero_grad()
+    loss.backward()
+    adapter.require_finite_gdesigner_model(graph, "diagnostic backward", gradients=True)
+    gradients = [value.grad for value in graph.gcn.parameters() if value.grad is not None]
+    for grad in gradients:
+        adapter.require_finite_gdesigner(grad, "diagnostic GCN gradient")
+    gradient_max = max((float(grad.detach().abs().max().item()) for grad in gradients), default=0.0)
+    nonzero_elements = sum(int(torch.count_nonzero(grad.detach()).item()) for grad in gradients)
+    nonzero_tensors = sum(bool(torch.count_nonzero(grad.detach()).item()) for grad in gradients)
+    optimizer.step()
+    adapter.require_finite_gdesigner_model(graph, "diagnostic model after Adam")
+    deltas = []
+    for name, value in graph.gcn.named_parameters():
+        assert value.shape == before[name].shape
+        adapter.require_finite_gdesigner(value, "diagnostic updated GCN parameter")
+        deltas.append(float((value.detach() - before[name]).abs().max().item()))
+    return {"optimizer": "Adam", "learning_rate": 0.1, "optimized_module": "GCN only; MLP fixed",
+        "optimizer_steps": 1, "loss": float(loss.detach().item()), "rewards": rewards,
+        "gradient_tensor_count": len(gradients), "gradient_max_abs": gradient_max,
+        "gradient_nonzero_elements": nonzero_elements, "gradient_nonzero_tensors": nonzero_tensors,
+        "changed_parameter_tensors": sum(delta > 0 for delta in deltas),
+        "parameter_max_abs_delta": max(deltas, default=0.0),
+        "parameter_update_verified": nonzero_elements > 0 and max(deltas, default=0.0) > 0}
+
+
+def gdesigner_diagnostic(source: Path, args: argparse.Namespace, runtime: Any = None) -> dict[str, Any]:
+    """Check one native graph batch, its optimizer step, and a second forward."""
+    import native_external_methods as adapter
+    from answer_protocol import score_aime
+    import torch
+    graph, graph_module, numerics = gdesigner_graph(source)
+    graph.gcn.train()
+    optimizer = torch.optim.Adam(graph.gcn.parameters(), lr=0.1)
+    initial = {name: value.detach().clone() for name, value in graph.gcn.named_parameters()}
+
+    def realized_graph() -> Any:
+        realized = copy.deepcopy(graph)
+        realized.gcn, realized.mlp = graph.gcn, graph.mlp
+        return realized
+
+    if runtime is not None:
+        from GDesigner.llm.gpt_chat import GPTChat
+
+        async def controlled_agen(self: Any, messages: Any, max_tokens: int | None = None,
+                                  temperature: float | None = None, num_comps: int | None = None) -> str:
+            material = ([{"role": "user", "content": messages}] if isinstance(messages, str) else
+                [{"role": str(item.get("role") if isinstance(item, dict) else item.role),
+                  "content": str(item.get("content") if isinstance(item, dict) else item.content)} for item in messages])
+            try:
+                return await runtime.call_async(material,
+                    temperature=float(temperature if temperature is not None else 0.2),
+                    phase=os.environ.get("MASBENCH_PHASE", "unattributed"))
+            finally:
+                # Preserve usage even if a later topology/gradient check fails.
+                write_json(args.run_dir / "telemetry.json", runtime.usage)
+        GPTChat.agen = controlled_agen
+
+    async def batch(phase: str) -> tuple[list[dict[str, Any]], list[Any]]:
+        async def one(task: dict[str, str]) -> tuple[dict[str, Any], Any]:
+            realized = realized_graph()
+            if runtime is None:
+                features = realized.construct_new_features(task["problem"])
+                assert features.shape == (4, 768)
+                adapter.require_finite_gdesigner(features, "diagnostic query/role features")
+                logits = realized.mlp(realized.gcn(features, realized.role_adj_matrix))
+                assert logits.shape == (4, 16)
+                adapter.require_finite_gdesigner(logits, "diagnostic GCN/MLP output")
+                gram = logits @ logits.t()
+                assert gram.shape == (4, 4)
+                realized.spatial_logits = graph_module.min_max_norm(torch.flatten(gram))
+                log_prob = realized.construct_spatial_connection() + realized.construct_temporal_connection(0)
+                audit = {"id": task["id"], "topology_only": True,
+                    "gram_span": float((gram.detach().max() - gram.detach().min()).item())}
+            else:
+                response, log_prob = await realized.arun({"task": task["problem"]}, num_rounds=1,
+                    max_tries=3, max_time=180)
+                raw = str(response[0] if response else "")
+                audit = {"id": task["id"], "raw_output": raw, **score_aime(raw, task["answer"])}
+            adapter.require_finite_gdesigner(log_prob, "diagnostic topology log probability")
+            audit["topology_log_probability"] = float(log_prob.detach().item())
+            return audit, log_prob
+        previous = os.environ.get("MASBENCH_PHASE")
+        os.environ["MASBENCH_PHASE"] = phase
+        try:
+            pairs = await asyncio.gather(*(one(task) for task in TASKS))
+            return [pair[0] for pair in pairs], [pair[1] for pair in pairs]
+        finally:
+            if previous is None:
+                os.environ.pop("MASBENCH_PHASE", None)
+            else:
+                os.environ["MASBENCH_PHASE"] = previous
+
+    async def train_and_forward() -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+        train_rows, log_probs = await batch("search:train")
+        write_json(args.run_dir / "gdesigner_training_predictions.json", train_rows)
+        if runtime is not None and not all(row["correct"] for row in train_rows):
+            raise RuntimeError("native G-Designer did not correctly answer both synthetic training questions")
+        rewards = [float(bool(row["correct"])) for row in train_rows] if runtime is not None else [1.0] * len(TASKS)
+        step = gdesigner_adam_step(graph, log_probs, rewards, optimizer)
+        write_json(args.run_dir / "optimizer_steps.json", [step])
+        if not step["parameter_update_verified"]:
+            raise RuntimeError("native G-Designer diagnostic has no nonzero GCN gradient or Adam parameter change")
+        graph.gcn.eval()
+        post_rows, _ = await batch("search:post_training")
+        return train_rows, post_rows, step
+
+    train_rows, post_rows, step = asyncio.run(train_and_forward())
+    checkpoint = args.run_dir / "gdesigner_diagnostic_gcn.pt"
+    torch.save(graph.gcn.state_dict(), checkpoint)
+    saved = torch.load(checkpoint, map_location="cpu", weights_only=True)
+    checkpoint_delta = max(float((saved[name] - before.cpu()).abs().max().item()) for name, before in initial.items())
+    result = {"agent_nodes": 4, "decision_method": "FinalRefer", "topology_optimizer": "native GCN/MLP",
+        "training": True, "offline_topology_only": runtime is None,
+        "reward_source": "model-answer exact match" if runtime is not None else "explicit synthetic constant 1; no model answers",
+        "training_predictions": train_rows, "predictions": post_rows, "optimizer_audit": step,
+        "checkpoint": str(checkpoint), "checkpoint_sha256": digest(checkpoint),
+        "checkpoint_max_abs_delta_from_initial": checkpoint_delta, "numerical_adapter": numerics,
+        "node_timeout_seconds": 180,
+        "request_timeout_seconds": runtime.request_timeout_s if runtime is not None else None,
+        "seed_timing": "after local MiniLM load, matching formal runner"}
+    if runtime is not None:
+        result.update(correct=sum(bool(row["correct"]) for row in post_rows),
+            training_correct=sum(bool(row["correct"]) for row in train_rows),
+            telemetry=runtime.usage, context_guard=runtime.guard.summary())
+        if runtime.usage["totals"]["calls"] < 4 or runtime.usage["totals"]["failed_calls"] or not any(row["parser_valid"] for row in post_rows):
+            raise RuntimeError("native G-Designer diagnostic failed model calls or produced no parseable answers")
+    return result
+
+
 def run_external(method: str, source: Path, args: argparse.Namespace) -> dict[str, Any]:
     import native_external_methods as adapter
     from answer_protocol import score_aime
     adapter.OUTPUT_LIMIT = args.max_tokens
     adapter.CONCURRENCY = 2
-    adapter.seed_everything(0)
     runtime = adapter.ModelRuntime(args.endpoint, method, f"diagnostic:{method}:{args.run_dir.name}")
+    if method == "gdesigner":
+        return gdesigner_diagnostic(source, args, runtime)
+    adapter.seed_everything(0)
     if method == "adas":
         smoke = adapter.smoke_native_source(method, source)
         native = importlib.import_module("search")
@@ -251,47 +432,6 @@ def run_external(method: str, source: Path, args: argparse.Namespace) -> dict[st
             raw = str(result.content if hasattr(result, "content") else result)
             return {"id": task["id"], "raw_output": raw, **score_aime(raw, task["answer"])}
         architecture_info = {"native_seed_architecture": architecture["name"], "smoke": smoke}
-    else:
-        sys.path.insert(0, str(source))
-        os.chdir(source)
-        import GDesigner.prompt.gsm8k_prompt_set
-        import GDesigner.agents.math_solver
-        import GDesigner.agents.final_decision
-        from GDesigner.llm.gpt_chat import GPTChat
-        import GDesigner.graph.graph as graph_module
-        from GDesigner.graph.graph import Graph
-        from sentence_transformers import SentenceTransformer
-        import torch
-        embedding_dir = Path(os.environ.get("AIME_MINILM_PATH", ""))
-        if not embedding_dir.is_dir():
-            raise FileNotFoundError("AIME_MINILM_PATH must name the local MiniLM directory")
-        encoder = SentenceTransformer(str(embedding_dir), device="cpu")
-        graph_module.get_sentence_embedding = lambda text: encoder.encode(text, convert_to_numpy=True)
-        adapter._register_gdesigner_prompt()
-
-        async def controlled_agen(self: Any, messages: Any, max_tokens: int | None = None,
-                                  temperature: float | None = None, num_comps: int | None = None) -> str:
-            material = ([{"role": "user", "content": messages}] if isinstance(messages, str) else
-                [{"role": str(item.get("role") if isinstance(item, dict) else item.role),
-                  "content": str(item.get("content") if isinstance(item, dict) else item.content)} for item in messages])
-            return await runtime.call_async(material, temperature=float(temperature if temperature is not None else 0.2), phase="search")
-
-        GPTChat.agen = controlled_agen
-        roles = ["Algebraic Decomposer", "Independent Solver", "Consistency Checker", "Solution Synthesizer"]
-
-        async def one(task: dict[str, str]) -> dict[str, Any]:
-            graph = Graph(domain="rpas_external", llm_name="GPTChat", agent_names=["MathSolver"] * 4,
-                decision_method="FinalRefer", optimized_spatial=True, optimized_temporal=False,
-                fixed_spatial_masks=[[int(i != j) for j in range(4)] for i in range(4)],
-                fixed_temporal_masks=[[0] * 4 for _ in range(4)], node_kwargs=[{"role": role} for role in roles])
-            assert graph.features.shape == (4, 384) and bool(torch.isfinite(graph.features).all())
-            response, log_prob = await graph.arun({"task": task["problem"]}, num_rounds=1,
-                max_tries=3, max_time=float(os.environ.get("AIME_EXTERNAL_REQUEST_TIMEOUT_S", "600")))
-            if not bool(torch.isfinite(log_prob).all()):
-                raise RuntimeError("native G-Designer produced a nonfinite topology log probability")
-            raw = str(response[0] if response else "")
-            return {"id": task["id"], "raw_output": raw, **score_aime(raw, task["answer"])}
-        architecture_info = {"agent_nodes": 4, "decision_method": "FinalRefer", "topology_optimizer": "native GCN/MLP", "training": False}
 
     async def batch() -> list[dict[str, Any]]:
         return await asyncio.gather(*(one(task) for task in TASKS))
@@ -325,7 +465,10 @@ def worker(spec_path: Path) -> None:
                 report["result"] = run_aflow(repo, args) if args.method == "aflow" else run_maas(repo, args)
         else:
             import native_external_methods as adapter
-            report["result"] = adapter.smoke_native_source(args.method, source) if args.check_only else run_external(args.method, source, args)
+            if args.check_only and args.method == "gdesigner":
+                report["result"] = gdesigner_diagnostic(source, args)
+            else:
+                report["result"] = adapter.smoke_native_source(args.method, source) if args.check_only else run_external(args.method, source, args)
         report["status"] = "passed"
     except BaseException as exc:
         report.update(status="failed", error=f"{type(exc).__name__}: {exc}", traceback=traceback.format_exc())
