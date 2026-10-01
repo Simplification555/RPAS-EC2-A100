@@ -2,8 +2,9 @@
 
 This folder was assembled from the recovered local experiment wrappers and
 upstream repositories identified in `README.md`. It contains baseline adapters
-only. There is no RPAS search algorithm, RPAS result, secret, model checkpoint,
-or AIME test content in this folder.
+only. There is no RPAS search algorithm, RPAS result, secret, or model
+checkpoint in this folder. Authorized frozen AIME test data is included as
+described below.
 
 The AFlow/MaAS runner maps frozen AIME rows into each upstream method's MATH
 input schema and adds local execution-safety, shared scoring, and blind-split

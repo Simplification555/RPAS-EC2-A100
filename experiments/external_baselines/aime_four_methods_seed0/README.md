@@ -3,9 +3,10 @@
 The [single RTX 5880 Ada 48 GB host record](deployment/SINGLE_48G_2026-10-01.md)
 documents the prepared environments, model verification, runtime limits,
 audit fixes, synthetic diagnostics, and four-method orchestrator used by the
-2026-10-01 host run. This local source variant retains the package's native
-search settings and quality gates. Read that record for the host launch;
-the original two-pair commands below remain the package interface.
+2026-10-01 host run. This source variant retains the package's search budgets
+and quality gates and discloses G-Designer's role-graph/numerical adapters.
+Read that record for the host launch and the preserved rejected AFlow attempt;
+the pair and single-method commands below remain available.
 
 This folder contains **only external baseline adapters** for AFlow, MaAS, ADAS,
 and G-Designer. It does not contain or invoke the RPAS method. The wrappers
@@ -28,9 +29,11 @@ reproductions.
   manifest and every file before use. `.gitattributes` fixes JSONL line endings
   so these hashes remain portable across Windows and Linux.
 - Not included: model weights, tokenizer weights, MiniLM weights, API
-  credentials, generated predictions, or experiment outputs. Publishing the
-  frozen test questions/answers is intentional and was authorized by the data
-  owner; users should still avoid using `D_test` for tuning or selection.
+  credentials, or complete formal result bundles. Deployment records include
+  synthetic diagnostic predictions and execution/rejection audit summaries.
+  Publishing the frozen test questions/answers is intentional and was
+  authorized by the data owner; users should still avoid using `D_test` for
+  tuning or selection.
 - Required data directory: `data/`, containing the three raw source JSONL
   files plus the canonical split subdirectories. Search/select load the exact
   frozen 60/30 files (the runner no longer re-shuffles the 90-row source).
@@ -51,10 +54,11 @@ reproductions.
 | Shared reported score | `0` unparseable, `1` parseable but wrong, `2` exact match |
 | Pair execution | Two methods in the selected pair, serially on one visible GPU |
 
-The AFlow/MaAS and ADAS/G-Designer adapters each require a fresh output root
-for a new run. A partial member makes that pair stop rather than silently
-mixing old and new results. Existing complete members are accepted only after
-their quality gate passes. Freeze/access manifests bind the exact validation
+Every selected method requires a fresh output directory and service-attempt
+record. Existing complete or partial attempts are refused before any checker
+can rewrite them. Independent methods continue after another method fails;
+only four verified formal passes produce an accepted complete aggregate.
+Freeze/access manifests bind the exact validation
 IDs, method-specific selection, baseline provenance, test-file hashes/IDs,
 question fingerprints, and timestamps. These checks reduce accidental leakage;
 they are not an OS-level audit against a malicious process reading files.
@@ -102,6 +106,10 @@ export AIME_MAAS_PYTHON=/path/to/maas-environment/bin/python
 export AIME_ADAS_PYTHON=/path/to/adas-environment/bin/python
 export AIME_GDESIGNER_PYTHON=/path/to/gdesigner-environment/bin/python
 export CUDA_VISIBLE_DEVICES=0
+export AIME_MODEL_VERIFICATION_REPORT="$PWD/logs/local_model_verification_new.json"
+uv run --no-project --python "$AIME_PYTHON" python scripts/verify_local_models.py \
+  --qwen "$AIME_MODEL_PATH" --embedding "$AIME_MINILM_PATH" \
+  --report "$AIME_MODEL_VERIFICATION_REPORT"
 export AIME_OUTPUT_DIR="$PWD/outputs/aime_seed0_pair1"
 bash scripts/run_pair.sh aflow_maas
 ```
@@ -112,6 +120,17 @@ For the other pair, select a new output directory and run:
 export AIME_OUTPUT_DIR="$PWD/outputs/aime_seed0_pair2"
 bash scripts/run_pair.sh adas_gdesigner
 ```
+
+For one method, use `bash scripts/run_pair.sh --method maas` with a fresh
+`AIME_OUTPUT_DIR`. For all four methods with fresh synthetic diagnostics:
+
+```bash
+export AIME_OUTPUT_ROOT="$PWD/outputs/aime_four_methods_seed0_new"
+bash scripts/run_single48g_all.sh all --method-order maas,adas,gdesigner,aflow
+```
+
+The all-method launcher assigns each formal method its own service session
+and records failures without accepting an incomplete comparison.
 
 The runner starts one local vLLM server (`TP=1`, context 8192, max-num-seqs
 24, GPU utilization 0.92), sends a disposable model smoke request, then runs
@@ -125,11 +144,12 @@ machine before starting the long run.
 ## Local checks
 
 ```bash
-python -m compileall -q experiments
-PYTHONPATH=experiments python -m pytest -q experiments
+uv run --no-project --python /path/to/test-environment/bin/python python -m compileall -q experiments
+PYTHONPATH=experiments uv run --no-project --python /path/to/test-environment/bin/python python -m pytest -q experiments
 ```
 
-The authoring-machine checks are CPU/offline tests only. They do not establish
-that the four upstream methods, vLLM, Qwen3.5-9B, and this GPU work together.
-The 1-seed output is a pilot; it cannot fill a three-seed mean±standard-
-deviation table.
+The authoring-machine checks are CPU/offline tests only. Real-model synthetic
+diagnostics on the recorded 48 GB host are documented separately in the host
+record; they establish execution viability, not held-out benchmark quality.
+Formal methods still need their full quality gates. The 1-seed output is a
+pilot; it cannot fill a three-seed mean±standard-deviation table.
