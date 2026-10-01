@@ -131,6 +131,9 @@ python_for() {
 "$COMMON_PYTHON" - "$PORT" <<'PY'
 import socket, sys
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+    # Match the server's reuse policy: recently closed connections can remain
+    # in TIME_WAIT. An active listener still makes this bind fail.
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind(("127.0.0.1", int(sys.argv[1])))
 PY
 "$COMMON_PYTHON" "$ROOT/scripts/preflight_gpu.py" --role serve
