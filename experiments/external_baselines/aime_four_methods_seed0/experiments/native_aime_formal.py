@@ -18,6 +18,7 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
 import json
+import math
 import os
 import random
 import re
@@ -133,8 +134,143 @@ async def execute_generated_code(
             _shutdown_process_executor(executor, terminate=True)
             return "Error", f"Code execution failed: {type(exc).__name__}: {exc}"
         else:
-            _shutdown_process_executor(executor, terminate=False)
+            # A completed solve() may leave background threads in its worker.
+            # Its result is already received; disposable workers must still end.
+            _shutdown_process_executor(executor, terminate=True)
             return result
+
+
+_CODE_EXECUTOR_RUNTIMES: dict[str, dict[str, Any]] = {}
+_CODE_EXECUTOR_TEMPLATE_MARKER = "# RPAS bounded Programmer executor v2"
+
+
+def configure_code_executor(
+    method: str, telemetry: dict[str, Any], timeout_s: float, workers: int,
+) -> None:
+    """Set shared limits/counters before any native or copied template is used."""
+    if method not in UPSTREAMS:
+        raise ValueError(f"Unknown generated-code method: {method}")
+    timeout_s = float(timeout_s)
+    workers = int(workers)
+    if not math.isfinite(timeout_s) or timeout_s <= 0 or workers <= 0:
+        raise ValueError("Generated-code timeout and worker count must be positive and finite")
+    # Direct CLI execution otherwise creates a second, unconfigured module when
+    # a workflow imports the binder below under its ordinary module name.
+    if __name__ == "__main__":
+        existing = sys.modules.get("native_aime_formal")
+        if existing is not None and Path(getattr(existing, "__file__", "") or "").resolve() != Path(__file__).resolve():
+            raise RuntimeError("Refusing to bind generated-code templates to a different runner source")
+        sys.modules["native_aime_formal"] = sys.modules[__name__]
+    for key in (
+        "code_execution_calls", "code_execution_timeouts", "code_execution_errors",
+        "code_execution_cancellations",
+    ):
+        telemetry.setdefault(key, 0)
+    telemetry["code_executor_adapter"] = {
+        "version": "bounded_programmer_v2_all_template_paths",
+        "timeout_s": timeout_s,
+        "workers_per_event_loop": workers,
+        "bound_modules": [],
+        "template_repairs": [],
+    }
+    _CODE_EXECUTOR_RUNTIMES[method] = {
+        "telemetry": telemetry, "timeout_s": timeout_s,
+        "limiter": LoopBoundSemaphore(workers),
+    }
+
+
+def install_bounded_programmer(
+    programmer: Any, run_code: Any, method: str, module_name: str,
+) -> None:
+    """Bind the actual class to its own native run_code and shared runtime.
+
+    Binding is also safe during spawned-worker imports: runtime configuration
+    is required only when exec_code is called, not when run_code is imported.
+    """
+    if method not in UPSTREAMS:
+        raise ValueError(f"Unknown generated-code method: {method}")
+
+    def record_module(telemetry: dict[str, Any]) -> None:
+        modules = telemetry["code_executor_adapter"]["bound_modules"]
+        if module_name not in modules:
+            modules.append(module_name)
+
+    async def bounded_exec_code(self: Any, code: str, timeout: float = 30 if method == "aflow" else 600):
+        runtime = _CODE_EXECUTOR_RUNTIMES.get(method)
+        if runtime is None:
+            raise RuntimeError(f"{method} generated-code runtime was not configured")
+        telemetry = runtime["telemetry"]
+        record_module(telemetry)
+        telemetry["code_execution_calls"] += 1
+        try:
+            result = await execute_generated_code(
+                run_code, code, min(float(timeout), runtime["timeout_s"]), runtime["limiter"],
+            )
+        except asyncio.CancelledError:
+            telemetry["code_execution_cancellations"] += 1
+            raise
+        if result[0] != "Success":
+            field = "code_execution_timeouts" if result[1] == "Code execution timed out" else "code_execution_errors"
+            telemetry[field] += 1
+        return result
+
+    programmer.exec_code = bounded_exec_code
+    programmer._rpas_bounded_code_executor = method
+    runtime = _CODE_EXECUTOR_RUNTIMES.get(method)
+    if runtime is not None:
+        record_module(runtime["telemetry"])
+
+
+def patch_programmer_templates(repo: Path, method: str) -> list[dict[str, str]]:
+    """Repair isolated templates before import/copy, including future aliases.
+
+    This is a run-local execution adapter. Never call it on the pinned upstream
+    checkout or an existing formal run. Template run_code and retry loops remain
+    native; only their executor binding is appended.
+    """
+    repo = repo.resolve()
+    if method == "aflow":
+        originals = [repo / "workspace/MATH/workflows/template/operator.py"]
+    elif method == "maas":
+        originals = [
+            repo / f"maas/ext/maas/scripts/optimized/MATH/{phase}/template/operator.py"
+            for phase in ("train", "test")
+        ]
+    else:
+        raise ValueError(f"Unknown generated-code method: {method}")
+    isolated = repo / "workspace/rpas_aime_native"
+    paths = sorted(set(originals + list(isolated.rglob("template/operator.py"))))
+    repairs = []
+    for path in paths:
+        source = path.read_text(encoding="utf-8")
+        tree = ast.parse(source, filename=str(path))
+        if not any(isinstance(node, ast.ClassDef) and node.name == "Programmer" for node in tree.body):
+            raise RuntimeError(f"Native Programmer class missing from isolated template: {path}")
+        if not any(isinstance(node, ast.FunctionDef) and node.name == "run_code" for node in tree.body):
+            raise RuntimeError(f"Native run_code missing from isolated template: {path}")
+        before_sha = hashlib.sha256(source.encode("utf-8")).hexdigest()
+        if _CODE_EXECUTOR_TEMPLATE_MARKER not in source:
+            source += (
+                f"\n\n{_CODE_EXECUTOR_TEMPLATE_MARKER}\n"
+                "from native_aime_formal import install_bounded_programmer as _rpas_bind_programmer\n"
+                f"_rpas_bind_programmer(Programmer, run_code, {method!r}, __name__)\n"
+                "del _rpas_bind_programmer\n"
+            )
+            compile(source, str(path), "exec")
+            path.write_text(source, encoding="utf-8")
+        repairs.append({
+            "path": str(path.relative_to(repo)), "source_sha256": before_sha,
+            "patched_sha256": hashlib.sha256(source.encode("utf-8")).hexdigest(),
+        })
+    runtime = _CODE_EXECUTOR_RUNTIMES[method]
+    runtime["telemetry"]["code_executor_adapter"]["template_repairs"] = repairs
+    # Native classes may already have been imported while constructing the
+    # runtime. Apply the same binder to those objects, not just their files.
+    for name, module in tuple(sys.modules.items()):
+        file = getattr(module, "__file__", None)
+        if file and Path(file).resolve() in paths:
+            install_bounded_programmer(module.Programmer, module.run_code, method, name)
+    return repairs
 
 
 def patch_aflow_optimizer_retry_guard(repo: Path) -> None:
@@ -946,7 +1082,7 @@ def merge_phase_usage(telemetry: dict[str, Any], phase: str, usage: dict[str, in
 def patch_aflow_runtime(max_tokens: int, concurrency: int) -> dict[str, int]:
     """Use the native AFlow objects with the common endpoint contract."""
     from scripts.async_llm import AsyncLLM
-    from scripts.operators import Programmer, run_code
+    import scripts.operators as operators
     from benchmarks.benchmark import BaseBenchmark
     from benchmarks.math import MATHBenchmark
     from tqdm.asyncio import tqdm_asyncio
@@ -971,23 +1107,14 @@ def patch_aflow_runtime(max_tokens: int, concurrency: int) -> dict[str, int]:
         "code_execution_errors": 0,
     }
     code_timeout = float(os.environ.get("AIME_AFLOW_CODE_TIMEOUT_S", "30"))
-    code_limiter = LoopBoundSemaphore(
-        int(os.environ.get("AIME_CODE_EXEC_WORKERS", str(min(8, os.cpu_count() or 1))))
+    configure_code_executor(
+        "aflow", telemetry, code_timeout,
+        int(os.environ.get("AIME_CODE_EXEC_WORKERS", str(min(8, os.cpu_count() or 1)))),
     )
-
-    async def bounded_exec_code(self: Any, code: str, timeout: float = 30):
-        result = await execute_generated_code(run_code, code, min(float(timeout), code_timeout), code_limiter)
-        if result[0] != "Success":
-            if "timed out" in result[1].lower():
-                telemetry["code_execution_timeouts"] += 1
-            else:
-                telemetry["code_execution_errors"] += 1
-        return result
-
-    # The released operator reuses a single worker after timeouts. A runaway
-    # solve() then blocks every later execution in that pool. Use disposable,
-    # forcibly stoppable workers while leaving the native operator/search intact.
-    Programmer.exec_code = bounded_exec_code
+    install_bounded_programmer(operators.Programmer, operators.run_code, "aflow", operators.__name__)
+    # Workflows import a distinct template.Programmer rather than the scripts
+    # class. Patch isolated template bytes before subsequent namespace copies.
+    patch_programmer_templates(Path(operators.__file__).resolve().parents[1], "aflow")
     tokenizer_path = os.environ.get("AIME_TOKENIZER_PATH", "") or snapshot_download(
         MODEL, local_files_only=True
     )
@@ -1452,13 +1579,8 @@ def patch_maas_runtime(concurrency: int, max_tokens: int) -> dict[str, int]:
     from maas.ext.maas.benchmark.benchmark import BaseBenchmark
     from maas.ext.maas.benchmark.math import MATHBenchmark
     from maas.ext.maas.scripts.optimizer_utils.data_utils import DataUtils
-    from maas.ext.maas.scripts.optimized.MATH.train.template.operator import (
-        Programmer as TrainProgrammer,
-        run_code,
-    )
-    from maas.ext.maas.scripts.optimized.MATH.test.template.operator import (
-        Programmer as TestProgrammer,
-    )
+    import maas.ext.maas.scripts.optimized.MATH.train.template.operator as train_operators
+    import maas.ext.maas.scripts.optimized.MATH.test.template.operator as test_operators
     from maas.provider.openai_api import OpenAILLM
     from maas_context_guard import PromptGuard
 
@@ -1526,27 +1648,16 @@ def patch_maas_runtime(concurrency: int, max_tokens: int) -> dict[str, int]:
 
     MATHBenchmark._generate_output = bounded_generate_output
 
-    # The released Programmer.exec_code uses a ProcessPoolExecutor inside a
-    # context manager.  On timeout, the context manager waits for the runaway
-    # child anyway, so an infinite generated solve() can stall the whole
-    # benchmark.  Terminate the worker process explicitly before returning.
+    # Cover native train/test classes plus all copied workflow templates. Each
+    # keeps its own native run_code implementation and operator retry budget.
     code_timeout = float(os.environ.get("AIME_MAAS_CODE_TIMEOUT_S", "60"))
-    code_limiter = LoopBoundSemaphore(
-        int(os.environ.get("AIME_CODE_EXEC_WORKERS", str(min(8, os.cpu_count() or 1))))
+    configure_code_executor(
+        "maas", usage, code_timeout,
+        int(os.environ.get("AIME_CODE_EXEC_WORKERS", str(min(8, os.cpu_count() or 1)))),
     )
-
-    async def bounded_exec_code(self: Any, code: str, timeout: float = 600):
-        effective_timeout = min(float(timeout), code_timeout)
-        result = await execute_generated_code(run_code, code, effective_timeout, code_limiter)
-        if result[0] != "Success":
-            if "timed out" in result[1].lower():
-                usage["code_execution_timeouts"] += 1
-            else:
-                usage["code_execution_errors"] += 1
-        return result
-
-    TrainProgrammer.exec_code = bounded_exec_code
-    TestProgrammer.exec_code = bounded_exec_code
+    for module in (train_operators, test_operators):
+        install_bounded_programmer(module.Programmer, module.run_code, "maas", module.__name__)
+    patch_programmer_templates(Path(train_operators.__file__).resolve().parents[8], "maas")
 
     original_cons_kwargs = OpenAILLM._cons_kwargs
 

@@ -48,6 +48,29 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def stop_owned_worker(process: subprocess.Popen | None) -> None:
+    """Reap this diagnostic's worker group within the launcher's grace time."""
+    if process is None:
+        return
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        pass
+    try:
+        process.wait(timeout=1)
+    except subprocess.TimeoutExpired:
+        pass
+    # Descendants may ignore TERM even if the worker itself already exited.
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except ProcessLookupError:
+        pass
+    try:
+        process.wait(timeout=1)
+    except subprocess.TimeoutExpired:
+        pass
+
+
 def safe_run_dir(path: Path, source: Path) -> Path:
     result = path.expanduser().resolve()
     forbidden = [ROOT / "outputs", ROOT / "data", ROOT / "upstream", source]
@@ -518,21 +541,32 @@ def main() -> int:
     environment = os.environ.copy()
     environment["AIME_RUN_ID"] = f"diagnostic:{args.method}:{run_dir.name}"
     environment["MASBENCH_PHASE"] = "search"
-    with (run_dir / "run.log").open("w", encoding="utf-8") as log:
-        process = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), "--worker-spec", str(run_dir / "worker_spec.json")],
-            env=environment, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
-        try:
+    process = None
+    failure = None
+    previous_handlers = {item: signal.getsignal(item) for item in (signal.SIGTERM, signal.SIGINT)}
+
+    def interrupted(signum: int, frame: Any) -> None:
+        raise KeyboardInterrupt(f"Diagnostic interrupted by {signal.Signals(signum).name}")
+
+    try:
+        for item in previous_handlers:
+            signal.signal(item, interrupted)
+        with (run_dir / "run.log").open("w", encoding="utf-8") as log:
+            process = subprocess.Popen([sys.executable, str(Path(__file__).resolve()), "--worker-spec", str(run_dir / "worker_spec.json")],
+                env=environment, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
             code = process.wait(timeout=args.timeout_seconds)
-        except BaseException as exc:
-            os.killpg(process.pid, signal.SIGTERM)
-            try:
-                process.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                os.killpg(process.pid, signal.SIGKILL)
-                process.wait()
+    except BaseException as exc:
+        failure = exc
+        raise
+    finally:
+        for item in previous_handlers:
+            signal.signal(item, signal.SIG_IGN)
+        stop_owned_worker(process)
+        if failure is not None:
             write_json(run_dir / "report.json", {"status": "failed", "synthetic_only": True,
-                "method": args.method, "error": f"{type(exc).__name__}: diagnostic worker exceeded time limit or was interrupted"})
-            raise
+                "method": args.method, "error": f"{type(failure).__name__}: {failure}"})
+        for item, handler in previous_handlers.items():
+            signal.signal(item, handler)
     report_path = run_dir / "report.json"
     report = json.loads(report_path.read_text(encoding="utf-8")) if report_path.exists() else {"status": "failed"}
     print(json.dumps({"status": report["status"], "method": args.method, "report": str(report_path)}, ensure_ascii=False))
