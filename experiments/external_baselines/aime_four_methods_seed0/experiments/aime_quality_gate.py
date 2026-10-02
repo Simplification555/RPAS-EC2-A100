@@ -235,7 +235,7 @@ def main() -> int:
                 if len(rows) < 30 or actual_ids != expected_ids:
                     errors.append(f"D_test IDs mismatch for {filename}")
                 access_record = (access.get("test_splits", {}) if access_path.is_file() else {}).get(filename, {})
-                if access_record.get("sha256") != sha256_file(path):
+                if access_record.get("sha256") != sha256_file(data_dir / filename):
                     errors.append(f"D_test opened-data hash mismatch for {filename}")
                 spec = data_manifest["test"][filename]
                 frozen_path = data_dir / spec["split_path"]

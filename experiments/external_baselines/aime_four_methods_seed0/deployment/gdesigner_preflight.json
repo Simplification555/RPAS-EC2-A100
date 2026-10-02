@@ -1,0 +1,25 @@
+{
+  "dataset": "aime",
+  "method": "gdesigner",
+  "axis": "depth",
+  "seed": 0,
+  "split_counts": {
+    "search": 60,
+    "select": 30
+  },
+  "official_source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-upstream-ba1ca711/experiments/external_baselines/aime_four_methods_seed0/upstream/GDesigner",
+  "source_python_files": 50,
+  "upstream_provenance": {
+    "commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+    "clean_worktree": true,
+    "origin": "https://github.com/yanweiyue/GDesigner.git",
+    "repository": "https://github.com/yanweiyue/GDesigner.git"
+  },
+  "source_sha256": "a13320b06004eac35f3507266582470876efb2657784cca691638472b4eece29",
+  "preflight": {
+    "native_import": "passed",
+    "agent_nodes": 4,
+    "decision_method": "FinalRefer",
+    "topology_optimizer": "native GCN/MLP"
+  }
+}
