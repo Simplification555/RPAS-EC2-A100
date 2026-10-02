@@ -154,5 +154,6 @@ record; they establish execution viability, not held-out benchmark quality.
 Formal methods still need their full quality gates. The 1-seed output is a
 pilot; it cannot fill a three-seed mean±standard-deviation table.
 
-
-See [SCIR reference status](deployment/SCIR_REFERENCE_STATUS.md) for the distinction between historical SCIR gate evidence, runtime diagnostics, and a completed formal result.
+See [SCIR reference status](deployment/SCIR_REFERENCE_STATUS.md) for the
+distinction between historical SCIR gate evidence, runtime diagnostics, and
+a completed formal result.
