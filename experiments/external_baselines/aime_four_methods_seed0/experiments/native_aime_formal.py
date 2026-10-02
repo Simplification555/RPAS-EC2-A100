@@ -867,15 +867,21 @@ def audit_aflow_outputs(log_dir: Path) -> dict[str, Any]:
         prediction = str(row.get("prediction", "") or "").strip()
         lowered = prediction.lower()
         # Native evaluators persist str(exc), which can omit the exception
-        # class entirely. Match the complete AttributeError shape so ordinary
-        # solution prose mentioning an error remains eligible for scoring.
+        # class entirely. Match complete failure shapes so ordinary solution
+        # prose mentioning an error remains eligible for scoring.
         bare_attribute_error = re.fullmatch(
             r"(?:attributeerror:\s*)?'[\w.]+' object has no attribute '\w+'", lowered
+        ) is not None
+        bare_name_error = re.fullmatch(
+            r"(?:nameerror:\s*)?name '[^']+' is not defined", lowered
+        ) is not None
+        pydantic_validation_error = re.match(
+            r"^(?:error:\s*)?(?:\d+\s+)?validation error\b", lowered
         ) is not None
         if not prediction:
             empty += 1
             failure_rows.append("<empty prediction>")
-        elif bare_attribute_error or any(
+        elif bare_attribute_error or bare_name_error or pydantic_validation_error or any(
             lowered == marker or lowered.startswith(marker) for marker in marker_prefixes
         ):
             failure_rows.append(prediction[:160])

@@ -64,6 +64,31 @@ def test_output_audit_counts_native_attribute_and_worker_failures_only(tmp_path:
     assert audit["failure_fraction"] == len(failures) / (len(failures) + len(solutions))
 
 
+def test_output_audit_counts_maas_validation_and_bare_name_errors(tmp_path: Path):
+    failures = [
+        "1 validation error for ScEnsembleOp_AN\n"
+        "  Value error, Missing fields: {'solution_letter'} [type=value_error]",
+        "Error: 1 validation error for ScEnsembleOp_AN\n"
+        "  Value error, Missing fields: {'solution_letter'} [type=value_error]",
+        "NameError: name 'answer' is not defined",
+        "name 'answer' is not defined",
+    ]
+    solutions = [
+        "A valid solution with FINAL ANSWER: 7",
+        "The word validation error appears in this explanation; FINAL ANSWER: 7",
+    ]
+    output = tmp_path / "predictions.csv"
+    with output.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=["prediction"])
+        writer.writeheader()
+        writer.writerows({"prediction": value} for value in failures + solutions)
+
+    audit = runner.audit_aflow_outputs(tmp_path)
+    assert audit["csv_rows"] == 6
+    assert audit["failure_predictions"] == 4
+    assert audit["failure_fraction"] == 4 / 6
+
+
 @pytest.mark.parametrize(
     ("environment", "expected"),
     [
