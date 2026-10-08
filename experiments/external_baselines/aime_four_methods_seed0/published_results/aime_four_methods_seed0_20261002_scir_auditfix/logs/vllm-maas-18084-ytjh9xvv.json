@@ -1,0 +1,100 @@
+{
+  "started_at_utc": "2026-10-02T14:22:56.599107+00:00",
+  "host": "ubuntu-SYS-521GE-TNRT",
+  "project_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0",
+  "project_git_commit": "66ad8287f759e08a5310c190cd0eddb273bbe627",
+  "project_sha256sums_sha256": "380b08c8ddd403af15f9431dda5797847b3e271927184a8cd59c08909240470b",
+  "server_pid": 2819485,
+  "gpu_monitor_pid": 2819486,
+  "server_log": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-maas-18084-ytjh9xvv.log",
+  "gpu_log": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/gpu-maas-18084-sSdsOE1J.csv",
+  "port": 18084,
+  "server_bind": "127.0.0.1",
+  "server_binary": "/data/jxc/envs/rpas-serve/bin/vllm",
+  "model_path": "/data/jxc/models/Qwen3.5-9B",
+  "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "embedding_path": "/data/jxc/models/all-MiniLM-L6-v2",
+  "embedding_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "model_verification_report": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/local_model_verification_4e5791c4.json",
+  "model_verification_report_sha256": "93334ea3c465d39e57628fec43a202e5d2b9388f80136ce89e5042cf1060b9c6",
+  "server_settings": {
+    "served_model_name": "Qwen/Qwen3.5-9B",
+    "dtype": "bfloat16",
+    "language_model_only": true,
+    "tensor_parallel_size": 1,
+    "max_model_len": 8192,
+    "max_num_seqs": 24,
+    "max_num_batched_tokens": 16384,
+    "gpu_memory_utilization": 0.92,
+    "reasoning_parser": "qwen3",
+    "enable_prefix_caching": true
+  },
+  "python_paths": {
+    "serve": "/data/jxc/envs/rpas-serve/bin/python",
+    "aflow": "/data/jxc/envs/rpas-aflow/bin/python",
+    "maas": "/data/jxc/envs/rpas-maas/bin/python",
+    "adas": "/data/jxc/envs/rpas-aime-adas/bin/python",
+    "gdesigner": "/data/jxc/envs/rpas-aime-gdesigner/bin/python"
+  },
+  "package_versions": {
+    "serve": {
+      "torch": "2.10.0+cu130",
+      "transformers": "4.57.6",
+      "vllm": "0.17.0",
+      "openai": "2.24.0",
+      "numpy": "2.2.6"
+    },
+    "aflow": {
+      "torch": "2.10.0+cu130",
+      "transformers": "4.57.6",
+      "openai": "1.82.0",
+      "numpy": "2.0.2",
+      "pandas": "2.2.3"
+    },
+    "maas": {
+      "torch": "2.10.0+cu130",
+      "transformers": "4.57.6",
+      "openai": "1.82.0",
+      "sentence-transformers": "5.7.0",
+      "numpy": "1.26.4",
+      "pandas": "3.0.6"
+    },
+    "adas": {
+      "transformers": "4.57.6",
+      "openai": "1.82.0",
+      "numpy": "1.26.4",
+      "pandas": "3.0.6"
+    },
+    "gdesigner": {
+      "torch": "2.10.0+cu130",
+      "transformers": "4.57.6",
+      "openai": "1.82.0",
+      "sentence-transformers": "5.7.0",
+      "numpy": "1.26.4",
+      "pandas": "3.0.6"
+    }
+  },
+  "pair": "maas",
+  "runtime_overrides": {
+    "AIME_AFLOW_REQUEST_TIMEOUT_S": "600",
+    "AIME_AFLOW_SAMPLE_TIMEOUT_S": "1200",
+    "AIME_AFLOW_CODE_TIMEOUT_S": "30",
+    "AIME_MAAS_REQUEST_TIMEOUT_S": "600",
+    "AIME_MAAS_SAMPLE_TIMEOUT_S": "1500",
+    "AIME_MAAS_SAMPLE_RETRIES": "3",
+    "AIME_MAAS_CODE_TIMEOUT_S": "60",
+    "AIME_EXTERNAL_REQUEST_TIMEOUT_S": "600"
+  },
+  "gpu": [
+    "0, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 45963 MiB, 580.178.04",
+    "1, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 5171 MiB, 580.178.04",
+    "2, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 200 MiB, 580.178.04",
+    "3, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 199 MiB, 580.178.04",
+    "4, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 199 MiB, 580.178.04",
+    "5, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 199 MiB, 580.178.04",
+    "6, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 199 MiB, 580.178.04",
+    "7, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 201 MiB, 580.178.04",
+    "8, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 201 MiB, 580.178.04",
+    "9, NVIDIA RTX 5880 Ada Generation, 49140 MiB, 202 MiB, 580.178.04"
+  ]
+}

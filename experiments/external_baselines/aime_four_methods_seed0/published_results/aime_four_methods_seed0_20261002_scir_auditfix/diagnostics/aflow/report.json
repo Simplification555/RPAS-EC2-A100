@@ -1,0 +1,156 @@
+{
+  "status": "passed",
+  "method": "aflow",
+  "synthetic_only": true,
+  "sample_count": 2,
+  "concurrency": 2,
+  "max_tokens": 6144,
+  "source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/upstream/AFlow",
+  "source_info": {
+    "repository": "https://github.com/FoundationAgents/AFlow.git",
+    "origin": "https://github.com/FoundationAgents/AFlow.git",
+    "commit": "3f457218fc716093fe53f6df8a5d5e6379d66346",
+    "clean_worktree": true,
+    "python_tree_sha256": "fcdfa2e8e4fc313b36d8d5a9d204d71e4a605ffd8a4de45b9befbdb396c621b4"
+  },
+  "script_sha256": "6f6bc280c490178d52096242768848f05358a36432473ec03743c49543ac88fd",
+  "check_only": false,
+  "started_at_utc": "2026-10-02T14:19:30.606974+00:00",
+  "runtime_overrides": {
+    "AIME_AFLOW_CODE_TIMEOUT_S": "30",
+    "AIME_AFLOW_REQUEST_TIMEOUT_S": "600",
+    "AIME_AFLOW_SAMPLE_TIMEOUT_S": "1200",
+    "AIME_EXTERNAL_REQUEST_TIMEOUT_S": "600",
+    "AIME_MAAS_CODE_TIMEOUT_S": "60",
+    "AIME_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MAAS_REQUEST_TIMEOUT_S": "600",
+    "AIME_MAAS_SAMPLE_RETRIES": "3",
+    "AIME_MAAS_SAMPLE_TIMEOUT_S": "1500",
+    "AIME_MINILM_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "AIME_TOKENIZER_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "RPAS_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "RPAS_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B"
+  },
+  "staging": {
+    "synthetic_rows": 2,
+    "workflow": "workspace/rpas_aime_native/MATH/workflows"
+  },
+  "result": {
+    "entrypoint": "native AFlow Evaluator/Workflow",
+    "mutation": false,
+    "rounds": {
+      "round_1": {
+        "csv": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/1.00000_20261002_221938.csv",
+        "rows": 2,
+        "correct": 2,
+        "parser_valid": 2,
+        "scores": [
+          {
+            "id": "synthetic_add",
+            "native_score": "1",
+            "prediction": "7",
+            "gold": "7",
+            "parser_valid": true,
+            "correct": true,
+            "score": 1.0,
+            "score_0_1_2": 2
+          },
+          {
+            "id": "synthetic_multiply",
+            "native_score": "1",
+            "prediction": "12",
+            "gold": "12",
+            "parser_valid": true,
+            "correct": true,
+            "score": 1.0,
+            "score_0_1_2": 2
+          }
+        ]
+      }
+    },
+    "telemetry": {
+      "calls": 2,
+      "prompt_tokens": 54,
+      "completion_tokens": 73,
+      "total_tokens": 127,
+      "failed_calls": 0,
+      "sample_timeouts": 0,
+      "phase_totals": {
+        "search": {
+          "calls": 2,
+          "prompt_tokens": 54,
+          "completion_tokens": 73,
+          "total_tokens": 127,
+          "failed_calls": 0
+        },
+        "select": {
+          "calls": 0,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0,
+          "failed_calls": 0
+        },
+        "test:aime_2025": {
+          "calls": 0,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0,
+          "failed_calls": 0
+        },
+        "test:aime_2026": {
+          "calls": 0,
+          "prompt_tokens": 0,
+          "completion_tokens": 0,
+          "total_tokens": 0,
+          "failed_calls": 0
+        }
+      },
+      "finish_reason_counts": {
+        "stop": 2
+      },
+      "completion_truncated": 0,
+      "phase_wall_seconds": {
+        "search": 4.729188010911457
+      },
+      "code_execution_timeouts": 0,
+      "code_execution_errors": 0,
+      "code_execution_calls": 0,
+      "code_execution_cancellations": 0,
+      "code_executor_adapter": {
+        "version": "bounded_programmer_v2_all_template_paths",
+        "timeout_s": 30.0,
+        "workers_per_event_loop": 8,
+        "bound_modules": [
+          "scripts.operators",
+          "workspace.rpas_aime_native.MATH.workflows.template.operator"
+        ],
+        "template_repairs": [
+          {
+            "path": "workspace/MATH/workflows/template/operator.py",
+            "source_sha256": "a05a930c03a0ef3e04f6f78f79da644e386b5fb1f4af8c63079c9f73be33b92b",
+            "patched_sha256": "c5c3398308e75b9c378ff1a794d1434958c8923a3b5fabb1d15389649afbdfc8"
+          },
+          {
+            "path": "workspace/rpas_aime_native/MATH/workflows/template/operator.py",
+            "source_sha256": "a05a930c03a0ef3e04f6f78f79da644e386b5fb1f4af8c63079c9f73be33b92b",
+            "patched_sha256": "c5c3398308e75b9c378ff1a794d1434958c8923a3b5fabb1d15389649afbdfc8"
+          }
+        ]
+      },
+      "context_guard": {
+        "version": "maas_context_guard_v1",
+        "target_input_tokens": 4096,
+        "context_limit": 8192,
+        "calls_seen": 2,
+        "compacted_calls": 0,
+        "original_input_tokens": 54,
+        "final_input_tokens": 54,
+        "compacted_input_tokens": 0,
+        "max_input_tokens_seen": 27,
+        "events_sample": []
+      }
+    }
+  },
+  "finished_at_utc": "2026-10-02T14:19:38.489724+00:00"
+}

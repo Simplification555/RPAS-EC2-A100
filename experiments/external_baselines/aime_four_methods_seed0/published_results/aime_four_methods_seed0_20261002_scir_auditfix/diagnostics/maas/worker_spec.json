@@ -1,0 +1,18 @@
+{
+  "method": "maas",
+  "baseline_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/upstream",
+  "endpoint": "http://127.0.0.1:18084/v1",
+  "run_dir": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas",
+  "max_tokens": 6144,
+  "timeout_seconds": 2400,
+  "check_only": false,
+  "aflow_mutation": false,
+  "source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/upstream/MaAS",
+  "source_info": {
+    "repository": "https://github.com/bingreeky/MaAS.git",
+    "origin": "https://github.com/bingreeky/MaAS.git",
+    "commit": "987f3c1bc9a96e844fe090db3791446e3ef0f5c7",
+    "clean_worktree": true,
+    "python_tree_sha256": "9a05b0d195bc9f0c4939060bbb1efab90516a2dabeebc9d41e30e7802f3d1f49"
+  }
+}

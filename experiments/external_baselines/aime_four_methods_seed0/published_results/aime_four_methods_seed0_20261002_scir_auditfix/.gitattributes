@@ -1,0 +1,4 @@
+artifacts/** -text
+diagnostics/** -text
+logs/** -text
+evidence/** -text

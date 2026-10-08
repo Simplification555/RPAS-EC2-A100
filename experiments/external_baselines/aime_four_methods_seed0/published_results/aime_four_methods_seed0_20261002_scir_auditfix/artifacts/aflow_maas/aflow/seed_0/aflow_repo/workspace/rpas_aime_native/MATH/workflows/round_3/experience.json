@@ -1,0 +1,7 @@
+{
+    "father node": 2,
+    "modification": "Added a 'Format & Verify' step using the Custom operator to enforce LaTeX `\\boxed{}` output and validate the result against the problem constraints before returning. This addresses the extraction failures where models outputted raw numbers or `None` instead of the required format.",
+    "before": 0.6,
+    "after": 0.26666666666666666,
+    "succeed": false
+}

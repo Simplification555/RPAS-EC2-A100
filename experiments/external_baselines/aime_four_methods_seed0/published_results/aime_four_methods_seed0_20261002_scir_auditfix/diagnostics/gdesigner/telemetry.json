@@ -1,0 +1,33 @@
+{
+  "totals": {
+    "calls": 20,
+    "prompt_tokens": 10343,
+    "completion_tokens": 5131,
+    "total_tokens": 15474,
+    "failed_calls": 0,
+    "completion_truncated": 0
+  },
+  "phases": {
+    "search:train": {
+      "calls": 10,
+      "prompt_tokens": 5544,
+      "completion_tokens": 2635,
+      "total_tokens": 8179,
+      "failed_calls": 0,
+      "completion_truncated": 0
+    },
+    "search:post_training": {
+      "calls": 10,
+      "prompt_tokens": 4799,
+      "completion_tokens": 2496,
+      "total_tokens": 7295,
+      "failed_calls": 0,
+      "completion_truncated": 0
+    }
+  },
+  "finish_reason_counts": {
+    "stop": 20
+  },
+  "guard_events": 20,
+  "context_limit": 8192
+}

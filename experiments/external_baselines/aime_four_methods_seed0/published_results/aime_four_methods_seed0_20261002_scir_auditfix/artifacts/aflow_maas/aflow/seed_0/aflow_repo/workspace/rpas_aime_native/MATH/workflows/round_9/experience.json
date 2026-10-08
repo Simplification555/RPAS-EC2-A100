@@ -1,0 +1,7 @@
+{
+    "father node": 6,
+    "modification": "1. **Add a 'Format Enforcement' step**: Insert a new `Custom` node immediately after the `ScEnsemble` step to strictly enforce the output format `\\boxed{value}`. This addresses the failure in the log where the model output `\\boxed{None}` or unformatted text, causing extraction to fail.\n2. **Refine `SANITIZE_PROMPT`**: Modify the instruction to explicitly handle cases where the input is `\\boxed{None}` or contains no valid number, ensuring the output is strictly `\\boxed{None}` rather than leaving it unformatted or adding explanations.\n3. **Refine `VERIFY_PROMPT`**: Update the instruction to ensure that if the verification fails, the output is strictly `\\boxed{None}` without any surrounding text, preventing extraction errors.",
+    "before": 0.6666666666666666,
+    "after": 0.6833333333333333,
+    "succeed": true
+}

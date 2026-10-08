@@ -1,0 +1,148 @@
+2026-10-03 18:03:57 - INFO - Results saved to workspace/rpas_aime_native/MATH/workflows/round_1/0.40000_20261003_180357.csv
+2026-10-03 18:03:57 - INFO - Average score on MATH dataset: 0.40000
+2026-10-03 18:03:57 - INFO - Total Cost: 0.00000
+2026-10-03 18:03:57 - INFO - 
+Mixed probability distribution: [1.]
+2026-10-03 18:03:57 - INFO - 
+Sorted rounds: [{'round': 1, 'score': 0.4}]
+2026-10-03 18:03:57 - INFO - 
+Selected index: 0, Selected item: {'round': 1, 'score': 0.4}
+2026-10-03 18:03:57 - INFO - Processed experience data saved to workspace/rpas_aime_native/MATH/workflows/processed_experience.json
+2026-10-03 18:03:57 - INFO - Loading log from: workspace/rpas_aime_native/MATH/workflows/round_1/log.json
+2026-10-03 18:04:08 - INFO - Graph optimization response received successfully
+2026-10-03 18:04:08 - INFO - workspace/rpas_aime_native/MATH/workflows/round_2
+2026-10-03 18:29:31 - INFO - Results saved to workspace/rpas_aime_native/MATH/workflows/round_2/0.60000_20261003_182931.csv
+2026-10-03 18:29:31 - INFO - Average score on MATH dataset: 0.60000
+2026-10-03 18:29:31 - INFO - Total Cost: 0.00000
+2026-10-03 18:29:31 - INFO - Score for round 2: 0.6
+2026-10-03 18:29:36 - INFO - 
+Mixed probability distribution: [0.83740965 0.16259035]
+2026-10-03 18:29:36 - INFO - 
+Sorted rounds: [{'round': 2, 'score': 0.6}, {'round': 1, 'score': 0.4}]
+2026-10-03 18:29:36 - INFO - 
+Selected index: 0, Selected item: {'round': 2, 'score': 0.6}
+2026-10-03 18:29:36 - INFO - Processed experience data saved to workspace/rpas_aime_native/MATH/workflows/processed_experience.json
+2026-10-03 18:29:36 - INFO - Loading log from: workspace/rpas_aime_native/MATH/workflows/round_2/log.json
+2026-10-03 18:29:50 - INFO - Graph optimization response received successfully
+2026-10-03 18:29:50 - INFO - workspace/rpas_aime_native/MATH/workflows/round_3
+2026-10-03 19:09:57 - INFO - Results saved to workspace/rpas_aime_native/MATH/workflows/round_3/0.26667_20261003_190957.csv
+2026-10-03 19:09:57 - INFO - Average score on MATH dataset: 0.26667
+2026-10-03 19:09:57 - INFO - Total Cost: 0.00000
+2026-10-03 19:09:57 - INFO - Score for round 3: 0.26666666666666666
+2026-10-03 19:10:02 - INFO - 
+Mixed probability distribution: [0.78655164 0.11257463 0.10087373]
+2026-10-03 19:10:02 - INFO - 
+Sorted rounds: [{'round': 2, 'score': 0.6}, {'round': 1, 'score': 0.4}, {'round': 3, 'score': 0.26666666666666666}]
+2026-10-03 19:10:02 - INFO - 
+Selected index: 0, Selected item: {'round': 2, 'score': 0.6}
+2026-10-03 19:10:02 - INFO - Processed experience data saved to workspace/rpas_aime_native/MATH/workflows/processed_experience.json
+2026-10-03 19:10:02 - INFO - Loading log from: workspace/rpas_aime_native/MATH/workflows/round_2/log.json
+2026-10-03 19:10:19 - INFO - Graph optimization response received successfully
+2026-10-03 19:10:19 - INFO - workspace/rpas_aime_native/MATH/workflows/round_4
+2026-10-03 19:44:46 - INFO - Results saved to workspace/rpas_aime_native/MATH/workflows/round_4/0.58333_20261003_194446.csv
+2026-10-03 19:44:46 - INFO - Average score on MATH dataset: 0.58333
+2026-10-03 19:44:46 - INFO - Total Cost: 0.00000
+2026-10-03 19:44:46 - INFO - Score for round 4: 0.5833333333333334
+2026-10-03 19:44:51 - INFO - 
+Mixed probability distribution: [0.47819803 0.36390401 0.08238483 0.07551312]
+2026-10-03 19:44:51 - INFO - 
+Sorted rounds: [{'round': 2, 'score': 0.6}, {'round': 4, 'score': 0.5833333333333334}, {'round': 1, 'score': 0.4}, {'round': 3, 'score': 0.26666666666666666}]
+2026-10-03 19:44:51 - INFO - 
+Selected index: 1, Selected item: {'round': 4, 'score': 0.5833333333333334}
+2026-10-03 19:44:51 - INFO - Processed experience data saved to workspace/rpas_aime_native/MATH/workflows/processed_experience.json
+2026-10-03 19:44:51 - INFO - Loading log from: workspace/rpas_aime_native/MATH/workflows/round_4/log.json
+2026-10-03 19:45:11 - INFO - Graph optimization response received successfully
+2026-10-03 19:45:11 - INFO - workspace/rpas_aime_native/MATH/workflows/round_5
+2026-10-03 20:15:07 - INFO - Results saved to workspace/rpas_aime_native/MATH/workflows/round_5/0.68333_20261003_201507.csv
+2026-10-03 20:15:07 - INFO - Average score on MATH dataset: 0.68333
+2026-10-03 20:15:07 - INFO - Total Cost: 0.00000
+2026-10-03 20:15:07 - INFO - Score for round 5: 0.6833333333333333
+2026-10-03 20:15:12 - INFO - 
+Mixed probability distribution: [0.60223934 0.17458265 0.14635409 0.07682392]
+2026-10-03 20:15:12 - INFO - 
+Sorted rounds: [{'round': 5, 'score': 0.6833333333333333}, {'round': 2, 'score': 0.6}, {'round': 4, 'score': 0.5833333333333334}, {'round': 1, 'score': 0.4}]
+2026-10-03 20:15:12 - INFO - 
+Selected index: 0, Selected item: {'round': 5, 'score': 0.6833333333333333}
+2026-10-03 20:15:12 - INFO - Processed experience data saved to workspace/rpas_aime_native/MATH/workflows/processed_experience.json
+2026-10-03 20:15:12 - INFO - Loading log from: workspace/rpas_aime_native/MATH/workflows/round_5/log.json
+2026-10-03 20:15:37 - INFO - Graph optimization response received successfully
+2026-10-03 20:15:37 - INFO - workspace/rpas_aime_native/MATH/workflows/round_6
+2026-10-03 20:46:19 - INFO - Results saved to workspace/rpas_aime_native/MATH/workflows/round_6/0.66667_20261003_204619.csv
+2026-10-03 20:46:19 - INFO - Average score on MATH dataset: 0.66667
+2026-10-03 20:46:19 - INFO - Total Cost: 0.00000
+2026-10-03 20:46:19 - INFO - Score for round 6: 0.6666666666666666
+2026-10-03 20:46:24 - INFO - 
+Mixed probability distribution: [0.41801246 0.32077917 0.13978669 0.12142169]
+2026-10-03 20:46:24 - INFO - 
+Sorted rounds: [{'round': 5, 'score': 0.6833333333333333}, {'round': 6, 'score': 0.6666666666666666}, {'round': 2, 'score': 0.6}, {'round': 4, 'score': 0.5833333333333334}]
+2026-10-03 20:46:24 - INFO - 
+Selected index: 1, Selected item: {'round': 6, 'score': 0.6666666666666666}
+2026-10-03 20:46:24 - INFO - Processed experience data saved to workspace/rpas_aime_native/MATH/workflows/processed_experience.json
+2026-10-03 20:46:24 - INFO - Loading log from: workspace/rpas_aime_native/MATH/workflows/round_6/log.json
+2026-10-03 20:46:45 - INFO - Graph optimization response received successfully
+2026-10-03 20:46:45 - INFO - workspace/rpas_aime_native/MATH/workflows/round_7
+2026-10-03 21:17:18 - INFO - Results saved to workspace/rpas_aime_native/MATH/workflows/round_7/0.73333_20261003_211718.csv
+2026-10-03 21:17:18 - INFO - Average score on MATH dataset: 0.73333
+2026-10-03 21:17:18 - INFO - Total Cost: 0.00000
+2026-10-03 21:17:18 - INFO - Score for round 7: 0.7333333333333333
+2026-10-03 21:17:23 - INFO - 
+Mixed probability distribution: [0.4865323  0.22639427 0.18347874 0.10359468]
+2026-10-03 21:17:23 - INFO - 
+Sorted rounds: [{'round': 7, 'score': 0.7333333333333333}, {'round': 5, 'score': 0.6833333333333333}, {'round': 6, 'score': 0.6666666666666666}, {'round': 2, 'score': 0.6}]
+2026-10-03 21:17:23 - INFO - 
+Selected index: 0, Selected item: {'round': 7, 'score': 0.7333333333333333}
+2026-10-03 21:17:23 - INFO - Processed experience data saved to workspace/rpas_aime_native/MATH/workflows/processed_experience.json
+2026-10-03 21:17:23 - INFO - Loading log from: workspace/rpas_aime_native/MATH/workflows/round_7/log.json
+2026-10-03 21:17:50 - INFO - Graph optimization response received successfully
+2026-10-03 21:17:50 - INFO - workspace/rpas_aime_native/MATH/workflows/round_8
+2026-10-03 22:06:46 - INFO - Results saved to workspace/rpas_aime_native/MATH/workflows/round_8/0.71667_20261003_220646.csv
+2026-10-03 22:06:46 - INFO - Average score on MATH dataset: 0.71667
+2026-10-03 22:06:46 - INFO - Total Cost: 0.00000
+2026-10-03 22:06:46 - INFO - Score for round 8: 0.7166666666666667
+2026-10-03 22:06:51 - INFO - 
+Mixed probability distribution: [0.37312506 0.28861594 0.18467408 0.15358491]
+2026-10-03 22:06:51 - INFO - 
+Sorted rounds: [{'round': 7, 'score': 0.7333333333333333}, {'round': 8, 'score': 0.7166666666666667}, {'round': 5, 'score': 0.6833333333333333}, {'round': 6, 'score': 0.6666666666666666}]
+2026-10-03 22:06:51 - INFO - 
+Selected index: 3, Selected item: {'round': 6, 'score': 0.6666666666666666}
+2026-10-03 22:06:51 - INFO - Processed experience data saved to workspace/rpas_aime_native/MATH/workflows/processed_experience.json
+2026-10-03 22:06:51 - INFO - Loading log from: workspace/rpas_aime_native/MATH/workflows/round_6/log.json
+2026-10-03 22:07:21 - INFO - Graph optimization response received successfully
+2026-10-03 22:07:22 - INFO - workspace/rpas_aime_native/MATH/workflows/round_9
+2026-10-03 22:48:34 - INFO - Results saved to workspace/rpas_aime_native/MATH/workflows/round_9/0.68333_20261003_224834.csv
+2026-10-03 22:48:34 - INFO - Average score on MATH dataset: 0.68333
+2026-10-03 22:48:34 - INFO - Total Cost: 0.00000
+2026-10-03 22:48:34 - INFO - Score for round 9: 0.6833333333333333
+2026-10-03 22:55:46 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_1/0.40000_20261003_225546.csv
+2026-10-03 22:55:46 - INFO - Average score on MATH dataset: 0.40000
+2026-10-03 22:55:46 - INFO - Total Cost: 0.00000
+2026-10-03 23:16:39 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_2/0.53333_20261003_231639.csv
+2026-10-03 23:16:39 - INFO - Average score on MATH dataset: 0.53333
+2026-10-03 23:16:39 - INFO - Total Cost: 0.00000
+2026-10-03 23:33:57 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_3/0.30000_20261003_233357.csv
+2026-10-03 23:33:57 - INFO - Average score on MATH dataset: 0.30000
+2026-10-03 23:33:57 - INFO - Total Cost: 0.00000
+2026-10-03 23:53:40 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_4/0.63333_20261003_235340.csv
+2026-10-03 23:53:40 - INFO - Average score on MATH dataset: 0.63333
+2026-10-03 23:53:40 - INFO - Total Cost: 0.00000
+2026-10-04 00:14:00 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_5/0.83333_20261004_001400.csv
+2026-10-04 00:14:00 - INFO - Average score on MATH dataset: 0.83333
+2026-10-04 00:14:00 - INFO - Total Cost: 0.00000
+2026-10-04 00:36:16 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_6/0.60000_20261004_003616.csv
+2026-10-04 00:36:16 - INFO - Average score on MATH dataset: 0.60000
+2026-10-04 00:36:16 - INFO - Total Cost: 0.00000
+2026-10-04 01:00:16 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_7/0.76667_20261004_010016.csv
+2026-10-04 01:00:16 - INFO - Average score on MATH dataset: 0.76667
+2026-10-04 01:00:16 - INFO - Total Cost: 0.00000
+2026-10-04 01:23:11 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_8/0.63333_20261004_012311.csv
+2026-10-04 01:23:11 - INFO - Average score on MATH dataset: 0.63333
+2026-10-04 01:23:11 - INFO - Total Cost: 0.00000
+2026-10-04 01:57:27 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_9/0.66667_20261004_015727.csv
+2026-10-04 01:57:27 - INFO - Average score on MATH dataset: 0.66667
+2026-10-04 01:57:27 - INFO - Total Cost: 0.00000
+2026-10-04 02:21:00 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_test/aime_2025_Q/0.56667_20261004_022100.csv
+2026-10-04 02:21:00 - INFO - Average score on MATH dataset: 0.56667
+2026-10-04 02:21:00 - INFO - Total Cost: 0.00000
+2026-10-04 02:41:00 - INFO - Results saved to /data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_test/aime_2026_Q/0.66667_20261004_024100.csv
+2026-10-04 02:41:00 - INFO - Average score on MATH dataset: 0.66667
+2026-10-04 02:41:00 - INFO - Total Cost: 0.00000

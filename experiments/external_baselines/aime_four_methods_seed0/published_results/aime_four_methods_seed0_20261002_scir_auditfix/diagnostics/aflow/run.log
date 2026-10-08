@@ -1,0 +1,4 @@
+Evaluating MATH problems:   0%|          | 0/2 [00:00<?, ?it/s]Evaluating MATH problems:  50%|█████     | 1/2 [00:04<00:04,  4.65s/it]Evaluating MATH problems: 100%|██████████| 2/2 [00:04<00:00,  2.35s/it]
+[32m2026-10-02 22:19:38 - INFO - Results saved to /data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/1.00000_20261002_221938.csv[0m
+[32m2026-10-02 22:19:38 - INFO - Average score on MATH dataset: 1.00000[0m
+[32m2026-10-02 22:19:38 - INFO - Total Cost: 0.00000[0m

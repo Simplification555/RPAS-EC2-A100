@@ -1,0 +1,114 @@
+[
+    {
+        "question": "Rectangles $ABCD$ and $EFGH$ are drawn such that $D,E,C,F$ are collinear. Also, $A,D,H,G$ all lie on a circle. If $BC=16$,$AB=107$,$FG=17$, and $EF=184$, what is the length of $CE$?",
+        "right_answer": "\\boxed{104}",
+        "model_output": "\\boxed{106.90765504125764}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the number of collections of $16$ distinct subsets of $\\{1,2,3,4,5\\}$ with the property that for any two subsets $X$ and $Y$ in the collection, $X \\cap Y \\not= \\emptyset.$",
+        "right_answer": "\\boxed{081}",
+        "model_output": "\\boxed{16}",
+        "extracted_output": "16",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the number of cubic polynomials $p(x) = x^3 + ax^2 + bx + c,$ where $a, b,$ and $c$ are integers in $\\{-20,-19,-18,\\ldots,18,19,20\\},$ such that there is a unique integer $m \\not= 2$ with $p(m) = p(2).$",
+        "right_answer": "\\boxed{738}",
+        "model_output": "\\boxed{1640}",
+        "extracted_output": "1640",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the number of ordered pairs of integers $(a, b)$ such that the sequence\\[3, 4, 5, a, b, 30, 40, 50\\]is strictly increasing and no set of four (not necessarily consecutive) terms forms an arithmetic progression.",
+        "right_answer": "\\boxed{228}",
+        "model_output": "\\boxed{None}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the number of positive integers $n \\le 600$ whose value can be uniquely determined when the values of $\\left\\lfloor \\frac n4\\right\\rfloor$, $\\left\\lfloor\\frac n5\\right\\rfloor$, and $\\left\\lfloor\\frac n6\\right\\rfloor$ are given, where $\\lfloor x \\rfloor$ denotes the greatest integer less than or equal to the real number $x$.",
+        "right_answer": "\\boxed{080}",
+        "model_output": "\\boxed{280}",
+        "extracted_output": "280",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Define $f(x)=|| x|-\\tfrac{1}{2}|$ and $g(x)=|| x|-\\tfrac{1}{4}|$. Find the number of intersections of the graphs of \\[y=4 g(f(\\sin (2 \\pi x))) \\quad\\text{ and }\\quad x=4 g(f(\\cos (3 \\pi y))).\\]",
+        "right_answer": "\\boxed{385}",
+        "model_output": "\\boxed{1}",
+        "extracted_output": "1",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Each vertex of a regular octagon is independently colored either red or blue with equal probability. The probability that the octagon can then be rotated so that all of the blue vertices end up at positions where there were originally red vertices is $\\tfrac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. What is $m+n$?",
+        "right_answer": "\\boxed{371}",
+        "model_output": "The problem asks for the number of valid colorings of a regular octagon's vertices (Blue/Red) such that there exists a rotation $k$ where all Blue vertices move to Red positions.\n\n**Step 1: Analyze the condition.**\nLet $n=8$. Let $B$ be the set of Blue vertices. The condition is that there exists a $k \\in \\{1, \\dots, 7\\}$ such that $B \\cap (B+k) = \\emptyset$.\nThis is equivalent to saying that the set of differences $D(B) = \\{ (b_1 - b_2) \\pmod 8 \\mid b_1, b_2 \\in B, b_1 \\neq b_2 \\}$ does not contain all non-zero residues modulo 8.\nIf $D(B)$ misses a value $k$, then $B \\cap (B+k) = \\emptyset$.\n\n**Step 2: Determine valid set sizes $|B|$.**\n*   **Case $|B| \\le 4$:**\n    The number of distinct pairs in $B$ is $\\binom{|B|}{2}$.\n    For $|B| \\le 4$, $\\binom{|B|}{2} \\le \\binom{4}{2} = 6$.\n    The set of possible non-zero differences modulo 8 has size 7 ($\\{1, 2, 3, 4, 5, 6, 7\\}$).\n    Since the number of generated differences (at most 6) is strictly less than the total number of available non-zero differences (7), it is impossible for $D(B)$ to cover all of them.\n    Therefore, there is always at least one $k$ such that $k \\notin D(B)$, which implies $B \\cap (B+k) = \\emptyset$.\n    Thus, **all** colorings with $|B| \\le 4$ are valid.\n\n*   **Case $|B| \\ge 5$:**\n    Let $|B| = m$. Then the number of Red vertices $|R| = 8-m \\le 3$.\n    The condition $B \\cap (B+k) = \\emptyset$ implies that for every $b \\in B$, $b+k \\in R$.\n    This means the set $B+k$ is a subset of $R$.\n    So, $|R| \\ge |B+k| = |B| = m$.\n    But we have $|R| \\le 3$ and $m \\ge 5$.\n    This leads to $3 \\ge 5$, which is a contradiction.\n    Therefore, no coloring with $|B| \\ge 5$ is valid.\n\n**Step 3: Calculate the number of valid colorings.**\nThe valid colorings are exactly those where $|B| \\in \\{0, 1, 2, 3, 4\\}$.\nThe number of such colorings is:\n$$ N_{valid} = \\sum_{i=0}^{4} \\binom{8}{i} = \\binom{8}{0} + \\binom{8}{1} + \\binom{8}{2} + \\binom{8}{3} + \\binom{8}{4} $$\n$$ N_{valid} = 1 + 8 + 28 + 56 + 70 = 163 $$\n\nThe total number of colorings is $2^8 = 256$.\nThe probability is $P = \\frac{163}{256}$.\n\nThe input mentions a \"Code Output: 371\". This value is inconsistent with the mathematical derivation ($163 \\neq 371$). Given the rigorous proof that the count is 163, and the fact that 371 does not correspond to any standard variant (like sum of numerator and denominator $163+256=419$), the \"Code Output\" is treated as an error or noise. The correct answer based on the provided analysis is the count of valid colorings, which is 163. If the question implies probability, the answer would be the fraction, but the integer nature of the \"Code Output\" suggests the question asks for the count.\n\n\\boxed{163}",
+        "extracted_output": "163",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the remainder when\\[\\binom{\\binom{3}{2}}{2} + \\binom{\\binom{4}{2}}{2} + \\dots +  \\binom{\\binom{40}{2}}{2}\\]is divided by $1000$.",
+        "right_answer": "\\boxed{004}",
+        "model_output": "\\boxed{19}",
+        "extracted_output": "19",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "There is a collection of $25$ indistinguishable white chips and $25$ indistinguishable black chips. Find the number of ways to place some of these chips in the $25$ unit cells of a $5\\times5$ grid such that: \n\neach cell contains at most one chip\nall chips in the same row and all chips in the same column have the same colour\nany additional chip placed on the grid would violate one or more of the previous two conditions.",
+        "right_answer": "\\boxed{902}",
+        "model_output": "\\boxed{None}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "A cube-shaped container has vertices $A,$ $B,$ $C,$ and $D,$ where $\\overline{AB}$ and $\\overline{CD}$ are parallel edges of the cube, and $\\overline{AC}$ and $\\overline{BD}$ are diagonals of faces of the cube, as shown. Vertex $A$ of the cube is set on a horizontal plane $\\mathcal{P}$ so that the plane of the rectangle $ABDC$ is perpendicular to $\\mathcal{P},$ vertex $B$ is $2$ meters above $\\mathcal{P},$ vertex $C$ is $8$ meters above $\\mathcal{P},$ and vertex $D$ is $10$ meters above $\\mathcal{P}.$ The cube contains water whose surface is parallel to $\\mathcal{P}$ at a height of $7$ meters above $\\mathcal{P}.$ The volume of water is $\\frac{m}{n}$ cubic meters, where $m$ and $n$ are relatively prime positive integers. Find $m+n.$",
+        "right_answer": "\\boxed{751}",
+        "model_output": "\\boxed{6}",
+        "extracted_output": "6",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $S$ be the set of all rational numbers that can be expressed as a repeating decimal in the form $0.\\overline{abcd},$ where at least one of the digits $a,$ $b,$ $c,$ or $d$ is nonzero. Let $N$ be the number of distinct numerators obtained when numbers in $S$ are written as fractions in lowest terms. For example, both $4$ and $410$ are counted among the distinct numerators for numbers in $S$ because $0.\\overline{3636} = \\frac{4}{11}$ and $0.\\overline{1230} = \\frac{410}{3333}.$ Find the remainder when $N$ is divided by $1000.$",
+        "right_answer": "\\boxed{392}",
+        "model_output": "\\boxed{4}",
+        "extracted_output": "4",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Torus $T$ is the surface produced by revolving a circle with radius $3$ around an axis in the plane of the circle that is a distance $6$ from the center of the circle (so like a donut). Let $S$ be a sphere with a radius $11$. When $T$ rests on the outside of $S$, it is externally tangent to $S$ along a circle with radius $r_i$, and when $T$ rests on the outside of $S$, it is externally tangent to $S$ along a circle with radius $r_o$. The difference $r_i-r_o$ can be written as $\\tfrac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$.\n[asy] unitsize(0.3 inch); draw(ellipse((0,0), 3, 1.75)); draw((-1.2,0.1)..(-0.8,-0.03)..(-0.4,-0.11)..(0,-0.15)..(0.4,-0.11)..(0.8,-0.03)..(1.2,0.1)); draw((-1,0.04)..(-0.5,0.12)..(0,0.16)..(0.5,0.12)..(1,0.04)); draw((0,2.4)--(0,-0.15)); draw((0,-0.15)--(0,-1.75), dashed); draw((0,-1.75)--(0,-2.25)); draw(ellipse((2,0), 1, 0.9)); draw((2.03,-0.02)--(2.9,-0.4)); [/asy]",
+        "right_answer": "\\boxed{127}",
+        "model_output": "\\boxed{None}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $p$ be the least prime number for which there exists a positive integer $n$ such that $n^{4}+1$ is divisible by $p^{2}$. Find the least positive integer $m$ such that $m^{4}+1$ is divisible by $p^{2}$.",
+        "right_answer": "\\boxed{110}",
+        "model_output": "\\boxed{134}",
+        "extracted_output": "134",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the largest prime number $p<1000$ for which there exists a complex number $z$ satisfying\n\nthe real and imaginary part of $z$ are both integers;\n$|z|=\\sqrt{p},$ and\nthere exists a triangle whose three side lengths are $p,$ the real part of $z^{3},$ and the imaginary part of $z^{3}.$",
+        "right_answer": "\\boxed{349}",
+        "model_output": "\\boxed{997}",
+        "extracted_output": "997",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $ABCD$ be a convex quadrilateral with $AB=2, AD=7,$ and $CD=3$ such that the bisectors of acute angles $\\angle{DAB}$ and $\\angle{ADC}$ intersect at the midpoint of $\\overline{BC}.$ Find the square of the area of $ABCD.$",
+        "right_answer": "\\boxed{180}",
+        "model_output": "\\boxed{12}",
+        "extracted_output": "12",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Equilateral triangle $\\triangle ABC$ is inscribed in circle $\\omega$ with radius $18.$ Circle $\\omega_A$ is tangent to sides $\\overline{AB}$ and $\\overline{AC}$ and is internally tangent to $\\omega.$ Circles $\\omega_B$ and $\\omega_C$ are defined analogously. Circles $\\omega_A,$ $\\omega_B,$ and $\\omega_C$ meet in six points---two points for each pair of circles. The three intersection points closest to the vertices of $\\triangle ABC$ are the vertices of a large equilateral triangle in the interior of $\\triangle ABC,$ and the other three intersection points are the vertices of a smaller equilateral triangle in the interior of $\\triangle ABC.$ The side length of the smaller equilateral triangle can be written as $\\sqrt{a} - \\sqrt{b},$ where $a$ and $b$ are positive integers. Find $a+b.$",
+        "right_answer": "\\boxed{378}",
+        "model_output": "The reasoning provided in the input contains a critical mathematical inconsistency.\n\n1.  **Inconsistency in Radius Derivation**: The input states that the derivation leads to $d = 2r$ and $d + r = R$ (where $R=18$), which implies $3r = 18 \\implies r = 6$. However, the text immediately asserts that this leads to $r = 12$. This is a direct contradiction ($6 \\neq 12$).\n2.  **Geometric Validity**: If $r=12$ and $d=6$ (as used in the subsequent coordinate calculations), the circles are tangent to the circumcircle ($6+12=18$). However, the condition $d=2r$ (which would be $6=24$) is false. The geometric setup described (centers on rays opposite to vertices) with $r=12$ implies the circles are very large, occupying most of the triangle, but the derivation logic provided is flawed.\n3.  **Calculation Errors**: The coordinates for the centers ($O_B = (3\\sqrt{3}, 3)$) imply a distance from the origin of $\\sqrt{27+9} = 6$, which matches $d=6$. However, the angle calculation assumes a specific orientation that may not align with the standard equilateral triangle setup where the angle between the altitude and the side is $30^\\circ$. Even if the coordinates are accepted as given, the foundational error in deriving $r=12$ invalidates the entire chain of reasoning.\n\nSince the reasoning contains a fundamental logical error and calculation contradiction, the result cannot be trusted.\n\n\\boxed{None}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    }
+]

@@ -1,0 +1,111 @@
+{
+  "status": "passed",
+  "method": "adas",
+  "synthetic_only": true,
+  "sample_count": 2,
+  "concurrency": 2,
+  "max_tokens": 6144,
+  "source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/upstream/ADAS",
+  "source_info": {
+    "commit": "2702bee8fefda42255efc5be9f60e3bd3db96ae4",
+    "clean_worktree": true,
+    "origin": "https://github.com/ShengranHu/ADAS.git",
+    "repository": "https://github.com/ShengranHu/ADAS.git"
+  },
+  "script_sha256": "6f6bc280c490178d52096242768848f05358a36432473ec03743c49543ac88fd",
+  "check_only": false,
+  "started_at_utc": "2026-10-02T14:21:27.862740+00:00",
+  "runtime_overrides": {
+    "AIME_AFLOW_CODE_TIMEOUT_S": "30",
+    "AIME_AFLOW_REQUEST_TIMEOUT_S": "600",
+    "AIME_AFLOW_SAMPLE_TIMEOUT_S": "1200",
+    "AIME_EXTERNAL_REQUEST_TIMEOUT_S": "600",
+    "AIME_MAAS_CODE_TIMEOUT_S": "60",
+    "AIME_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MAAS_REQUEST_TIMEOUT_S": "600",
+    "AIME_MAAS_SAMPLE_RETRIES": "3",
+    "AIME_MAAS_SAMPLE_TIMEOUT_S": "1500",
+    "AIME_MINILM_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "AIME_TOKENIZER_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "RPAS_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "RPAS_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B"
+  },
+  "result": {
+    "native_seed_architecture": "Chain-of-Thought",
+    "smoke": {
+      "native_import": "passed",
+      "native_seed_architectures": [
+        "Chain-of-Thought",
+        "Self-Consistency with Chain-of-Thought",
+        "Self-Refine (Reflexion)",
+        "LLM Debate",
+        "Step-back Abstraction",
+        "Quality-Diversity",
+        "Dynamic Assignment of Roles"
+      ],
+      "safe_executor": "restricted_ast_v1"
+    },
+    "predictions": [
+      {
+        "id": "synthetic_add",
+        "raw_output": "7",
+        "prediction": "7",
+        "gold": "7",
+        "parser_valid": true,
+        "correct": true,
+        "score": 1.0,
+        "score_0_1_2": 2
+      },
+      {
+        "id": "synthetic_multiply",
+        "raw_output": "12",
+        "prediction": "12",
+        "gold": "12",
+        "parser_valid": true,
+        "correct": true,
+        "score": 1.0,
+        "score_0_1_2": 2
+      }
+    ],
+    "correct": 2,
+    "telemetry": {
+      "totals": {
+        "calls": 2,
+        "prompt_tokens": 234,
+        "completion_tokens": 143,
+        "total_tokens": 377,
+        "failed_calls": 0,
+        "completion_truncated": 0
+      },
+      "phases": {
+        "search": {
+          "calls": 2,
+          "prompt_tokens": 234,
+          "completion_tokens": 143,
+          "total_tokens": 377,
+          "failed_calls": 0,
+          "completion_truncated": 0
+        }
+      },
+      "finish_reason_counts": {
+        "stop": 2
+      },
+      "guard_events": 2,
+      "context_limit": 8192
+    },
+    "context_guard": {
+      "version": "maas_context_guard_v1",
+      "target_input_tokens": 4096,
+      "context_limit": 8192,
+      "calls_seen": 2,
+      "compacted_calls": 0,
+      "original_input_tokens": 234,
+      "final_input_tokens": 234,
+      "compacted_input_tokens": 0,
+      "max_input_tokens_seen": 117,
+      "events_sample": []
+    }
+  },
+  "finished_at_utc": "2026-10-02T14:21:32.393527+00:00"
+}

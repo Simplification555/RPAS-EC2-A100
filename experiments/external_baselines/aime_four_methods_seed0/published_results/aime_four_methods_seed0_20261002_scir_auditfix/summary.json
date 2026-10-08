@@ -1,0 +1,187 @@
+{
+  "schema": "aime_seed0_published_failed_attempt_v1",
+  "run_id": "aime_four_methods_seed0_20261002_scir_auditfix",
+  "public_base_commit": "4e5791c4c56c8ddb098f656589116674d8364217",
+  "actual_runtime_source_commit": "66ad8287f759e08a5310c190cd0eddb273bbe627",
+  "runtime_audit_fix_commit": "9fa62d6c48cae5ffbc83d66221905134073fdecb",
+  "publication_note": "This commit adds preserved artifacts after the run; it is not the source commit used to execute the methods.",
+  "overall_status": "failed",
+  "aggregate_status": "blocked_incomplete",
+  "formal_passes": 0,
+  "search_seed": 0,
+  "data_seed": 2026,
+  "methods": {
+    "aflow": {
+      "run_status": "rejected",
+      "launcher_status": "failed",
+      "failure": null,
+      "formal_pass": false,
+      "dtest_opened": true,
+      "artifact_directory": "artifacts/aflow_maas/aflow/seed_0",
+      "upstream_provenance": {
+        "repository": "https://github.com/FoundationAgents/AFlow.git",
+        "origin": "https://github.com/FoundationAgents/AFlow.git",
+        "commit": "3f457218fc716093fe53f6df8a5d5e6379d66346",
+        "clean_worktree": true,
+        "python_tree_sha256": "fcdfa2e8e4fc313b36d8d5a9d204d71e4a605ffd8a4de45b9befbdb396c621b4"
+      },
+      "quality_gate": {
+        "status": "FAIL",
+        "method": "aflow",
+        "seed": 0,
+        "errors": [
+          "aime_2025/Q workflow failure rate 6.7% exceeds 5.0%",
+          "aime_2025/E workflow failure rate 6.7% exceeds 5.0%",
+          "aime_2026/Q workflow failure rate 6.7% exceeds 5.0%",
+          "aime_2026/E workflow failure rate 6.7% exceeds 5.0%",
+          "truncation rate 1079/4832 exceeds 5.0%"
+        ],
+        "warnings": [
+          "AFlow skipped 1/9 invalid generated candidates"
+        ],
+        "test_scores": {
+          "aime_2025": {
+            "Q": 0.5666666666666667,
+            "E": 0.5666666666666667
+          },
+          "aime_2026": {
+            "Q": 0.6666666666666666,
+            "E": 0.6666666666666666
+          }
+        },
+        "calls": 4832,
+        "failed_calls": 0
+      },
+      "raw_test_scores_not_accepted": {
+        "aime_2025": {
+          "Q": {
+            "correct": 17,
+            "num_examples": 30,
+            "score": 0.5666666666666667,
+            "valid_answer_rate": 0.7333333333333333,
+            "total_tokens": 773124,
+            "selected_round": 5,
+            "same_candidate_as": null
+          },
+          "E": {
+            "correct": 17,
+            "num_examples": 30,
+            "score": 0.5666666666666667,
+            "valid_answer_rate": 0.7333333333333333,
+            "total_tokens": 773124,
+            "selected_round": 5,
+            "same_candidate_as": "Q"
+          }
+        },
+        "aime_2026": {
+          "Q": {
+            "correct": 20,
+            "num_examples": 30,
+            "score": 0.6666666666666666,
+            "valid_answer_rate": 0.7333333333333333,
+            "total_tokens": 763849,
+            "selected_round": 5,
+            "same_candidate_as": null
+          },
+          "E": {
+            "correct": 20,
+            "num_examples": 30,
+            "score": 0.6666666666666666,
+            "valid_answer_rate": 0.7333333333333333,
+            "total_tokens": 763849,
+            "selected_round": 5,
+            "same_candidate_as": "Q"
+          }
+        }
+      },
+      "selection_parseability": {
+        "selected_round": 5,
+        "valid_answer_rate": 0.9,
+        "explicit_workflow_failure_fraction": 0.0,
+        "note": "AFlow selection audit does not count every parser-invalid answer as a workflow exception; these are separately disclosed and score zero."
+      },
+      "telemetry_totals": {
+        "calls": 4832,
+        "prompt_tokens": 11092615,
+        "completion_tokens": 8415858,
+        "total_tokens": 19508473,
+        "failed_calls": 0,
+        "sample_timeouts": 17,
+        "completion_truncated": 1079,
+        "wall_time_seconds": 31810.73857975006
+      }
+    },
+    "maas": {
+      "run_status": "failed",
+      "launcher_status": "failed",
+      "failure": "RuntimeError: MaAS D_select quality gate failed; refusing to open D_test. rows=30, failures=10.0%",
+      "formal_pass": false,
+      "dtest_opened": false,
+      "artifact_directory": "artifacts/aflow_maas/maas/seed_0",
+      "upstream_provenance": {
+        "repository": "https://github.com/bingreeky/MaAS.git",
+        "origin": "https://github.com/bingreeky/MaAS.git",
+        "commit": "987f3c1bc9a96e844fe090db3791446e3ef0f5c7",
+        "clean_worktree": true,
+        "python_tree_sha256": "9a05b0d195bc9f0c4939060bbb1efab90516a2dabeebc9d41e30e7802f3d1f49"
+      },
+      "telemetry_totals": null
+    },
+    "adas": {
+      "run_status": "failed",
+      "launcher_status": "failed",
+      "failure": "RuntimeError: ADAS has no valid candidate on D_select (failure rate must be <=5%).",
+      "formal_pass": false,
+      "dtest_opened": false,
+      "artifact_directory": "artifacts/adas_gdesigner/adas/seed_0",
+      "upstream_provenance": {
+        "commit": "2702bee8fefda42255efc5be9f60e3bd3db96ae4",
+        "clean_worktree": true,
+        "origin": "https://github.com/ShengranHu/ADAS.git",
+        "repository": "https://github.com/ShengranHu/ADAS.git"
+      },
+      "telemetry_totals": {
+        "calls": 2800,
+        "prompt_tokens": 3506774,
+        "completion_tokens": 7946094,
+        "total_tokens": 11452868,
+        "failed_calls": 0,
+        "completion_truncated": 967
+      }
+    },
+    "gdesigner": {
+      "run_status": "failed",
+      "launcher_status": "failed",
+      "failure": "RuntimeError: G-Designer D_select failure rate exceeds 5%; refusing to open D_test.",
+      "formal_pass": false,
+      "dtest_opened": false,
+      "artifact_directory": "artifacts/adas_gdesigner/gdesigner/seed_0",
+      "upstream_provenance": {
+        "commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+        "clean_worktree": true,
+        "origin": "https://github.com/yanweiyue/GDesigner.git",
+        "repository": "https://github.com/yanweiyue/GDesigner.git"
+      },
+      "telemetry_totals": {
+        "calls": 506,
+        "prompt_tokens": 1260695,
+        "completion_tokens": 1560771,
+        "total_tokens": 2821466,
+        "failed_calls": 0,
+        "completion_truncated": 188
+      }
+    }
+  },
+  "limitations": [
+    "No accepted four-method AIME aggregate; single seed only, no mean/std claim.",
+    "MaAS includes reconstructed compatibility/context helpers and is an adapter variant, not a byte-identical recovery of the missing original modules.",
+    "ADAS uses the restricted_ast_v1 candidate executor; rejected AST/format generations are part of this adapter attempt.",
+    "G-Designer includes role-graph/numerical adapters.",
+    "MaAS full formal-run telemetry was not persisted after its selection-gate exception.",
+    "ADAS and G-Designer did not persist complete per-candidate/per-sample D_select failure records; logs cannot reconstruct absent artifacts.",
+    "AFlow workflow failure audit and shared answer-parser validity are different metrics; selected round 5 had 3/30 parser-invalid answers.",
+    "Q/E are the same selected AFlow candidate, so E aliases Q and is not a second independent evaluation.",
+    "The runtime source SHA256SUMS contains CRLF and an archive.sha256 entry whose raw bytes differ only by CRLF/LF; normalized hash matches. The new publication SHA256SUMS verifies exported raw bytes.",
+    "Preserved absolute paths refer to the execution host; artifact_index.json maps every exported file to its source path."
+  ]
+}

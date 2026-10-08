@@ -1,0 +1,7 @@
+{
+    "father node": 4,
+    "modification": "Added a 'Sanitizer' step using the Custom operator to strictly parse the model's output, removing floating-point noise (e.g., 180.00000000000003) and ensuring the final string is a clean integer or fraction wrapped in \\boxed{}, before passing it to the ScEnsemble. This addresses the extraction failure on noisy floats and the complete failure on 'None' outputs.",
+    "before": 0.5833333333333334,
+    "after": 0.6833333333333333,
+    "succeed": true
+}

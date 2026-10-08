@@ -1,0 +1,27 @@
+{
+  "status": "FAIL",
+  "method": "aflow",
+  "seed": 0,
+  "errors": [
+    "aime_2025/Q workflow failure rate 6.7% exceeds 5.0%",
+    "aime_2025/E workflow failure rate 6.7% exceeds 5.0%",
+    "aime_2026/Q workflow failure rate 6.7% exceeds 5.0%",
+    "aime_2026/E workflow failure rate 6.7% exceeds 5.0%",
+    "truncation rate 1079/4832 exceeds 5.0%"
+  ],
+  "warnings": [
+    "AFlow skipped 1/9 invalid generated candidates"
+  ],
+  "test_scores": {
+    "aime_2025": {
+      "Q": 0.5666666666666667,
+      "E": 0.5666666666666667
+    },
+    "aime_2026": {
+      "Q": 0.6666666666666666,
+      "E": 0.6666666666666666
+    }
+  },
+  "calls": 4832,
+  "failed_calls": 0
+}

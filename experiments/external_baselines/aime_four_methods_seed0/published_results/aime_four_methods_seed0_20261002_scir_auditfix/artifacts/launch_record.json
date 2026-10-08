@@ -1,0 +1,38 @@
+{
+  "started_at_utc": "2026-10-02T14:18:42.888434+00:00",
+  "source_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0",
+  "source_commit": "66ad8287f759e08a5310c190cd0eddb273bbe627",
+  "stage": "all",
+  "method_order": [
+    "maas",
+    "adas",
+    "gdesigner",
+    "aflow"
+  ],
+  "settings": {
+    "AIME_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "AIME_MINILM_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MODEL_VERIFICATION_REPORT": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/local_model_verification_4e5791c4.json",
+    "AIME_UV_BIN": "/home/ZZD/.local/bin/uv",
+    "AIME_PYTHON": "/data/jxc/envs/rpas-serve/bin/python",
+    "AIME_VLLM_BIN": "/data/jxc/envs/rpas-serve/bin/vllm",
+    "AIME_AFLOW_PYTHON": "/data/jxc/envs/rpas-aflow/bin/python",
+    "AIME_MAAS_PYTHON": "/data/jxc/envs/rpas-maas/bin/python",
+    "AIME_ADAS_PYTHON": "/data/jxc/envs/rpas-aime-adas/bin/python",
+    "AIME_GDESIGNER_PYTHON": "/data/jxc/envs/rpas-aime-gdesigner/bin/python",
+    "AIME_DIAGNOSTIC_DIR": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002",
+    "CUDA_VISIBLE_DEVICES": "3"
+  },
+  "launcher_sha256": "d5b274418e37b9bc0337afc33622711a4ff97f0f1fe2054610d1dafdfada2b60",
+  "protocol": {
+    "search_seed": 0,
+    "data_seed": 2026,
+    "D_search": 60,
+    "D_select": 30,
+    "D_test_each_year": 30,
+    "context": 8192,
+    "max_tokens": 6144,
+    "concurrency": 8
+  },
+  "note": "Each independent method runs in its own service session; failures do not stop other methods."
+}

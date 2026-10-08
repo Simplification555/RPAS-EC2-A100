@@ -1,0 +1,7 @@
+{
+    "father node": 6,
+    "modification": "Added a 'Format Enforcement' step using the Custom operator to strictly ensure the final output is a single LaTeX boxed value, preventing the model from outputting explanations or multiple sentences which caused extraction failures in previous logs. Also added a 'Format Validator' to double-check the output structure before returning.",
+    "before": 0.6666666666666666,
+    "after": 0.7333333333333333,
+    "succeed": true
+}

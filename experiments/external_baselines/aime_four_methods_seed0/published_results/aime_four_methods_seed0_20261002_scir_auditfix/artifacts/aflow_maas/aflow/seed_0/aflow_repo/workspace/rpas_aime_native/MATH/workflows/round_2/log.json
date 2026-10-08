@@ -1,0 +1,170 @@
+[
+    {
+        "question": "Five men and nine women stand equally spaced around a circle in random order. The probability that every man stands diametrically opposite a woman is $\\frac{m}{n},$ where $m$ and $n$ are relatively prime positive integers. Find $m+n.$",
+        "right_answer": "\\boxed{191}",
+        "model_output": "146",
+        "extracted_output": "146",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Ellina has twelve blocks, two each of red ($\\textbf{R}$), blue ($\\textbf{B}$), yellow ($\\textbf{Y}$), green ($\\textbf{G}$), orange ($\\textbf{O}$), and purple ($\\textbf{P}$). Call an arrangement of blocks $\\textit{even}$ if there is an even number of blocks between each pair of blocks of the same color. For example, the arrangement\n\\[\\textbf{R B B Y G G Y R O P P O}\\]\nis even. Ellina arranges her blocks in a row in random order. The probability that her arrangement is even is $\\frac{m}{n},$ where $m$ and $n$ are relatively prime positive integers. Find $m+n.$",
+        "right_answer": "\\boxed{247}",
+        "model_output": "1255",
+        "extracted_output": "1255",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Circles $\\omega_1$ and $\\omega_2$ intersect at two points $P$ and $Q,$ and their common tangent line closer to $P$ intersects $\\omega_1$ and $\\omega_2$ at points $A$ and $B,$ respectively. The line parallel to $AB$ that passes through $P$ intersects $\\omega_1$ and $\\omega_2$ for the second time at points $X$ and $Y,$ respectively. Suppose $PX=10,$ $PY=14,$ and $PQ=5.$ Then the area of trapezoid $XABY$ is $m\\sqrt{n},$ where $m$ and $n$ are positive integers and $n$ is not divisible by the square of any prime. Find $m+n.$",
+        "right_answer": "\\boxed{033}",
+        "model_output": "None",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "A circle with radius $6$ is externally tangent to a circle with radius $24$. Find the area of the triangular region bounded by the three common tangent lines of these two circles.",
+        "right_answer": "\\boxed{192}",
+        "model_output": "191.99999999999997",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Define $f(x)=|| x|-\\tfrac{1}{2}|$ and $g(x)=|| x|-\\tfrac{1}{4}|$. Find the number of intersections of the graphs of \\[y=4 g(f(\\sin (2 \\pi x))) \\quad\\text{ and }\\quad x=4 g(f(\\cos (3 \\pi y))).\\]",
+        "right_answer": "\\boxed{385}",
+        "model_output": "4",
+        "extracted_output": "4",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $\\triangle ABC$ be an isosceles triangle with $\\angle A = 90^\\circ.$ There exists a point $P$ inside $\\triangle ABC$ such that $\\angle PAB = \\angle PBC = \\angle PCA$ and $AP = 10.$ Find the area of $\\triangle ABC.$",
+        "right_answer": "\\boxed{250}",
+        "model_output": "250.00000000000003",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the number of collections of $16$ distinct subsets of $\\{1,2,3,4,5\\}$ with the property that for any two subsets $X$ and $Y$ in the collection, $X \\cap Y \\not= \\emptyset.$",
+        "right_answer": "\\boxed{081}",
+        "model_output": "5",
+        "extracted_output": "5",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the largest possible real part of \\[(75+117i)z+\\frac{96+144i}{z}\\]where $z$ is a complex number with $|z|=4$.",
+        "right_answer": "\\boxed{540}",
+        "model_output": "540.0",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let ABCDEF be a convex equilateral hexagon in which all pairs of opposite sides are parallel. The triangle whose sides are extensions of segments AB, CD, and EF has side lengths 200, 240, and 300. Find the side length of the hexagon.",
+        "right_answer": "\\boxed{080}",
+        "model_output": "80.0",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "In $\\triangle ABC$ with side lengths $AB = 13,$ $BC = 14,$ and $CA = 15,$ let $M$ be the midpoint of $\\overline{BC}.$ Let $P$ be the point on the circumcircle of $\\triangle ABC$ such that $M$ is on $\\overline{AP}.$ There exists a unique point $Q$ on segment $\\overline{AM}$ such that $\\angle PBQ = \\angle PCQ.$ Then $AQ$ can be written as $\\frac{m}{\\sqrt{n}},$ where $m$ and $n$ are relatively prime positive integers. Find $m+n.$",
+        "right_answer": "\\boxed{247}",
+        "model_output": "None",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $ABCD$ be a convex quadrilateral with $AB=2, AD=7,$ and $CD=3$ such that the bisectors of acute angles $\\angle{DAB}$ and $\\angle{ADC}$ intersect at the midpoint of $\\overline{BC}.$ Find the square of the area of $ABCD.$",
+        "right_answer": "\\boxed{180}",
+        "model_output": "189.4191059611469",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "There is a collection of $25$ indistinguishable white chips and $25$ indistinguishable black chips. Find the number of ways to place some of these chips in the $25$ unit cells of a $5\\times5$ grid such that: \n\neach cell contains at most one chip\nall chips in the same row and all chips in the same column have the same colour\nany additional chip placed on the grid would violate one or more of the previous two conditions.",
+        "right_answer": "\\boxed{902}",
+        "model_output": "2",
+        "extracted_output": "2",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $S$ be the set of all positive rational numbers $r$ such that when the two numbers $r$ and $55r$ are written as fractions in lowest terms, the sum of the numerator and denominator of one fraction is the same as the sum of the numerator and denominator of the other fraction. The sum of all the elements of $S$ can be expressed in the form $\\frac{p}{q},$ where $p$ and $q$ are relatively prime positive integers. Find $p+q.$",
+        "right_answer": "\\boxed{719}",
+        "model_output": "2",
+        "extracted_output": "2",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $a, b, x,$ and $y$ be real numbers with $a>4$ and $b>1$ such that\\[\\frac{x^2}{a^2}+\\frac{y^2}{a^2-16}=\\frac{(x-20)^2}{b^2-1}+\\frac{(y-11)^2}{b^2}=1.\\]Find the least possible value of $a+b.$",
+        "right_answer": "\\boxed{023}",
+        "model_output": "22.849629454737553",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $a,b,c,d,e,f,g,h,i$ be distinct integers from $1$ to $9.$ The minimum possible positive value of \\[\\dfrac{a \\cdot b \\cdot c - d \\cdot e \\cdot f}{g \\cdot h \\cdot i}\\] can be written as $\\frac{m}{n},$ where $m$ and $n$ are relatively prime positive integers. Find $m+n.$",
+        "right_answer": "\\boxed{289}",
+        "model_output": "1",
+        "extracted_output": "1",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Rhombus $ABCD$ has $\\angle BAD < 90^\\circ.$ There is a point $P$ on the incircle of the rhombus such that the distances from $P$ to the lines $DA,AB,$ and $BC$ are $9,$ $5,$ and $16,$ respectively. Find the perimeter of $ABCD.$",
+        "right_answer": "\\boxed{125}",
+        "model_output": "None",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Rectangles $ABCD$ and $EFGH$ are drawn such that $D,E,C,F$ are collinear. Also, $A,D,H,G$ all lie on a circle. If $BC=16$,$AB=107$,$FG=17$, and $EF=184$, what is the length of $CE$?",
+        "right_answer": "\\boxed{104}",
+        "model_output": "106.90765504125764",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Three spheres with radii $11$, $13$, and $19$ are mutually externally tangent. A plane intersects the spheres in three congruent circles centered at $A$, $B$, and $C$, respectively, and the centers of the spheres all lie on the same side of this plane. Suppose that $AB^2 = 560$. Find $AC^2$.",
+        "right_answer": "\\boxed{756}",
+        "model_output": "756.0",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "A list of positive integers has the following properties:\n$\\bullet$ The sum of the items in the list is $30$.\n$\\bullet$ The unique mode of the list is $9$.\n$\\bullet$ The median of the list is a positive integer that does not appear in the list itself.\nFind the sum of the squares of all the items in the list.",
+        "right_answer": "\\boxed{236}",
+        "model_output": "None",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "There exist real numbers $x$ and $y$, both greater than 1, such that $\\log_x\\left(y^x\\right)=\\log_y\\left(x^{4y}\\right)=10$. Find $xy$.",
+        "right_answer": "\\boxed{025}",
+        "model_output": "25.0",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "A cube-shaped container has vertices $A,$ $B,$ $C,$ and $D,$ where $\\overline{AB}$ and $\\overline{CD}$ are parallel edges of the cube, and $\\overline{AC}$ and $\\overline{BD}$ are diagonals of faces of the cube, as shown. Vertex $A$ of the cube is set on a horizontal plane $\\mathcal{P}$ so that the plane of the rectangle $ABDC$ is perpendicular to $\\mathcal{P},$ vertex $B$ is $2$ meters above $\\mathcal{P},$ vertex $C$ is $8$ meters above $\\mathcal{P},$ and vertex $D$ is $10$ meters above $\\mathcal{P}.$ The cube contains water whose surface is parallel to $\\mathcal{P}$ at a height of $7$ meters above $\\mathcal{P}.$ The volume of water is $\\frac{m}{n}$ cubic meters, where $m$ and $n$ are relatively prime positive integers. Find $m+n.$",
+        "right_answer": "\\boxed{751}",
+        "model_output": "None",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $P$ be a point on the circle circumscribing square $ABCD$ that satisfies $PA \\cdot PC = 56$ and $PB \\cdot PD = 90.$ Find the area of $ABCD.$",
+        "right_answer": "\\boxed{106}",
+        "model_output": "106.0",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Torus $T$ is the surface produced by revolving a circle with radius $3$ around an axis in the plane of the circle that is a distance $6$ from the center of the circle (so like a donut). Let $S$ be a sphere with a radius $11$. When $T$ rests on the outside of $S$, it is externally tangent to $S$ along a circle with radius $r_i$, and when $T$ rests on the outside of $S$, it is externally tangent to $S$ along a circle with radius $r_o$. The difference $r_i-r_o$ can be written as $\\tfrac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$.\n[asy] unitsize(0.3 inch); draw(ellipse((0,0), 3, 1.75)); draw((-1.2,0.1)..(-0.8,-0.03)..(-0.4,-0.11)..(0,-0.15)..(0.4,-0.11)..(0.8,-0.03)..(1.2,0.1)); draw((-1,0.04)..(-0.5,0.12)..(0,0.16)..(0.5,0.12)..(1,0.04)); draw((0,2.4)--(0,-0.15)); draw((0,-0.15)--(0,-1.75), dashed); draw((0,-1.75)--(0,-2.25)); draw(ellipse((2,0), 1, 0.9)); draw((2.03,-0.02)--(2.9,-0.4)); [/asy]",
+        "right_answer": "\\boxed{127}",
+        "model_output": "None",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Equilateral triangle $\\triangle ABC$ is inscribed in circle $\\omega$ with radius $18.$ Circle $\\omega_A$ is tangent to sides $\\overline{AB}$ and $\\overline{AC}$ and is internally tangent to $\\omega.$ Circles $\\omega_B$ and $\\omega_C$ are defined analogously. Circles $\\omega_A,$ $\\omega_B,$ and $\\omega_C$ meet in six points---two points for each pair of circles. The three intersection points closest to the vertices of $\\triangle ABC$ are the vertices of a large equilateral triangle in the interior of $\\triangle ABC,$ and the other three intersection points are the vertices of a smaller equilateral triangle in the interior of $\\triangle ABC.$ The side length of the smaller equilateral triangle can be written as $\\sqrt{a} - \\sqrt{b},$ where $a$ and $b$ are positive integers. Find $a+b.$",
+        "right_answer": "\\boxed{378}",
+        "model_output": "432",
+        "extracted_output": "432",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    }
+]
