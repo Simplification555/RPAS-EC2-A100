@@ -1,0 +1,17 @@
+{
+  "method": "adas",
+  "baseline_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/upstream",
+  "endpoint": "http://127.0.0.1:18084/v1",
+  "run_dir": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/adas",
+  "max_tokens": 6144,
+  "timeout_seconds": 2400,
+  "check_only": false,
+  "aflow_mutation": false,
+  "source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/upstream/ADAS",
+  "source_info": {
+    "commit": "2702bee8fefda42255efc5be9f60e3bd3db96ae4",
+    "clean_worktree": true,
+    "origin": "https://github.com/ShengranHu/ADAS.git",
+    "repository": "https://github.com/ShengranHu/ADAS.git"
+  }
+}

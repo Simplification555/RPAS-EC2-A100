@@ -1,0 +1,7 @@
+{
+    "father node": 5,
+    "modification": "Added a 'Reasoning' step before the 'Sanitize' step to force the model to output the final answer as a standalone sentence, which significantly improves the regex extraction reliability compared to relying solely on the \\boxed{} format in complex reasoning chains. Also, updated the SANITIZE_PROMPT to explicitly handle cases where the reasoning step might fail to produce a number, defaulting to \\boxed{None} instead of trying to parse garbage text.",
+    "before": 0.6833333333333333,
+    "after": 0.6666666666666666,
+    "succeed": false
+}

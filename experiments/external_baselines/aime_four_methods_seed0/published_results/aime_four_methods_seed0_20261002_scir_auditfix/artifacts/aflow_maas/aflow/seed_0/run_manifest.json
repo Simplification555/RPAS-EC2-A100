@@ -1,0 +1,51 @@
+{
+  "protocol_version": "aime_main_protocol_v6_canonical_frozen_data",
+  "task_contract": {
+    "version": "AIME_TASK_CONTRACT_v1",
+    "input": "problem statement only; gold answer and solution are not included in the prompt",
+    "gold": "integer answer from the frozen AIME dataset",
+    "scoring": "answer_protocol_v4.extract_aime_answer; normalized integer exact match",
+    "sha256": "589e3a90f58172f2fdbc3278871b5c5037201bfae9caa4d65e048528fc5aad11"
+  },
+  "method": "aflow",
+  "upstream_provenance": {
+    "repository": "https://github.com/FoundationAgents/AFlow.git",
+    "origin": "https://github.com/FoundationAgents/AFlow.git",
+    "commit": "3f457218fc716093fe53f6df8a5d5e6379d66346",
+    "clean_worktree": true,
+    "python_tree_sha256": "fcdfa2e8e4fc313b36d8d5a9d204d71e4a605ffd8a4de45b9befbdb396c621b4"
+  },
+  "search_seed": 0,
+  "data_seed": 2026,
+  "model": "Qwen/Qwen3.5-9B",
+  "context_limit": 8192,
+  "output_limit": 6144,
+  "answer_protocol": "answer_protocol_v4.extract_aime_answer",
+  "answer_protocol_sha256": "f5707ae75e38b5874ed94f9e3c652055ef8c778badcb83f4fe069ec9ad0fb378",
+  "data_sha256": {
+    "aimo_validation/search_60.jsonl": "d5c7163a7bda435ca7d4c8045b534f061dd92cecd854a892bcfd62b0beaa4747",
+    "aimo_validation/select_30.jsonl": "9439248b0527d4c3fc316a272f18d43fbe6ce990a97eb3f80fcc3b28bc5f4fb7",
+    "aimo-validation-aime.jsonl": "fa42838c9d643be2fa83671fb7960a31bae75d5fe73b902cca9f21cbf70607ee",
+    "aime_2025.jsonl": "fe7b8a157da7c1389ab0ca9ffb1536973843b8244a796d5c1f5fbb0b62a1f221",
+    "aime2025/test_30.jsonl": "779889244fb4e6c27e84bfeb0efddbc81090fbaf0ca9c371a53730414f0d49ae",
+    "aime_2026.jsonl": "02445121c022fb9f6c6d6bb24a299dee29b248263af02c5f71504d9ef07d00d0",
+    "aime2026/test_30.jsonl": "c61c0fcdf333e947622a5b164cda4fb67e760c271bf9939e5851467e9285e9db"
+  },
+  "search_size": 60,
+  "selection_size": 30,
+  "test_size_each": 30,
+  "endpoint": "http://127.0.0.1:18084/v1",
+  "run_id": "aime:aflow:aflow:seed_0",
+  "attempt": "main",
+  "status": "rejected",
+  "runner_sha256": "530a7f28b4dd8733a8a569fa1e719d9748a9adc46216aab114ef492ddea448d0",
+  "frozen_data_manifest_sha256": "7e6501210c7689e1702e9786a9652222c5ca33193d11d4cde531ea84bdee2cfe",
+  "selection_lock_sha256": "610fffb21c147c759ebc051ad1150e804431a74c629c3f275f68f7bc0cc0488c",
+  "dtest_access_manifest_sha256": "4d67bd67ef73767bdb253851cd3e9c3bc26036366c2fa4cc3a7616b3cc538287",
+  "quality_gate": {
+    "status": "FAIL",
+    "path": "quality_gate.json",
+    "errors": 5,
+    "warnings": 1
+  }
+}

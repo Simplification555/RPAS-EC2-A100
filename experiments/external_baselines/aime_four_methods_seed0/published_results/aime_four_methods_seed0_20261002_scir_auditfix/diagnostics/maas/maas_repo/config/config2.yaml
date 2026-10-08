@@ -1,0 +1,30 @@
+{
+  "llm": {
+    "api_type": "openai",
+    "model": "Qwen/Qwen3.5-9B",
+    "base_url": "http://127.0.0.1:18084/v1",
+    "api_key": "EMPTY",
+    "max_token": 6144,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "timeout": 600,
+    "stream": false,
+    "calc_usage": true,
+    "use_system_prompt": true
+  },
+  "models": {
+    "qwen35_9b": {
+      "api_type": "openai",
+      "model": "Qwen/Qwen3.5-9B",
+      "base_url": "http://127.0.0.1:18084/v1",
+      "api_key": "EMPTY",
+      "max_token": 6144,
+      "temperature": 0.0,
+      "top_p": 1.0,
+      "timeout": 600,
+      "stream": false,
+      "calc_usage": true,
+      "use_system_prompt": true
+    }
+  }
+}

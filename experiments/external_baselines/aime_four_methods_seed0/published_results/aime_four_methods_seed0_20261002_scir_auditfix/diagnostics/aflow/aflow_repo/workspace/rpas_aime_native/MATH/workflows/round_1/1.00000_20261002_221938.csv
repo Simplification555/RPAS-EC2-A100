@@ -1,0 +1,15 @@
+question,prediction,expected_output,score,cost
+Compute 3 + 4. Give the final integer in \boxed{}.,"To compute the sum of 3 and 4:
+
+$$3 + 4 = 7$$
+
+The final integer is 7.
+
+\boxed{7}",\boxed{7},1,0.0
+Compute 3 times 4. Give the final integer in \boxed{}.,"To compute 3 times 4:
+
+$$3 \times 4 = 12$$
+
+The final integer is 12.
+
+\boxed{12}",\boxed{12},1,0.0

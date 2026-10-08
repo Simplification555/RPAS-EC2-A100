@@ -1,0 +1,2 @@
+{"problem": "Compute 3 + 4. Give the final integer in \\boxed{}.", "solution": "\\boxed{7}", "synthetic_id": "synthetic_add"}
+{"problem": "Compute 3 times 4. Give the final integer in \\boxed{}.", "solution": "\\boxed{12}", "synthetic_id": "synthetic_multiply"}

@@ -1,0 +1,79 @@
+[
+    {
+        "question": "Let $A$, $B$, $C$, and $D$ be point on the hyperbola $\\frac{x^2}{20}- \\frac{y^2}{24} = 1$ such that $ABCD$ is a rhombus whose diagonals intersect at the origin. Find the greatest real number that is less than $BD^2$ for all such rhombi.",
+        "right_answer": "\\boxed{480}",
+        "model_output": "\\boxed{480.00000000000017}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "In isosceles trapezoid $ABCD$, parallel bases $\\overline{AB}$ and $\\overline{CD}$ have lengths $500$ and $650$, respectively, and $AD=BC=333$. The angle bisectors of $\\angle{A}$ and $\\angle{D}$ meet at $P$, and the angle bisectors of $\\angle{B}$ and $\\angle{C}$ meet at $Q$. Find $PQ$.",
+        "right_answer": "\\boxed{242}",
+        "model_output": "\\boxed{242.0}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Quadratic polynomials $P(x)$ and $Q(x)$ have leading coefficients $2$ and $-2,$ respectively. The graphs of both polynomials pass through the two points $(16,54)$ and $(20,53).$ Find $P(0) + Q(0).$",
+        "right_answer": "\\boxed{116}",
+        "model_output": "\\boxed{116.0}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "For positive integers $a$, $b$, and $c$ with $a < b < c$, consider collections of postage stamps in denominations $a$, $b$, and $c$ cents that contain at least one stamp of each denomination. If there exists such a collection that contains sub-collections worth every whole number of cents up to $1000$ cents, let $f(a, b, c)$ be the minimum number of stamps in such a collection. Find the sum of the three least values of $c$ such that $f(a, b, c) = 97$ for some choice of $a$ and $b$.",
+        "right_answer": "\\boxed{188}",
+        "model_output": "\\boxed{114}",
+        "extracted_output": "114",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "The following analog clock has two hands that can move independently of each other.\n\nInitially, both hands point to the number $12$. The clock performs a sequence of hand movements so that on each movement, one of the two hands moves clockwise to the next number on the clock face while the other hand does not move.\nLet $N$ be the number of sequences of $144$ hand movements such that during the sequence, every possible positioning of the hands appears exactly once, and at the end of the $144$ movements, the hands have returned to their initial position. Find the remainder when $N$ is divided by $1000$.",
+        "right_answer": "\\boxed{608}",
+        "model_output": "\\boxed{0}",
+        "extracted_output": "0",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $ABCD$ be a parallelogram with $\\angle BAD < 90^\\circ.$ A circle tangent to sides $\\overline{DA},$ $\\overline{AB},$ and $\\overline{BC}$ intersects diagonal $\\overline{AC}$ at points $P$ and $Q$ with $AP < AQ,$ as shown. Suppose that $AP=3,$ $PQ=9,$ and $QC=16.$ Then the area of $ABCD$ can be expressed in the form $m\\sqrt{n},$ where $m$ and $n$ are positive integers, and $n$ is not divisible by the square of any prime. Find $m+n.$",
+        "right_answer": "\\boxed{150}",
+        "model_output": "None",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the number of rectangles that can be formed inside a fixed regular dodecagon ($12$-gon) where each side of the rectangle lies on either a side or a diagonal of the dodecagon. The diagram below shows three of those rectangles.\n[asy] unitsize(0.6 inch); for(int i=0; i<360; i+=30) { dot(dir(i), 4+black); draw(dir(i)--dir(i+30)); } draw(dir(120)--dir(330)); filldraw(dir(210)--dir(240)--dir(30)--dir(60)--cycle, mediumgray, linewidth(1.5)); draw((0,0.366)--(0.366,0), linewidth(1.5)); [/asy]",
+        "right_answer": "\\boxed{315}",
+        "model_output": "\\boxed{15}",
+        "extracted_output": "15",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "A straight river that is $264$ meters wide flows from west to east at a rate of $14$ meters per minute. Melanie and Sherry sit on the south bank of the river with Melanie a distance of $D$ meters downstream from Sherry. Relative to the water, Melanie swims at $80$ meters per minute, and Sherry swims at $60$ meters per minute. At the same time, Melanie and Sherry begin swimming in straight lines to a point on the north bank of the river that is equidistant from their starting positions. The two women arrive at this point simultaneously. Find $D$.",
+        "right_answer": "\\boxed{550}",
+        "model_output": "\\boxed{550.0}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Two externally tangent circles $\\omega_1$ and $\\omega_2$ have centers $O_1$ and $O_2$, respectively. A third circle $\\Omega$ passing through $O_1$ and $O_2$ intersects $\\omega_1$ at $B$ and $C$ and $\\omega_2$ at $A$ and $D$, as shown. Suppose that $AB = 2$, $O_1O_2 = 15$, $CD = 16$, and $ABO_1CDO_2$ is a convex hexagon. Find the area of this hexagon.",
+        "right_answer": "\\boxed{140}",
+        "model_output": "None",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $\\triangle ABC$ be an equilateral triangle with side length $55.$ Points $D,$ $E,$ and $F$ lie on $\\overline{BC},$ $\\overline{CA},$ and $\\overline{AB},$ respectively, with $BD = 7,$ $CE=30,$ and $AF=40.$ Point $P$ inside $\\triangle ABC$ has the property that \\[\\angle AEP = \\angle BFP = \\angle CDP.\\] Find $\\tan^2(\\angle AEP).$",
+        "right_answer": "\\boxed{075}",
+        "model_output": "\\boxed{1574.2414656681265}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Eight circles of radius $34$ are sequentially tangent, and two of the circles are tangent to $AB$ and $BC$ of triangle $ABC$, respectively. $2024$ circles of radius $1$ can be arranged in the same manner. The inradius of triangle $ABC$ can be expressed as $\\frac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$.",
+        "right_answer": "\\boxed{197}",
+        "model_output": "None",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    }
+]

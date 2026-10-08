@@ -1,0 +1,18 @@
+{
+  "method": "aflow",
+  "baseline_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/upstream",
+  "endpoint": "http://127.0.0.1:18084/v1",
+  "run_dir": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow",
+  "max_tokens": 6144,
+  "timeout_seconds": 2400,
+  "check_only": false,
+  "aflow_mutation": false,
+  "source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/upstream/AFlow",
+  "source_info": {
+    "repository": "https://github.com/FoundationAgents/AFlow.git",
+    "origin": "https://github.com/FoundationAgents/AFlow.git",
+    "commit": "3f457218fc716093fe53f6df8a5d5e6379d66346",
+    "clean_worktree": true,
+    "python_tree_sha256": "fcdfa2e8e4fc313b36d8d5a9d204d71e4a605ffd8a4de45b9befbdb396c621b4"
+  }
+}

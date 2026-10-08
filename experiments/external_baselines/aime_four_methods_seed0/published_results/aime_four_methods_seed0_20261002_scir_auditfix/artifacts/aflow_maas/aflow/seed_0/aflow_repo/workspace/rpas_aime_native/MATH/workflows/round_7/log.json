@@ -1,0 +1,114 @@
+[
+    {
+        "question": "Rhombus $ABCD$ has $\\angle BAD < 90^\\circ.$ There is a point $P$ on the incircle of the rhombus such that the distances from $P$ to the lines $DA,AB,$ and $BC$ are $9,$ $5,$ and $16,$ respectively. Find the perimeter of $ABCD.$",
+        "right_answer": "\\boxed{125}",
+        "model_output": "\\boxed{284.0909090909092}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Each vertex of a regular octagon is independently colored either red or blue with equal probability. The probability that the octagon can then be rotated so that all of the blue vertices end up at positions where there were originally red vertices is $\\tfrac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. What is $m+n$?",
+        "right_answer": "\\boxed{371}",
+        "model_output": "\\boxed{155}",
+        "extracted_output": "155",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Torus $T$ is the surface produced by revolving a circle with radius $3$ around an axis in the plane of the circle that is a distance $6$ from the center of the circle (so like a donut). Let $S$ be a sphere with a radius $11$. When $T$ rests on the outside of $S$, it is externally tangent to $S$ along a circle with radius $r_i$, and when $T$ rests on the outside of $S$, it is externally tangent to $S$ along a circle with radius $r_o$. The difference $r_i-r_o$ can be written as $\\tfrac{m}{n}$, where $m$ and $n$ are relatively prime positive integers. Find $m+n$.\n[asy] unitsize(0.3 inch); draw(ellipse((0,0), 3, 1.75)); draw((-1.2,0.1)..(-0.8,-0.03)..(-0.4,-0.11)..(0,-0.15)..(0.4,-0.11)..(0.8,-0.03)..(1.2,0.1)); draw((-1,0.04)..(-0.5,0.12)..(0,0.16)..(0.5,0.12)..(1,0.04)); draw((0,2.4)--(0,-0.15)); draw((0,-0.15)--(0,-1.75), dashed); draw((0,-1.75)--(0,-2.25)); draw(ellipse((2,0), 1, 0.9)); draw((2.03,-0.02)--(2.9,-0.4)); [/asy]",
+        "right_answer": "\\boxed{127}",
+        "model_output": "The problem asks for the difference between the radii of two circles of tangency ($r_i$ and $r_o$) formed when a torus $T$ rests on a sphere $S$.\n\n**1. Analyze the Geometry and Parameters:**\n*   **Torus ($T$):**\n    *   Major radius $R = 6$.\n    *   Minor radius $a = 3$.\n    *   Equation in cylindrical coordinates $(\\rho, \\phi, z)$: $(\\rho - 6)^2 + z^2 = 3^2$.\n*   **Sphere ($S$):**\n    *   Radius $b = 11$.\n    *   Centered at the origin $(0,0,0)$.\n    *   Equation: $\\rho^2 + z^2 = 11^2$.\n\n**2. Interpret \"Resting\" and \"Two Circles of Tangency\":**\nThe phrase implies there are two distinct configurations where the torus is tangent to the sphere.\n*   **Configuration 1: External Tangency (Torus sits on top of the sphere).**\n    The distance between the center of the sphere ($O$) and the center of the torus cross-section ($C$) must be the sum of their radii: $D = b + a = 11 + 3 = 14$.\n    The center of the torus cross-section is at $(6, H)$.\n    $D^2 = 6^2 + H^2 = 14^2 \\implies 36 + H^2 = 196 \\implies H^2 = 160$.\n    The circle of tangency lies on the line connecting $O$ and $C$. The radius of this circle, $r_o$, is the $\\rho$-coordinate of the contact point.\n    The contact point divides the segment $OC$ in the ratio $b:a = 11:3$.\n    $r_o = \\frac{b}{b+a} \\times 6 = \\frac{11}{14} \\times 6 = \\frac{33}{7}$.\n\n*   **Configuration 2: Internal Tangency (Sphere sits inside the torus hole).**\n    The distance between centers is the difference of their radii: $D = b - a = 11 - 3 = 8$.\n    $D^2 = 6^2 + H^2 = 8^2 \\implies 36 + H^2 = 64 \\implies H^2 = 28$.\n    The contact point lies on the line connecting $O$ and $C$. Since the sphere is inside the torus, the contact point is on the extension of $OC$ from $O$ through $C$.\n    The distance from $O$ to the contact point is $b = 11$.\n    The distance from $O$ to $C$ is $D = 8$.\n    The ratio is $b:D = 11:8$.\n    $r_i = \\frac{b}{b-a} \\times 6 = \\frac{11}{8} \\times 6 = \\frac{33}{4}$.\n\n    *Note on Physical Feasibility:* While a sphere of radius 11 cannot physically fit inside the hole of a torus with major radius 6 and minor radius 3 (hole radius 3), in the context of such geometry problems, \"resting\" often refers to the mathematical condition of tangency between the surfaces, regardless of whether the object can physically pass through the hole. The problem explicitly states there are two circles, implying both mathematical solutions are intended.\n\n**3. Calculate the Difference:**\nWe need the difference between the two radii $r_i$ and $r_o$.\n$r_o = \\frac{33}{7}$\n$r_i = \\frac{33}{4}$\n\nDifference $= |r_i - r_o| = \\left| \\frac{33}{4} - \\frac{33}{7} \\right|$\n$= 33 \\left| \\frac{1}{4} - \\frac{1}{7} \\right|$\n$= 33 \\left| \\frac{7 - 4}{28} \\right|$\n$= 33 \\times \\frac{3}{28}$\n$= \\frac{99}{28}$\n\nThe value is $\\frac{99}{28}$.\n\n\\boxed{\\frac{99}{28}}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $ABCD$ be a convex quadrilateral with $AB=2, AD=7,$ and $CD=3$ such that the bisectors of acute angles $\\angle{DAB}$ and $\\angle{ADC}$ intersect at the midpoint of $\\overline{BC}.$ Find the square of the area of $ABCD.$",
+        "right_answer": "\\boxed{180}",
+        "model_output": "\\boxed{100}",
+        "extracted_output": "100",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the number of collections of $16$ distinct subsets of $\\{1,2,3,4,5\\}$ with the property that for any two subsets $X$ and $Y$ in the collection, $X \\cap Y \\not= \\emptyset.$",
+        "right_answer": "\\boxed{081}",
+        "model_output": "\\boxed{6}",
+        "extracted_output": "6",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Circles $\\omega_1$ and $\\omega_2$ intersect at two points $P$ and $Q,$ and their common tangent line closer to $P$ intersects $\\omega_1$ and $\\omega_2$ at points $A$ and $B,$ respectively. The line parallel to $AB$ that passes through $P$ intersects $\\omega_1$ and $\\omega_2$ for the second time at points $X$ and $Y,$ respectively. Suppose $PX=10,$ $PY=14,$ and $PQ=5.$ Then the area of trapezoid $XABY$ is $m\\sqrt{n},$ where $m$ and $n$ are positive integers and $n$ is not divisible by the square of any prime. Find $m+n.$",
+        "right_answer": "\\boxed{033}",
+        "model_output": "\\boxed{120}",
+        "extracted_output": "120",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $\\ell_A$ and $\\ell_B$ be two distinct parallel lines. For positive integers $m$ and $n$, distinct points $A_1, A_2, \\allowbreak A_3, \\allowbreak \\ldots, \\allowbreak A_m$ lie on $\\ell_A$, and distinct points $B_1, B_2, B_3, \\ldots, B_n$ lie on $\\ell_B$. Additionally, when segments $\\overline{A_iB_j}$ are drawn for all $i=1,2,3,\\ldots, m$ and $j=1,\\allowbreak 2,\\allowbreak 3, \\ldots, \\allowbreak n$, no point strictly between $\\ell_A$ and $\\ell_B$ lies on more than 1 of the segments. Find the number of bounded regions into which this figure divides the plane when $m=7$ and $n=5$. The figure shows that there are 8 regions when $m=3$ and $n=2$.",
+        "right_answer": "\\boxed{244}",
+        "model_output": "\\boxed{37}",
+        "extracted_output": "37",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Let $w = \\dfrac{\\sqrt{3} + i}{2}$ and $z = \\dfrac{-1 + i\\sqrt{3}}{2},$ where $i = \\sqrt{-1}.$ Find the number of ordered pairs $(r,s)$ of positive integers not exceeding $100$ that satisfy the equation $i \\cdot w^r = z^s.$",
+        "right_answer": "\\boxed{834}",
+        "model_output": "\\boxed{264}",
+        "extracted_output": "264",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the number of ordered pairs of integers $(a, b)$ such that the sequence\\[3, 4, 5, a, b, 30, 40, 50\\]is strictly increasing and no set of four (not necessarily consecutive) terms forms an arithmetic progression.",
+        "right_answer": "\\boxed{228}",
+        "model_output": "\\boxed{252}",
+        "extracted_output": "252",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Define $f(x)=|| x|-\\tfrac{1}{2}|$ and $g(x)=|| x|-\\tfrac{1}{4}|$. Find the number of intersections of the graphs of \\[y=4 g(f(\\sin (2 \\pi x))) \\quad\\text{ and }\\quad x=4 g(f(\\cos (3 \\pi y))).\\]",
+        "right_answer": "\\boxed{385}",
+        "model_output": "\\boxed{1}",
+        "extracted_output": "1",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Find the number of positive integers $n \\le 600$ whose value can be uniquely determined when the values of $\\left\\lfloor \\frac n4\\right\\rfloor$, $\\left\\lfloor\\frac n5\\right\\rfloor$, and $\\left\\lfloor\\frac n6\\right\\rfloor$ are given, where $\\lfloor x \\rfloor$ denotes the greatest integer less than or equal to the real number $x$.",
+        "right_answer": "\\boxed{080}",
+        "model_output": "\\boxed{280}",
+        "extracted_output": "280",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "There is a collection of $25$ indistinguishable white chips and $25$ indistinguishable black chips. Find the number of ways to place some of these chips in the $25$ unit cells of a $5\\times5$ grid such that: \n\neach cell contains at most one chip\nall chips in the same row and all chips in the same column have the same colour\nany additional chip placed on the grid would violate one or more of the previous two conditions.",
+        "right_answer": "\\boxed{902}",
+        "model_output": "\\boxed{1024}",
+        "extracted_output": "1024",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "A cube-shaped container has vertices $A,$ $B,$ $C,$ and $D,$ where $\\overline{AB}$ and $\\overline{CD}$ are parallel edges of the cube, and $\\overline{AC}$ and $\\overline{BD}$ are diagonals of faces of the cube, as shown. Vertex $A$ of the cube is set on a horizontal plane $\\mathcal{P}$ so that the plane of the rectangle $ABDC$ is perpendicular to $\\mathcal{P},$ vertex $B$ is $2$ meters above $\\mathcal{P},$ vertex $C$ is $8$ meters above $\\mathcal{P},$ and vertex $D$ is $10$ meters above $\\mathcal{P}.$ The cube contains water whose surface is parallel to $\\mathcal{P}$ at a height of $7$ meters above $\\mathcal{P}.$ The volume of water is $\\frac{m}{n}$ cubic meters, where $m$ and $n$ are relatively prime positive integers. Find $m+n.$",
+        "right_answer": "\\boxed{751}",
+        "model_output": "\\boxed{108}",
+        "extracted_output": "108",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Consider the L-shaped region formed by three unit squares joined at their sides, as shown below. Two points $A$ and $B$ are chosen independently and uniformly at random from inside the region. The probability that the midpoint of $\\overline{AB}$ also lies inside this L-shaped region can be expressed as $\\frac{m}{n},$ where $m$ and $n$ are relatively prime positive integers. Find $m+n.$\n[asy] unitsize(2cm); draw((0,0)--(2,0)--(2,1)--(1,1)--(1,2)--(0,2)--cycle); draw((0,1)--(1,1)--(1,0),dashed); [/asy]",
+        "right_answer": "\\boxed{35}",
+        "model_output": "\\boxed{17}",
+        "extracted_output": "17",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "In $\\triangle ABC$ with side lengths $AB = 13,$ $BC = 14,$ and $CA = 15,$ let $M$ be the midpoint of $\\overline{BC}.$ Let $P$ be the point on the circumcircle of $\\triangle ABC$ such that $M$ is on $\\overline{AP}.$ There exists a unique point $Q$ on segment $\\overline{AM}$ such that $\\angle PBQ = \\angle PCQ.$ Then $AQ$ can be written as $\\frac{m}{\\sqrt{n}},$ where $m$ and $n$ are relatively prime positive integers. Find $m+n.$",
+        "right_answer": "\\boxed{247}",
+        "model_output": "The problem asks for the value of $m+n$ given $AQ = \\frac{m}{\\sqrt{n}}$.\n\n**1. Geometric Analysis:**\n*   **Triangle Properties:** $\\triangle ABC$ has sides $a=14, b=15, c=13$.\n    *   Semi-perimeter $s = 21$.\n    *   Area $K = \\sqrt{21(7)(6)(8)} = 84$.\n    *   Circumradius $R = \\frac{13 \\cdot 14 \\cdot 15}{4 \\cdot 84} = \\frac{65}{8}$.\n*   **Median $AM$:** $M$ is the midpoint of $BC$.\n    *   $AM^2 = \\frac{2(13^2) + 2(15^2) - 14^2}{4} = \\frac{338 + 450 - 196}{4} = \\frac{592}{4} = 148$.\n    *   $AM = \\sqrt{148} = 2\\sqrt{37}$.\n*   **Point $P$:** $P$ is on the circumcircle such that $M$ lies on the segment $AP$.\n    *   By Power of a Point at $M$: $AM \\cdot MP = BM \\cdot MC = 7 \\cdot 7 = 49$.\n    *   $MP = \\frac{49}{AM}$.\n*   **Point $Q$:** $Q$ is on segment $AM$ such that $\\angle PBQ = \\angle PCQ$.\n    *   This condition implies $Q$ lies on the circumcircle of $\\triangle PBC$.\n    *   Let this circle be $\\Gamma'$. The line $AP$ intersects $\\Gamma'$ at $P$ and another point $Q$.\n    *   By Power of a Point at $M$ with respect to $\\Gamma'$: $MQ \\cdot MP = MB \\cdot MC = 49$.\n    *   Substituting $MP = \\frac{49}{AM}$: $MQ \\cdot \\frac{49}{AM} = 49 \\implies MQ = AM$.\n    *   Since $Q$ lies on the segment $AM$, the distance $MQ$ must be less than or equal to $AM$.\n    *   The equality $MQ = AM$ holds if and only if $Q$ coincides with $A$.\n    *   Thus, $Q = A$.\n\n**2. Calculation of $AQ$:**\n*   Since $Q = A$, the length $AQ = 0$.\n*   The problem states $AQ = \\frac{m}{\\sqrt{n}}$ with $m, n$ being **positive integers**.\n*   If $AQ = 0$, then $m$ must be $0$.\n*   However, $0$ is not a positive integer.\n*   This creates a contradiction with the problem statement's constraints ($m \\in \\mathbb{Z}^+$).\n*   Strictly speaking, no such positive integers $m, n$ exist to satisfy the equation $0 = \\frac{m}{\\sqrt{n}}$.\n*   Therefore, the problem as stated has no solution under the given constraints.\n\n**3. Final Decision:**\n*   The logical derivation leads to $AQ=0$.\n*   The constraint $m \\in \\mathbb{Z}^+$ makes the solution invalid.\n*   According to the instructions, if the input does not contain a clear final answer (due to contradiction or missing valid format), output `\\boxed{None}`.\n\n\\boxed{None}",
+        "extracted_output": "",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    },
+    {
+        "question": "Given $\\triangle ABC$ and a point $P$ on one of its sides, call line $\\ell$ the $\\textit{splitting line}$ of $\\triangle ABC$ through $P$ if $\\ell$ passes through $P$ and divides $\\triangle ABC$ into two polygons of equal perimeter. Let $\\triangle ABC$ be a triangle where $BC = 219$ and $AB$ and $AC$ are positive integers. Let $M$ and $N$ be the midpoints of $\\overline{AB}$ and $\\overline{AC},$ respectively, and suppose that the splitting lines of $\\triangle ABC$ through $M$ and $N$ intersect at $30^\\circ.$ Find the perimeter of $\\triangle ABC.$",
+        "right_answer": "\\boxed{459}",
+        "model_output": "\\boxed{510}",
+        "extracted_output": "510",
+        "extract_answer_code": "    def extract_model_answer(self, text: str) -> str:\n        pattern = r\"\\\\boxed{((?:[^{}]|{[^{}]*})*)}\"\n        boxed_matches = re.findall(pattern, text, re.DOTALL)\n        if boxed_matches:\n            return boxed_matches[-1].strip()\n\n        sentence_end_pattern = r\"(?<!\\d)[.!?]\\s+\"\n        sentences = re.split(sentence_end_pattern, text)\n        sentences = [s.strip() for s in sentences if s.strip()]\n        return sentences[-1] if sentences else \"\"\n"
+    }
+]

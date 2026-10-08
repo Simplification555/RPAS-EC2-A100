@@ -1,0 +1,7 @@
+{
+    "father node": 2,
+    "modification": "1. **Add a 'Format & Verify' step**: Insert a new `Custom` operator call immediately after the `Programmer` step. This step explicitly instructs the model to check if the calculated result is a valid number and to wrap it in `\\boxed{}`. This directly addresses the failures where the model returned \"None\" or raw text instead of the required format.\n2. **Refine ScEnsemble Input**: Modify the `ScEnsemble` call to pass the *formatted* output from the verification step (or the code output if verification fails) as the primary solution candidate, ensuring the ensemble operates on consistent, formatted strings.\n3. **Update Analysis Prompt**: Slightly tighten the `ANALYSIS_PROMPT` to explicitly mention that the final answer must be a single rational number or integer, guiding the `Programmer` to output cleaner results.",
+    "before": 0.6,
+    "after": 0.5833333333333334,
+    "succeed": false
+}

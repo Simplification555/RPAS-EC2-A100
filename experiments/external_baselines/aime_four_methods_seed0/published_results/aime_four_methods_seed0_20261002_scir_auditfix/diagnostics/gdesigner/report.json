@@ -1,0 +1,265 @@
+{
+  "status": "passed",
+  "method": "gdesigner",
+  "synthetic_only": true,
+  "sample_count": 2,
+  "concurrency": 2,
+  "max_tokens": 6144,
+  "source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/upstream/GDesigner",
+  "source_info": {
+    "commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+    "clean_worktree": true,
+    "origin": "https://github.com/yanweiyue/GDesigner.git",
+    "repository": "https://github.com/yanweiyue/GDesigner.git"
+  },
+  "script_sha256": "6f6bc280c490178d52096242768848f05358a36432473ec03743c49543ac88fd",
+  "check_only": false,
+  "started_at_utc": "2026-10-02T14:21:32.982988+00:00",
+  "runtime_overrides": {
+    "AIME_AFLOW_CODE_TIMEOUT_S": "30",
+    "AIME_AFLOW_REQUEST_TIMEOUT_S": "600",
+    "AIME_AFLOW_SAMPLE_TIMEOUT_S": "1200",
+    "AIME_EXTERNAL_REQUEST_TIMEOUT_S": "600",
+    "AIME_MAAS_CODE_TIMEOUT_S": "60",
+    "AIME_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MAAS_REQUEST_TIMEOUT_S": "600",
+    "AIME_MAAS_SAMPLE_RETRIES": "3",
+    "AIME_MAAS_SAMPLE_TIMEOUT_S": "1500",
+    "AIME_MINILM_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "AIME_TOKENIZER_PATH": "/data/jxc/models/Qwen3.5-9B",
+    "RPAS_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "RPAS_MODEL_PATH": "/data/jxc/models/Qwen3.5-9B"
+  },
+  "result": {
+    "agent_nodes": 4,
+    "decision_method": "FinalRefer",
+    "topology_optimizer": "native GCN/MLP",
+    "training": true,
+    "offline_topology_only": false,
+    "reward_source": "model-answer exact match",
+    "training_predictions": [
+      {
+        "id": "synthetic_add",
+        "raw_output": "The task is to compute the sum of 3 and 4.\n\n1.  **Identify the numbers**: The integers are 3 and 4.\n2.  **Perform the addition**:\n    $$3 + 4 = 7$$\n    We can verify this by counting up from 3 by 4 steps:\n    -   $3 + 1 = 4$\n    -   $4 + 1 = 5$\n    -   $5 + 1 = 6$\n    -   $6 + 1 = 7$\n3.  **Final Result**: The sum is 7.\n\n\\boxed{7}\n\nFINAL ANSWER: 7",
+        "prediction": "7",
+        "gold": "7",
+        "parser_valid": true,
+        "correct": true,
+        "score": 1.0,
+        "score_0_1_2": 2,
+        "topology_log_probability": -5.063395023345947
+      },
+      {
+        "id": "synthetic_multiply",
+        "raw_output": "The task is to compute $3 \\times 4$.\n\n1.  **Identify the operation**: The problem asks for the product of 3 and 4.\n2.  **Perform the calculation**:\n    *   Using repeated addition: $4 + 4 + 4 = 12$.\n    *   Using standard multiplication facts: $3 \\times 4 = 12$.\n3.  **Verify constraints**: The result must be an integer, which 12 is. The final answer must be in `\\boxed{}`.\n\nAll provided agents (fU4u, NyBA, FTMf, XAUn) correctly calculated the result as 12 and formatted it appropriately.\n\n\\boxed{12}\n\nFINAL ANSWER: 12",
+        "prediction": "12",
+        "gold": "12",
+        "parser_valid": true,
+        "correct": true,
+        "score": 1.0,
+        "score_0_1_2": 2,
+        "topology_log_probability": -4.378702640533447
+      }
+    ],
+    "predictions": [
+      {
+        "id": "synthetic_add",
+        "raw_output": "The task is to compute the sum of 3 and 4.\n\n1.  Identify the numbers: $3$ and $4$.\n2.  Perform the addition: $3 + 4 = 7$.\n3.  The result is an integer.\n\nAll provided agents correctly identified the operation and calculated the sum as 7.\n\n\\boxed{7}\n\nFINAL ANSWER: 7",
+        "prediction": "7",
+        "gold": "7",
+        "parser_valid": true,
+        "correct": true,
+        "score": 1.0,
+        "score_0_1_2": 2,
+        "topology_log_probability": -5.452554702758789
+      },
+      {
+        "id": "synthetic_multiply",
+        "raw_output": "The task is to compute $3$ times $4$.\n\n1.  **Identify the operation**: The problem asks for the product of $3$ and $4$, which is written as $3 \\times 4$.\n2.  **Perform the calculation**:\n    *   Using repeated addition: $3 + 3 + 3 + 3 = 12$.\n    *   Alternatively: $4 + 4 + 4 = 12$.\n3.  **Verify with agents**:\n    *   Agent fU4u correctly calculated $3 \\times 4 = 12$.\n    *   Agent NyBA correctly calculated $3 \\times 4 = 12$.\n    *   Agent FTMf verified the calculation is correct and the result is $12$.\n    *   Agent XAUn correctly calculated $3 \\times 4 = 12$.\n\nAll agents agree on the result. The mathematical fact is that $3 \\times 4 = 12$.\n\n\\boxed{12}\n\nFINAL ANSWER: 12",
+        "prediction": "12",
+        "gold": "12",
+        "parser_valid": true,
+        "correct": true,
+        "score": 1.0,
+        "score_0_1_2": 2,
+        "topology_log_probability": -5.323959827423096
+      }
+    ],
+    "optimizer_audit": {
+      "optimizer": "Adam",
+      "learning_rate": 0.1,
+      "optimized_module": "GCN only; MLP fixed",
+      "optimizer_steps": 1,
+      "loss": 4.721048831939697,
+      "rewards": [
+        1.0,
+        1.0
+      ],
+      "gradient_tensor_count": 4,
+      "gradient_max_abs": 1.8853070735931396,
+      "gradient_nonzero_elements": 8455,
+      "gradient_nonzero_tensors": 4,
+      "changed_parameter_tensors": 4,
+      "parameter_max_abs_delta": 0.10000000894069672,
+      "parameter_update_verified": true
+    },
+    "checkpoint": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/gdesigner/gdesigner_diagnostic_gcn.pt",
+    "checkpoint_sha256": "dffbd04e7dc0c4a93510e998ae6369768e3158a296fd09970e68f1cec12cb8c5",
+    "checkpoint_max_abs_delta_from_initial": 0.10000000894069672,
+    "numerical_adapter": {
+      "variant": "gdesigner_exact_zero_span_numerical_compatibility_v1",
+      "upstream_function": "GDesigner.graph.graph.min_max_norm",
+      "degenerate_policy": "exact zero span maps to zero logits (edge probability 0.5)",
+      "nondegenerate_policy": "unchanged upstream min-max formula; no epsilon",
+      "zero_span_calls": 0,
+      "finite_checks": "normalization, log probability, loss, gradients, parameters; fail closed",
+      "role_graph": {
+        "variant": "aime_native_gsm8k_role_graph_semantic_mapping_v1",
+        "role_names": [
+          "Algebraic Decomposer",
+          "Independent Solver",
+          "Consistency Checker",
+          "Solution Synthesizer"
+        ],
+        "role_mapping": {
+          "Math Solver": "Independent Solver",
+          "Mathematical Analyst": "Algebraic Decomposer",
+          "Programming Expert": "Solution Synthesizer",
+          "Inspector": "Consistency Checker"
+        },
+        "native_role_edges": [
+          [
+            "Mathematical Analyst",
+            "Math Solver"
+          ],
+          [
+            "Mathematical Analyst",
+            "Programming Expert"
+          ],
+          [
+            "Mathematical Analyst",
+            "Inspector"
+          ],
+          [
+            "Math Solver",
+            "Programming Expert"
+          ],
+          [
+            "Programming Expert",
+            "Math Solver"
+          ],
+          [
+            "Programming Expert",
+            "Inspector"
+          ],
+          [
+            "Inspector",
+            "Math Solver"
+          ],
+          [
+            "Inspector",
+            "Programming Expert"
+          ],
+          [
+            "Inspector",
+            "Mathematical Analyst"
+          ]
+        ],
+        "mapped_role_edges": [
+          [
+            "Algebraic Decomposer",
+            "Independent Solver"
+          ],
+          [
+            "Algebraic Decomposer",
+            "Solution Synthesizer"
+          ],
+          [
+            "Algebraic Decomposer",
+            "Consistency Checker"
+          ],
+          [
+            "Independent Solver",
+            "Solution Synthesizer"
+          ],
+          [
+            "Solution Synthesizer",
+            "Independent Solver"
+          ],
+          [
+            "Solution Synthesizer",
+            "Consistency Checker"
+          ],
+          [
+            "Consistency Checker",
+            "Independent Solver"
+          ],
+          [
+            "Consistency Checker",
+            "Solution Synthesizer"
+          ],
+          [
+            "Consistency Checker",
+            "Algebraic Decomposer"
+          ]
+        ],
+        "upstream_repository": "https://github.com/yanweiyue/GDesigner.git",
+        "upstream_commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+        "upstream_source": "GDesigner/prompt/gsm8k_prompt_set.py:ROLE_CONNECTION",
+        "adapter_change": "replace the author AIME package's complete role graph with mapped native nine-edge role conditioning"
+      }
+    },
+    "node_timeout_seconds": 180,
+    "request_timeout_seconds": 600.0,
+    "seed_timing": "after local MiniLM load, matching formal runner",
+    "correct": 2,
+    "training_correct": 2,
+    "telemetry": {
+      "totals": {
+        "calls": 20,
+        "prompt_tokens": 10343,
+        "completion_tokens": 5131,
+        "total_tokens": 15474,
+        "failed_calls": 0,
+        "completion_truncated": 0
+      },
+      "phases": {
+        "search:train": {
+          "calls": 10,
+          "prompt_tokens": 5544,
+          "completion_tokens": 2635,
+          "total_tokens": 8179,
+          "failed_calls": 0,
+          "completion_truncated": 0
+        },
+        "search:post_training": {
+          "calls": 10,
+          "prompt_tokens": 4799,
+          "completion_tokens": 2496,
+          "total_tokens": 7295,
+          "failed_calls": 0,
+          "completion_truncated": 0
+        }
+      },
+      "finish_reason_counts": {
+        "stop": 20
+      },
+      "guard_events": 20,
+      "context_limit": 8192
+    },
+    "context_guard": {
+      "version": "maas_context_guard_v1",
+      "target_input_tokens": 4096,
+      "context_limit": 8192,
+      "calls_seen": 20,
+      "compacted_calls": 0,
+      "original_input_tokens": 10343,
+      "final_input_tokens": 10343,
+      "compacted_input_tokens": 0,
+      "max_input_tokens_seen": 1644,
+      "events_sample": []
+    }
+  },
+  "finished_at_utc": "2026-10-02T14:22:44.573161+00:00"
+}

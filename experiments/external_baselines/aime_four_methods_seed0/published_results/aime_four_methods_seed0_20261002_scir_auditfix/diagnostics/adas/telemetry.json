@@ -1,0 +1,25 @@
+{
+  "totals": {
+    "calls": 2,
+    "prompt_tokens": 234,
+    "completion_tokens": 143,
+    "total_tokens": 377,
+    "failed_calls": 0,
+    "completion_truncated": 0
+  },
+  "phases": {
+    "search": {
+      "calls": 2,
+      "prompt_tokens": 234,
+      "completion_tokens": 143,
+      "total_tokens": 377,
+      "failed_calls": 0,
+      "completion_truncated": 0
+    }
+  },
+  "finish_reason_counts": {
+    "stop": 2
+  },
+  "guard_events": 2,
+  "context_limit": 8192
+}

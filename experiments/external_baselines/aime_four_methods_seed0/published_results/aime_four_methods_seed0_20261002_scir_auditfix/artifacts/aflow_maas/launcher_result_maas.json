@@ -1,0 +1,13 @@
+{
+  "schema": "aime_method_launcher_attempt_v1",
+  "method": "maas",
+  "kind": "formal",
+  "status": "failed",
+  "recorded_at_utc": "2026-10-02T22:20:15.011197+00:00",
+  "source_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0",
+  "run_session_record": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-maas-18084-ytjh9xvv.json",
+  "preflight_exit_code": 0,
+  "compute_exit_code": 1,
+  "quality_gate_exit_code": null,
+  "note": "Only a successful computation and unchanged native quality gate establish a formal pass."
+}

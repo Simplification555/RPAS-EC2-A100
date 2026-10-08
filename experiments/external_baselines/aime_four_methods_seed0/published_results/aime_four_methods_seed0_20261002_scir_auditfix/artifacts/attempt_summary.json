@@ -1,0 +1,94 @@
+{
+  "schema": "aime_four_methods_attempt_summary_v1",
+  "stage": "all",
+  "finished_at_utc": "2026-10-03T18:41:02.956250+00:00",
+  "method_order": [
+    "maas",
+    "adas",
+    "gdesigner",
+    "aflow"
+  ],
+  "overall_exit_code": 1,
+  "overall_status": "failed",
+  "diagnostic_exit_code": 0,
+  "aggregate_status": "blocked_incomplete",
+  "methods": {
+    "maas": {
+      "status": "failed",
+      "exit_code": 1,
+      "run_dir": "aflow_maas/maas/seed_0",
+      "launcher_record": "aflow_maas/launcher_result_maas.json",
+      "launcher_result": {
+        "schema": "aime_method_launcher_attempt_v1",
+        "method": "maas",
+        "kind": "formal",
+        "status": "failed",
+        "recorded_at_utc": "2026-10-02T22:20:15.011197+00:00",
+        "source_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0",
+        "run_session_record": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-maas-18084-ytjh9xvv.json",
+        "preflight_exit_code": 0,
+        "compute_exit_code": 1,
+        "quality_gate_exit_code": null,
+        "note": "Only a successful computation and unchanged native quality gate establish a formal pass."
+      }
+    },
+    "adas": {
+      "status": "failed",
+      "exit_code": 1,
+      "run_dir": "adas_gdesigner/adas/seed_0",
+      "launcher_record": "adas_gdesigner/launcher_result_adas.json",
+      "launcher_result": {
+        "schema": "aime_method_launcher_attempt_v1",
+        "method": "adas",
+        "kind": "formal",
+        "status": "failed",
+        "recorded_at_utc": "2026-10-03T06:44:21.142030+00:00",
+        "source_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0",
+        "run_session_record": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-adas-18084-tueQfqH2.json",
+        "preflight_exit_code": 0,
+        "compute_exit_code": 1,
+        "quality_gate_exit_code": null,
+        "note": "Only a successful computation and unchanged native quality gate establish a formal pass."
+      }
+    },
+    "gdesigner": {
+      "status": "failed",
+      "exit_code": 1,
+      "run_dir": "adas_gdesigner/gdesigner/seed_0",
+      "launcher_record": "adas_gdesigner/launcher_result_gdesigner.json",
+      "launcher_result": {
+        "schema": "aime_method_launcher_attempt_v1",
+        "method": "gdesigner",
+        "kind": "formal",
+        "status": "failed",
+        "recorded_at_utc": "2026-10-03T09:49:50.255473+00:00",
+        "source_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0",
+        "run_session_record": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-gdesigner-18084-fMvGxIq5.json",
+        "preflight_exit_code": 0,
+        "compute_exit_code": 1,
+        "quality_gate_exit_code": null,
+        "note": "Only a successful computation and unchanged native quality gate establish a formal pass."
+      }
+    },
+    "aflow": {
+      "status": "failed",
+      "exit_code": 1,
+      "run_dir": "aflow_maas/aflow/seed_0",
+      "launcher_record": "aflow_maas/launcher_result_aflow.json",
+      "launcher_result": {
+        "schema": "aime_method_launcher_attempt_v1",
+        "method": "aflow",
+        "kind": "formal",
+        "status": "failed",
+        "recorded_at_utc": "2026-10-03T18:41:01.099790+00:00",
+        "source_root": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0",
+        "run_session_record": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-aflow-18084-2EkDLua7.json",
+        "preflight_exit_code": 0,
+        "compute_exit_code": 0,
+        "quality_gate_exit_code": 42,
+        "note": "Only a successful computation and unchanged native quality gate establish a formal pass."
+      }
+    }
+  },
+  "note": "Failed or unverified methods are not accepted or aggregated; attempts use fresh output directories."
+}

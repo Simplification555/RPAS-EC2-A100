@@ -1,0 +1,1907 @@
+{
+  "schema": "aime_artifact_export_index_v1",
+  "run_id": "aime_four_methods_seed0_20261002_scir_auditfix",
+  "exported_at_utc": "2026-10-08T07:17:06.353923+00:00",
+  "source_bytes_preserved": true,
+  "source_file_count": 270,
+  "source_bytes": 15662725,
+  "excluded_file_counts": {
+    "unchanged_pinned_upstream_file": 818,
+    "cache_or_git_metadata": 267
+  },
+  "excluded_note": "Unchanged upstream files are recoverable at pinned commits. Retained clone files are generated artifacts, runtime logs, or runtime deltas. Original run output files were not modified; source metadata snapshots are tied to the actual runtime commit, while the publication commit refreshes the current package README and its checksum.",
+  "files": [
+    {
+      "path": "artifacts/adas_gdesigner/adas/seed_0/native_search/aime_0_run_archive.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/adas/seed_0/native_search/aime_0_run_archive.json",
+      "category": "formal_run_artifact",
+      "bytes": 23049,
+      "sha256": "2b2d740c5a57711186afc3cbc8a11958524bb64c96493aaed419fa4e9554afc2"
+    },
+    {
+      "path": "artifacts/adas_gdesigner/adas/seed_0/run_manifest.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/adas/seed_0/run_manifest.json",
+      "category": "formal_run_artifact",
+      "bytes": 12175,
+      "sha256": "11fc0fae8bb2105e6e41488af9cfc9fd10b70cd361c63072ce2aa00b1570c718"
+    },
+    {
+      "path": "artifacts/adas_gdesigner/gdesigner/seed_0/gdesigner_controller.pt",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/gdesigner/seed_0/gdesigner_controller.pt",
+      "category": "formal_run_artifact",
+      "bytes": 105993,
+      "sha256": "2b0648d1abd5abd9506d2d9e7e9284cec56e16a4728167486417fb442ab23005"
+    },
+    {
+      "path": "artifacts/adas_gdesigner/gdesigner/seed_0/run_manifest.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/gdesigner/seed_0/run_manifest.json",
+      "category": "formal_run_artifact",
+      "bytes": 14710,
+      "sha256": "050e2a9f854837d50c0705be800e90101c237f1add1368d2cef765059958fe4e"
+    },
+    {
+      "path": "artifacts/adas_gdesigner/launcher_attempt_adas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/launcher_attempt_adas.json",
+      "category": "formal_run_artifact",
+      "bytes": 662,
+      "sha256": "d40f50b44a715b47afb976eef9add668ef4d1853300ba1a60b361ac0b01962c5"
+    },
+    {
+      "path": "artifacts/adas_gdesigner/launcher_attempt_gdesigner.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/launcher_attempt_gdesigner.json",
+      "category": "formal_run_artifact",
+      "bytes": 672,
+      "sha256": "d3569df15043bde4fad707c4fbe1ca141fbe57565d555cd26d07d19007479cbc"
+    },
+    {
+      "path": "artifacts/adas_gdesigner/launcher_result_adas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/launcher_result_adas.json",
+      "category": "formal_run_artifact",
+      "bytes": 655,
+      "sha256": "b05d6ff4298acf85930653d4b95a82a73cbc3be9572417cfebec3b8216754cfc"
+    },
+    {
+      "path": "artifacts/adas_gdesigner/launcher_result_gdesigner.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/launcher_result_gdesigner.json",
+      "category": "formal_run_artifact",
+      "bytes": 665,
+      "sha256": "55bd3801c1b3683a75bff1e2b6c1742b21c9e12b62ee300c37b38e2727078e52"
+    },
+    {
+      "path": "artifacts/adas_gdesigner/run_session_adas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/run_session_adas.json",
+      "category": "formal_run_artifact",
+      "bytes": 4044,
+      "sha256": "e1958b881ca26ff6195948c6e3c36f267f222233c1dbb74f0394b86cdb093ee8"
+    },
+    {
+      "path": "artifacts/adas_gdesigner/run_session_gdesigner.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/adas_gdesigner/run_session_gdesigner.json",
+      "category": "formal_run_artifact",
+      "bytes": 4059,
+      "sha256": "475e5443251453ef26f7fd1420d823821ddd5f2ba45922e3428138178d85b7b6"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/data/datasets/math_test.jsonl",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/data/datasets/math_test.jsonl",
+      "category": "formal_run_artifact",
+      "bytes": 14503,
+      "sha256": "5b8b8bdffcac840cbb2500fcad8fa729ed2fce2ceb2210274746c599a2391820"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/data/datasets/math_validate.jsonl",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/data/datasets/math_validate.jsonl",
+      "category": "formal_run_artifact",
+      "bytes": 14806,
+      "sha256": "4573c21f52b48e18f489c53bf615174ae34cc37da5b3bfe9bc11536ebade59f7"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/logs/AFlow_2026-10-03.log",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/logs/AFlow_2026-10-03.log",
+      "category": "formal_run_artifact",
+      "bytes": 13184,
+      "sha256": "42d72b18d6b88ada5093615f9e38a0f2763b92b92bb0aefbb47db191f5b26e0e"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/scripts/formatter.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/scripts/formatter.py",
+      "category": "formal_run_artifact",
+      "bytes": 8778,
+      "sha256": "e185ff705494480403cb2e81e677eec8d02836e9d3e43f17e7aa29ca4ed5cb10"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/scripts/optimizer.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/scripts/optimizer.py",
+      "category": "formal_run_artifact",
+      "bytes": 10535,
+      "sha256": "e0c0622e6cc9ba3023ce49d22634b73fcc64d83c83eca391f9f40bf199a8a5da"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/MATH/workflows/template/operator.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/MATH/workflows/template/operator.py",
+      "category": "formal_run_artifact",
+      "bytes": 5786,
+      "sha256": "c5c3398308e75b9c378ff1a794d1434958c8923a3b5fabb1d15389649afbdfc8"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/processed_experience.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/processed_experience.json",
+      "category": "formal_run_artifact",
+      "bytes": 4441,
+      "sha256": "6e6b2cde842fad36810c1730992de8967c3c25250bdd6c7d3d950c5c00c1000a"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/results.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/results.json",
+      "category": "formal_run_artifact",
+      "bytes": 1476,
+      "sha256": "117985c3d80588057c2ecd08905a2a971a65812f749a8dd809fcc4702182b979"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/0.40000_20261003_180357.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/0.40000_20261003_180357.csv",
+      "category": "formal_run_artifact",
+      "bytes": 662936,
+      "sha256": "44d6e7083f6f5492003112c178bfd96f7b1bfb640aeff124303b67a39d4ba3e3"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 823,
+      "sha256": "22d4ba25953ff0a7327c45524ee933bb1798821daabc4d18ab2c6f28380100f6"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 528628,
+      "sha256": "755d2d93fe4044434d72cb731adaf21ef960b4e2d68b93104016402b0d6b5d31"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 34,
+      "sha256": "6251640632336f99f2767eed1f0496d127ec50f1cbf51806280dd0d6c97df1e9"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/0.60000_20261003_182931.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/0.60000_20261003_182931.csv",
+      "category": "formal_run_artifact",
+      "bytes": 21807,
+      "sha256": "abf5f5124964470b8b44dd2cda0f5d69522f90e45f839343cf33f471ad349845"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/experience.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/experience.json",
+      "category": "formal_run_artifact",
+      "bytes": 468,
+      "sha256": "f4a453a558bdd9c67ad59c98990632543dc0b9a28c7021f5e85c733451c64f2f"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 1857,
+      "sha256": "0a1c7f472fd0bd1ca6aaa1dde57facfe9f6f962d27b14123997b1307b1c69717"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 24084,
+      "sha256": "4cfb1a98d78da5781739fa9b10adc673dc01452c5a1ce24da4d474da2e59dc4e"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_2/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 379,
+      "sha256": "04d9aa3f809eb925c99bae9c27c301afed22e421f6b1063178c2344f5f562c08"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/0.26667_20261003_190957.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/0.26667_20261003_190957.csv",
+      "category": "formal_run_artifact",
+      "bytes": 22346,
+      "sha256": "657db8917b578f05ad1d62fef3738bb629e090794285ef16ea3d6f86374dc9c7"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/experience.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/experience.json",
+      "category": "formal_run_artifact",
+      "bytes": 405,
+      "sha256": "f68475d7c9e4ba61b46fefb0b045bf35ab7fb552f149ddadb576f382403b546f"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 2143,
+      "sha256": "fc49bf28254568f6b980627e1cb91005590f8b9687580adedea7e92540216fab"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 39988,
+      "sha256": "09337d9f75bdf341127d188a44443da1a5f0ece0523eac37883f4eae0695dd98"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_3/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 908,
+      "sha256": "6b1fa766fcfebe0874ee7e04ceb6611987159d477a1b87adf110d174b12120eb"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/0.58333_20261003_194446.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/0.58333_20261003_194446.csv",
+      "category": "formal_run_artifact",
+      "bytes": 22346,
+      "sha256": "edc261d9ec641cec4af7108ce3f8200440123779b7dd1781d24e24e790c05aeb"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/experience.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/experience.json",
+      "category": "formal_run_artifact",
+      "bytes": 949,
+      "sha256": "f5a96f35fb02135474c5133a865b18bde052503258a814136f3d3ceb0266550e"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 2101,
+      "sha256": "78838b6de269755db85ebee5903a4b164af76f7bd3086a9d33e156bd333c28c2"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 23183,
+      "sha256": "3dbad88e66a2b4450fd49fd7dc3d43144af3107770512b515839eff806b3b412"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_4/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 870,
+      "sha256": "076bd2dee88195789b75749e267f25d5e79045183e2ace26ff9d6932bbdd8917"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/0.68333_20261003_201507.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/0.68333_20261003_201507.csv",
+      "category": "formal_run_artifact",
+      "bytes": 79194,
+      "sha256": "ca0c519daa15f01c47a7c693cf73d7ed022e0b5fafe9398d3a70acf9cf8eace2"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/experience.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/experience.json",
+      "category": "formal_run_artifact",
+      "bytes": 499,
+      "sha256": "ccc0e71556dd691a3558e73c7bc36181dc670554720dcb74ee6813cdce9ca612"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 2619,
+      "sha256": "da8c657bd98ec4abc6015f032cb79a2eded04bb9437058a92ea981869659538d"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 56934,
+      "sha256": "02cf5fd4a069a0751afd8649b81c24fd5ec930b989a2a6b70fbff4fe2797f3e1"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_5/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 1450,
+      "sha256": "c78f52c12d385e1eb75105bfa7689aaa26c7172a29c55ed82e130d74f2ef4c0c"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/0.66667_20261003_204619.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/0.66667_20261003_204619.csv",
+      "category": "formal_run_artifact",
+      "bytes": 46026,
+      "sha256": "d8142cc1a1fd0bf1cdf250071d77422dce10767ec1270d989bef9ecff06970ed"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/experience.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/experience.json",
+      "category": "formal_run_artifact",
+      "bytes": 589,
+      "sha256": "d90367caa068588013628b47d08bc28257b0e34793e13533ede77c1467c2fb1a"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 2951,
+      "sha256": "e7f2e432b4e38d51f37f86edd014500d63443e266f4883aed9bfc71ae4d7a949"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 39076,
+      "sha256": "18f6261c799fa28e1bf8d65077014e67cfbdf58073e964d5ae7965fde7295672"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_6/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 2076,
+      "sha256": "51306a96d4d10f092cf0c30a527eae51f8dbd92d1b573ef2e73832f16593fb40"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/0.73333_20261003_211718.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/0.73333_20261003_211718.csv",
+      "category": "formal_run_artifact",
+      "bytes": 27233,
+      "sha256": "dd2f24a2431d44d9826aada91a62373b46a76fb3b93a62ceae022fcd7a3eb34a"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/experience.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/experience.json",
+      "category": "formal_run_artifact",
+      "bytes": 472,
+      "sha256": "8a1a415ef32e0b85a523b0e2f626d1c8a93c552bf6cfc73619b65352d858990b"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 2727,
+      "sha256": "7721e18d246f1b615aaf28711710a776ddce758f199b1294d8315abb6bff5cdc"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 22625,
+      "sha256": "c6a30c09ac2b1e139751b29fde8fea34d82e316d35b258096a75099acf58033b"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_7/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 1828,
+      "sha256": "a08947f2952d012eec003113ae347bdce6899eff76a7d4f64e04cdade6e09be8"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/0.71667_20261003_220646.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/0.71667_20261003_220646.csv",
+      "category": "formal_run_artifact",
+      "bytes": 26427,
+      "sha256": "f441cee9542b7f966d1f29df250be0ab57116cbc1a891deeeb250dde7f093aa9"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/experience.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/experience.json",
+      "category": "formal_run_artifact",
+      "bytes": 552,
+      "sha256": "a38f8ca46a316bea864291cd2f6482ebc9b80a651cb1e8ed656062fe317ad79e"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 3238,
+      "sha256": "baba44250a7f360266cd95889097e23b0e7ad3df7933218bce90ebaecff0b4d8"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 20835,
+      "sha256": "bbeffdc676de04307169b8463731011fc45e5d52d4c86d5a668f89d1853127c6"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_8/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 2323,
+      "sha256": "06909efb3c834091d1d23935efd4c168b824c07c8f06b2395b05f8041c8c88e8"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/0.68333_20261003_224834.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/0.68333_20261003_224834.csv",
+      "category": "formal_run_artifact",
+      "bytes": 29600,
+      "sha256": "23f20a312c53cab79b993551fca5934bc68c0da72390f4b687b5f57913dd7fff"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/experience.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/experience.json",
+      "category": "formal_run_artifact",
+      "bytes": 875,
+      "sha256": "08a0ac860ee6b089d3737d29220124dd1516e107c47a8859f6dff898ef251be0"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 3208,
+      "sha256": "c039637eaece044111f346a4551c0ef5080f0da64a12816606b72b757b337c61"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 18584,
+      "sha256": "cb1babadcaf83c824d8d4acc40f1adf8ee125d8288e8764b41849fb6ac026564"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_9/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 2863,
+      "sha256": "0667fc342fbeb1f9fce374691b28a2217b3fd61c50ebbacc7d205642fd1776fb"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/op_prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/op_prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 1754,
+      "sha256": "21a5276dcce3ebeb6a531b34be36c7b6fb62c035eba040a77284f6069b97da81"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator.json",
+      "category": "formal_run_artifact",
+      "bytes": 976,
+      "sha256": "35182bb00a4a152b31eef3a67f623e1ad4cd17b32d20c92c415c646d97359591"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator.py",
+      "category": "formal_run_artifact",
+      "bytes": 5786,
+      "sha256": "c5c3398308e75b9c378ff1a794d1434958c8923a3b5fabb1d15389649afbdfc8"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator_an.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator_an.py",
+      "category": "formal_run_artifact",
+      "bytes": 530,
+      "sha256": "d7c6015d35021585f9794aa496c55004098cbd5f308ff91a39000c550848c05d"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_repo/workspace/rpas_aime_native/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_1/0.40000_20261003_225546.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_1/0.40000_20261003_225546.csv",
+      "category": "formal_run_artifact",
+      "bytes": 322762,
+      "sha256": "64872a88b47caa0b71955f26846f803ff7ac29597bda03c9b93ff06332841ae9"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_1/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_1/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 273377,
+      "sha256": "4eb073e9684bf4b0d25d9e103af6ed3c7fc82be736ad2392e0e9b54c031d75f1"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_2/0.53333_20261003_231639.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_2/0.53333_20261003_231639.csv",
+      "category": "formal_run_artifact",
+      "bytes": 11486,
+      "sha256": "398cb5091d234b41ea07cd74216de67d6c394d66b9538ba133b5a312868ef4dd"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_2/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_2/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 13335,
+      "sha256": "75e64db8cfaaba521ba244030c12663f75ce87200cdc3f9620e95d285c0d3713"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_3/0.30000_20261003_233357.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_3/0.30000_20261003_233357.csv",
+      "category": "formal_run_artifact",
+      "bytes": 11574,
+      "sha256": "46527403be23bdb0c6740251037d8c29a688decc8c7b3e8d8b5f7f226de207d4"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_3/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_3/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 22324,
+      "sha256": "066c0ef8730cabfbee14c2fb4d8a26c9f59ee2bd1c9f8cf1349a100fb5fbedc8"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_4/0.63333_20261003_235340.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_4/0.63333_20261003_235340.csv",
+      "category": "formal_run_artifact",
+      "bytes": 11571,
+      "sha256": "2a4e1268ef4870e4b8fd25ca4456abcff4082cf39d88b1e373d52dc3f8c4d862"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_4/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_4/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 11664,
+      "sha256": "7bfa14e307cd7e881a5e2c370ad4abc376a6dbf4cf994a0a447647caa2a94b7d"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_5/0.83333_20261004_001400.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_5/0.83333_20261004_001400.csv",
+      "category": "formal_run_artifact",
+      "bytes": 17095,
+      "sha256": "e7c018116904a63f47c8f99556f6861a74669af4f8b87ca29fe5900838cc2356"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_5/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_5/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 5574,
+      "sha256": "4f5e1329a311020e36ed67571a1557dfa10287e472dbf6519ee353146dfb0c84"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_6/0.60000_20261004_003616.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_6/0.60000_20261004_003616.csv",
+      "category": "formal_run_artifact",
+      "bytes": 46697,
+      "sha256": "c20da29033615e131026e75d624a21c6a122a4a42f4c03c788d99dac032c938b"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_6/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_6/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 37847,
+      "sha256": "78a53db3b2a2f7f5acbb05ba2103a32e281a63c71a59d813173fca9231dc7982"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_7/0.76667_20261004_010016.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_7/0.76667_20261004_010016.csv",
+      "category": "formal_run_artifact",
+      "bytes": 11571,
+      "sha256": "b3860a1ecfaaec864b3ae1ddfdd4dacb5034ab2536a5f739b787eed1982e6b3d"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_7/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_7/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 7804,
+      "sha256": "a96e153ce12c7ac5be43ccf8a0c5c1153ae87725656a1948e7cfc75225ecba4a"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_8/0.63333_20261004_012311.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_8/0.63333_20261004_012311.csv",
+      "category": "formal_run_artifact",
+      "bytes": 11658,
+      "sha256": "1f52b0c58394ceca375141266e0ead6182243e56a1ef1520e20720336b63d85a"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_8/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_8/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 10016,
+      "sha256": "b670ab969cf97060da7317e4f63c8cb4199c68df98371bbafaae5afa1310fb7c"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_9/0.66667_20261004_015727.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_9/0.66667_20261004_015727.csv",
+      "category": "formal_run_artifact",
+      "bytes": 11645,
+      "sha256": "00b24d1ffa71f21fda453b201463b5c59f42bb957edd60b4763df8c0a1477fca"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_selection/round_9/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_selection/round_9/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 9547,
+      "sha256": "2ff32ba418b7714d42d604710fe33d83fb1ce2b4f11d95f71e04b88566b70764"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_test/aime_2025_Q/0.56667_20261004_022100.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_test/aime_2025_Q/0.56667_20261004_022100.csv",
+      "category": "formal_run_artifact",
+      "bytes": 40530,
+      "sha256": "110030780136135f0fc8fd3a7d962b9032e6f0b6f615074976abb815d6fede6c"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_test/aime_2025_Q/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_test/aime_2025_Q/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 38390,
+      "sha256": "8fce83f463cec1518e85eac6706df99a11e6d52d6585615e57a8a3e97f38fb40"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_test/aime_2026_Q/0.66667_20261004_024100.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_test/aime_2026_Q/0.66667_20261004_024100.csv",
+      "category": "formal_run_artifact",
+      "bytes": 15683,
+      "sha256": "5e2d27394832048eb15db1351ccc0456a07340f7a85cc212a0d9d2a90cef4949"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/aflow_test/aime_2026_Q/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/aflow_test/aime_2026_Q/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 8963,
+      "sha256": "8f4e538788f3af867600ca4608381676a24f57474c692ee77beba8ca57efbaca"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/dtest_access_manifest.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/dtest_access_manifest.json",
+      "category": "formal_run_artifact",
+      "bytes": 7211,
+      "sha256": "4d67bd67ef73767bdb253851cd3e9c3bc26036366c2fa4cc3a7616b3cc538287"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/native_result.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/native_result.json",
+      "category": "formal_run_artifact",
+      "bytes": 347521,
+      "sha256": "4800fff9c8cb267414239b00dc9ab6e258959df98caf614e72030a86a658af1b"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/quality_gate.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/quality_gate.json",
+      "category": "formal_run_artifact",
+      "bytes": 666,
+      "sha256": "fc7305bc86b7f5d3bd1ce21f6e96e7aeb81cca146efc2798fdc1bf97602389a9"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/run_manifest.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/run_manifest.json",
+      "category": "formal_run_artifact",
+      "bytes": 2517,
+      "sha256": "53b653fc1057006942672b783b16351182c3a6aeae26c69c68489f76f6c8c63c"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/selection_frozen.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/selection_frozen.json",
+      "category": "formal_run_artifact",
+      "bytes": 7625,
+      "sha256": "610fffb21c147c759ebc051ad1150e804431a74c629c3f275f68f7bc0cc0488c"
+    },
+    {
+      "path": "artifacts/aflow_maas/aflow/seed_0/split_manifest.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/aflow/seed_0/split_manifest.json",
+      "category": "formal_run_artifact",
+      "bytes": 9732,
+      "sha256": "96b1e5bb38f61c06ff4b98e16709999803aca1aaa0fb4aaff3ddf70381054c95"
+    },
+    {
+      "path": "artifacts/aflow_maas/launcher_attempt_aflow.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/launcher_attempt_aflow.json",
+      "category": "formal_run_artifact",
+      "bytes": 664,
+      "sha256": "63a986237e8a4973662c2f65cdb801c214a46a61c402c38e0af3899a37415480"
+    },
+    {
+      "path": "artifacts/aflow_maas/launcher_attempt_maas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/launcher_attempt_maas.json",
+      "category": "formal_run_artifact",
+      "bytes": 662,
+      "sha256": "a11e5f31e402133de6e9ce3504235f1c76fcca313a6f44d24e8b3e6eba07ca9f"
+    },
+    {
+      "path": "artifacts/aflow_maas/launcher_result_aflow.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/launcher_result_aflow.json",
+      "category": "formal_run_artifact",
+      "bytes": 655,
+      "sha256": "377263f0631a88860df41eb1264bf8141137098c4b1b1c4a26f7d4c8719acbf4"
+    },
+    {
+      "path": "artifacts/aflow_maas/launcher_result_maas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/launcher_result_maas.json",
+      "category": "formal_run_artifact",
+      "bytes": 655,
+      "sha256": "8b15a6c31ae9c9f405a9d13c73171398dea898bfd82dcfd4e2e91fb9a73abbe3"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/config/config2.yaml",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/config/config2.yaml",
+      "category": "formal_run_artifact",
+      "bytes": 659,
+      "sha256": "4f1b097877ca2ab9409394985b9ae19cc8a1b6fa55414d4c2cd41149fd82b93c"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/logs/20261002.txt",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/logs/20261002.txt",
+      "category": "formal_run_artifact",
+      "bytes": 165987,
+      "sha256": "6acb2cbb467d90ad6c1d9bd7542c163106169b4b687186b57eb9249f539d84da"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/actions/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/actions/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 129,
+      "sha256": "0306f0614f009216aa656b66aa4c4e36312a397f3451dafa5bf45dd9e5b9ffaa"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/data/math_test.jsonl",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/data/math_test.jsonl",
+      "category": "formal_run_artifact",
+      "bytes": 14806,
+      "sha256": "4573c21f52b48e18f489c53bf615174ae34cc37da5b3bfe9bc11536ebade59f7"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/data/math_train.jsonl",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/data/math_train.jsonl",
+      "category": "formal_run_artifact",
+      "bytes": 28703,
+      "sha256": "04460020b1bc1a95993a0a748c627a54511257bcd2abb9ac42821aecfc4ca837"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/models/utils.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/models/utils.py",
+      "category": "formal_run_artifact",
+      "bytes": 1606,
+      "sha256": "f8018064cf0711a6c51f7c08a12199a85bbb0b60fc5ab6c86c24026e06174277"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/op_prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/op_prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 3145,
+      "sha256": "84b19e1fcc8cf600d5df1764edcb0c986dd29fdacb1cea931cce173bdbf5360d"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/operator.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/operator.py",
+      "category": "formal_run_artifact",
+      "bytes": 6867,
+      "sha256": "b76dd3ffb04664ff5915beac3a01a4bff172a152a633b69b1d8eaadfd62869e1"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 4784,
+      "sha256": "6bb0ed182312c0afaad23cfe4988305a48a0e6b1284892dca602128989525b34"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/op_prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/op_prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 3145,
+      "sha256": "84b19e1fcc8cf600d5df1764edcb0c986dd29fdacb1cea931cce173bdbf5360d"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/operator.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/operator.py",
+      "category": "formal_run_artifact",
+      "bytes": 6867,
+      "sha256": "b76dd3ffb04664ff5915beac3a01a4bff172a152a633b69b1d8eaadfd62869e1"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 4784,
+      "sha256": "6bb0ed182312c0afaad23cfe4988305a48a0e6b1284892dca602128989525b34"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/textgrad/textual_gradient.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/ext/maas/scripts/textgrad/textual_gradient.py",
+      "category": "formal_run_artifact",
+      "bytes": 6170,
+      "sha256": "415e31019b019718f2666267d61103a550feb20afe2c8ef889971ec9d3c52ad6"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/provider/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/provider/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 72,
+      "sha256": "b66462ee99e5c95fa66ba43a1cf9e3087d916d3ddef0e3053714e99c33983599"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/maas/tools/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/maas/tools/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 487,
+      "sha256": "7731a486661890d47154c1175618a6b33b3392fba7c76ca649216ebc9f971053"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 4504,
+      "sha256": "96f7b948d03a5a645c6bf77f77ac348d7707f05ff4df22affd8b6676620b3613"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/results.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/results.json",
+      "category": "formal_run_artifact",
+      "bytes": 130,
+      "sha256": "bbde87289a8499ea6c346239f3f3a86900a398a0cdfcc91fca88c734803eae17"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/round_1/0.70000_20261003_062013.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/round_1/0.70000_20261003_062013.csv",
+      "category": "formal_run_artifact",
+      "bytes": 270756,
+      "sha256": "dac80efb1a8723b8a79c729acfdb9984e271b6398f1ba011dd27cd758676fee6"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/round_1/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/round_1/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 77250,
+      "sha256": "2c61d42ea7055923d7de9e08345b70cad7a2c480ca4d9ef4edc69f79c92da3a8"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/op_prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/op_prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 3145,
+      "sha256": "84b19e1fcc8cf600d5df1764edcb0c986dd29fdacb1cea931cce173bdbf5360d"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator.json",
+      "category": "formal_run_artifact",
+      "bytes": 2377,
+      "sha256": "1450895b0a9253910614310980c9325f7e05cf900c3a3d3180cd8a873f628401"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator.py",
+      "category": "formal_run_artifact",
+      "bytes": 6867,
+      "sha256": "b76dd3ffb04664ff5915beac3a01a4bff172a152a633b69b1d8eaadfd62869e1"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator_an.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator_an.py",
+      "category": "formal_run_artifact",
+      "bytes": 529,
+      "sha256": "bc314e7dbf5286651ab6ac8df6bea4b26843b80c7b62ba53b0c176c7b8eb6654"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator_registry.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator_registry.py",
+      "category": "formal_run_artifact",
+      "bytes": 482,
+      "sha256": "85e27ed0b92144fdd627a5ca7836388ff035191eccd82fedaeba1a2f2b390ebd"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/test/template/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 4784,
+      "sha256": "6bb0ed182312c0afaad23cfe4988305a48a0e6b1284892dca602128989525b34"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/graph.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/graph.py",
+      "category": "formal_run_artifact",
+      "bytes": 4338,
+      "sha256": "eae94b897814769c066284348ec0dc3d7d9126834b55cf5cd83856eaff0319b7"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/results.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/results.json",
+      "category": "formal_run_artifact",
+      "bytes": 145,
+      "sha256": "6bbe804ad64956ce0357b9df9ef1d663441dd55d3bb1e4513cdc91180c209950"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/0.68333_20261003_043021.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/0.68333_20261003_043021.csv",
+      "category": "formal_run_artifact",
+      "bytes": 479905,
+      "sha256": "bb63ce5b2a093ed0f0fe0d87f8f6dca9a46a87aaa19fcf9c6697343195b374c2"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/MATH_controller_sample1.pth",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/MATH_controller_sample1.pth",
+      "category": "formal_run_artifact",
+      "bytes": 548563,
+      "sha256": "3f2e754a1f4288ede0fb41fd17b116bb9f63569d040f8f9d78280a65c7d269ed"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/log.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/log.json",
+      "category": "formal_run_artifact",
+      "bytes": 140072,
+      "sha256": "5771a1ae5b2b9cddf3bf7ff927ac4da30bac049778027fb0839ff1f3527d4db1"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/op_prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/op_prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 3145,
+      "sha256": "84b19e1fcc8cf600d5df1764edcb0c986dd29fdacb1cea931cce173bdbf5360d"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator.json",
+      "category": "formal_run_artifact",
+      "bytes": 2377,
+      "sha256": "1450895b0a9253910614310980c9325f7e05cf900c3a3d3180cd8a873f628401"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator.py",
+      "category": "formal_run_artifact",
+      "bytes": 6867,
+      "sha256": "b76dd3ffb04664ff5915beac3a01a4bff172a152a633b69b1d8eaadfd62869e1"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator_an.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator_an.py",
+      "category": "formal_run_artifact",
+      "bytes": 529,
+      "sha256": "bc314e7dbf5286651ab6ac8df6bea4b26843b80c7b62ba53b0c176c7b8eb6654"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator_registry.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator_registry.py",
+      "category": "formal_run_artifact",
+      "bytes": 482,
+      "sha256": "85e27ed0b92144fdd627a5ca7836388ff035191eccd82fedaeba1a2f2b390ebd"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/prompt.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/MATH/train/template/prompt.py",
+      "category": "formal_run_artifact",
+      "bytes": 4784,
+      "sha256": "6bb0ed182312c0afaad23cfe4988305a48a0e6b1284892dca602128989525b34"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/__init__.py",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/maas_repo/workspace/rpas_aime_native/__init__.py",
+      "category": "formal_run_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/run_manifest.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/run_manifest.json",
+      "category": "formal_run_artifact",
+      "bytes": 1819,
+      "sha256": "c88c9577aa58a72703c47e49112a48546b9788d8426b6db3982aff7f6c56eb56"
+    },
+    {
+      "path": "artifacts/aflow_maas/maas/seed_0/split_manifest.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/maas/seed_0/split_manifest.json",
+      "category": "formal_run_artifact",
+      "bytes": 7768,
+      "sha256": "af53a02788d35662287e3e60132dbcafbb301aff31fabfc50b97c6545704549c"
+    },
+    {
+      "path": "artifacts/aflow_maas/run_session_aflow.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/run_session_aflow.json",
+      "category": "formal_run_artifact",
+      "bytes": 4047,
+      "sha256": "9a1c8a86778188596baaab82603441dfa0b05275301528b97984eee95dc13f4a"
+    },
+    {
+      "path": "artifacts/aflow_maas/run_session_maas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/aflow_maas/run_session_maas.json",
+      "category": "formal_run_artifact",
+      "bytes": 4047,
+      "sha256": "5a03576c7f6817fd61732a2345abbb098d65d157e9b3e78db0453aba664a302a"
+    },
+    {
+      "path": "artifacts/attempt_summary.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/attempt_summary.json",
+      "category": "formal_run_artifact",
+      "bytes": 4229,
+      "sha256": "28419cc4034613b3fe79d3e9432acf915009e63d6062a31e3ca32dec45998d12"
+    },
+    {
+      "path": "artifacts/diagnostics/launcher_attempt_adas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/diagnostics/launcher_attempt_adas.json",
+      "category": "formal_run_artifact",
+      "bytes": 673,
+      "sha256": "5f6f5dc274835e51cf98c841b40fe1d4b48b6b30cd34481b0a7be3f907621c73"
+    },
+    {
+      "path": "artifacts/diagnostics/launcher_attempt_aflow.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/diagnostics/launcher_attempt_aflow.json",
+      "category": "formal_run_artifact",
+      "bytes": 674,
+      "sha256": "0f8a851811a3fb289d32fb4af614068a8fdb1ad551e36672a923c86dd8512b37"
+    },
+    {
+      "path": "artifacts/diagnostics/launcher_attempt_gdesigner.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/diagnostics/launcher_attempt_gdesigner.json",
+      "category": "formal_run_artifact",
+      "bytes": 678,
+      "sha256": "7ede827283379f732d5bdeb1455e2a60e13740df903da370ec9fe775e74497b8"
+    },
+    {
+      "path": "artifacts/diagnostics/launcher_attempt_maas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/diagnostics/launcher_attempt_maas.json",
+      "category": "formal_run_artifact",
+      "bytes": 673,
+      "sha256": "1fd4598d905d69e52c5f785017a3c0de37a46cbb8f5f7fb6447baef90792311f"
+    },
+    {
+      "path": "artifacts/diagnostics/launcher_result_adas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/diagnostics/launcher_result_adas.json",
+      "category": "formal_run_artifact",
+      "bytes": 669,
+      "sha256": "1077f79fcefac4eb96811d1a556b1e9e881ea34790b50542feebeb09deb63316"
+    },
+    {
+      "path": "artifacts/diagnostics/launcher_result_aflow.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/diagnostics/launcher_result_aflow.json",
+      "category": "formal_run_artifact",
+      "bytes": 670,
+      "sha256": "214b0716a3133e31ae84a1f52f33b444e8fc316675c93bdb42f7a235ad5d2660"
+    },
+    {
+      "path": "artifacts/diagnostics/launcher_result_gdesigner.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/diagnostics/launcher_result_gdesigner.json",
+      "category": "formal_run_artifact",
+      "bytes": 674,
+      "sha256": "eaa43f83db0ab4e4d539bffc3024d99607a6fc8cd761c65a6b3709e8c165ab5a"
+    },
+    {
+      "path": "artifacts/diagnostics/launcher_result_maas.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/diagnostics/launcher_result_maas.json",
+      "category": "formal_run_artifact",
+      "bytes": 669,
+      "sha256": "cc7693813cce2d9f1cdcabbad406c387dc59e5002e8b99239ed81e0bf26c4b13"
+    },
+    {
+      "path": "artifacts/diagnostics/run_session.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/diagnostics/run_session.json",
+      "category": "formal_run_artifact",
+      "bytes": 4068,
+      "sha256": "129a742aa97a23e3c275ab643a3c9f9a8b5638488596b777ece09165e2dd9b7e"
+    },
+    {
+      "path": "artifacts/launch_record.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/launch_record.json",
+      "category": "formal_run_artifact",
+      "bytes": 1625,
+      "sha256": "983af17e41efe9436b191b252ecd7533379d5331f1bb84b869305b54af890c5f"
+    },
+    {
+      "path": "artifacts/method_attempts.tsv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261002_scir_auditfix/method_attempts.tsv",
+      "category": "formal_run_artifact",
+      "bytes": 62,
+      "sha256": "f8768a5d6b5d00560f8269c44e5ba55e86e1234b9266eb48d5c2366b9d87730d"
+    },
+    {
+      "path": "diagnostics/adas/report.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/adas/report.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 3329,
+      "sha256": "19fe3e140078eef424eb1c6d0f30e5310436e7db274bfddf5b923a1529356173"
+    },
+    {
+      "path": "diagnostics/adas/run.log",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/adas/run.log",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 159,
+      "sha256": "2d056a402d36c0559e8176f3048ad5de7f1c8cc6a83cd0416e91573be6e2ac50"
+    },
+    {
+      "path": "diagnostics/adas/telemetry.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/adas/telemetry.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 468,
+      "sha256": "ba32f41c1e45b92bff82c3644d6edc384390f30a4ec71ba819beb88792af6cfb"
+    },
+    {
+      "path": "diagnostics/adas/worker_spec.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/adas/worker_spec.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 742,
+      "sha256": "16b31355e2f9459c253da61f009b5a902fd946a8f1e0a834e1347742df757a7c"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/data/datasets/math_test.jsonl",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/data/datasets/math_test.jsonl",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/data/datasets/math_validate.jsonl",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/data/datasets/math_validate.jsonl",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 262,
+      "sha256": "927cea512e3fea87a7d03d58091644b58514eab89d68c70429789241cddb9e03"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/logs/AFlow_2026-10-02.log",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/logs/AFlow_2026-10-02.log",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 315,
+      "sha256": "197a60d7551381708060be3752961b25102637a0f3a4ebd435c3c760cf4ae6dd"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/scripts/formatter.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/scripts/formatter.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 8778,
+      "sha256": "e185ff705494480403cb2e81e677eec8d02836e9d3e43f17e7aa29ca4ed5cb10"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/scripts/optimizer.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/scripts/optimizer.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 10535,
+      "sha256": "e0c0622e6cc9ba3023ce49d22634b73fcc64d83c83eca391f9f40bf199a8a5da"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/MATH/workflows/template/operator.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/MATH/workflows/template/operator.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 5786,
+      "sha256": "c5c3398308e75b9c378ff1a794d1434958c8923a3b5fabb1d15389649afbdfc8"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/1.00000_20261002_221938.csv",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/1.00000_20261002_221938.csv",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 353,
+      "sha256": "6e2459b64856075a0787ab2583b4ae8fbfa18dcf206c8fdcecc5f338b2493c7b"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/graph.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/graph.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 823,
+      "sha256": "22d4ba25953ff0a7327c45524ee933bb1798821daabc4d18ab2c6f28380100f6"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/round_1/prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 42,
+      "sha256": "89758a63470c31c0a5d9613cd97d88d07c1c4fde8793f165fa8de5773892e5cf"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/op_prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/op_prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 1754,
+      "sha256": "21a5276dcce3ebeb6a531b34be36c7b6fb62c035eba040a77284f6069b97da81"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 976,
+      "sha256": "35182bb00a4a152b31eef3a67f623e1ad4cd17b32d20c92c415c646d97359591"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 5786,
+      "sha256": "c5c3398308e75b9c378ff1a794d1434958c8923a3b5fabb1d15389649afbdfc8"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator_an.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/MATH/workflows/template/operator_an.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 530,
+      "sha256": "d7c6015d35021585f9794aa496c55004098cbd5f308ff91a39000c550848c05d"
+    },
+    {
+      "path": "diagnostics/aflow/aflow_repo/workspace/rpas_aime_native/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/aflow_repo/workspace/rpas_aime_native/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/aflow/report.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/report.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 5165,
+      "sha256": "a75260c6a3ee38d46f7e7b37d5a530b66c5f5242abc0f23ea064d435406ebd54"
+    },
+    {
+      "path": "diagnostics/aflow/run.log",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/run.log",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 581,
+      "sha256": "233320887348204a743d258ebe632263e354172c036be699ae98263982f81cb6"
+    },
+    {
+      "path": "diagnostics/aflow/telemetry.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/telemetry.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 2214,
+      "sha256": "cb384c0aed9b646a09cdd6cddea499b00c402b31a7f4d06d8be611ad44d5c7b8"
+    },
+    {
+      "path": "diagnostics/aflow/worker_spec.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/aflow/worker_spec.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 853,
+      "sha256": "c026ec13b95e84f7c989d7a29a0779555c6e800f6996e87920ba6d1a87b8977e"
+    },
+    {
+      "path": "diagnostics/gdesigner/gdesigner_diagnostic_gcn.pt",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/gdesigner/gdesigner_diagnostic_gcn.pt",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 78151,
+      "sha256": "dffbd04e7dc0c4a93510e998ae6369768e3158a296fd09970e68f1cec12cb8c5"
+    },
+    {
+      "path": "diagnostics/gdesigner/gdesigner_training_predictions.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/gdesigner/gdesigner_training_predictions.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 1381,
+      "sha256": "33ed319a2c7a23fabf7d401b35826a06aa380e8a2123aa6eab52e5cc6e017842"
+    },
+    {
+      "path": "diagnostics/gdesigner/optimizer_steps.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/gdesigner/optimizer_steps.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 488,
+      "sha256": "e98f3653590320ce522f0b49c293e6695ea6dac99f5d8c4189a4d3113e6c8cd2"
+    },
+    {
+      "path": "diagnostics/gdesigner/report.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/gdesigner/report.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 9989,
+      "sha256": "a25ac188a69fb83e04c28be00926bead8d6839eccf6274eccba4c5ded3a98503"
+    },
+    {
+      "path": "diagnostics/gdesigner/run.log",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/gdesigner/run.log",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 50942,
+      "sha256": "edaf602e11c884907ad85902441aef78cb79b1a9e5b8fae49fe294fa2a9c83a0"
+    },
+    {
+      "path": "diagnostics/gdesigner/telemetry.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/gdesigner/telemetry.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 689,
+      "sha256": "c76c5dcb01f1320ebfc978caf7a2daeb776c0befe7fa51f5393c390bc46ea126"
+    },
+    {
+      "path": "diagnostics/gdesigner/worker_spec.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/gdesigner/worker_spec.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 765,
+      "sha256": "f5b450acbc228b4ec612aeaffb3920c9fb47e704bbedb41b87a52d8f05f0038b"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/config/config2.yaml",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/config/config2.yaml",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 659,
+      "sha256": "4f1b097877ca2ab9409394985b9ae19cc8a1b6fa55414d4c2cd41149fd82b93c"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/logs/20261002.txt",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/logs/20261002.txt",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 3682,
+      "sha256": "7f81f26ae71872ff4ced950d1f0b8f5ca538196bb005933a5ee5d8ff3a832a06"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/actions/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/actions/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 129,
+      "sha256": "0306f0614f009216aa656b66aa4c4e36312a397f3451dafa5bf45dd9e5b9ffaa"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/data/math_test.jsonl",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/data/math_test.jsonl",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/data/math_train.jsonl",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/data/math_train.jsonl",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 262,
+      "sha256": "927cea512e3fea87a7d03d58091644b58514eab89d68c70429789241cddb9e03"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/models/utils.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/models/utils.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 1606,
+      "sha256": "f8018064cf0711a6c51f7c08a12199a85bbb0b60fc5ab6c86c24026e06174277"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/op_prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/op_prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 3145,
+      "sha256": "84b19e1fcc8cf600d5df1764edcb0c986dd29fdacb1cea931cce173bdbf5360d"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/operator.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/operator.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 6867,
+      "sha256": "b76dd3ffb04664ff5915beac3a01a4bff172a152a633b69b1d8eaadfd62869e1"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/test/template/prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 4784,
+      "sha256": "6bb0ed182312c0afaad23cfe4988305a48a0e6b1284892dca602128989525b34"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/op_prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/op_prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 3145,
+      "sha256": "84b19e1fcc8cf600d5df1764edcb0c986dd29fdacb1cea931cce173bdbf5360d"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/operator.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/operator.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 6867,
+      "sha256": "b76dd3ffb04664ff5915beac3a01a4bff172a152a633b69b1d8eaadfd62869e1"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/scripts/optimized/MATH/train/template/prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 4784,
+      "sha256": "6bb0ed182312c0afaad23cfe4988305a48a0e6b1284892dca602128989525b34"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/ext/maas/scripts/textgrad/textual_gradient.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/ext/maas/scripts/textgrad/textual_gradient.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 6170,
+      "sha256": "415e31019b019718f2666267d61103a550feb20afe2c8ef889971ec9d3c52ad6"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/provider/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/provider/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 72,
+      "sha256": "b66462ee99e5c95fa66ba43a1cf9e3087d916d3ddef0e3053714e99c33983599"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/maas/tools/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/maas/tools/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 487,
+      "sha256": "7731a486661890d47154c1175618a6b33b3392fba7c76ca649216ebc9f971053"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/test/graph.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/test/graph.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 4504,
+      "sha256": "96f7b948d03a5a645c6bf77f77ac348d7707f05ff4df22affd8b6676620b3613"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/op_prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/op_prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 3145,
+      "sha256": "84b19e1fcc8cf600d5df1764edcb0c986dd29fdacb1cea931cce173bdbf5360d"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 2377,
+      "sha256": "1450895b0a9253910614310980c9325f7e05cf900c3a3d3180cd8a873f628401"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 6867,
+      "sha256": "b76dd3ffb04664ff5915beac3a01a4bff172a152a633b69b1d8eaadfd62869e1"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator_an.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator_an.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 529,
+      "sha256": "bc314e7dbf5286651ab6ac8df6bea4b26843b80c7b62ba53b0c176c7b8eb6654"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator_registry.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/operator_registry.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 482,
+      "sha256": "85e27ed0b92144fdd627a5ca7836388ff035191eccd82fedaeba1a2f2b390ebd"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/test/template/prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 4784,
+      "sha256": "6bb0ed182312c0afaad23cfe4988305a48a0e6b1284892dca602128989525b34"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/graph.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/graph.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 4338,
+      "sha256": "eae94b897814769c066284348ec0dc3d7d9126834b55cf5cd83856eaff0319b7"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/results.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/results.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 130,
+      "sha256": "069061165e9520caeb9bb836fb33ac4311c96eb43c33b318f45bf2c4d549a5a7"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/1.00000_20261002_222121.csv",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/1.00000_20261002_222121.csv",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 3033,
+      "sha256": "64b3825b09b0484216fcdfb0bf0b522905ca1cba1881a19879696588fdf6068d"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/MATH_controller_sample1.pth",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/round_1/MATH_controller_sample1.pth",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 548563,
+      "sha256": "8cbda5068edb77e40574614bbbad1d1750f6e8301d5d6c6fe5e0638ab61accef"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/op_prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/op_prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 3145,
+      "sha256": "84b19e1fcc8cf600d5df1764edcb0c986dd29fdacb1cea931cce173bdbf5360d"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 2377,
+      "sha256": "1450895b0a9253910614310980c9325f7e05cf900c3a3d3180cd8a873f628401"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 6867,
+      "sha256": "b76dd3ffb04664ff5915beac3a01a4bff172a152a633b69b1d8eaadfd62869e1"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator_an.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator_an.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 529,
+      "sha256": "bc314e7dbf5286651ab6ac8df6bea4b26843b80c7b62ba53b0c176c7b8eb6654"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator_registry.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/operator_registry.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 482,
+      "sha256": "85e27ed0b92144fdd627a5ca7836388ff035191eccd82fedaeba1a2f2b390ebd"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/prompt.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/MATH/train/template/prompt.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 4784,
+      "sha256": "6bb0ed182312c0afaad23cfe4988305a48a0e6b1284892dca602128989525b34"
+    },
+    {
+      "path": "diagnostics/maas/maas_repo/workspace/rpas_aime_native/__init__.py",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo/workspace/rpas_aime_native/__init__.py",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "diagnostics/maas/optimizer_steps.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/optimizer_steps.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 144,
+      "sha256": "b2934f9de1c8465ad859b1e378d836e79948283effb01407f8ee74703ed3244e"
+    },
+    {
+      "path": "diagnostics/maas/report.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/report.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 7341,
+      "sha256": "40e0bd76c026366cabcd4a1e0ca9270f973f1557d3b1c9f13eebbbd774e91798"
+    },
+    {
+      "path": "diagnostics/maas/run.log",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/run.log",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 4229,
+      "sha256": "ce64262593dcb75f6ec23de44eb403a18397c714b1120ad43c421de48a48f803"
+    },
+    {
+      "path": "diagnostics/maas/telemetry.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/telemetry.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 3000,
+      "sha256": "7ba57aeead95beee6a4d43a91d07f3d36f5ee70427582accb714bafbcc145d7c"
+    },
+    {
+      "path": "diagnostics/maas/worker_spec.json",
+      "source_path": "/data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/worker_spec.json",
+      "category": "synthetic_diagnostic_artifact",
+      "bytes": 834,
+      "sha256": "8c50c2660dd135ee15d2b941726487b05338cc5b22aa4322b9fa64c294b76b18"
+    },
+    {
+      "path": "logs/gpu-adas-18084-Um9FwAS4.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/gpu-adas-18084-Um9FwAS4.csv",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 1359582,
+      "sha256": "b690b5d7f78e36fbe37a70aee9873ed501f5449fd3bee9ccf59ded97ff4798e9"
+    },
+    {
+      "path": "logs/gpu-aflow-18084-kBcOoGni.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/gpu-aflow-18084-kBcOoGni.csv",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 1431500,
+      "sha256": "3c60950f21076fcbdc9597f33e06035bc0f7d65c4f8ec2e97c1129af20cd4915"
+    },
+    {
+      "path": "logs/gpu-diagnostics-18081-oZ5DLVim.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/gpu-diagnostics-18081-oZ5DLVim.csv",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 939,
+      "sha256": "804d66575d2220a3ae4d6957b7ba9304f297e3c7672c0424103905937ddff040"
+    },
+    {
+      "path": "logs/gpu-diagnostics-18082-jGF0o6sV.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/gpu-diagnostics-18082-jGF0o6sV.csv",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 1723,
+      "sha256": "82da566d01b604aa2c3f052d0ea53e94e910015355b089fabc40ef015895587f"
+    },
+    {
+      "path": "logs/gpu-diagnostics-18083-0De74Mb0.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/gpu-diagnostics-18083-0De74Mb0.csv",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 13847,
+      "sha256": "57c8d8be506e20bc086c26cc3166a0af302b159b2ab00ddde7cc9f6fbb353614"
+    },
+    {
+      "path": "logs/gpu-diagnostics-18084-fjoCzIdW.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/gpu-diagnostics-18084-fjoCzIdW.csv",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 10389,
+      "sha256": "c8848953b4caa086378f32ea9b465af62e412eeb3ee135c496579becb7edacf4"
+    },
+    {
+      "path": "logs/gpu-gdesigner-18084-wxjVLyZU.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/gpu-gdesigner-18084-wxjVLyZU.csv",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 500045,
+      "sha256": "f82f06a9bbbca606927ea97e1f21e344415a33aba001d779bfd226526e75adbe"
+    },
+    {
+      "path": "logs/gpu-maas-18084-sSdsOE1J.csv",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/gpu-maas-18084-sSdsOE1J.csv",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 1287997,
+      "sha256": "dc5cc37860dd51dc2cc21dba6d935e5d606ccc09d8d6abdd9b135a772b5bd58b"
+    },
+    {
+      "path": "logs/local_model_verification_4e5791c4.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/local_model_verification_4e5791c4.json",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 1554,
+      "sha256": "93334ea3c465d39e57628fec43a202e5d2b9388f80136ce89e5042cf1060b9c6"
+    },
+    {
+      "path": "logs/vllm-adas-18084-tueQfqH2.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-adas-18084-tueQfqH2.json",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 4044,
+      "sha256": "e1958b881ca26ff6195948c6e3c36f267f222233c1dbb74f0394b86cdb093ee8"
+    },
+    {
+      "path": "logs/vllm-adas-18084-tueQfqH2.log",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-adas-18084-tueQfqH2.log",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 1433437,
+      "sha256": "ad954d9d520db85702dc36e2c38d2570535ba228ac55e51f0f570ea6c1c5e488"
+    },
+    {
+      "path": "logs/vllm-aflow-18084-2EkDLua7.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-aflow-18084-2EkDLua7.json",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 4047,
+      "sha256": "9a1c8a86778188596baaab82603441dfa0b05275301528b97984eee95dc13f4a"
+    },
+    {
+      "path": "logs/vllm-aflow-18084-2EkDLua7.log",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-aflow-18084-2EkDLua7.log",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 1966965,
+      "sha256": "8bba86dd1975f554862c093e35522ac624d7a9046fcf48d31eba266d39fad255"
+    },
+    {
+      "path": "logs/vllm-diagnostics-18081-WLjWq8cf.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-diagnostics-18081-WLjWq8cf.json",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 4073,
+      "sha256": "133cc48624b71d586a76278d27a37efd3fb3fdf8f7432cb7c295166870401bfc"
+    },
+    {
+      "path": "logs/vllm-diagnostics-18081-WLjWq8cf.log",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-diagnostics-18081-WLjWq8cf.log",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 19668,
+      "sha256": "7b3600b842fd9b17cf466c48c75dbde19bdfe0bbc6d450197c57964992588b68"
+    },
+    {
+      "path": "logs/vllm-diagnostics-18082-xjUnsKDt.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-diagnostics-18082-xjUnsKDt.json",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 4068,
+      "sha256": "1104e08f3e4cce3114cada588105f816773ad2de072cdebea380a5beed1473f6"
+    },
+    {
+      "path": "logs/vllm-diagnostics-18082-xjUnsKDt.log",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-diagnostics-18082-xjUnsKDt.log",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 12395,
+      "sha256": "db26df19b9dd75942ce647509a9c73f16924f3b8016ad89f4c276da979fdbaf3"
+    },
+    {
+      "path": "logs/vllm-diagnostics-18083-xiDZFeJ2.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-diagnostics-18083-xiDZFeJ2.json",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 4073,
+      "sha256": "725a9e2300b189faee1ad196e6704a2591dc9fed32275429ccac723a5b5e89ab"
+    },
+    {
+      "path": "logs/vllm-diagnostics-18083-xiDZFeJ2.log",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-diagnostics-18083-xiDZFeJ2.log",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 32497,
+      "sha256": "0382f6af061deb25e916ab06c43d187ce91d7a04e235d207170db46a725c16d5"
+    },
+    {
+      "path": "logs/vllm-diagnostics-18084-XsWkefG8.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-diagnostics-18084-XsWkefG8.json",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 4068,
+      "sha256": "129a742aa97a23e3c275ab643a3c9f9a8b5638488596b777ece09165e2dd9b7e"
+    },
+    {
+      "path": "logs/vllm-diagnostics-18084-XsWkefG8.log",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-diagnostics-18084-XsWkefG8.log",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 29637,
+      "sha256": "dbca25a1ae9eeb8af2380d14a8885bb25255d800d6a0b3b20eb17f2b34e9ff8d"
+    },
+    {
+      "path": "logs/vllm-gdesigner-18084-fMvGxIq5.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-gdesigner-18084-fMvGxIq5.json",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 4059,
+      "sha256": "475e5443251453ef26f7fd1420d823821ddd5f2ba45922e3428138178d85b7b6"
+    },
+    {
+      "path": "logs/vllm-gdesigner-18084-fMvGxIq5.log",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-gdesigner-18084-fMvGxIq5.log",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 474631,
+      "sha256": "427b06131d2ac6b85e5b85209b47943c950a2d56f6acc25b8da1743234e8e305"
+    },
+    {
+      "path": "logs/vllm-maas-18084-ytjh9xvv.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-maas-18084-ytjh9xvv.json",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 4047,
+      "sha256": "5a03576c7f6817fd61732a2345abbb098d65d157e9b3e78db0453aba664a302a"
+    },
+    {
+      "path": "logs/vllm-maas-18084-ytjh9xvv.log",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/logs/vllm-maas-18084-ytjh9xvv.log",
+      "category": "runtime_service_gpu_or_model_evidence",
+      "bytes": 1025220,
+      "sha256": "bf2521f3c2346073eda33df65d1882b38a41a09054180f323ca57bf4a2365615"
+    },
+    {
+      "path": "evidence/runtime_source_SHA256SUMS.txt",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/SHA256SUMS",
+      "category": "runtime_source_inventory",
+      "bytes": 7201,
+      "sha256": "380b08c8ddd403af15f9431dda5797847b3e271927184a8cd59c08909240470b",
+      "source_git_commit": "66ad8287f759e08a5310c190cd0eddb273bbe627",
+      "source_git_path": "experiments/external_baselines/aime_four_methods_seed0/SHA256SUMS"
+    },
+    {
+      "path": "evidence/frozen_aime_manifest.json",
+      "source_path": "/data/jxc/RPAS-AIME-FourMethods-Seed0-scir-4e5791c4/experiments/external_baselines/aime_four_methods_seed0/data/frozen_aime_manifest.json",
+      "category": "frozen_data_inventory",
+      "bytes": 1414,
+      "sha256": "7e6501210c7689e1702e9786a9652222c5ca33193d11d4cde531ea84bdee2cfe"
+    }
+  ]
+}

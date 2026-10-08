@@ -1,0 +1,39 @@
+{
+  "protocol_version": "aime_main_protocol_v6_canonical_frozen_data",
+  "task_contract": {
+    "version": "AIME_TASK_CONTRACT_v1",
+    "input": "problem statement only; gold answer and solution are not included in the prompt",
+    "gold": "integer answer from the frozen AIME dataset",
+    "scoring": "answer_protocol_v4.extract_aime_answer; normalized integer exact match",
+    "sha256": "589e3a90f58172f2fdbc3278871b5c5037201bfae9caa4d65e048528fc5aad11"
+  },
+  "method": "maas",
+  "upstream_provenance": {
+    "repository": "https://github.com/bingreeky/MaAS.git",
+    "origin": "https://github.com/bingreeky/MaAS.git",
+    "commit": "987f3c1bc9a96e844fe090db3791446e3ef0f5c7",
+    "clean_worktree": true,
+    "python_tree_sha256": "9a05b0d195bc9f0c4939060bbb1efab90516a2dabeebc9d41e30e7802f3d1f49"
+  },
+  "search_seed": 0,
+  "data_seed": 2026,
+  "model": "Qwen/Qwen3.5-9B",
+  "context_limit": 8192,
+  "output_limit": 6144,
+  "answer_protocol": "answer_protocol_v4.extract_aime_answer",
+  "answer_protocol_sha256": "f5707ae75e38b5874ed94f9e3c652055ef8c778badcb83f4fe069ec9ad0fb378",
+  "data_sha256": {
+    "aimo_validation/search_60.jsonl": "d5c7163a7bda435ca7d4c8045b534f061dd92cecd854a892bcfd62b0beaa4747",
+    "aimo_validation/select_30.jsonl": "9439248b0527d4c3fc316a272f18d43fbe6ce990a97eb3f80fcc3b28bc5f4fb7",
+    "aimo-validation-aime.jsonl": "fa42838c9d643be2fa83671fb7960a31bae75d5fe73b902cca9f21cbf70607ee"
+  },
+  "search_size": 60,
+  "selection_size": 30,
+  "test_size_each": 30,
+  "endpoint": "http://127.0.0.1:18084/v1",
+  "run_id": "aime:maas:maas:seed_0",
+  "attempt": "main",
+  "status": "failed",
+  "runner_sha256": "530a7f28b4dd8733a8a569fa1e719d9748a9adc46216aab114ef492ddea448d0",
+  "failure": "RuntimeError: MaAS D_select quality gate failed; refusing to open D_test. rows=30, failures=10.0%"
+}

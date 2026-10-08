@@ -8,6 +8,13 @@ and quality gates and discloses G-Designer's role-graph/numerical adapters.
 Read that record for the host launch and the preserved rejected AFlow attempt;
 the pair and single-method commands below remain available.
 
+The [2026-10-02 four-method seed-0 attempt and raw artifacts](published_results/aime_four_methods_seed0_20261002_scir_auditfix/README.md)
+are now published with per-question outputs, runtime deltas, controllers,
+service/GPU logs, and a separate checksum inventory. All four methods failed
+their formal acceptance gates; these artifacts do not establish an accepted
+four-method result. AFlow's raw test scores were 17/30 on AIME2025 and 20/30 on
+AIME2026, and its final quality gate rejected the attempt.
+
 This folder contains **only external baseline adapters** for AFlow, MaAS, ADAS,
 and G-Designer. It does not contain or invoke the RPAS method. The wrappers
 preserve the pinned upstream search/controller logic where possible and adapt
@@ -29,7 +36,7 @@ reproductions.
   manifest and every file before use. `.gitattributes` fixes JSONL line endings
   so these hashes remain portable across Windows and Linux.
 - Not included: model weights, tokenizer weights, MiniLM weights, API
-  credentials, or complete formal result bundles. Deployment records include
+  credentials, or an accepted complete four-method result. Deployment records include
   synthetic diagnostic predictions and execution/rejection audit summaries.
   Publishing the frozen test questions/answers is intentional and was
   authorized by the data owner; users should still avoid using `D_test` for

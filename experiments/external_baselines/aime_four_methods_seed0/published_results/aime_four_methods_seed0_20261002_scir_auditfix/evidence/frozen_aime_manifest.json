@@ -1,0 +1,39 @@
+{
+  "schema": "rpas_frozen_aime_external_v1",
+  "source_repository": "JiangyueAnn/RPAS",
+  "source_revision": "e12f58823be5f91a32f05f9af4d36e54838ffe59",
+  "data_seed": 2026,
+  "validation": {
+    "source": {
+      "path": "aimo-validation-aime.jsonl",
+      "sha256_git_content": "fa42838c9d643be2fa83671fb7960a31bae75d5fe73b902cca9f21cbf70607ee",
+      "rows": 90
+    },
+    "search": {
+      "path": "aimo_validation/search_60.jsonl",
+      "sha256_git_content": "d5c7163a7bda435ca7d4c8045b534f061dd92cecd854a892bcfd62b0beaa4747",
+      "rows": 60
+    },
+    "select": {
+      "path": "aimo_validation/select_30.jsonl",
+      "sha256_git_content": "9439248b0527d4c3fc316a272f18d43fbe6ce990a97eb3f80fcc3b28bc5f4fb7",
+      "rows": 30
+    }
+  },
+  "test": {
+    "aime_2025.jsonl": {
+      "source_sha256_git_content": "fe7b8a157da7c1389ab0ca9ffb1536973843b8244a796d5c1f5fbb0b62a1f221",
+      "source_rows": 30,
+      "split_path": "aime2025/test_30.jsonl",
+      "split_sha256_git_content": "779889244fb4e6c27e84bfeb0efddbc81090fbaf0ca9c371a53730414f0d49ae",
+      "rows": 30
+    },
+    "aime_2026.jsonl": {
+      "source_sha256_git_content": "02445121c022fb9f6c6d6bb24a299dee29b248263af02c5f71504d9ef07d00d0",
+      "source_rows": 30,
+      "split_path": "aime2026/test_30.jsonl",
+      "split_sha256_git_content": "c61c0fcdf333e947622a5b164cda4fb67e760c271bf9939e5851467e9285e9db",
+      "rows": 30
+    }
+  }
+}

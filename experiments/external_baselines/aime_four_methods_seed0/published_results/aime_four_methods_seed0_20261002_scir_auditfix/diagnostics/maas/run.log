@@ -1,0 +1,30 @@
+2026-10-02 22:19:40.511 | INFO     | maas.const:get_metagpt_root:31 - PROJECT_ROOT set from environment variable to /data/jxc/aime_scir_auditfix_formal_diagnostics_20261002/maas/maas_repo
+2026-10-02 22:19:44.898 | INFO     | maas.ext.maas.scripts.optimizer:_optimize_graph_maas:108 - workspace/rpas_aime_native/MATH/train/round_1
+2026-10-02 22:19:44.918 | INFO     | maas.ext.maas.benchmark.benchmark:evaluate_all_problems:124 - Starting training repetition 1/1
+Repetition 1: Executing batch 1:   0%|          | 0/2 [00:00<?, ?it/s]2026-10-02 22:19:52.144 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:19:52.344 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:00.890 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:02.171 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:08.122 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:15.305 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:22.506 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:23.469 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:27.205 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:35.366 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:43.404 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:43.443 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:51.611 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:56.574 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:20:57.468 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+Repetition 1: Executing batch 1:  50%|█████     | 1/2 [01:12<01:12, 72.55s/it]2026-10-02 22:21:00.021 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:21:06.733 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:21:13.458 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:21:20.172 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+2026-10-02 22:21:21.041 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.
+Repetition 1: Executing batch 1: 100%|██████████| 2/2 [01:36<00:00, 43.74s/it]Repetition 1: Executing batch 1: 100%|██████████| 2/2 [01:36<00:00, 48.06s/it]
+2026-10-02 22:21:21.232 | INFO     | maas.ext.maas.benchmark.benchmark:evaluate_all_problems:170 - Repetition 1: Batch 1 Loss: 10.626836776733398
+2026-10-02 22:21:21.250 | INFO     | maas.ext.maas.benchmark.benchmark:save_results_to_csv:66 - Results saved to workspace/rpas_aime_native/MATH/train/round_1/1.00000_20261002_222121.csv
+2026-10-02 22:21:21.250 | INFO     | maas.ext.maas.benchmark.benchmark:run_evaluation:213 - Average score on MATH dataset: 1.00000
+2026-10-02 22:21:21.253 | INFO     | maas.ext.maas.benchmark.benchmark:run_evaluation:219 - Saved controller parameters to workspace/rpas_aime_native/MATH/train/round_1/MATH_controller_sample1.pth
+2026-10-02 22:21:21.254 | INFO     | maas.ext.maas.benchmark.benchmark:run_evaluation:220 - Successfully Finish Training
+2026-10-02 22:21:21.254 | INFO     | maas.ext.maas.scripts.optimizer:optimize:96 - Score for round 1: 1.0
