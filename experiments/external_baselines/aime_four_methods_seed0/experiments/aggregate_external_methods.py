@@ -51,7 +51,7 @@ def _verify_aime_freeze(run_dir: Path, manifest: dict[str, Any], result: dict[st
         raise ValueError(f"{run_dir}: unpinned or inconsistent upstream provenance")
     lock_hash = _sha256_file(lock_path)
     if (lock.get("schema") != "aime_dtest_blind_selection_lock_v2"
-            or lock.get("protocol_version") != "aime_external_methods_v3_canonical_frozen_data"
+            or lock.get("protocol_version") != "aime_external_methods_v4_shared_task_input"
             or lock.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256
             or manifest.get("frozen_data_manifest_sha256") != FROZEN_AIME_MANIFEST_SHA256
             or lock.get("method") != method
@@ -206,7 +206,7 @@ def load_run(run_dir: Path, method: str, dataset: str, seed: int,
     runner_path = Path(__file__).with_name("native_external_methods.py")
     if manifest.get("runner_sha256") != _sha256_file(runner_path):
         raise ValueError(f"{run_dir}: external-method runner differs from the hashed execution source")
-    expected_protocol = "aime_external_methods_v3_canonical_frozen_data" if dataset == "aime" else "masbench_external_five_axis_v1"
+    expected_protocol = "aime_external_methods_v4_shared_task_input" if dataset == "aime" else "masbench_external_five_axis_v1"
     if (manifest.get("method") != method or manifest.get("dataset") != dataset
             or int(manifest.get("seed", -1)) != seed or manifest.get("protocol_version") != expected_protocol
             or manifest.get("model") != MODEL or int(manifest.get("context_limit", -1)) != 8192

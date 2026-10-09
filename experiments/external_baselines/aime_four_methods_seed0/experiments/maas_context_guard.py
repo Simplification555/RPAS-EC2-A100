@@ -221,6 +221,7 @@ class PromptGuard:
                 "original_input_tokens": original_count,
                 "final_input_tokens": original_count,
                 "requested_max_tokens": requested_max_tokens,
+                "effective_max_tokens": max(1, min(requested_max_tokens, self.context_limit - original_count)),
             }
 
         # Keep the system prompt intact.  The public policy is appended by the
@@ -271,6 +272,7 @@ class PromptGuard:
             "original_input_tokens": original_count,
             "final_input_tokens": final_count,
             "requested_max_tokens": requested_max_tokens,
+            "effective_max_tokens": max(1, min(requested_max_tokens, self.context_limit - final_count)),
         }
         if len(self.events) < 100:
             self.events.append(event)

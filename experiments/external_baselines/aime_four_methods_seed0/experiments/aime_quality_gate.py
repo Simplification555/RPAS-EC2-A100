@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 
 ANSWER_PARSER = "answer_protocol_v4.extract_aime_answer"
-PROTOCOL_VERSION = "aime_main_protocol_v6_canonical_frozen_data"
+PROTOCOL_VERSION = "aime_main_protocol_v7_shared_task_input"
 FROZEN_AIME_MANIFEST_SHA256 = "7e6501210c7689e1702e9786a9652222c5ca33193d11d4cde531ea84bdee2cfe"
 MAX_SAMPLE_FAILURE_RATE = 0.05
 UPSTREAMS = {

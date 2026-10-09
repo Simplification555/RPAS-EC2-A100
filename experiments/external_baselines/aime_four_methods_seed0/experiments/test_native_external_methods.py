@@ -4,7 +4,7 @@ import unittest
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
-from native_aime_formal import namespace_aime_rows, validate_aime_partitions
+from native_aime_formal import namespace_aime_rows, validate_aime_partitions, native_math_rows, format_aime_task
 from native_external_methods import (
     MASBENCH_AXES,
     ModelRuntime,
@@ -20,9 +20,36 @@ from native_external_methods import (
     score_row,
     validate_masbench_splits,
 )
+from aime_selection import efficiency_operating_point, quality_operating_point
 
 
 class NativeExternalAdapterTests(unittest.TestCase):
+    def test_qe_selection_never_falls_back_to_invalid_candidates(self):
+        invalid = [
+            {"candidate_id": "truncated", "valid": False, "score": 1.0, "total_tokens": 1},
+            {"candidate_id": "failed", "valid": False, "score": 0.9, "total_tokens": 2},
+        ]
+        self.assertIsNone(quality_operating_point(invalid))
+        self.assertIsNone(efficiency_operating_point(invalid, delta=0.05))
+
+    def test_qe_selection_ignores_invalid_high_scoring_candidate(self):
+        candidates = [
+            {"candidate_id": "invalid-perfect", "valid": False, "score": 1.0, "total_tokens": 1},
+            {"candidate_id": "valid", "valid": True, "score": 0.8, "total_tokens": 20},
+        ]
+        self.assertEqual(quality_operating_point(candidates)["candidate_id"], "valid")
+        self.assertEqual(efficiency_operating_point(candidates)["candidate_id"], "valid")
+
+    def test_aime_task_input_identical_for_all_four_methods(self):
+        from native_external_methods import task_text
+        row = {"id": "sample", "problem": "Find the value of 7 + 9.", "answer": "16"}
+        via_math = native_math_rows([row])[0]["problem"]
+        via_external = task_text("aime", row)
+        self.assertEqual(via_math, via_external)
+        self.assertEqual(via_math, format_aime_task(row["problem"]))
+        self.assertTrue(via_math.endswith(row["problem"]))
+        self.assertNotIn("\\boxed{16}", via_math)
+
     def test_aime_role_graph_maps_native_nine_edges_without_complete_graph_collapse(self):
         native_edges = [
             ("Mathematical Analyst", "Math Solver"),

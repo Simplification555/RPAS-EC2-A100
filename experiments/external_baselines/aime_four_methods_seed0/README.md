@@ -20,7 +20,8 @@ reproductions.
 
 - Included: runner/adapters, scoring and quality gates, tests, exact source
   commit pins for all four method repositories, and the authorized frozen AIME
-  data files used by this seed-0 pilot.
+  data files used by this seed-0 pilot. `deployment/*.freeze.txt` contains
+  package-version snapshots for the serving and four method environments.
 - Data provenance: AIMO validation plus its canonical `search_60` and
   `select_30`, and the canonical AIME2025/AIME2026 `test_30` files are copied
   from `JiangyueAnn/RPAS` revision
@@ -63,6 +64,13 @@ IDs, method-specific selection, baseline provenance, test-file hashes/IDs,
 question fingerprints, and timestamps. These checks reduce accidental leakage;
 they are not an OS-level audit against a malicious process reading files.
 
+The 5% D_select quality gate is deliberately fail-closed. If no AFlow round,
+ADAS archive candidate, or native controller satisfies it, the runner writes
+`selection_audit.json` and stops before opening D_test. It will not promote an
+invalid candidate or synthesize a fallback. No code change can guarantee a
+passing candidate for arbitrary model outputs while this gate is preserved;
+the frozen data, model, seeds, and scoring must not be changed to force a pass.
+
 ## Install upstream source pins
 
 Run once from this directory:
@@ -88,7 +96,12 @@ stack are not a verified single environment. In particular, MaAS’s upstream
 requirements pin an old CUDA/PyTorch stack. Use separate method environments
 (`AIME_AFLOW_PYTHON`, `AIME_MAAS_PYTHON`, `AIME_ADAS_PYTHON`,
 `AIME_GDESIGNER_PYTHON`) and a separate model-serving environment where needed;
-do not blindly install upstream requirements over vLLM’s environment.
+do not blindly install upstream requirements over vLLM’s environment. The
+`*.freeze.txt` files record observed package versions; they are not vendored
+wheel archives and a clean install from them has not been verified on RTX PRO
+6000. They require package-index access and compatible Python/CUDA drivers.
+Create isolated environments and install each snapshot separately, then run
+the import/GPU preflights; do not merge all five snapshots into one environment.
 
 ## Run one pair on one GPU
 

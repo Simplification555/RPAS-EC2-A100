@@ -34,9 +34,41 @@ def fake_run_code(code: str) -> tuple[str, str]:
 
 def test_aime_contract_is_self_contained_and_not_masbench_metadata():
     contract = runner.task_contract_manifest()
-    assert contract["version"] == "AIME_TASK_CONTRACT_v1"
+    assert contract["version"] == "AIME_TASK_CONTRACT_v2_shared_input"
     assert "MASBENCH" not in contract["version"]
     assert contract["sha256"] == runner.AIME_TASK_CONTRACT_SHA256
+
+
+def test_aflow_formatter_adapter_matches_native_code_operator_contract(tmp_path: Path):
+    formatter = tmp_path / "scripts" / "formatter.py"
+    formatter.parent.mkdir(parents=True)
+    formatter.write_text(
+        'result = {"response": sanitized_code}\n', encoding="utf-8"
+    )
+
+    runner.patch_aflow_code_formatter(tmp_path)
+    source = formatter.read_text(encoding="utf-8")
+    assert source == 'result = {"code": sanitized_code}\n'
+    compile(source, str(formatter), "exec")
+
+    # A second application must be idempotent, which is important for retries.
+    runner.patch_aflow_code_formatter(tmp_path)
+    assert formatter.read_text(encoding="utf-8") == source
+
+
+def test_native_fidelity_audit_defaults_to_the_frozen_8k_profile():
+    package_root = Path(__file__).resolve().parents[1]
+    script = package_root / "scripts" / "audit_native_fidelity.py"
+    result = subprocess.run(
+        [sys.executable, str(script)], cwd=package_root,
+        check=True, capture_output=True, text=True,
+    )
+    audit = json.loads(result.stdout)
+    assert audit["status"] == "PASS"
+    assert audit["profile"] == "8k"
+    assert audit["context"] == 8192
+    assert audit["requested_output_tokens"] == 6144
+    assert audit["test_contents_read"] is False
 
 
 def test_output_audit_counts_native_attribute_and_worker_failures_only(tmp_path: Path):
@@ -62,6 +94,28 @@ def test_output_audit_counts_native_attribute_and_worker_failures_only(tmp_path:
     assert audit["failure_predictions"] == len(failures)
     assert audit["failure_markers"] == failures
     assert audit["failure_fraction"] == len(failures) / (len(failures) + len(solutions))
+
+
+def test_output_audit_recognizes_validation_and_bare_name_errors(tmp_path: Path):
+    failures = [
+        "1 validation error for ScEnsembleOp_AN\n  Missing fields: {'solution_letter'}",
+        "Error: 1 validation error for ScEnsembleOp_AN",
+        "NameError: name 'answer' is not defined",
+        "name 'answer' is not defined",
+    ]
+    solutions = [
+        "FINAL ANSWER: 7",
+        "A solution that mentions validation error in ordinary prose. FINAL ANSWER: 7",
+    ]
+    output = tmp_path / "predictions.csv"
+    with output.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=["prediction"])
+        writer.writeheader()
+        writer.writerows({"prediction": row} for row in failures + solutions)
+    audit = runner.audit_aflow_outputs(tmp_path)
+    assert audit["csv_rows"] == 6
+    assert audit["failure_predictions"] == 4
+    assert audit["failure_fraction"] == 4 / 6
 
 
 @pytest.mark.parametrize(
@@ -260,7 +314,13 @@ def _stage_real_programmer_templates(root: Path, method: str) -> None:
         ]
         _write_fixture_module(root, "maas/logs.py", logger)
         _write_fixture_module(root, "maas/llm.py", "class LLM: pass\n")
-        _write_fixture_module(root, "maas/actions/action_node.py", "class ActionNode: pass\n")
+        _write_fixture_module(root, "maas/actions/action_node.py", """
+            class ActionNode:
+                def get_field_names(self):
+                    return ()
+                async def xml_fill(self, context, images=None):
+                    return {}
+        """)
         _write_fixture_module(root, "maas/ext/maas/benchmark/benchmark.py", benchmark)
         _write_fixture_module(root, "maas/ext/maas/benchmark/math.py", "from maas.ext.maas.benchmark.benchmark import BaseBenchmark\nclass MATHBenchmark(BaseBenchmark): pass\n")
         _write_fixture_module(root, "maas/ext/maas/scripts/optimizer_utils/data_utils.py", "class DataUtils: pass\n")
@@ -407,14 +467,14 @@ if __name__ == '__main__':
 
 
 @pytest.mark.parametrize("method", ["aflow", "maas"])
+@pytest.mark.skipif(os.name != "posix", reason="exercises POSIX process-group termination")
 def test_real_template_programmers_cli_timeout_cancel_and_exit(tmp_path: Path, method: str):
     repo = tmp_path / method
     repo.mkdir()
     _stage_real_programmer_templates(repo, method)
     driver = _write_fixture_module(tmp_path, "offline_cli_fixture.py", _REAL_TEMPLATE_DRIVER)
     command = [
-        "uv", "run", "--no-project", "--python", sys.executable,
-        "python", str(driver), str(Path(runner.__file__).resolve()), str(repo), method,
+        sys.executable, str(driver), str(Path(runner.__file__).resolve()), str(repo), method,
     ]
     # Isolate only synthetic fixture processes so a failing regression cannot
     # leak workers, while never touching any formal benchmark process group.
