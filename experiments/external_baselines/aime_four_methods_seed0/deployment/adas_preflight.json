@@ -1,0 +1,32 @@
+{
+  "dataset": "aime",
+  "method": "adas",
+  "axis": "depth",
+  "seed": 0,
+  "split_counts": {
+    "search": 60,
+    "select": 30
+  },
+  "official_source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-upstream-ba1ca711/experiments/external_baselines/aime_four_methods_seed0/upstream/ADAS",
+  "source_python_files": 30,
+  "upstream_provenance": {
+    "commit": "2702bee8fefda42255efc5be9f60e3bd3db96ae4",
+    "clean_worktree": true,
+    "origin": "https://github.com/ShengranHu/ADAS.git",
+    "repository": "https://github.com/ShengranHu/ADAS.git"
+  },
+  "source_sha256": "fd9e32e61045143c91a881ef393e0ad6ef1c23e056d496ebe4e07e38efbedd9b",
+  "preflight": {
+    "native_import": "passed",
+    "native_seed_architectures": [
+      "Chain-of-Thought",
+      "Self-Consistency with Chain-of-Thought",
+      "Self-Refine (Reflexion)",
+      "LLM Debate",
+      "Step-back Abstraction",
+      "Quality-Diversity",
+      "Dynamic Assignment of Roles"
+    ],
+    "safe_executor": "restricted_ast_v1"
+  }
+}

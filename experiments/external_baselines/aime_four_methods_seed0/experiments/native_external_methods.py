@@ -17,6 +17,7 @@ from contextlib import contextmanager
 import copy
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import random
@@ -38,14 +39,14 @@ else:
     from masbench_answer_protocol import score_masbench
 
 MODEL = "Qwen/Qwen3.5-9B"
-CONTEXT_LIMIT = 8192
+CONTEXT_LIMIT = 16384
 OUTPUT_LIMIT = 6144
 CONCURRENCY = 8
 MAX_SAMPLE_FAILURE_RATE = 0.05
 METHODS = ("adas", "gdesigner")
 MASBENCH_AXES = ("breadth", "depth", "horizon", "parallel", "robustness")
 MASBENCH_PROTOCOL = "masbench_external_five_axis_v1"
-AIME_PROTOCOL = "aime_external_methods_v3_canonical_frozen_data"
+AIME_PROTOCOL = "aime_external_methods_v5_16k_shared_task_input"
 UPSTREAM_COMMITS = {
     "adas": "2702bee8fefda42255efc5be9f60e3bd3db96ae4",
     "gdesigner": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
@@ -211,7 +212,10 @@ def task_text(dataset: str, row: dict[str, Any]) -> str:
             instruction += ("For explicitly injected factual or magic-number values, preserve the value exactly as stated; "
                             "do not reduce those raw values modulo 23. Apply Z_23 only to algebraic quantities.\n")
         return f"{instruction}\nProblem: {row['input']}"
-    return f"Solve this AIME problem. Give a concise derivation and put the integer answer on the last line as FINAL ANSWER: <integer>.\n\n{row['problem']}"
+    # Same user-facing task text as AFlow/MaAS, not a stronger
+    # ADAS/G-Designer-only instruction. Native optimizers remain unchanged.
+    from native_aime_formal import format_aime_task
+    return format_aime_task(str(row["problem"]))
 
 
 def score_row(dataset: str, output: Any, gold: Any) -> dict[str, Any]:
@@ -233,6 +237,14 @@ class ModelRuntime:
     """One audited OpenAI-compatible client with an enforced 8192-token window."""
 
     def __init__(self, endpoint: str, method: str, run_id: str, *, temperature: float = 0.0):
+        try:
+            request_timeout_s = float(os.environ.get("AIME_EXTERNAL_REQUEST_TIMEOUT_S", "180"))
+        except ValueError as exc:
+            raise ValueError("AIME_EXTERNAL_REQUEST_TIMEOUT_S must be a positive finite number") from exc
+        if not math.isfinite(request_timeout_s) or request_timeout_s <= 0:
+            raise ValueError("AIME_EXTERNAL_REQUEST_TIMEOUT_S must be a positive finite number")
+        self.request_timeout_s = request_timeout_s
+
         from huggingface_hub import snapshot_download
         from transformers import AutoTokenizer
         from maas_context_guard import PromptGuard
@@ -242,8 +254,8 @@ class ModelRuntime:
         tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, local_files_only=True)
         self.guard = PromptGuard(tokenizer, context_limit=CONTEXT_LIMIT)
         self.endpoint, self.method, self.run_id = endpoint.rstrip("/"), method, run_id
-        self.sync = OpenAI(base_url=self.endpoint, api_key="EMPTY", timeout=180.0, max_retries=0)
-        self.async_client = AsyncOpenAI(base_url=self.endpoint, api_key="EMPTY", timeout=180.0, max_retries=0)
+        self.sync = OpenAI(base_url=self.endpoint, api_key="EMPTY", timeout=self.request_timeout_s, max_retries=0)
+        self.async_client = AsyncOpenAI(base_url=self.endpoint, api_key="EMPTY", timeout=self.request_timeout_s, max_retries=0)
         self.temperature = temperature
         self.usage: dict[str, Any] = {"totals": empty_usage(), "phases": {}, "finish_reason_counts": {},
                                      "guard_events": 0, "context_limit": CONTEXT_LIMIT}
@@ -318,7 +330,7 @@ class ModelRuntime:
 
     def summary(self) -> dict[str, Any]:
         return {**self.usage, "context_limit": CONTEXT_LIMIT, "output_limit": OUTPUT_LIMIT,
-                "max_concurrency": CONCURRENCY}
+                "max_concurrency": CONCURRENCY, "request_timeout_s": self.request_timeout_s}
 
 
 def _parse_json_object(content: str) -> dict[str, Any]:
@@ -520,18 +532,20 @@ def _native_source(method: str, explicit: Path | None) -> Path:
 
 
 def run_adas(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse.Namespace,
-             run_id: str, runtime: ModelRuntime, source: Path) -> dict[str, Any]:
+             run_id: str, runtime: ModelRuntime, source: Path, *,
+             test_recovery: dict[str, Any] | None = None) -> dict[str, Any]:
     """Run the official ADAS archive/reflection/debug loop through safe adapters."""
     source = source.resolve()
     mgsm_dir = source / "_mgsm"
     sys.path.insert(0, str(mgsm_dir))
     os.environ["OPENAI_API_KEY"] = "EMPTY"
     os.environ["OPENAI_BASE_URL"] = args.endpoint.rstrip("/")
-    os.environ["OPENAI_TIMEOUT"] = "180"
+    os.environ["OPENAI_TIMEOUT"] = str(runtime.request_timeout_s)
     import importlib
     adas = importlib.import_module("search")
     from openai import OpenAI
-    adas.client = OpenAI(base_url=args.endpoint.rstrip("/"), api_key="EMPTY", timeout=180.0, max_retries=0)
+    adas.client = OpenAI(base_url=args.endpoint.rstrip("/"), api_key="EMPTY",
+                         timeout=runtime.request_timeout_s, max_retries=0)
 
     info_cls = adas.Info
     active_rows = rows["search"]
@@ -559,7 +573,7 @@ def run_adas(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse
         try:
             content = runtime._messages_call(
                 [{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}],
-                temperature=float(self.temperature), json_mode=True, phase=phase_name,
+                temperature=(0.0 if dataset == "aime" else float(self.temperature)), json_mode=True, phase=phase_name,
             )
             response_json = _parse_json_object(content)
         except Exception:
@@ -644,6 +658,10 @@ def run_adas(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse
             "tokens_per_example": delta_tokens / max(1, len(audit)), "rows": audit,
         }
         eval_audits.append(summary)
+        sample_callback = (test_recovery or {}).get("sample_completed")
+        if sample_callback is not None and phase_name.startswith("test:"):
+            for sample in audit:
+                sample_callback(phase_name, sample)
         if summary["failure_fraction"] > MAX_SAMPLE_FAILURE_RATE:
             # Keep native ADAS's search signal, but mark the candidate/run
             # invalid later; the optimizer must never hide sample failures.
@@ -670,6 +688,82 @@ def run_adas(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse
         save_dir=str(native_dir), expr_name=f"{dataset}_{args.seed}",
         n_generation=args.adas_generations, debug_max=3, model=MODEL,
     )
+    if test_recovery is not None:
+        if dataset != "aime" or args.seed != 0:
+            raise ValueError("ADAS D_test recovery is authorized only for AIME seed 0")
+        archive_path = Path(test_recovery["archive_path"]).resolve()
+        archive = json.loads(archive_path.read_text(encoding="utf-8"))
+        candidate_index = int(test_recovery["candidate_index"])
+        if not 0 <= candidate_index < len(archive):
+            raise RuntimeError("authorized ADAS candidate index is outside the retained archive")
+        candidate = archive[candidate_index]
+        code = str(candidate.get("code", ""))
+        code_hash = hashlib.sha256(code.encode("utf-8")).hexdigest()
+        if not code or code_hash != test_recovery["candidate_code_sha256"]:
+            raise RuntimeError("retained ADAS best-candidate code hash differs")
+        selected = {"Q": dict(test_recovery["selection_row"]),
+                    "E": {**dict(test_recovery["selection_row"]), "same_candidate_as": "Q"}}
+        from native_aime_formal import freeze_aime_selection, load_aime_test_rows_after_freeze
+        freeze_aime_selection(
+            args.run_dir, "adas", rows["search"], rows["select"],
+            {key: {"candidate_id": item["candidate_id"], "code_sha256": item["code_sha256"],
+                   "score": float(item["score"])} for key, item in selected.items()},
+            source_provenance=args.upstream_provenance,
+        )
+        waiver = {
+            "schema": "aime_adas_quality_gate_waiver_v1", "method": "adas",
+            "selection": {"candidate_id": selected["Q"]["candidate_id"],
+                          "candidate_index": candidate_index,
+                          "observed_rates": {key: selected["Q"].get(key)
+                                             for key in ("failure_fraction", "request_failure_fraction", "truncation_fraction")},
+                          "original_threshold": MAX_SAMPLE_FAILURE_RATE, "waived": True,
+                          "authorization": "user explicitly requested D_test with gate validation temporarily waived"},
+            "test": {}, "formal_acceptance": "NOT_FORMAL_PASS",
+        }
+        write_json(args.run_dir / "gate_waiver_audit.json", waiver)
+        before_tests = test_recovery.get("before_tests")
+        if before_tests is not None:
+            before_tests({"candidate_id": selected["Q"]["candidate_id"],
+                          "candidate_index": candidate_index, "candidate_code_sha256": code_hash,
+                          "candidate_name": candidate.get("name", ""), "search_reused": True,
+                          "selection_reused": True, "seed_policy": "stage_reseed_seed0"})
+        tests: dict[str, Any] = {}
+        for split_name in ("aime_2025", "aime_2026"):
+            active_rows = load_aime_test_rows_after_freeze(
+                args.data_dir, args.run_dir, "adas", f"{split_name}.jsonl", 30
+            )
+            phase_name = f"test:{split_name}"
+            evaluate_forward_fn(native_args, code)
+            measured = eval_audits[-1]
+            point = {key: measured[key] for key in (
+                "phase", "num_examples", "correct", "accuracy", "parser_valid_rate", "mean_score_0_1_2",
+                "failure_fraction", "total_tokens", "calls", "tokens_per_example", "rows",
+                "failed_calls", "completion_truncated", "request_failure_fraction", "truncation_fraction")}
+            point.update({"operating_point": "Q", "selected_candidate": selected["Q"]["candidate_id"],
+                          "gate_audit": {"waived": True, "original_threshold": MAX_SAMPLE_FAILURE_RATE,
+                                         "observed_rates": {key: point[key] for key in
+                                                             ("failure_fraction", "request_failure_fraction", "truncation_fraction")},
+                                         "acceptance_status": "NOT_FORMAL_PASS"}})
+            point_e = {**point, "operating_point": "E", "same_candidate_as": "Q"}
+            tests[split_name] = {**point, "Q": point, "E": point_e}
+            waiver["test"][split_name] = point["gate_audit"]
+            write_json(args.run_dir / "gate_waiver_audit.json", waiver)
+            callback = test_recovery.get("checkpoint_completed")
+            if callback is not None:
+                callback(split_name, tests[split_name], runtime)
+        return {
+            "method": "adas", "search_entrypoint": "ADAS retained archive candidate (search/select reused)",
+            "native_method_config": {"safe_candidate_executor": "restricted_ast_v1", "batch_size": 30,
+                "concurrency": CONCURRENCY, "candidate_index": candidate_index},
+            "search": {"reused": True, "rows": None, "training_instances": None},
+            "selection": {"reused": True, "candidate_id": selected["Q"]["candidate_id"],
+                          "accuracy": selected["Q"]["accuracy"], "num_examples": 30},
+            "selected_Q": selected["Q"]["candidate_id"], "selected_E": selected["E"]["candidate_id"],
+            "test": tests, "telemetry": runtime.summary(),
+            "recovery_metadata": {"candidate_code_sha256": code_hash, "candidate_index": candidate_index,
+                                  "random_state_policy": "stage_reseed_seed0; original search RNG unavailable",
+                                  "gate_waiver": True, "formal_acceptance": "NOT_FORMAL_PASS"},
+        }
     phase_name = "search"
     started = time.time()
     adas.search(native_args)
@@ -720,6 +814,16 @@ def run_adas(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse
                 "failure": f"{type(exc).__name__}: {exc}"}
         code_to_candidate[code_hash] = row
         selection_rows.append(row)
+    # Save every D_select archive candidate (including rejected candidates)
+    # before the strict selection gate can abort the formal runner.
+    write_json(args.run_dir / "selection_audit.json", {
+        "schema": "aime_fourway_selection_audit_v1", "method": "adas",
+        "split": "D_select", "dtest_opened": False,
+        "candidate_rows": selection_rows,
+        "native_search_archive": str(archive_path),
+        "failure_limit": MAX_SAMPLE_FAILURE_RATE,
+        "telemetry": runtime.summary(),
+    })
     valid = [row for row in selection_rows if row.get("valid") is True]
     if not valid:
         raise RuntimeError("ADAS has no valid candidate on D_select (failure rate must be <=5%).")
@@ -781,10 +885,22 @@ def run_adas(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse
     }
 
 
-def _register_gdesigner_prompt() -> None:
+def _register_gdesigner_prompt() -> dict[str, Any]:
     from GDesigner.prompt.prompt_set_registry import PromptSetRegistry
+    from GDesigner.prompt.gsm8k_prompt_set import ROLE_CONNECTION
 
     roles = ["Algebraic Decomposer", "Independent Solver", "Consistency Checker", "Solution Synthesizer"]
+    role_mapping = {
+        "Math Solver": "Independent Solver",
+        "Mathematical Analyst": "Algebraic Decomposer",
+        "Programming Expert": "Solution Synthesizer",
+        "Inspector": "Consistency Checker",
+    }
+    native_edges = [tuple(edge) for edge in ROLE_CONNECTION]
+    if (len(native_edges) != 9 or len(set(native_edges)) != 9
+            or any(left not in role_mapping or right not in role_mapping for left, right in native_edges)):
+        raise RuntimeError("G-Designer pinned GSM8K role connections do not match the audited nine-edge graph")
+    mapped_edges = [(role_mapping[left], role_mapping[right]) for left, right in native_edges]
     descriptions = {
         roles[0]: "You decompose the mathematical task into explicit equations and constraints.",
         roles[1]: "You solve the task independently and verify each arithmetic step.",
@@ -804,7 +920,9 @@ def _register_gdesigner_prompt() -> None:
             return descriptions.get(role, "Solve the task carefully.")
         @staticmethod
         def get_role_connection():
-            return [(left, right) for left in roles for right in roles if left != right]
+            # Preserve native role-conditioning connectivity. The earlier
+            # AIME complete role graph collapsed GCN features to rank one.
+            return mapped_edges
         @staticmethod
         def get_format():
             return "natural language"
@@ -842,9 +960,168 @@ def _register_gdesigner_prompt() -> None:
         def get_decision_few_shot():
             return ""
 
+    return {
+        "variant": "aime_native_gsm8k_role_graph_semantic_mapping_v1",
+        "role_names": roles,
+        "role_mapping": role_mapping,
+        "native_role_edges": native_edges,
+        "mapped_role_edges": mapped_edges,
+        "upstream_repository": UPSTREAM_REPOSITORIES["gdesigner"],
+        "upstream_commit": UPSTREAM_COMMITS["gdesigner"],
+        "upstream_source": "GDesigner/prompt/gsm8k_prompt_set.py:ROLE_CONNECTION",
+        "adapter_change": "replace the author AIME package's complete role graph with mapped native nine-edge role conditioning",
+    }
+
+
+class GDesignerNumericalError(FloatingPointError):
+    """A non-finite controller value invalidates the entire native run."""
+
+
+def require_finite_gdesigner(value: Any, label: str) -> None:
+    import torch
+
+    if not bool(torch.isfinite(torch.as_tensor(value)).all()):
+        raise GDesignerNumericalError(f"G-Designer non-finite {label}")
+
+
+def require_finite_gdesigner_model(graph: Any, label: str, *, gradients: bool = False) -> None:
+    for module_name in ("gcn", "mlp"):
+        for parameter_name, parameter in getattr(graph, module_name).named_parameters():
+            require_finite_gdesigner(parameter, f"{label} {module_name}.{parameter_name}")
+            if gradients and parameter.grad is not None:
+                require_finite_gdesigner(parameter.grad, f"{label} gradient {module_name}.{parameter_name}")
+
+
+def patch_gdesigner_numerics(graph_module: Any) -> dict[str, Any]:
+    """Install an explicit numerical compatibility adapter in this process.
+
+    The pinned Graph.arun normalizes flattened Gram values with an undefined
+    zero denominator when every value is equal. Only that exact degenerate
+    case receives neutral zero logits; every nonzero span retains the upstream
+    formula without an epsilon or altered gradient.
+    """
+    import torch
+
+    audit = {
+        "variant": "gdesigner_exact_zero_span_numerical_compatibility_v1",
+        "upstream_function": "GDesigner.graph.graph.min_max_norm",
+        "degenerate_policy": "exact zero span maps to zero logits (edge probability 0.5)",
+        "nondegenerate_policy": "unchanged upstream min-max formula; no epsilon",
+        "zero_span_calls": 0,
+        "finite_checks": "normalization, log probability, loss, gradients, parameters; fail closed",
+    }
+
+    def finite_min_max_norm(tensor: Any):
+        require_finite_gdesigner(tensor, "normalization input")
+        min_val, max_val = tensor.min(), tensor.max()
+        span = max_val - min_val
+        require_finite_gdesigner(span, "normalization span")
+        degenerate = span == 0
+        if bool(degenerate):
+            audit["zero_span_calls"] += 1
+        # Avoid evaluating division by zero in either autograd branch. The
+        # constant branch remains connected to the input with zero gradient.
+        denominator = torch.where(degenerate, torch.ones_like(span), span)
+        normalized = (tensor - min_val) / denominator * 2 - 1
+        result = torch.where(degenerate, torch.zeros_like(normalized), normalized)
+        require_finite_gdesigner(result, "normalized logits")
+        return result
+
+    graph_module.min_max_norm = finite_min_max_norm
+    return audit
+
+
+def _restore_gdesigner_controller(
+    graph: Any, checkpoint_path: Path, expected_sha256: str, seed: int,
+    role_graph_adapter: dict[str, Any], numerical_adapter: dict[str, Any],
+) -> tuple[dict[str, dict[str, Any]], dict[str, bool], Any]:
+    """Strictly restore the frozen native state; never substitute a fresh controller."""
+    import torch
+
+    if seed != 0 or sha256_file(checkpoint_path) != expected_sha256:
+        raise RuntimeError("G-Designer recovery requires the authorized seed 0 checkpoint identity")
+    checkpoint = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+    expected_keys = {"schema", "seed", "state_dicts", "role_graph_adapter",
+                     "role_adjacency_edge_index", "numerical_compatibility_adapter",
+                     "module_training_modes", "frozen_phase"}
+    if (not isinstance(checkpoint, dict) or set(checkpoint) != expected_keys
+            or checkpoint["schema"] != "aime_gdesigner_controller_v1"
+            or checkpoint["seed"] != seed
+            or checkpoint["frozen_phase"] != "after D_search and before D_select/D_test"):
+        raise RuntimeError("G-Designer frozen checkpoint schema/seed/phase does not match")
+    if _sha256_json(checkpoint["role_graph_adapter"]) != _sha256_json(role_graph_adapter):
+        raise RuntimeError("G-Designer checkpoint role adapter differs from this recovery")
+    saved_numerics = checkpoint["numerical_compatibility_adapter"]
+    if (not isinstance(saved_numerics, dict)
+            or set(saved_numerics) != set(numerical_adapter)
+            or type(saved_numerics.get("zero_span_calls")) is not int
+            or saved_numerics["zero_span_calls"] < 0
+            or {key: value for key, value in saved_numerics.items() if key != "zero_span_calls"}
+            != {key: value for key, value in numerical_adapter.items() if key != "zero_span_calls"}):
+        raise RuntimeError("G-Designer checkpoint numerical adapter differs from this recovery")
+    role_edges = checkpoint["role_adjacency_edge_index"]
+    current_edges = graph.role_adj_matrix.detach().cpu()
+    if (not isinstance(role_edges, torch.Tensor) or role_edges.dtype != current_edges.dtype
+            or role_edges.shape != current_edges.shape or not torch.equal(role_edges, current_edges)):
+        raise RuntimeError("G-Designer checkpoint role adjacency differs from the native graph")
+    modes = checkpoint["module_training_modes"]
+    states = checkpoint["state_dicts"]
+    if (not isinstance(modes, dict) or set(modes) != {"gcn", "mlp"}
+            or modes != {"gcn": False, "mlp": True}
+            or any(type(value) is not bool for value in modes.values())
+            or not isinstance(states, dict) or set(states) != {"gcn", "mlp"}):
+        raise RuntimeError("G-Designer checkpoint module state/modes do not match native post-search inference")
+    frozen_state: dict[str, dict[str, Any]] = {}
+    for module_name in ("gcn", "mlp"):
+        module = getattr(graph, module_name)
+        state = states[module_name]
+        expected = module.state_dict()
+        if not isinstance(state, dict) or set(state) != set(expected):
+            raise RuntimeError(f"G-Designer checkpoint {module_name} state keys differ")
+        for key, value in state.items():
+            if (not isinstance(value, torch.Tensor) or value.dtype != expected[key].dtype
+                    or value.shape != expected[key].shape):
+                raise RuntimeError(f"G-Designer checkpoint {module_name}.{key} tensor contract differs")
+            require_finite_gdesigner(value, f"checkpoint {module_name}.{key}")
+        module.load_state_dict(state, strict=True)
+        module.train(modes[module_name])
+        frozen_state[module_name] = {key: value.detach().cpu().clone() for key, value in state.items()}
+    require_finite_gdesigner_model(graph, "restored frozen controller")
+    if sha256_file(checkpoint_path) != expected_sha256:
+        raise RuntimeError("G-Designer checkpoint artifact changed while loading")
+    return frozen_state, dict(modes), role_edges.detach().cpu().clone()
+
+
+def _require_gdesigner_frozen_controller(
+    graph: Any, state: dict[str, dict[str, Any]], modes: dict[str, bool], role_edges: Any,
+    checkpoint_path: Path, expected_sha256: str,
+) -> None:
+    """Fail closed on any parameter, buffer, training-mode, edge, or artifact change."""
+    import torch
+
+    require_finite_gdesigner_model(graph, "frozen recovery inference controller", gradients=True)
+    for module_name, expected in state.items():
+        module = getattr(graph, module_name)
+        observed = module.state_dict()
+        if (module.training is not modes[module_name] or set(observed) != set(expected)
+                or any(value.dtype != observed[key].dtype or value.shape != observed[key].shape
+                       or not torch.equal(value, observed[key].detach().cpu())
+                       for key, value in expected.items())):
+            raise RuntimeError("G-Designer frozen controller changed during recovery inference")
+        for key, value in observed.items():
+            require_finite_gdesigner(value, f"frozen recovery {module_name}.{key}")
+    observed_edges = graph.role_adj_matrix.detach().cpu()
+    if (observed_edges.dtype != role_edges.dtype or observed_edges.shape != role_edges.shape
+            or not torch.equal(observed_edges, role_edges)
+            or graph.optimized_spatial is not True or graph.optimized_temporal is not False):
+        raise RuntimeError("G-Designer frozen graph connectivity changed during recovery inference")
+    if sha256_file(checkpoint_path) != expected_sha256:
+        raise RuntimeError("G-Designer frozen checkpoint artifact changed during recovery inference")
+
 
 def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: argparse.Namespace,
-                  run_id: str, runtime: ModelRuntime, source: Path) -> dict[str, Any]:
+                  run_id: str, runtime: ModelRuntime, source: Path, *,
+                  test_recovery: dict[str, Any] | None = None) -> dict[str, Any]:
     """Run official G-Designer Graph + GCN/MLP + REINFORCE with a local task promptset."""
     source = source.resolve()
     sys.path.insert(0, str(source))
@@ -862,7 +1139,8 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
     import numpy as np
     import torch
 
-    _register_gdesigner_prompt()
+    numerical_adapter = patch_gdesigner_numerics(graph_module)
+    role_graph_adapter = _register_gdesigner_prompt()
     embedding_dir = Path(os.environ.get(
         "AIME_MINILM_PATH", str(Path(__file__).resolve().parent / "embeddings" / "all-MiniLM-L6-v2")
     ))
@@ -880,13 +1158,13 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
                          "content": str(item.get("content") if isinstance(item, dict) else item.content)}
                         for item in messages]
         phase = os.environ.get("MASBENCH_PHASE", "unattributed")
-        return await runtime.call_async(material, temperature=float(temperature if temperature is not None else 0.2), phase=phase)
+        return await runtime.call_async(material, temperature=(0.0 if dataset == "aime" else float(temperature if temperature is not None else 0.2)), phase=phase)
     GPTChat.agen = controlled_agen
     LLMRegistry.register  # explicit reference ensures registry is initialized
 
     seed_everything(args.seed)
     agent_names = ["MathSolver"] * 4
-    role_names = ["Algebraic Decomposer", "Independent Solver", "Consistency Checker", "Solution Synthesizer"]
+    role_names = role_graph_adapter["role_names"]
     spatial_masks = [[0 if i == j else 1 for j in range(4)] for i in range(4)]
     temporal_masks = [[0 for _ in range(4)] for _ in range(4)]
     graph = Graph(domain="rpas_external", llm_name="GPTChat", agent_names=agent_names,
@@ -894,7 +1172,65 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
         fixed_spatial_masks=spatial_masks, fixed_temporal_masks=temporal_masks,
         node_kwargs=[{"role": role} for role in role_names])
     graph.gcn.train()
-    optimizer = torch.optim.Adam(graph.gcn.parameters(), lr=0.1)
+    require_finite_gdesigner_model(graph, "initial parameters")
+    optimizer = torch.optim.Adam(graph.gcn.parameters(), lr=0.1) if test_recovery is None else None
+    controller_path = args.run_dir / "gdesigner_controller.pt"
+    controller_sha256 = ""
+    frozen_controller_state: dict[str, dict[str, Any]] = {}
+    recovery_modes: dict[str, bool] = {}
+    recovery_role_edges: Any = None
+    recovery_metadata: dict[str, Any] | None = None
+    source_controller_path: Path | None = None
+    if test_recovery is not None:
+        if dataset != "aime" or args.seed != 0:
+            raise ValueError("G-Designer test recovery is authorized only for AIME seed 0")
+        if not callable(test_recovery.get("checkpoint_completed")):
+            raise ValueError("G-Designer recovery requires a durable test completion callback")
+        if test_recovery.get("before_tests") is not None and not callable(test_recovery["before_tests"]):
+            raise ValueError("G-Designer recovery before_tests hook must be callable")
+        if test_recovery.get("sample_completed") is not None and not callable(test_recovery["sample_completed"]):
+            raise ValueError("G-Designer recovery sample_completed hook must be callable")
+        if test_recovery.get("close_async_client") is not None and not callable(test_recovery["close_async_client"]):
+            raise ValueError("G-Designer recovery close_async_client hook must be callable")
+        source_controller_path = Path(test_recovery["controller_path"]).resolve()
+        controller_sha256 = str(test_recovery["checkpoint_sha256"])
+        if source_controller_path == controller_path.resolve():
+            raise ValueError("G-Designer recovery must copy the checkpoint into a fresh run")
+        if sha256_file(source_controller_path) != controller_sha256:
+            raise RuntimeError("G-Designer original checkpoint identity differs before recovery")
+        with source_controller_path.open("rb") as original, controller_path.open("xb") as recovered:
+            shutil.copyfileobj(original, recovered)
+            recovered.flush()
+            os.fsync(recovered.fileno())
+        frozen_controller_state, recovery_modes, recovery_role_edges = _restore_gdesigner_controller(
+            graph, controller_path, controller_sha256, args.seed, role_graph_adapter, numerical_adapter,
+        )
+        recovery_metadata = {
+            "graph_id": graph.id,
+            "nodes": [{"id": node_id, "role": node.role} for node_id, node in graph.nodes.items()],
+            "decision_node_id": graph.decision_node.id,
+            "node_identity_policy": "new native shortuuid IDs; historical IDs are absent from checkpoint",
+            "rng_policy": "seed 0 reset at recovery stage; historical RNG state is absent from checkpoint",
+            "module_training_modes": dict(recovery_modes), "controller_sha256": controller_sha256,
+            "reused_search": True, "reused_selection": True,
+            "acceptance_status": "NOT_FORMAL_PASS",
+        }
+
+    def require_recovery_identity() -> None:
+        if test_recovery is not None:
+            _require_gdesigner_frozen_controller(graph, frozen_controller_state, recovery_modes,
+                                                recovery_role_edges, controller_path, controller_sha256)
+            if sha256_file(source_controller_path) != controller_sha256:
+                raise RuntimeError("G-Designer original checkpoint changed during recovery")
+
+    def waived_gate_audit(point: dict[str, Any], phase: str) -> dict[str, Any]:
+        rates = {key: float(point[key]) for key in
+                 ("failure_fraction", "request_failure_fraction", "truncation_fraction")}
+        return {"phase": phase, "waived": True, "original_failure_limit": MAX_SAMPLE_FAILURE_RATE,
+                "original_gate_passed": all(value <= MAX_SAMPLE_FAILURE_RATE for value in rates.values()),
+                "observed_rates": rates,
+                "authorization": "user explicitly requested G-Designer continuation without quality thresholds",
+                "acceptance_status": "NOT_FORMAL_PASS"}
 
     def records(split: list[dict[str, Any]]) -> list[dict[str, Any]]:
         return [{"task": task_text(dataset, row), "gold": str(row.get("answer", "")),
@@ -902,6 +1238,9 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
                 for index, row in enumerate(split)]
 
     async def infer(batch: list[dict[str, Any]], phase: str, train: bool = False) -> tuple[list[dict[str, Any]], list[Any]]:
+        if test_recovery is not None and train:
+            raise RuntimeError("G-Designer frozen test recovery cannot perform optimizer updates")
+        require_finite_gdesigner_model(graph, f"{phase} parameters before inference")
         before = dict(runtime.usage["totals"])
         previous = os.environ.get("MASBENCH_PHASE")
         os.environ["MASBENCH_PHASE"] = phase
@@ -912,17 +1251,27 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
                 realized.mlp = graph.mlp
                 try:
                     response, log_prob = await realized.arun({"task": item["task"]}, num_rounds=1, max_tries=3, max_time=180)
+                    require_finite_gdesigner(log_prob, f"{phase} log probability")
                     raw = response[0] if response else ""
                     score = score_row(dataset, raw, item["gold"])
                     audit = {"id": item["id"], "prediction": score["prediction"], "gold": score["gold"],
                         "parser_valid": bool(score["parser_valid"]), "correct": bool(score["correct"]),
                         "score_0_1_2": int(score["score_0_1_2"]),
                         "sample_failed": not bool(score["parser_valid"]), "raw_output": str(raw)}
-                    return audit, log_prob
+                except GDesignerNumericalError:
+                    raise
                 except Exception as exc:
-                    return {"id": item["id"], "prediction": "", "gold": item["gold"],
+                    audit = {"id": item["id"], "prediction": "", "gold": item["gold"],
                         "parser_valid": False, "correct": False, "score_0_1_2": 0,
-                        "sample_failed": True, "failure": f"{type(exc).__name__}: {exc}"}, torch.tensor(0.0)
+                        "sample_failed": True, "failure": f"{type(exc).__name__}: {exc}"}
+                    log_prob = torch.tensor(0.0)
+                if test_recovery is not None:
+                    sample_completed = test_recovery.get("sample_completed")
+                    if sample_completed is not None:
+                        # Persistence failures must propagate, rather than be
+                        # mislabeled as an upstream per-sample model failure.
+                        sample_completed(phase, audit)
+                return audit, log_prob
             pairs = await asyncio.gather(*(one(item) for item in batch))
             audit, log_probs = zip(*pairs) if pairs else ([], [])
             if train:
@@ -933,9 +1282,14 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
                 losses = [-log_prob * utility for log_prob, utility in zip(log_probs, utilities)]
                 losses = [loss for loss in losses if getattr(loss, "requires_grad", False)]
                 if losses:
+                    assert optimizer is not None
+                    loss = torch.mean(torch.stack(losses))
+                    require_finite_gdesigner(loss, f"{phase} REINFORCE loss")
                     optimizer.zero_grad()
-                    torch.mean(torch.stack(losses)).backward()
+                    loss.backward()
+                    require_finite_gdesigner_model(graph, f"{phase} before Adam update", gradients=True)
                     optimizer.step()
+                    require_finite_gdesigner_model(graph, f"{phase} after Adam update", gradients=True)
             after = dict(runtime.usage["totals"])
             phase_usage = runtime.usage["phases"].get(phase, empty_usage())
             return list(audit), list(log_probs)
@@ -995,13 +1349,55 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
             "truncation_fraction": truncation_fraction,
             "total_tokens": int(phase_usage["total_tokens"])}
 
-    async def full_run() -> tuple[list[dict[str, Any]], list[list[str]], float, dict[str, Any], dict[str, Any]]:
+    async def full_run() -> tuple[Any, Any, float | None, dict[str, Any], dict[str, Any]]:
+        nonlocal controller_sha256, frozen_controller_state
         runtime.async_semaphore = asyncio.Semaphore(CONCURRENCY)
-        started = time.time()
-        search_result, training_row_ids = await training_loop()
-        elapsed = time.time() - started
-        selected = await evaluate_split(rows["select"], "select")
-        if (selected["failure_fraction"] > MAX_SAMPLE_FAILURE_RATE
+        if test_recovery is None:
+            started = time.time()
+            search_result, training_row_ids = await training_loop()
+            elapsed = time.time() - started
+            require_finite_gdesigner_model(graph, "controller frozen after D_search", gradients=True)
+            frozen_controller_state = {
+                name: {key: value.detach().cpu().clone() for key, value in getattr(graph, name).state_dict().items()}
+                for name in ("gcn", "mlp")
+            }
+            with controller_path.open("xb") as stream:
+                torch.save({
+                    "schema": "aime_gdesigner_controller_v1", "seed": args.seed,
+                    "state_dicts": frozen_controller_state,
+                    "role_graph_adapter": role_graph_adapter,
+                    "role_adjacency_edge_index": graph.role_adj_matrix.detach().cpu().clone(),
+                    "numerical_compatibility_adapter": dict(numerical_adapter),
+                    "module_training_modes": {name: getattr(graph, name).training for name in ("gcn", "mlp")},
+                    "frozen_phase": "after D_search and before D_select/D_test",
+                }, stream)
+            controller_sha256 = sha256_file(controller_path)
+            selected = await evaluate_split(rows["select"], "select")
+        else:
+            search_result = training_row_ids = elapsed = None
+            selected = copy.deepcopy(test_recovery["selection_metrics"])
+            require_recovery_identity()
+        # Preserve the full 30-item audit and trained controller identity even
+        # if the existing 5% quality gate correctly blocks D_test access.
+        write_json(args.run_dir / "selection_audit.json", {
+            "schema": "aime_fourway_selection_audit_v1", "method": "gdesigner",
+            "split": "D_select", "dtest_opened": False,
+            "selection_metrics": selected,
+            "controller_sha256": controller_sha256,
+            "failure_limit": MAX_SAMPLE_FAILURE_RATE,
+            "telemetry": runtime.summary(),
+            **({"reused_without_model_requests": True,
+                "selection_metrics_origin": "retained selection audit",
+                "telemetry_scope": "new test continuation; no selection calls"}
+               if test_recovery is not None else {}),
+        })
+        if test_recovery is not None:
+            write_json(args.run_dir / "gate_waiver_audit.json", {
+                "schema": "aime_gdesigner_quality_gate_waiver_v1", "method": "gdesigner",
+                "selection": waived_gate_audit(selected, "select"), "test": {},
+                "acceptance_status": "NOT_FORMAL_PASS",
+            })
+        elif (selected["failure_fraction"] > MAX_SAMPLE_FAILURE_RATE
                 or selected["request_failure_fraction"] > MAX_SAMPLE_FAILURE_RATE
                 or selected["truncation_fraction"] > MAX_SAMPLE_FAILURE_RATE):
             raise RuntimeError("G-Designer D_select failure rate exceeds 5%; refusing to open D_test.")
@@ -1012,28 +1408,65 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
             args.run_dir, "gdesigner", rows["search"], rows["select"],
             {"candidate_id": "trained_gdesigner_graph",
              "selection_accuracy": float(selected["accuracy"]),
-             "selection_rows": int(selected["num_examples"])},
+             "selection_rows": int(selected["num_examples"]),
+             "controller_path": str(controller_path),
+             "controller_sha256": controller_sha256},
             source_provenance=args.upstream_provenance,
         )
+        if test_recovery is not None:
+            require_recovery_identity()
+            before_tests = test_recovery.get("before_tests")
+            if before_tests is not None:
+                before_tests(copy.deepcopy(recovery_metadata))
         test_results: dict[str, Any] = {}
         for name in ("aime_2025", "aime_2026"):
             test_rows = load_aime_test_rows_after_freeze(
                 args.data_dir, args.run_dir, "gdesigner", f"{name}.jsonl", 30
             )
             point = await evaluate_split(test_rows, f"test:{name}")
-            if (point["failure_fraction"] > MAX_SAMPLE_FAILURE_RATE
+            if test_recovery is None and (point["failure_fraction"] > MAX_SAMPLE_FAILURE_RATE
                     or point["request_failure_fraction"] > MAX_SAMPLE_FAILURE_RATE
                     or point["truncation_fraction"] > MAX_SAMPLE_FAILURE_RATE):
                 raise RuntimeError(f"G-Designer {name} failure rate exceeds 5%.")
             point["tokens_per_example"] = point["total_tokens"] / max(1, point["num_examples"])
             point["operating_point"] = "Q"
             point["selected_candidate"] = "trained_gdesigner_graph"
+            if test_recovery is not None:
+                point["phase"] = f"test:{name}"
+                point["gate_audit"] = waived_gate_audit(point, point["phase"])
             point_e = {**point, "operating_point": "E", "same_candidate_as": "Q"}
             test_results[name] = {**point, "Q": point, "E": point_e}
+            if test_recovery is not None:
+                require_recovery_identity()
+                test_recovery["checkpoint_completed"](name, test_results[name], runtime)
+                waiver_path = args.run_dir / "gate_waiver_audit.json"
+                waiver = json.loads(waiver_path.read_text(encoding="utf-8"))
+                waiver["test"][name] = point["gate_audit"]
+                write_json(waiver_path, waiver)
+        require_finite_gdesigner_model(graph, "final inference parameters", gradients=True)
+        for module_name, state in frozen_controller_state.items():
+            observed = getattr(graph, module_name).state_dict()
+            if any(not torch.equal(value, observed[key].detach().cpu()) for key, value in state.items()):
+                raise RuntimeError("G-Designer controller changed after its D_search freeze")
+        if sha256_file(controller_path) != controller_sha256:
+            raise RuntimeError("G-Designer frozen controller artifact changed during evaluation")
+        require_recovery_identity()
         return search_result, training_row_ids, elapsed, selected, test_results
 
-    search_audit, training_row_ids, search_seconds, selection, tests = asyncio.run(full_run())
-    return {
+    async def recovery_run() -> tuple[Any, Any, float | None, dict[str, Any], dict[str, Any]]:
+        try:
+            return await full_run()
+        finally:
+            close_async_client = test_recovery.get("close_async_client")
+            if close_async_client is not None:
+                # HTTPX connections belong to the inference event loop. Close
+                # them here on both success and failure before that loop ends.
+                await close_async_client()
+
+    search_audit, training_row_ids, search_seconds, selection, tests = asyncio.run(
+        full_run() if test_recovery is None else recovery_run()
+    )
+    result = {
         "method": "gdesigner", "search_entrypoint": "G-Designer Graph.arun + task-conditioned GCN/MLP + REINFORCE",
         "native_method_config": {"agent_names": agent_names, "agent_count": 4,
             "decision_method": "FinalRefer", "mode": "FullConnected", "optimized_spatial": True,
@@ -1041,14 +1474,25 @@ def run_gdesigner(dataset: str, rows: dict[str, list[dict[str, Any]]], args: arg
             "training_iterations": 10, "training_batch_size": 4, "training_row_ids": training_row_ids,
             "num_rounds": 1, "post_training_inference": "native task-conditioned GCN with optimized spatial sampling enabled",
             "utility": "native exact-match binary REINFORCE reward; shared 0/1/2 score reported separately",
+            "numerical_compatibility_adapter": numerical_adapter,
+            "role_graph_adapter": role_graph_adapter,
+            "controller_checkpoint": str(controller_path), "controller_sha256": controller_sha256,
+            "controller_unchanged_after_search": True,
             "embedding_model": str(embedding_dir)},
-        "search_seconds": search_seconds, "search": {"rows": search_audit,
+        "search_seconds": search_seconds, "search": ({"rows": None, "accuracy": None,
+            "unique_d_search_examples": len(rows["search"]), "training_instances": None,
+            "post_training_d_search_examples": None, "training_row_ids": None,
+            "reused_search": True, "historical_telemetry_available": False}
+            if test_recovery is not None else {"rows": search_audit,
             "accuracy": sum(int(x["correct"]) for x in search_audit) / len(search_audit),
             "unique_d_search_examples": len(rows["search"]), "training_instances": 40,
-            "post_training_d_search_examples": len(search_audit)},
+            "post_training_d_search_examples": len(search_audit)}),
         "selection": {**selection, "split": "D_select"}, "selected_Q": "trained_gdesigner_graph",
         "selected_E": "same_candidate_as_Q", "test": tests, "telemetry": runtime.summary(),
     }
+    if test_recovery is not None:
+        result["recovery_metadata"] = recovery_metadata
+    return result
 
 
 def parse_args() -> argparse.Namespace:
@@ -1235,7 +1679,8 @@ def main() -> int:
         result["dtest_access_manifest_sha256"] = manifest["dtest_access_manifest_sha256"]
         result["run_id"] = run_id
         result["controls"] = {"model": MODEL, "endpoint": args.endpoint, "max_model_len": CONTEXT_LIMIT,
-            "max_tokens": OUTPUT_LIMIT, "temperature_policy": "native method/agent settings",
+            "max_tokens": OUTPUT_LIMIT, "temperature_policy": "AIME task executor temperature=0; method-native ADAS meta-search temperature retained",
+            "request_timeout_s": runtime.request_timeout_s,
             "top_p": 1.0, "thinking": False, "concurrency": CONCURRENCY, "seed": args.seed,
             "data_seed": 2026, "selection_split": "D_select", "test_split": "D_test",
             "score_mapping": "2=exact match; 1=parseable wrong; 0=unparseable",

@@ -1,0 +1,76 @@
+{
+  "original_run": "/data/jxc/RPAS-AIME-FourMethods-Seed0-upstream-ba1ca711/experiments/external_baselines/aime_four_methods_seed0/outputs/aime_four_methods_seed0_20261001_recovery2/aflow_maas/aflow/seed_0",
+  "diagnostic_copy": "/data/jxc/tmp/rpas/aime_hang_recovery_20261001_200131/new_checker_copy",
+  "checker_code": "/data/jxc/tmp/rpas/aime_hang_recovery_20261001_200131/new_checker_code",
+  "protected_original_sha256": {
+    "run_manifest.json": "a3407ec61cc75960837a84d11c85748df5729b2adc38b8b9c1148d0ebdaace07",
+    "quality_gate.json": "210871d8f369f48e194e84a0da241388aaf546e487d17383440cc7a1f5dca1d9",
+    "native_result.json": "c0916c775697579aca9ed7d1f4c0c1b63605a69159a7825ad6bba9113cad6902",
+    "selection_frozen.json": "f8d5d3c2bfba2d10310067fb7cb723ce54889f60fea8214cc93f89e71dd30929",
+    "split_manifest.json": "ce15d93887aff23de4d7787aa84a9bec618edada8d67ed7483cf917d9804e692",
+    "dtest_access_manifest.json": "3ae09db1a197d09c24d31b55e5e38d31450ca4d685d23f2df74cbe3ad0c4e3d5"
+  },
+  "checker_sha256": "8e50dba0b753326ee5256bbe610845a8d67f9ed9d5c80a7f39b4ee9d3bdf4935",
+  "runner_sha256": "8bad3970bb49f60147a921fa811213c9074b7ccaf68263cf90babb913afa5f23",
+  "parser_sha256": "f5707ae75e38b5874ed94f9e3c652055ef8c778badcb83f4fe069ec9ad0fb378",
+  "original_files_unchanged": {
+    "run_manifest.json": true,
+    "quality_gate.json": true,
+    "native_result.json": true,
+    "selection_frozen.json": true,
+    "split_manifest.json": true,
+    "dtest_access_manifest.json": true
+  },
+  "original_quality_gate": {
+    "status": "FAIL",
+    "method": "aflow",
+    "seed": 0,
+    "errors": [
+      "D_test opened-data hash mismatch for aime_2025.jsonl",
+      "D_test opened-data hash mismatch for aime_2026.jsonl",
+      "truncation rate 499/3638 exceeds 5.0%"
+    ],
+    "warnings": [],
+    "test_scores": {
+      "aime_2025": {
+        "Q": 0.5,
+        "E": 0.5
+      },
+      "aime_2026": {
+        "Q": 0.6666666666666666,
+        "E": 0.6666666666666666
+      }
+    },
+    "calls": 3638,
+    "failed_calls": 0
+  },
+  "corrected_diagnostic_quality_gate": {
+    "status": "FAIL",
+    "method": "aflow",
+    "seed": 0,
+    "errors": [
+      "truncation rate 499/3638 exceeds 5.0%"
+    ],
+    "warnings": [],
+    "test_scores": {
+      "aime_2025": {
+        "Q": 0.5,
+        "E": 0.5
+      },
+      "aime_2026": {
+        "Q": 0.6666666666666666,
+        "E": 0.6666666666666666
+      }
+    },
+    "calls": 3638,
+    "failed_calls": 0
+  },
+  "completion_truncated": 499,
+  "calls": 3638,
+  "truncation_fraction": 0.1371632765255635,
+  "threshold": 0.05,
+  "outcome": "rejected",
+  "checker_exit_code": 42,
+  "scope": "AFlow calculation completed; corrected source-hash check removes two false positives; fixed truncation quality gate still rejects. Original evidence remains immutable.",
+  "code_execution_telemetry_limitation": "The old runner patched scripts.operators.Programmer only. Actual workflow templates define a separate Programmer(Operator), retaining the original process pool. Zero timeout/error counters do not establish zero code execution failures."
+}

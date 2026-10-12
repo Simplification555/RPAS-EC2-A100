@@ -1,0 +1,18 @@
+{
+  "verified_at_utc": "2026-10-01T12:29:38.084347+00:00",
+  "source_sha256": {
+    "scripts/run_pair.sh": "e143ef1be51d57ff0d9a8ac6846a6cea6f3b4e9ee7882d601a3e084958a44ea0",
+    "scripts/run_single48g_all.sh": "d5b274418e37b9bc0337afc33622711a4ff97f0f1fe2054610d1dafdfada2b60",
+    "scripts/diagnose_native_methods.py": "6f6bc280c490178d52096242768848f05358a36432473ec03743c49543ac88fd"
+  },
+  "fixture_root": "/data/jxc/tmp/rpas/diagnostics/aime_runner_dispatch_cpu_3g7oi4fo",
+  "dispatch_fixture_sha256": "641c84ab770fe500a8fe0ca31303ae7731f7b67992343eacfb68e3cb38c70c1a",
+  "dispatch_result": "4 CPU cases passed; no GPU/model calls",
+  "cancellation_result": "TERM and INT fixtures passed with zero live worker/child processes",
+  "static_checks": [
+    "git diff --check passed",
+    "bash -n scripts/run_pair.sh scripts/run_single48g_all.sh passed",
+    "diagnose_native_methods.py compilation passed"
+  ],
+  "independent_review": "aime_environment_audit verified current launcher file hashes against tested fixture copies"
+}

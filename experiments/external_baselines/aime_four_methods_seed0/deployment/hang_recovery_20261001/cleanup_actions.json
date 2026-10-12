@@ -1,0 +1,38 @@
+[
+  {
+    "pid": 487914,
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 500141,
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 520637,
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 520736,
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 520828,
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 524204,
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 525484,
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 525710,
+    "signal": "SIGTERM"
+  },
+  {
+    "pid": 526869,
+    "signal": "SIGTERM"
+  }
+]

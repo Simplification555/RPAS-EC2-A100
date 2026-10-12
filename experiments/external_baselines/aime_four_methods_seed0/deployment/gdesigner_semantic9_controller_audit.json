@@ -1,0 +1,202 @@
+{
+  "schema": "gdesigner_synthetic_cpu_controller_audit_v1",
+  "model_calls": 0,
+  "dtest_opened": false,
+  "upstream_commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+  "torch": "2.10.0+cu130",
+  "float_dtype": "float32",
+  "mapping": {
+    "Math Solver": "Independent Solver",
+    "Mathematical Analyst": "Algebraic Decomposer",
+    "Programming Expert": "Solution Synthesizer",
+    "Inspector": "Consistency Checker"
+  },
+  "prompt_registration": {
+    "variant": "aime_native_gsm8k_role_graph_semantic_mapping_v1",
+    "role_names": [
+      "Algebraic Decomposer",
+      "Independent Solver",
+      "Consistency Checker",
+      "Solution Synthesizer"
+    ],
+    "role_mapping": {
+      "Math Solver": "Independent Solver",
+      "Mathematical Analyst": "Algebraic Decomposer",
+      "Programming Expert": "Solution Synthesizer",
+      "Inspector": "Consistency Checker"
+    },
+    "native_role_edges": [
+      [
+        "Mathematical Analyst",
+        "Math Solver"
+      ],
+      [
+        "Mathematical Analyst",
+        "Programming Expert"
+      ],
+      [
+        "Mathematical Analyst",
+        "Inspector"
+      ],
+      [
+        "Math Solver",
+        "Programming Expert"
+      ],
+      [
+        "Programming Expert",
+        "Math Solver"
+      ],
+      [
+        "Programming Expert",
+        "Inspector"
+      ],
+      [
+        "Inspector",
+        "Math Solver"
+      ],
+      [
+        "Inspector",
+        "Programming Expert"
+      ],
+      [
+        "Inspector",
+        "Mathematical Analyst"
+      ]
+    ],
+    "mapped_role_edges": [
+      [
+        "Algebraic Decomposer",
+        "Independent Solver"
+      ],
+      [
+        "Algebraic Decomposer",
+        "Solution Synthesizer"
+      ],
+      [
+        "Algebraic Decomposer",
+        "Consistency Checker"
+      ],
+      [
+        "Independent Solver",
+        "Solution Synthesizer"
+      ],
+      [
+        "Solution Synthesizer",
+        "Independent Solver"
+      ],
+      [
+        "Solution Synthesizer",
+        "Consistency Checker"
+      ],
+      [
+        "Consistency Checker",
+        "Independent Solver"
+      ],
+      [
+        "Consistency Checker",
+        "Solution Synthesizer"
+      ],
+      [
+        "Consistency Checker",
+        "Algebraic Decomposer"
+      ]
+    ],
+    "upstream_repository": "https://github.com/yanweiyue/GDesigner.git",
+    "upstream_commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+    "upstream_source": "GDesigner/prompt/gsm8k_prompt_set.py:ROLE_CONNECTION",
+    "adapter_change": "replace the author AIME package's complete role graph with mapped native nine-edge role conditioning"
+  },
+  "synthetic_query": "Compute 2 + 3. Return FINAL ANSWER: 5.",
+  "normalization": "unchanged min/max when span > 0; exact span == 0 maps to connected zero logits",
+  "optimizer": "native Adam(graph.gcn.parameters(), lr=0.1)",
+  "scenarios": {
+    "aime_semantic_native_9": {
+      "role_edges": 9,
+      "role_connection": [
+        [
+          "Algebraic Decomposer",
+          "Independent Solver"
+        ],
+        [
+          "Algebraic Decomposer",
+          "Solution Synthesizer"
+        ],
+        [
+          "Algebraic Decomposer",
+          "Consistency Checker"
+        ],
+        [
+          "Independent Solver",
+          "Solution Synthesizer"
+        ],
+        [
+          "Solution Synthesizer",
+          "Independent Solver"
+        ],
+        [
+          "Solution Synthesizer",
+          "Consistency Checker"
+        ],
+        [
+          "Consistency Checker",
+          "Independent Solver"
+        ],
+        [
+          "Consistency Checker",
+          "Solution Synthesizer"
+        ],
+        [
+          "Consistency Checker",
+          "Algebraic Decomposer"
+        ]
+      ],
+      "node_roles": [
+        "Algebraic Decomposer",
+        "Independent Solver",
+        "Consistency Checker",
+        "Solution Synthesizer"
+      ],
+      "normalized_propagation_matrix": [
+        [
+          0.4999999701976776,
+          0.0,
+          0.40824827551841736,
+          0.0
+        ],
+        [
+          0.3535533845424652,
+          0.25,
+          0.28867512941360474,
+          0.25
+        ],
+        [
+          0.40824827551841736,
+          0.0,
+          0.3333333134651184,
+          0.28867512941360474
+        ],
+        [
+          0.3535533845424652,
+          0.25,
+          0.28867512941360474,
+          0.25
+        ]
+      ],
+      "propagation_rank": 3,
+      "trials": [
+        {
+          "seed": 0,
+          "reward": 1.0,
+          "gcn_row_max_difference": 0.016734600067138672,
+          "gram_span": 0.008871078491210938,
+          "normalized_finite": true,
+          "loss": 7.295932769775391,
+          "gcn_gradient_finite": true,
+          "gcn_gradient_l1": 801.6369199752808,
+          "gcn_parameter_max_delta": 0.10000001639127731,
+          "changed_parameter_tensors": 4
+        }
+      ]
+    }
+  }
+}

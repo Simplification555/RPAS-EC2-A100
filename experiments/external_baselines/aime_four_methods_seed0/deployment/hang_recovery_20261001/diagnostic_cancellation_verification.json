@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "signal": "TERM",
+      "exit_code": 130,
+      "cleanup_seconds": 1.068,
+      "term_ignoring_worker_and_grandchild_live": 0
+    },
+    {
+      "signal": "INT",
+      "exit_code": 130,
+      "cleanup_seconds": 1.27,
+      "term_ignoring_worker_and_grandchild_live": 0
+    }
+  ]
+}

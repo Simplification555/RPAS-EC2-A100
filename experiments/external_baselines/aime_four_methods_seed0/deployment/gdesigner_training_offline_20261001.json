@@ -1,0 +1,187 @@
+{
+  "status": "passed",
+  "method": "gdesigner",
+  "synthetic_only": true,
+  "sample_count": 2,
+  "concurrency": 2,
+  "max_tokens": 6144,
+  "source": "/data/jxc/RPAS-AIME-FourMethods-Seed0-upstream-ba1ca711/experiments/external_baselines/aime_four_methods_seed0/upstream/GDesigner",
+  "source_info": {
+    "commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+    "clean_worktree": true,
+    "origin": "https://github.com/yanweiyue/GDesigner.git",
+    "repository": "https://github.com/yanweiyue/GDesigner.git"
+  },
+  "script_sha256": "f7ccb10e4097ce778a241fd2f02aafbeac9c2062c1b04f9249642e08e5a4f920",
+  "check_only": true,
+  "started_at_utc": "2026-10-01T03:42:34.263550+00:00",
+  "runtime_overrides": {
+    "AIME_MAAS_EMBEDDING_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_MINILM_PATH": "/data/jxc/models/all-MiniLM-L6-v2",
+    "AIME_TOKENIZER_PATH": "/data/jxc/models/Qwen3.5-9B"
+  },
+  "result": {
+    "agent_nodes": 4,
+    "decision_method": "FinalRefer",
+    "topology_optimizer": "native GCN/MLP",
+    "training": true,
+    "offline_topology_only": true,
+    "reward_source": "explicit synthetic constant 1; no model answers",
+    "training_predictions": [
+      {
+        "id": "synthetic_add",
+        "topology_only": true,
+        "gram_span": 0.006836891174316406,
+        "topology_log_probability": -5.063395023345947
+      },
+      {
+        "id": "synthetic_multiply",
+        "topology_only": true,
+        "gram_span": 0.005741119384765625,
+        "topology_log_probability": -4.378702640533447
+      }
+    ],
+    "predictions": [
+      {
+        "id": "synthetic_add",
+        "topology_only": true,
+        "gram_span": 0.07220172882080078,
+        "topology_log_probability": -5.452554702758789
+      },
+      {
+        "id": "synthetic_multiply",
+        "topology_only": true,
+        "gram_span": 0.08068656921386719,
+        "topology_log_probability": -5.323959827423096
+      }
+    ],
+    "optimizer_audit": {
+      "optimizer": "Adam",
+      "learning_rate": 0.1,
+      "optimized_module": "GCN only; MLP fixed",
+      "optimizer_steps": 1,
+      "loss": 4.721048831939697,
+      "rewards": [
+        1.0,
+        1.0
+      ],
+      "gradient_tensor_count": 4,
+      "gradient_max_abs": 1.8853070735931396,
+      "gradient_nonzero_elements": 8455,
+      "gradient_nonzero_tensors": 4,
+      "changed_parameter_tensors": 4,
+      "parameter_max_abs_delta": 0.10000000894069672,
+      "parameter_update_verified": true
+    },
+    "checkpoint": "/data/jxc/tmp/rpas/diagnostics/aime_gdesigner_training_offline_20261001/gdesigner_diagnostic_gcn.pt",
+    "checkpoint_sha256": "dffbd04e7dc0c4a93510e998ae6369768e3158a296fd09970e68f1cec12cb8c5",
+    "checkpoint_max_abs_delta_from_initial": 0.10000000894069672,
+    "numerical_adapter": {
+      "variant": "gdesigner_exact_zero_span_numerical_compatibility_v1",
+      "upstream_function": "GDesigner.graph.graph.min_max_norm",
+      "degenerate_policy": "exact zero span maps to zero logits (edge probability 0.5)",
+      "nondegenerate_policy": "unchanged upstream min-max formula; no epsilon",
+      "zero_span_calls": 0,
+      "finite_checks": "normalization, log probability, loss, gradients, parameters; fail closed",
+      "role_graph": {
+        "variant": "aime_native_gsm8k_role_graph_semantic_mapping_v1",
+        "role_names": [
+          "Algebraic Decomposer",
+          "Independent Solver",
+          "Consistency Checker",
+          "Solution Synthesizer"
+        ],
+        "role_mapping": {
+          "Math Solver": "Independent Solver",
+          "Mathematical Analyst": "Algebraic Decomposer",
+          "Programming Expert": "Solution Synthesizer",
+          "Inspector": "Consistency Checker"
+        },
+        "native_role_edges": [
+          [
+            "Mathematical Analyst",
+            "Math Solver"
+          ],
+          [
+            "Mathematical Analyst",
+            "Programming Expert"
+          ],
+          [
+            "Mathematical Analyst",
+            "Inspector"
+          ],
+          [
+            "Math Solver",
+            "Programming Expert"
+          ],
+          [
+            "Programming Expert",
+            "Math Solver"
+          ],
+          [
+            "Programming Expert",
+            "Inspector"
+          ],
+          [
+            "Inspector",
+            "Math Solver"
+          ],
+          [
+            "Inspector",
+            "Programming Expert"
+          ],
+          [
+            "Inspector",
+            "Mathematical Analyst"
+          ]
+        ],
+        "mapped_role_edges": [
+          [
+            "Algebraic Decomposer",
+            "Independent Solver"
+          ],
+          [
+            "Algebraic Decomposer",
+            "Solution Synthesizer"
+          ],
+          [
+            "Algebraic Decomposer",
+            "Consistency Checker"
+          ],
+          [
+            "Independent Solver",
+            "Solution Synthesizer"
+          ],
+          [
+            "Solution Synthesizer",
+            "Independent Solver"
+          ],
+          [
+            "Solution Synthesizer",
+            "Consistency Checker"
+          ],
+          [
+            "Consistency Checker",
+            "Independent Solver"
+          ],
+          [
+            "Consistency Checker",
+            "Solution Synthesizer"
+          ],
+          [
+            "Consistency Checker",
+            "Algebraic Decomposer"
+          ]
+        ],
+        "upstream_repository": "https://github.com/yanweiyue/GDesigner.git",
+        "upstream_commit": "a6efcfa3b40bb4d9cbf46f883a95d62020bd8251",
+        "upstream_source": "GDesigner/prompt/gsm8k_prompt_set.py:ROLE_CONNECTION",
+        "adapter_change": "replace the author AIME package's complete role graph with mapped native nine-edge role conditioning"
+      }
+    },
+    "node_timeout_seconds": 180,
+    "request_timeout_seconds": null,
+    "seed_timing": "after local MiniLM load, matching formal runner"
+  },
+  "finished_at_utc": "2026-10-01T03:42:37.924054+00:00"
+}

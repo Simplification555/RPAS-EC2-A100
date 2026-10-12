@@ -1,0 +1,42 @@
+{
+  "scope": "CPU/offline runtime regressions and unchanged G-Designer numerical tests; no benchmark inputs, model calls, or GPU experiments",
+  "verified_at_utc": "2026-10-01T12:19:07.920751+00:00",
+  "source_sha256": {
+    "experiments/native_aime_formal.py": "57c381522b5f1b126f67cd4d59d7e484db7f0f9dd39d3a0620f637bfc9db4d92",
+    "experiments/test_aime_runtime_safety.py": "611448cac0da0eb3e36da8e5030cb31f3567fb1c837ebdf909467cb89c87650b",
+    "experiments/aime_quality_gate.py": "8e50dba0b753326ee5256bbe610845a8d67f9ed9d5c80a7f39b4ee9d3bdf4935",
+    "experiments/test_aime_quality_gate.py": "831f9b930a16156a3f807837d2f2d319369ad86d337745007157e38e8a4631c4"
+  },
+  "checks": [
+    {
+      "command": "uv run --no-project --python /data/jxc/tmp/rpas/aime-offline-check-venv/bin/python python -m pytest -q experiments",
+      "result": "67 passed, 4 skipped, 13 subtests passed",
+      "skips": "Torch numerical tests unavailable in the minimal offline environment; exercised separately below",
+      "reported_by": "aime_protocol_audit"
+    },
+    {
+      "command": "PYTHONPATH=experiments:/data/jxc/tmp/rpas/aime-offline-check-venv/lib/python3.14/site-packages uv run --no-project --python /data/jxc/envs/rpas-aflow/bin/python python -m pytest -q experiments/test_aime_runtime_safety.py",
+      "result": "18 passed",
+      "reported_by": "aime_protocol_audit"
+    },
+    {
+      "command": "PYTHONPATH=experiments:/data/jxc/tmp/rpas/aime-offline-check-venv/lib/python3.14/site-packages uv run --no-project --python /data/jxc/envs/rpas-aime-gdesigner/bin/python python -m pytest -q experiments/test_native_external_methods.py",
+      "result": "20 passed, 18 subtests passed",
+      "reported_by": "root"
+    }
+  ],
+  "actual_template_cases": [
+    "canonical classes",
+    "run-local templates loaded before patch",
+    "dynamic copies loaded after patch",
+    "native run_code success/error/import restrictions",
+    "infinite generated solve timeout",
+    "cancellation",
+    "successful solve leaving non-daemon thread",
+    "multiple event loops",
+    "native main() under __main__",
+    "whole interpreter exit in 10 seconds"
+  ],
+  "old_frozen_source_and_result_changed": false,
+  "protocol_caps_changed": false
+}

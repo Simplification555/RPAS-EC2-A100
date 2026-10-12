@@ -1,0 +1,18 @@
+{
+  "python": "/data/jxc/envs/rpas-aime-gdesigner/bin/python",
+  "tokenizer_runtime": "passed",
+  "input_tokens": 27,
+  "output_budget": 6144,
+  "native_gcn_forward_backward": "passed",
+  "gcn_output_shape": [
+    4,
+    384
+  ],
+  "native_mlp_output_shape": [
+    16
+  ],
+  "torch": "2.10.0+cu130",
+  "cuda_available": true,
+  "model_calls": 0,
+  "dtest_opened": false
+}
