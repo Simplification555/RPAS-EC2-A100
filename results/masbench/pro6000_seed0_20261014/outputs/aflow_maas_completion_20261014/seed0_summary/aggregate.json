@@ -1,0 +1,572 @@
+{
+  "schema_version": "masbench_single_seed_summary_v1",
+  "seed": 0,
+  "axes": [
+    "breadth",
+    "depth",
+    "horizon",
+    "parallel",
+    "robustness"
+  ],
+  "methods": {
+    "aflow": {
+      "axes": {
+        "breadth": {
+          "Q": {
+            "accuracy": 0.35,
+            "tokens_per_example": 7584.4,
+            "component_accuracy": 0.35,
+            "mean_score_0_1_2": 0.7
+          },
+          "E": {
+            "accuracy": 0.35,
+            "tokens_per_example": 7584.4,
+            "component_accuracy": 0.35,
+            "mean_score_0_1_2": 0.7
+          }
+        },
+        "depth": {
+          "Q": {
+            "accuracy": 0.3,
+            "tokens_per_example": 7986.016666666666,
+            "component_accuracy": 0.3,
+            "mean_score_0_1_2": 0.6
+          },
+          "E": {
+            "accuracy": 0.3,
+            "tokens_per_example": 7986.016666666666,
+            "component_accuracy": 0.3,
+            "mean_score_0_1_2": 0.6
+          }
+        },
+        "horizon": {
+          "Q": {
+            "accuracy": 0.15,
+            "tokens_per_example": 11856.7,
+            "component_accuracy": 0.48541666666666666,
+            "mean_score_0_1_2": 0.95
+          },
+          "E": {
+            "accuracy": 0.15,
+            "tokens_per_example": 11856.7,
+            "component_accuracy": 0.48541666666666666,
+            "mean_score_0_1_2": 0.95
+          }
+        },
+        "parallel": {
+          "Q": {
+            "accuracy": 0.11666666666666667,
+            "tokens_per_example": 3999.3,
+            "component_accuracy": 0.3958333333333333,
+            "mean_score_0_1_2": 0.8166666666666667
+          },
+          "E": {
+            "accuracy": 0.11666666666666667,
+            "tokens_per_example": 3999.3,
+            "component_accuracy": 0.3958333333333333,
+            "mean_score_0_1_2": 0.8166666666666667
+          }
+        },
+        "robustness": {
+          "Q": {
+            "accuracy": 0.016666666666666666,
+            "tokens_per_example": 9487.15,
+            "component_accuracy": 0.09523809523809523,
+            "mean_score_0_1_2": 0.6333333333333333
+          },
+          "E": {
+            "accuracy": 0.016666666666666666,
+            "tokens_per_example": 11490.6,
+            "component_accuracy": 0.11904761904761904,
+            "mean_score_0_1_2": 0.7833333333333333
+          }
+        }
+      },
+      "macro_avg": {
+        "Q": {
+          "accuracy": {
+            "mean_across_five_axes": 0.18666666666666665,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "tokens_per_example": {
+            "mean_across_five_axes": 8182.713333333333,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "component_accuracy": {
+            "mean_across_five_axes": 0.32529761904761906,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "mean_score_0_1_2": {
+            "mean_across_five_axes": 0.74,
+            "n_axes": 5,
+            "seed": 0
+          }
+        },
+        "E": {
+          "accuracy": {
+            "mean_across_five_axes": 0.18666666666666665,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "tokens_per_example": {
+            "mean_across_five_axes": 8583.403333333334,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "component_accuracy": {
+            "mean_across_five_axes": 0.3300595238095238,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "mean_score_0_1_2": {
+            "mean_across_five_axes": 0.77,
+            "n_axes": 5,
+            "seed": 0
+          }
+        }
+      }
+    },
+    "maas": {
+      "axes": {
+        "breadth": {
+          "Q": {
+            "accuracy": 0.31666666666666665,
+            "tokens_per_example": 42072.3,
+            "component_accuracy": 0.31666666666666665,
+            "mean_score_0_1_2": 0.6333333333333333
+          },
+          "E": {
+            "accuracy": 0.31666666666666665,
+            "tokens_per_example": 42072.3,
+            "component_accuracy": 0.31666666666666665,
+            "mean_score_0_1_2": 0.6333333333333333
+          }
+        },
+        "depth": {
+          "Q": {
+            "accuracy": 0.25,
+            "tokens_per_example": 45203.73333333333,
+            "component_accuracy": 0.25,
+            "mean_score_0_1_2": 0.5
+          },
+          "E": {
+            "accuracy": 0.25,
+            "tokens_per_example": 45203.73333333333,
+            "component_accuracy": 0.25,
+            "mean_score_0_1_2": 0.5
+          }
+        },
+        "horizon": {
+          "Q": {
+            "accuracy": 0.11666666666666667,
+            "tokens_per_example": 64339.63333333333,
+            "component_accuracy": 0.2708333333333333,
+            "mean_score_0_1_2": 0.6833333333333333
+          },
+          "E": {
+            "accuracy": 0.11666666666666667,
+            "tokens_per_example": 64339.63333333333,
+            "component_accuracy": 0.2708333333333333,
+            "mean_score_0_1_2": 0.6833333333333333
+          }
+        },
+        "parallel": {
+          "Q": {
+            "accuracy": 0.16666666666666666,
+            "tokens_per_example": 45171.8,
+            "component_accuracy": 0.4791666666666667,
+            "mean_score_0_1_2": 0.9333333333333333
+          },
+          "E": {
+            "accuracy": 0.16666666666666666,
+            "tokens_per_example": 45171.8,
+            "component_accuracy": 0.4791666666666667,
+            "mean_score_0_1_2": 0.9333333333333333
+          }
+        },
+        "robustness": {
+          "Q": {
+            "accuracy": 0.0,
+            "tokens_per_example": 75822.53333333334,
+            "component_accuracy": 0.0761904761904762,
+            "mean_score_0_1_2": 0.5
+          },
+          "E": {
+            "accuracy": 0.0,
+            "tokens_per_example": 75822.53333333334,
+            "component_accuracy": 0.0761904761904762,
+            "mean_score_0_1_2": 0.5
+          }
+        }
+      },
+      "macro_avg": {
+        "Q": {
+          "accuracy": {
+            "mean_across_five_axes": 0.16999999999999998,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "tokens_per_example": {
+            "mean_across_five_axes": 54522.0,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "component_accuracy": {
+            "mean_across_five_axes": 0.2785714285714286,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "mean_score_0_1_2": {
+            "mean_across_five_axes": 0.65,
+            "n_axes": 5,
+            "seed": 0
+          }
+        },
+        "E": {
+          "accuracy": {
+            "mean_across_five_axes": 0.16999999999999998,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "tokens_per_example": {
+            "mean_across_five_axes": 54522.0,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "component_accuracy": {
+            "mean_across_five_axes": 0.2785714285714286,
+            "n_axes": 5,
+            "seed": 0
+          },
+          "mean_score_0_1_2": {
+            "mean_across_five_axes": 0.65,
+            "n_axes": 5,
+            "seed": 0
+          }
+        }
+      }
+    }
+  },
+  "run_ids": [
+    "masbench:aflow:breadth:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+    "masbench:aflow:depth:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+    "masbench:aflow:horizon:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+    "masbench:aflow:parallel:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+    "masbench:aflow:robustness:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+    "masbench:maas:breadth:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+    "masbench:maas:depth:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+    "masbench:maas:horizon:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+    "masbench:maas:parallel:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+    "masbench:maas:robustness:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True"
+  ],
+  "uncertainty_note": "Single search seed only: no across-seed standard deviation or significance claim is estimable.",
+  "result_scope": "exploratory_completion",
+  "quality_warnings": {
+    "aflow/breadth": [
+      "Q shared validity gate failed: protocol_error_rate=0.08333333333333333",
+      "Q shared validity gate failed: truncated_unextractable_rate=0.08333333333333333",
+      "E shared validity gate failed: protocol_error_rate=0.08333333333333333",
+      "E shared validity gate failed: truncated_unextractable_rate=0.08333333333333333",
+      "AFlow D_select round 1 shared validity thresholds exceeded",
+      "AFlow D_select round 5 shared validity thresholds exceeded"
+    ],
+    "aflow/depth": [
+      "Q shared validity gate failed: protocol_error_rate=0.016666666666666666",
+      "E shared validity gate failed: protocol_error_rate=0.016666666666666666",
+      "AFlow D_select round 1 shared validity thresholds exceeded"
+    ],
+    "aflow/horizon": [
+      "Q shared validity gate failed: protocol_error_rate=0.15",
+      "Q shared validity gate failed: truncated_unextractable_rate=0.11666666666666667",
+      "E shared validity gate failed: protocol_error_rate=0.15",
+      "E shared validity gate failed: truncated_unextractable_rate=0.11666666666666667"
+    ],
+    "aflow/parallel": [
+      "Q shared validity gate failed: protocol_error_rate=0.25",
+      "Q shared validity gate failed: truncated_unextractable_rate=0.25",
+      "E shared validity gate failed: protocol_error_rate=0.25",
+      "E shared validity gate failed: truncated_unextractable_rate=0.25",
+      "AFlow D_select round 3 shared validity thresholds exceeded",
+      "AFlow D_select round 4 shared validity thresholds exceeded",
+      "AFlow D_select round 6 shared validity thresholds exceeded",
+      "AFlow D_select round 8 shared validity thresholds exceeded"
+    ],
+    "aflow/robustness": [
+      "Q shared validity gate failed: protocol_error_rate=0.21666666666666667",
+      "Q shared validity gate failed: truncated_unextractable_rate=0.21666666666666667",
+      "E shared validity gate failed: protocol_error_rate=0.03333333333333333",
+      "AFlow D_select round 1 shared validity thresholds exceeded",
+      "AFlow D_select round 5 shared validity thresholds exceeded",
+      "AFlow D_select round 7 shared validity thresholds exceeded",
+      "AFlow D_select round 9 shared validity thresholds exceeded"
+    ],
+    "maas/breadth": [
+      "Q shared validity gate failed: valid_execution_rate=0.75",
+      "Q shared validity gate failed: error_example_rate=0.25",
+      "Q shared validity gate failed: truncated_unextractable_rate=0.25",
+      "E shared validity gate failed: valid_execution_rate=0.75",
+      "E shared validity gate failed: error_example_rate=0.25",
+      "E shared validity gate failed: truncated_unextractable_rate=0.25",
+      "Q sample failure fraction exceeds 5%",
+      "E sample failure fraction exceeds 5%",
+      "MaAS D_select failure fraction exceeds 5%",
+      "MaAS D_select shared validity thresholds exceeded"
+    ],
+    "maas/depth": [
+      "Q shared validity gate failed: valid_execution_rate=0.4833333333333333",
+      "Q shared validity gate failed: error_example_rate=0.5166666666666667",
+      "Q shared validity gate failed: protocol_error_rate=0.016666666666666666",
+      "Q shared validity gate failed: truncated_unextractable_rate=0.5333333333333333",
+      "E shared validity gate failed: valid_execution_rate=0.4833333333333333",
+      "E shared validity gate failed: error_example_rate=0.5166666666666667",
+      "E shared validity gate failed: protocol_error_rate=0.016666666666666666",
+      "E shared validity gate failed: truncated_unextractable_rate=0.5333333333333333",
+      "Q sample failure fraction exceeds 5%",
+      "E sample failure fraction exceeds 5%",
+      "MaAS D_select failure fraction exceeds 5%",
+      "MaAS D_select shared validity thresholds exceeded"
+    ],
+    "maas/horizon": [
+      "Q shared validity gate failed: valid_execution_rate=0.6166666666666667",
+      "Q shared validity gate failed: error_example_rate=0.38333333333333336",
+      "Q shared validity gate failed: protocol_error_rate=0.03333333333333333",
+      "Q shared validity gate failed: truncated_unextractable_rate=0.4",
+      "E shared validity gate failed: valid_execution_rate=0.6166666666666667",
+      "E shared validity gate failed: error_example_rate=0.38333333333333336",
+      "E shared validity gate failed: protocol_error_rate=0.03333333333333333",
+      "E shared validity gate failed: truncated_unextractable_rate=0.4",
+      "Q sample failure fraction exceeds 5%",
+      "E sample failure fraction exceeds 5%",
+      "MaAS D_select failure fraction exceeds 5%",
+      "MaAS D_select shared validity thresholds exceeded"
+    ],
+    "maas/parallel": [
+      "Q shared validity gate failed: valid_execution_rate=0.8333333333333334",
+      "Q shared validity gate failed: error_example_rate=0.16666666666666666",
+      "Q shared validity gate failed: truncated_unextractable_rate=0.16666666666666666",
+      "E shared validity gate failed: valid_execution_rate=0.8333333333333334",
+      "E shared validity gate failed: error_example_rate=0.16666666666666666",
+      "E shared validity gate failed: truncated_unextractable_rate=0.16666666666666666",
+      "Q sample failure fraction exceeds 5%",
+      "E sample failure fraction exceeds 5%",
+      "MaAS D_select failure fraction exceeds 5%",
+      "MaAS D_select shared validity thresholds exceeded"
+    ],
+    "maas/robustness": [
+      "Q shared validity gate failed: valid_execution_rate=0.6833333333333333",
+      "Q shared validity gate failed: error_example_rate=0.31666666666666665",
+      "Q shared validity gate failed: protocol_error_rate=0.016666666666666666",
+      "Q shared validity gate failed: truncated_unextractable_rate=0.3333333333333333",
+      "E shared validity gate failed: valid_execution_rate=0.6833333333333333",
+      "E shared validity gate failed: error_example_rate=0.31666666666666665",
+      "E shared validity gate failed: protocol_error_rate=0.016666666666666666",
+      "E shared validity gate failed: truncated_unextractable_rate=0.3333333333333333",
+      "Q sample failure fraction exceeds 5%",
+      "E sample failure fraction exceeds 5%",
+      "MaAS D_select shared validity thresholds exceeded"
+    ]
+  },
+  "request_accounting": {
+    "aflow/breadth": {
+      "ledger_requests": 226,
+      "unmetered_request_ids": [],
+      "token_cost_is_lower_bound": false,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    },
+    "aflow/depth": {
+      "ledger_requests": 411,
+      "unmetered_request_ids": [],
+      "token_cost_is_lower_bound": false,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    },
+    "aflow/horizon": {
+      "ledger_requests": 120,
+      "unmetered_request_ids": [],
+      "token_cost_is_lower_bound": false,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    },
+    "aflow/parallel": {
+      "ledger_requests": 697,
+      "unmetered_request_ids": [],
+      "token_cost_is_lower_bound": false,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    },
+    "aflow/robustness": {
+      "ledger_requests": 1039,
+      "unmetered_request_ids": [
+        "cc2355d965b74c159a8e694b0d7bbadf",
+        "beecda4712c54c18a25071c339ee4c12",
+        "2d1cccff2c52492a9707e14856a7902e",
+        "fab89d6c06714a13825b62e5576f4e71",
+        "8c600ce2d7904e2ca9ce69e470debca1",
+        "80be3eca7a24406199f2e46a61bd75ef",
+        "355b9aea0c5348bf8cf43e7037872886",
+        "d38fe7771a0f419f827c8ad91be913c2"
+      ],
+      "token_cost_is_lower_bound": true,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    },
+    "maas/breadth": {
+      "ledger_requests": 748,
+      "unmetered_request_ids": [
+        "9552182df587479e904208fbdbc70e2a",
+        "92a84babe6de49138259a27ea197ab17",
+        "c0cc2296754045e088bc43bc52b45f43",
+        "1bbc8f00e39140c8b357912d4a5e3548",
+        "0e7f442d69e046b683f87dc658c92a59",
+        "a605d13513464c658523ea7b6e828c82",
+        "0becad90f53a4238ba608dee2a0c3da9",
+        "ddfa37b650544e85babd56b804b3dcb8",
+        "f77229dfe21042759a3e4206264234d9",
+        "d88b6f9735e44d12a8227bb03b22ec5c",
+        "3bfec4c629cd48f9810d9227cd75177c",
+        "4f4657871c204cdc9013edeeb5b580e5",
+        "660ce24f7621458a80cfdbd27511136d",
+        "86f2e1d52c7a479780e702cd159ca466",
+        "3fe0e04c7b234ba394f67f2ef48a2ab8",
+        "53c526e89dcc4b7293f9ba50474a5bdf",
+        "4c2373a829564eafaf8719be275678a3",
+        "088cf8d041de40b09585805d5800fc3b",
+        "ba72cf2442664b8f997d61cafc8fd9f5",
+        "67e43bd6e9ff4b76a90a3c0ad1dd5cc9",
+        "941c192852fe4f2d9274e92e40a8afec",
+        "bf967fe3640d484c9df8650f5355ae58",
+        "a1a5d1f3ab2c46ef88ae6f472f71486d"
+      ],
+      "token_cost_is_lower_bound": true,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    },
+    "maas/depth": {
+      "ledger_requests": 817,
+      "unmetered_request_ids": [
+        "bbe9dfcb0e9d4ce59600025b91b8be2f",
+        "b508b290874741ad995c0cca448e818d",
+        "b539985a4e2c45dba9bece457f365a0c",
+        "eae285fca58c4816993e5d3c70f141b2",
+        "67413941c84149b0aca21b6ae5c584f7",
+        "5099215a004445ada5a8fcb244c60322",
+        "0a5ad27a15474acd8c450b6dcd2b6f2e",
+        "6b9e8b51302340bab89a0708274f8614",
+        "3e77b4c3bc5b4306950899f985b3a639",
+        "7c74036572d14e269af925294ff2cb73",
+        "3d522cc48f80489c985abf1865b24eb3",
+        "11222c1d3ed448d186ea128d5c91e373",
+        "8c621da1b7754fdda9536b9e53cf6f6f",
+        "f30efd31908744478298f833e43c9c01",
+        "1d09dd2251d240b5b3bb70d77a88a4a3",
+        "d29115484c3244e581dbe7f1baf95848",
+        "658414c67b7d4dc7bef6c1e99843f603",
+        "095d82a74ece4ac2a5bf89c7a1cb32f9",
+        "13be8a88234b41a79a5332361ea22c2e",
+        "8fa1762ebc824a738a1eb1fa0ff47600",
+        "bd97ea2305ba4592b6ccb224d9756920",
+        "2d5bdb1b39de42f69425c46d73909ec6",
+        "203024d264294c0fab585c9fa4a3caa9",
+        "74cf4ad41bdf4ed69f848c99cdcd7e82",
+        "a2473da619da46e58e85282261097224",
+        "07b6f8ce02d440e0ba98d5bd184622c3",
+        "421319fc04ab47d4af496ab8802d4954",
+        "c98280182e1444a9bdca66168ee09326",
+        "49855f1a707c4511ad341aade1fb7c26",
+        "e14b49934da848769743ea18e3e65e58",
+        "c996ba991c0c4faf85cfc0873c263260",
+        "2bfe663ff7774ee997ed369c4d64c695",
+        "a4b0f2ee968b4244998c8c1d1058a0cd",
+        "764a09c1c0324bc2bab4913b667d867d",
+        "79e2591ad2c34f298f877b545fafa4e7",
+        "469cd6000cd34da6bb539c95d719db05"
+      ],
+      "token_cost_is_lower_bound": true,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    },
+    "maas/horizon": {
+      "ledger_requests": 799,
+      "unmetered_request_ids": [
+        "d5b911729fb5409c898212acd43a0265",
+        "fddeb7dd972e4fdfb295e08bc145988f",
+        "90a55ce22cd44870b574e55a445dc73b",
+        "1d110393a7ed464c9fd18f5e6eb56b50",
+        "e4f653a2e06d4ea3aabaf06304902754",
+        "459677952fde49179622581919a400b2",
+        "2cb5b2c5648d443995c625664acd6011",
+        "6bb88c794c6940ea967aa3bf1783f89d",
+        "ef0229f4cd284a5bb74407b5b9ccf2e8",
+        "cc549e01118b4cac8577e1a25c38cdd1",
+        "470e279b61fe4bc2bd92621525fdacd7",
+        "1fdb11de46604f89992906329ef1363f",
+        "43c68cf833af42658319660ea0194fc1",
+        "b67453f12b55431198441d0d0bcbb279",
+        "5a7645e6f67d44c388d58ba9dcf2764a",
+        "85e1540c68364a7ba57edfb46c4083bb",
+        "0ff74b2480d7406b808a1e19eccc6262",
+        "4331f506376b4f3e8ca8426f5cef061e",
+        "80e2bbf6df0a4fd8b9c9b0e8439493e5",
+        "e41d45475df84f32a919f77ccf3ec150",
+        "5140f69699994b208922bae9f962ecda",
+        "1224c9917bf6474b96aa9fecfa38add6",
+        "0c5237081b8a4168a6c7a9a11ed878af",
+        "4947b142c14f4ad79de17f27a7db7c53",
+        "a1e0930b7dcf4337b96341bb0bab313c",
+        "5278c6ff6db1464b9bbbfa85add9dcbd",
+        "28fc3db9f274457c9e8fe3750ccf6fbc",
+        "f6b4d8fd52d040399f554647a8d62f1b",
+        "b887e31f59d24168ab3bb4c8f3eef5f8"
+      ],
+      "token_cost_is_lower_bound": true,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    },
+    "maas/parallel": {
+      "ledger_requests": 773,
+      "unmetered_request_ids": [
+        "150e6a833eae496a8d8e4790465fb038",
+        "9271102d307648449c2bfc9f8843134b",
+        "b797446772a9488dbe81f2e98193d133",
+        "b8e7327ec38e4635a51066ef0f6b1f0d",
+        "e97cc043e7b14848b27fc5bccfde6acb",
+        "a4fe143b3f1f4653aa83e9157f463336",
+        "18dd363a26c94a4a8c39ff438f2fb096",
+        "d2598a4ab2d34b0cb4d3644ba3ee6c32",
+        "a25ec6c79f3e43cfb72c71df9340575b",
+        "b8066e2c7b1b4102b0fad2172492bac6",
+        "0a77926f03d74648bb9f6a2ab35c8306",
+        "b236e1edef1a453c9d48105d0ce8c0a7",
+        "5d65344b8c2c4018a58ad5705da17a1b",
+        "c489b64a4e774b44bf6173f0ecd5e614",
+        "d3f0a6093b3940d98a00d57226a7f066"
+      ],
+      "token_cost_is_lower_bound": true,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    },
+    "maas/robustness": {
+      "ledger_requests": 946,
+      "unmetered_request_ids": [
+        "a3880b2ce46d4a0db7f055df73433592",
+        "f0e311747de94e239b08d7df433c909d",
+        "38cfa7aca81d43a5bf27fffdee3d0b57",
+        "4eec2431559d475dbc936d050c1bde95",
+        "f0edbfca04814c10905a6cdd38f366b8",
+        "4939f2820eb74e2ebbb6c47aa1c38d52",
+        "7d5dcebbf3b74b27856a14bfa6f13964",
+        "4b051b1a2d2c4542b1f7046690432106",
+        "b32780bacff143f0b75dffa420f6c854",
+        "f730ced146864486a294daec75f7b248",
+        "b6a1c1a63ac04042a8ab53079bfed0ac",
+        "2f0da45b2b1f406dbae12055fd4ff479",
+        "d93c4294be5a43c49847413eb43af158",
+        "8195ea3e889b43c8adad25d3cf474983",
+        "0973f05444b84779a1004f1ca3473a07",
+        "2aea0923ff9044d9881c0b85f2952489",
+        "56ce2d7594ba4a51adec278236d28ffa",
+        "6983f77f475e4b689042bcd60e37ce2c",
+        "b6822014b778451684fc7ca3a4fba9fa",
+        "a427bd9d880646028ec13732d8b1b033"
+      ],
+      "token_cost_is_lower_bound": true,
+      "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+    }
+  },
+  "answer_repair_note": "Gold-blind output repair applied equally to select and test; token totals include repair requests. Reused searches are recorded per run; historical test exposure prevents a pristine confirmatory claim."
+}

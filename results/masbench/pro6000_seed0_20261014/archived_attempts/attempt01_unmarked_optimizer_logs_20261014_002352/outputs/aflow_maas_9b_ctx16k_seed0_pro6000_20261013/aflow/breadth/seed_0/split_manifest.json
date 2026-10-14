@@ -1,0 +1,110 @@
+{
+  "protocol_version": "masbench_external_protocol_v2_16k_shared_alignment",
+  "run_id": "masbench:aflow:breadth:seed_0:masbench_external_protocol_v2_16k_shared_alignment",
+  "method": "aflow",
+  "dataset": "Salesforce/MASBench",
+  "axis": "breadth",
+  "seed": 0,
+  "data_seed": 2026,
+  "split_counts": {
+    "search": 24,
+    "select": 24
+  },
+  "pre_test_split_audit": {
+    "split_ids": {
+      "search": [
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_443:content:fb2e31679e6f3c3c",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_76:content:d03ccfadb1ec27b1",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1729:content:692fa8f77fb38fcc",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_593:content:93638f2a6492158d",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1726:content:d6c1d827ee331ba5",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1819:content:5987fac3abde65b4",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1147:content:b4e72d7d55a1e4c5",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1163:content:8a932a6e4c7256a0",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_550:content:d006add95e6a1c63",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1630:content:beb2b173d622a6d4",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1418:content:4bf4d4329e636c4d",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1253:content:f7cd0bf17bb7a758",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1700:content:16059ab0a56a6d39",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_141:content:4acf4f13755efb0d",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_180:content:204d04471a2cf2f6",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_95:content:a1a4cbb59e04141f",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_942:content:bdb3af9f3eab17e2",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1086:content:6fca28cdbf5a0076",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_384:content:50dcad901cf51095",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_774:content:54c7df39d5bc02dd",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1195:content:08f0c69d2572f5cd",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1012:content:2ffd41c6f01343e7",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_174:content:87a40c3c66291074",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1125:content:806be26e32304730"
+      ],
+      "select": [
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1302:content:574bbf42b5acb170",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1810:content:ee963cc175973c3a",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1528:content:16105dc994c22fba",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_564:content:e3d9be8c19004513",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_356:content:14d5ae8778216b51",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1594:content:4443406815c6dd98",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1204:content:7b285cc69cbcbcb2",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_454:content:768ef19e6f3405be",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_165:content:b3697c71efa03a39",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_83:content:17c2418cfe9d250a",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1005:content:423fa3b8e2998a75",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_694:content:32006d95c128918c",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1041:content:7bae0019643f3091",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_448:content:dc0805d2e369ad90",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1290:content:5f9fe540f3fa6710",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1466:content:04f1696981c893bf",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_909:content:c7e9570378386ae6",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1511:content:bc2774638e138599",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_561:content:02faad224e818ff7",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1956:content:d3253fb4c5d7bb97",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_311:content:8b742894d5217b7e",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1307:content:6d83a867d963568a",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_1674:content:24c4083b9e7fd715",
+        "masbench:breadth:train:masbench:breadth:train:2,4:breadth_35:content:8d66e37966ff7031"
+      ]
+    },
+    "axis_value_counts": {
+      "search": {
+        "2,4": 24
+      },
+      "select": {
+        "2,4": 24
+      }
+    },
+    "search_select_disjoint": true
+  },
+  "search_select_disjoint": true,
+  "data_sha256": {
+    "breadth/search_24.jsonl": "253a8dca543af9ffa08b7867bd050a672b4d070090df0ee8db7ec210329aecce",
+    "breadth/select_24.jsonl": "7d5aad37b6c23fab81be0bf4eaf31a90d203d26cee45888d9ccb3df5a56543ee",
+    "manifest_search_select.json": "27335b968c6b70a60e3fd5eba54221a9d45085568b6f602c9cd3fd4ed95a9a62"
+  },
+  "task_contract_sha256": "20c7c846c1643c4d76b8888b81a2c018b53f714e690b1e0d7c5c7603e4f2e4ce",
+  "task_instruction_sha256": "48e201243b9c8381223e884288600241a33abc02f9f15386454442d7f575d233",
+  "task_protocol_exception": null,
+  "answer_parser": "masbench_shared_scoring_alignment_v2",
+  "answer_parser_sha256": "549883357b584793de55f0aff4a5604c8df47d1ad7ae6592a762026bba9138d4",
+  "runner_sha256": "8edfdb287ec0c90e272a2a23bcddfbc2dd015baacafcd8d3f9880b8aae846728",
+  "base_runner_sha256": "c6afa5c5fc9d10255fee7be6ea1677b1d978ea7b4a606520a072408995cfbe7f",
+  "model": "Qwen/Qwen3.5-9B",
+  "context_limit": 16384,
+  "output_limit": 6144,
+  "selection_split": "D_select",
+  "test_split": "D_test",
+  "d_test_opened": false,
+  "selection_lock_required_before_test": true,
+  "baseline_source_sha256": {
+    "scripts/optimizer.py": "26cc9ac8f99177ed670c75fd6a265294c1dbaf1518e41f383eaf1d980b3968e5",
+    "scripts/evaluator.py": "5d115ac921b69f9d5055300cf52969c5e0b4474ab2f5daad13b8af988218616e",
+    "scripts/optimizer_utils/evaluation_utils.py": "de5807e97e9a6a6203ee1a94c754d18c580af2546340129ad4f681ca1d8b0048",
+    "scripts/optimizer_utils/graph_utils.py": "8155699387123b1655712300bdb741c6a534401ddb37d2ca927e422107b7178d",
+    "benchmarks/math.py": "8ee72470b04f1ca91e450cdbd2cde64defb6b8fba03e6bd9f175bcd04be8185c"
+  },
+  "baseline_git_commit": "3f457218fc716093fe53f6df8a5d5e6379d66346",
+  "official_baseline_source": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/external_baselines/AFlow",
+  "rpas_root": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo",
+  "status": "running",
+  "started_at_utc": "2026-10-13T16:17:19.154307+00:00"
+}

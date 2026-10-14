@@ -1,0 +1,38 @@
+AFlow / MaAS 与 RPAS 参数对齐说明（2026-10-12，可直接转发）
+
+麻烦把 AFlow 和 MaAS 的 MASBench 实验按下面的共同条件对齐。目前参数包里已确认的差异，是 MASBench 的任务上下文设成了 8192，而这轮 RPAS 对比要求 16384。修改时要同步服务端和客户端的上下文处理；其他项目先核验，不需要重写方法本身。
+
+一、必须修改：MASBench 任务上下文
+
+1. context_window_tokens：8192 → 16384。服务端实际 max_model_len 至少支持 16384，客户端每次任务请求仍按 16384 限制输入加输出。max_num_batched_tokens=16384 不是单请求上下文，不能代替这项设置。
+2. requested_max_output_tokens：保留 6144 作为共同上限；方法中的角色可以请求更少。
+3. 客户端 ContextGuard / PromptGuard 同步使用 16384，安全余量 64。用实际服务的 /tokenize、相同 chat template 和 enable_thinking=false 统计输入。
+   实际 max_tokens = min(角色请求值, 6144, 16384 - 64 - 处理后的输入 token 数)。
+4. 当剩余输出空间小于 min(角色请求值, 512) 时，按共同上下文代码处理已标记的中间证据，保留 system 和原题；仍放不下则记录失败。
+5. 请检查现有 maas_context_guard_v1 的 target_input_tokens=4096：它不等于 16K 上下文。若会在尚有空间时提前压缩输入，需要按共同 helper 调整；不能只改服务端数字，客户端仍按旧 8K/4K 逻辑运行。仅凭参数名还不能断定现有实现有这个问题。
+
+二、共同条件：确认实际生效，不只看配置声明
+
+- 所有模型调用统一 Qwen/Qwen3.5-9B，包括解题、架构/代码生成、优化、反思和调试；关闭 thinking，暂不使用 27B 或更大模型回退。记录实际模型权重版本、tokenizer 和 chat template。
+- MASBench 五轴 breadth/depth/horizon/parallel/robustness；每轴 search/select/test = 24/24/60。使用同一份冻结样本，按 data_manifest.json 核对 ID 与内容，不重新划分。data_seed=2026，方法 seeds=0/1/2。训练重复次数不等于独立 seed。
+- 使用共同答案解析与评分：explicit FINAL ANSWER，horizon 保留有序答案序列；整题 exact accuracy 为主指标，component / ordinal 可另报，失败样本保留在分母中。
+- 在 D_select 上选择并冻结方案后才评测 D_test。若报告 RPAS 的 Q/E 工作点，需核对完整规则：Q 优先准确率、再低 token、再 candidate_id；E 从合法 Pareto 候选中保留准确率不低于 Q-0.05 的候选，再按低 token、高准确率、candidate_id 排序。合法性门槛、候选集合和 token 口径也要一致。RPAS 门槛为 valid_execution_rate>=0.99、error_example_rate<=0.01、protocol_error_rate<=0.01、truncated_unextractable_rate<=0.05；token 使用每题平均输入加输出总量。
+
+三、原生方法参数可以保留
+
+AFlow 的 MCTS、sample/max_rounds，以及 MaAS 的 controller batch_size、learning_rate、training_repetitions 等，不需要硬改成 RPAS 的 8+24。原生采样温度可保留并登记，不能把全部角色强制设为 temperature=0。并发按机器资源安排即可。分别记录搜索、选择、测试中的任务/优化模型调用与 token，失败和重试也计入；不能仅凭轮数就宣称等计算预算。
+
+四、已有结果与重跑
+
+已有 8K 结果保留在原目录，标明原配置。新的 16K 结果使用独立目录，建议名称包含方法、9b、ctx16k、seed 和日期。正式对齐按新身份重跑搜索→选择→测试，不能只改配置标签或只重跑 test；若想复用某部分，需要先证明其完整请求身份与实际内容一致。旧 RPAS 的 27B 反思结果也不能并入本轮全 9B 比较。
+
+五、开始整批实验前回传这些信息
+
+请发最终配置、代码 commit/修改 diff、服务启动参数、数据 manifest 校验结果，以及开发集的一条正常请求和一条触发上下文处理的请求记录（原始/处理后输入 token、实际 max_tokens、是否压缩、模型身份）。先核对运行条件，再整批运行；不要根据 test 分数调整参数。
+
+附带参考文件：
+- shared_task_context.py：共同任务上下文处理。接入时显式调用 policy_for_dataset("masbench")，并在调用 fit_context 前将 requested 限制为 min(角色请求值,6144)；文件中的通用 POLICY 是 AIME 的 8192，不能误用于 MASBench。中间证据标记需要按调用接口正确接入；本文件不是自动替换对方 guard 的补丁。
+- shared_scoring.py：共同解析评分
+- data_manifest.json：冻结数据身份
+
+上述文件以实际交接副本为准；本说明没有修改对方仓库、启动远端实验或验证对方部署。

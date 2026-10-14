@@ -1,0 +1,77 @@
+{
+  "data_validation": {
+    "breadth": {
+      "search": {
+        "raw_sha256": "253a8dca543af9ffa08b7867bd050a672b4d070090df0ee8db7ec210329aecce",
+        "matches": true,
+        "content_check_deferred_until_lock": false
+      },
+      "select": {
+        "raw_sha256": "7d5aad37b6c23fab81be0bf4eaf31a90d203d26cee45888d9ccb3df5a56543ee",
+        "matches": true,
+        "content_check_deferred_until_lock": false
+      },
+      "test": {
+        "raw_sha256": "37815e82f6cb148fec7944942ad32fcdcba82701cc89accfcee2025bbe08c137",
+        "matches": true,
+        "content_check_deferred_until_lock": true
+      }
+    }
+  },
+  "parser_and_QE_checks": "PASS",
+  "test_contents_not_opened": true,
+  "normal_dev": {
+    "response": "To solve for the number of Animals in the Moscow Zoo, we must trace the dependency chain through the provided statements.\n\n**Step 1: Identify the target variable.**\nWe need to find \"The number of each Moscow Zoo's Animal\".\n\n**Step 2: Trace the dependencies backwards from the target.**\n1.  Statement: \"The number of each Moscow Zoo's Owl Forest equals 21 more than each Bronx Zoo's Animal.\"\n    *   Let $M_{Owl}$ be Moscow Zoo's Owl Forest.\n    *   Let $B_{Animal}$ be Bronx Zoo's Animal.\n    *   Equation: $M_{Owl} = B_{Animal} + 21$.\n    *   *Wait*, the question asks for \"How many Animal does Moscow Zoo have?\", not Owl Forest. Let's re-read carefully.\n    *   The question asks: \"How many Animal does Moscow Zoo have?\"\n    *   Looking at the statements, there is no direct statement defining \"Moscow Zoo's Animal\".\n    *   Let's re-examine the statement: \"The number of each Moscow Zoo's Owl Forest equals 21 more than each Bronx Zoo's Animal.\"\n    *   Is it possible the question implies the \"Owl Forest\" count *is* the \"Animal\" count for the purpose of this specific logic puzzle, or is there a missing link?\n    *   Let's look at the structure of similar problems. Often, \"Animal\" is a generic category or the specific item mentioned in the final clause refers to the last defined quantity associated with that zoo if a direct \"Animal\" count isn't listed separately. However, strictly speaking, the text defines \"Moscow Zoo's Owl Forest\".\n    *   Let's re-read the prompt's specific phrasing: \"How many Animal does Moscow Zoo have?\"\n    *   Let's check if \"Owl Forest\" is a type of \"Animal\" in this context or if I missed a line.\n    *   Lines:\n        1. Taronga Zoo Macaw Island = 3 * Taronga Zoo Macaw Island Chameleon\n        2. Taronga Zoo Pelican Pier = 5\n        3. Macaw Island Chameleon = 7\n        4. Owl Forest Chameleon = Bronx Zoo Animal\n        5. Owl Forest Skink = Macaw Island Animal + 3\n        6. Pelican Pier Iguana",
+    "usage": {
+      "completion_tokens": 512,
+      "prompt_tokens": 353,
+      "total_tokens": 865,
+      "completion_tokens_details": null,
+      "prompt_tokens_details": null
+    },
+    "finish_reason": "length",
+    "context_budget": {
+      "policy": {
+        "version": "task_context_masbench_v3",
+        "limit": 16384,
+        "margin": 64,
+        "min_output": 512
+      },
+      "original_input_tokens": 353,
+      "input_tokens": 353,
+      "configured_max_tokens": 512,
+      "effective_max_tokens": 512,
+      "compression_rounds": 0
+    }
+  },
+  "compressed_dev": {
+    "response": "To find the number of Animals Moscow Zoo has, we must trace the dependency chain through the provided statements, performing all calculations modulo 23.\n\n**Step 1: Determine the number of Chameleons on Macaw Island.**\nStatement: \"The number of each Macaw Island's Chameleon equals 7.\"\nValue: $7$\n\n**Step 2: Determine the number of Macaws on Macaw Island.**\nStatement: \"The number of each Taronga Zoo's Macaw Island equals 3 times as much as each Macaw Island's Chameleon.\"\nCalculation: $3 \\times ",
+    "usage": {
+      "completion_tokens": 128,
+      "prompt_tokens": 14121,
+      "total_tokens": 14249,
+      "completion_tokens_details": null,
+      "prompt_tokens_details": null
+    },
+    "finish_reason": "length",
+    "context_budget": {
+      "policy": {
+        "version": "task_context_masbench_v3",
+        "limit": 16384,
+        "margin": 64,
+        "min_output": 512
+      },
+      "original_input_tokens": 110359,
+      "input_tokens": 14121,
+      "configured_max_tokens": 128,
+      "effective_max_tokens": 128,
+      "compression_rounds": 3
+    }
+  },
+  "concurrency_smoke": {
+    "requests": 16,
+    "completed": 16,
+    "failed": 0,
+    "wall_seconds": 2.719015598297119
+  }
+}

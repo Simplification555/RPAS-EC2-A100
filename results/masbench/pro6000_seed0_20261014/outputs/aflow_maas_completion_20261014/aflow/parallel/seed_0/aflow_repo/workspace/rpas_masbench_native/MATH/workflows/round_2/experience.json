@@ -1,0 +1,7 @@
+{
+    "father node": 1,
+    "modification": "Add `ScEnsemble` operator before the custom extraction step to aggregate multiple derivation paths and enforce the strict `FINAL ANSWER: X<<horizon>>Y...` format, reducing hallucination and handling ambiguity in undefined variable scenarios.",
+    "before": 0.6666666666666666,
+    "after": 0.0,
+    "succeed": false
+}

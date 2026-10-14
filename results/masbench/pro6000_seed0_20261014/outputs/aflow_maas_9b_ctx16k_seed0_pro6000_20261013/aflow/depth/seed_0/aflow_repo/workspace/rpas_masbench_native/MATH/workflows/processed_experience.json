@@ -1,0 +1,20 @@
+{
+    "1": {
+        "score": 1.0833333333333333,
+        "success": {},
+        "failure": {
+            "8": {
+                "modification": "- **Add ScEnsemble Operator**: Introduced a `ScEnsemble` step to generate multiple reasoning attempts and select the most consistent answer, mitigating hallucinations and logical errors in complex dependency chains.\n- **Strict Definition Enforcement**: Added an explicit instruction in the prompt to treat any undefined variable in the dependency chain as `0` before proceeding, preventing logic collapse or infinite loops.\n- **Format Hardening**: Enforced a strict output pattern `FINAL ANSWER: <value>` with a dedicated extraction subroutine to isolate the result from verbose reasoning text.",
+                "score": 1.0833333333333333
+            },
+            "7": {
+                "modification": "Added a self-consistency verification step (ScEnsemble) and a strict extraction directive. The original graph failed because models often hallucinated \"0\" for undefined variables or missed the target due to complex dependency chains. By forcing the model to solve the problem 3 times and selecting the most common result, we mitigate reasoning errors. Additionally, the instruction now mandates that if a variable appears in the dependency chain but lacks a definition, it must be explicitly treated as 0 before proceeding, preventing indefinite looping or logic collapse. This ensures the Final Answer matches the expected format exactly.",
+                "score": 0.0
+            },
+            "4": {
+                "modification": "Added a verification step: Instead of directly using the Custom operator to solve the problem, the graph first extracts the raw answer using a `custom` call with a specific extraction prompt. Then, a second `custom` call (using a reasoning prompt) attempts to solve the problem. If the extracted answer matches the reasoning result, it is returned. If not, the model generates a revised reasoning attempt. This addresses the issue where models often fail to output the 'FINAL ANSWER tag or get cut off during complex derivations.",
+                "score": 0.8333333333333334
+            }
+        }
+    }
+}

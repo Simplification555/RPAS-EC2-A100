@@ -1,0 +1,7 @@
+{
+    "father node": 1,
+    "modification": "Add `ScEnsemble` to form multiple independent reasoning paths by iterating over the problem list `PROBLEMS` (since the input is concatenated as \"Problem 1: ...\\nProblem 2: ...\"), solve each path individually without premature global state reliance, and then aggregate the specific answers for each problem index to enforce strict formatting (`<<horizon>>` separation) and handle undefined variables correctly.",
+    "before": 0.6666666666666666,
+    "after": 0.0,
+    "succeed": false
+}

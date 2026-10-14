@@ -1,0 +1,55 @@
+{
+  "passed": false,
+  "accepted_for_completion": true,
+  "completion_policy": "relaxed",
+  "quality_warnings": [
+    "Q shared validity gate failed: protocol_error_rate=0.08333333333333333",
+    "Q shared validity gate failed: truncated_unextractable_rate=0.08333333333333333",
+    "E shared validity gate failed: protocol_error_rate=0.08333333333333333",
+    "E shared validity gate failed: truncated_unextractable_rate=0.08333333333333333",
+    "AFlow D_select round 1 shared validity thresholds exceeded",
+    "AFlow D_select round 5 shared validity thresholds exceeded"
+  ],
+  "integrity_errors": [],
+  "request_accounting": {
+    "ledger_requests": 226,
+    "unmetered_request_ids": [],
+    "token_cost_is_lower_bound": false,
+    "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+  },
+  "errors": [
+    "Q shared validity gate failed: protocol_error_rate=0.08333333333333333",
+    "Q shared validity gate failed: truncated_unextractable_rate=0.08333333333333333",
+    "E shared validity gate failed: protocol_error_rate=0.08333333333333333",
+    "E shared validity gate failed: truncated_unextractable_rate=0.08333333333333333",
+    "AFlow D_select round 1 shared validity thresholds exceeded",
+    "AFlow D_select round 5 shared validity thresholds exceeded"
+  ],
+  "run_id": "masbench:aflow:breadth:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+  "method": "aflow",
+  "axis": "breadth",
+  "seed": 0,
+  "point_summary": {
+    "Q": {
+      "accuracy": 0.35,
+      "correct": 21,
+      "tokens_per_example": 7584.4,
+      "calls": 86,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.9166666666666666,
+      "component_accuracy": 0.35,
+      "mean_score_0_1_2": 0.7
+    },
+    "E": {
+      "accuracy": 0.35,
+      "correct": 21,
+      "tokens_per_example": 7584.4,
+      "calls": 86,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.9166666666666666,
+      "component_accuracy": 0.35,
+      "mean_score_0_1_2": 0.7
+    }
+  },
+  "checked_at_utc": "2026-10-14T08:20:26.534284+00:00"
+}

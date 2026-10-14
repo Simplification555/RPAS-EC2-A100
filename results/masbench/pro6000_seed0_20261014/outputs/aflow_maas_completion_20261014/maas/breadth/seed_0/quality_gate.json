@@ -1,0 +1,87 @@
+{
+  "passed": false,
+  "accepted_for_completion": true,
+  "completion_policy": "relaxed",
+  "quality_warnings": [
+    "Q shared validity gate failed: valid_execution_rate=0.75",
+    "Q shared validity gate failed: error_example_rate=0.25",
+    "Q shared validity gate failed: truncated_unextractable_rate=0.25",
+    "E shared validity gate failed: valid_execution_rate=0.75",
+    "E shared validity gate failed: error_example_rate=0.25",
+    "E shared validity gate failed: truncated_unextractable_rate=0.25",
+    "Q sample failure fraction exceeds 5%",
+    "E sample failure fraction exceeds 5%",
+    "MaAS D_select failure fraction exceeds 5%",
+    "MaAS D_select shared validity thresholds exceeded"
+  ],
+  "integrity_errors": [],
+  "request_accounting": {
+    "ledger_requests": 748,
+    "unmetered_request_ids": [
+      "9552182df587479e904208fbdbc70e2a",
+      "92a84babe6de49138259a27ea197ab17",
+      "c0cc2296754045e088bc43bc52b45f43",
+      "1bbc8f00e39140c8b357912d4a5e3548",
+      "0e7f442d69e046b683f87dc658c92a59",
+      "a605d13513464c658523ea7b6e828c82",
+      "0becad90f53a4238ba608dee2a0c3da9",
+      "ddfa37b650544e85babd56b804b3dcb8",
+      "f77229dfe21042759a3e4206264234d9",
+      "d88b6f9735e44d12a8227bb03b22ec5c",
+      "3bfec4c629cd48f9810d9227cd75177c",
+      "4f4657871c204cdc9013edeeb5b580e5",
+      "660ce24f7621458a80cfdbd27511136d",
+      "86f2e1d52c7a479780e702cd159ca466",
+      "3fe0e04c7b234ba394f67f2ef48a2ab8",
+      "53c526e89dcc4b7293f9ba50474a5bdf",
+      "4c2373a829564eafaf8719be275678a3",
+      "088cf8d041de40b09585805d5800fc3b",
+      "ba72cf2442664b8f997d61cafc8fd9f5",
+      "67e43bd6e9ff4b76a90a3c0ad1dd5cc9",
+      "941c192852fe4f2d9274e92e40a8afec",
+      "bf967fe3640d484c9df8650f5355ae58",
+      "a1a5d1f3ab2c46ef88ae6f472f71486d"
+    ],
+    "token_cost_is_lower_bound": true,
+    "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+  },
+  "errors": [
+    "Q shared validity gate failed: valid_execution_rate=0.75",
+    "Q shared validity gate failed: error_example_rate=0.25",
+    "Q shared validity gate failed: truncated_unextractable_rate=0.25",
+    "E shared validity gate failed: valid_execution_rate=0.75",
+    "E shared validity gate failed: error_example_rate=0.25",
+    "E shared validity gate failed: truncated_unextractable_rate=0.25",
+    "Q sample failure fraction exceeds 5%",
+    "E sample failure fraction exceeds 5%",
+    "MaAS D_select failure fraction exceeds 5%",
+    "MaAS D_select shared validity thresholds exceeded"
+  ],
+  "run_id": "masbench:maas:breadth:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+  "method": "maas",
+  "axis": "breadth",
+  "seed": 0,
+  "point_summary": {
+    "Q": {
+      "accuracy": 0.31666666666666665,
+      "correct": 19,
+      "tokens_per_example": 42072.3,
+      "calls": 527,
+      "failure_fraction": 0.25,
+      "parser_valid_rate": 0.75,
+      "component_accuracy": 0.31666666666666665,
+      "mean_score_0_1_2": 0.6333333333333333
+    },
+    "E": {
+      "accuracy": 0.31666666666666665,
+      "correct": 19,
+      "tokens_per_example": 42072.3,
+      "calls": 527,
+      "failure_fraction": 0.25,
+      "parser_valid_rate": 0.75,
+      "component_accuracy": 0.31666666666666665,
+      "mean_score_0_1_2": 0.6333333333333333
+    }
+  },
+  "checked_at_utc": "2026-10-14T05:42:16.844624+00:00"
+}

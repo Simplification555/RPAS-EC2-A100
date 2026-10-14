@@ -1,0 +1,30 @@
+{
+  "selection": {
+    "valid_execution_rate": 0.9583333333333334,
+    "error_example_rate": 0.041666666666666664,
+    "protocol_error_rate": 0.0,
+    "truncated_unextractable_rate": 0.041666666666666664,
+    "score": 0.0,
+    "accuracy": 0.0,
+    "correct": 0,
+    "num_examples": 24,
+    "valid_answer_rate": 0.9583333333333334,
+    "component_accuracy": 0.22727272727272727,
+    "component_correct": 20,
+    "component_total": 88,
+    "mean_score_0_1_2": 0.8333333333333334,
+    "answer_parser": "masbench_shared_scoring_alignment_v2"
+  },
+  "output_audit": {
+    "csv": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/maas/robustness/seed_0/maas_repo/workspace/rpas_masbench_native/robustness/seed_0/MATH/test/round_1/0.83333_20261014_152012.csv",
+    "csv_rows": 24,
+    "empty_predictions": 1,
+    "failure_predictions": 1,
+    "failure_fraction": 0.041666666666666664,
+    "sample_timeouts": 0,
+    "failure_markers": [
+      "<empty prediction>"
+    ]
+  },
+  "d_test_opened": false
+}

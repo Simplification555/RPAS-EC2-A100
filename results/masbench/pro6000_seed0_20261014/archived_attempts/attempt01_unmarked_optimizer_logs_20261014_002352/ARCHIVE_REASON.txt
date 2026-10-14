@@ -1,0 +1,1 @@
+Initial runtime verification passed. Formal AFlow search optimisation requests exceeded 16K because generated model_output fields in sampled logs were unmarked. This attempt is preserved and excluded from the new formal run. Only generated model_output fields may now be compressed; original questions, gold labels, graph and optimiser instructions remain protected.

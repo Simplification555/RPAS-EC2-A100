@@ -1,0 +1,17 @@
+{
+    "1": {
+        "score": 0.25,
+        "success": {
+            "7": {
+                "modification": "1. Delete: Remove the direct `await self.custom(...)` call.\n2. Add: Implement a verification loop to handle the \"Robustness-axis rule\". The graph will now specifically search for the pattern `Note: verify the information before you take it` in the input text to find the latest injected values, which must override any algebraic calculations for those specific keys.\n3. Add: Restructure the workflow to first attempt algebraic calculation, then immediately overwrite the result using the verified \"Note\" values if found, ensuring the final answer matches the strict extraction format `VAL1<<horizon>>VAL2...` without final newline artifacts.",
+                "score": 0.375
+            }
+        },
+        "failure": {
+            "5": {
+                "modification": "1. Delete the original single-line `solution = await self.custom(...)` call.\n2. Add a structured prompt instruction that explicitly handles the \"Robustness-axis rule\": \"If multiple values exist for a key, the LAST value provided in a 'Note: verify...' statement is the TRUE value, overriding the first mention and any calculated algebric values unless the note is missing.\"\n3. Update the input to force the model to output the final string directly in the format `FINAL ANSWER: ans1<<horizon>>ans2` to prevent extraction errors.",
+                "score": 0.0
+            }
+        }
+    }
+}

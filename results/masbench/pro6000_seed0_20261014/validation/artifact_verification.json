@@ -1,0 +1,231 @@
+{
+  "verification_passed": true,
+  "export_files_checked": 1091,
+  "source_bytes_verified": 152524626,
+  "completed_units_checked": 10,
+  "test_operating_points_checked": 20,
+  "strict_quality_passes": 0,
+  "point_checks": [
+    {
+      "method": "aflow",
+      "axis": "breadth",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 21,
+      "accuracy": 0.35,
+      "component_accuracy": 0.35,
+      "mean_score_0_1_2": 0.7,
+      "tokens_per_example": 7584.4
+    },
+    {
+      "method": "aflow",
+      "axis": "breadth",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 21,
+      "accuracy": 0.35,
+      "component_accuracy": 0.35,
+      "mean_score_0_1_2": 0.7,
+      "tokens_per_example": 7584.4
+    },
+    {
+      "method": "aflow",
+      "axis": "depth",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 18,
+      "accuracy": 0.3,
+      "component_accuracy": 0.3,
+      "mean_score_0_1_2": 0.6,
+      "tokens_per_example": 7986.016666666666
+    },
+    {
+      "method": "aflow",
+      "axis": "depth",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 18,
+      "accuracy": 0.3,
+      "component_accuracy": 0.3,
+      "mean_score_0_1_2": 0.6,
+      "tokens_per_example": 7986.016666666666
+    },
+    {
+      "method": "aflow",
+      "axis": "horizon",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 9,
+      "accuracy": 0.15,
+      "component_accuracy": 0.48541666666666666,
+      "mean_score_0_1_2": 0.95,
+      "tokens_per_example": 11856.7
+    },
+    {
+      "method": "aflow",
+      "axis": "horizon",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 9,
+      "accuracy": 0.15,
+      "component_accuracy": 0.48541666666666666,
+      "mean_score_0_1_2": 0.95,
+      "tokens_per_example": 11856.7
+    },
+    {
+      "method": "aflow",
+      "axis": "parallel",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 7,
+      "accuracy": 0.11666666666666667,
+      "component_accuracy": 0.3958333333333333,
+      "mean_score_0_1_2": 0.8166666666666667,
+      "tokens_per_example": 3999.3
+    },
+    {
+      "method": "aflow",
+      "axis": "parallel",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 7,
+      "accuracy": 0.11666666666666667,
+      "component_accuracy": 0.3958333333333333,
+      "mean_score_0_1_2": 0.8166666666666667,
+      "tokens_per_example": 3999.3
+    },
+    {
+      "method": "aflow",
+      "axis": "robustness",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 1,
+      "accuracy": 0.016666666666666666,
+      "component_accuracy": 0.09523809523809523,
+      "mean_score_0_1_2": 0.6333333333333333,
+      "tokens_per_example": 9487.15
+    },
+    {
+      "method": "aflow",
+      "axis": "robustness",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 1,
+      "accuracy": 0.016666666666666666,
+      "component_accuracy": 0.11904761904761904,
+      "mean_score_0_1_2": 0.7833333333333333,
+      "tokens_per_example": 11490.6
+    },
+    {
+      "method": "maas",
+      "axis": "breadth",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 19,
+      "accuracy": 0.31666666666666665,
+      "component_accuracy": 0.31666666666666665,
+      "mean_score_0_1_2": 0.6333333333333333,
+      "tokens_per_example": 42072.3
+    },
+    {
+      "method": "maas",
+      "axis": "breadth",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 19,
+      "accuracy": 0.31666666666666665,
+      "component_accuracy": 0.31666666666666665,
+      "mean_score_0_1_2": 0.6333333333333333,
+      "tokens_per_example": 42072.3
+    },
+    {
+      "method": "maas",
+      "axis": "depth",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 15,
+      "accuracy": 0.25,
+      "component_accuracy": 0.25,
+      "mean_score_0_1_2": 0.5,
+      "tokens_per_example": 45203.73333333333
+    },
+    {
+      "method": "maas",
+      "axis": "depth",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 15,
+      "accuracy": 0.25,
+      "component_accuracy": 0.25,
+      "mean_score_0_1_2": 0.5,
+      "tokens_per_example": 45203.73333333333
+    },
+    {
+      "method": "maas",
+      "axis": "horizon",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 7,
+      "accuracy": 0.11666666666666667,
+      "component_accuracy": 0.2708333333333333,
+      "mean_score_0_1_2": 0.6833333333333333,
+      "tokens_per_example": 64339.63333333333
+    },
+    {
+      "method": "maas",
+      "axis": "horizon",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 7,
+      "accuracy": 0.11666666666666667,
+      "component_accuracy": 0.2708333333333333,
+      "mean_score_0_1_2": 0.6833333333333333,
+      "tokens_per_example": 64339.63333333333
+    },
+    {
+      "method": "maas",
+      "axis": "parallel",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 10,
+      "accuracy": 0.16666666666666666,
+      "component_accuracy": 0.4791666666666667,
+      "mean_score_0_1_2": 0.9333333333333333,
+      "tokens_per_example": 45171.8
+    },
+    {
+      "method": "maas",
+      "axis": "parallel",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 10,
+      "accuracy": 0.16666666666666666,
+      "component_accuracy": 0.4791666666666667,
+      "mean_score_0_1_2": 0.9333333333333333,
+      "tokens_per_example": 45171.8
+    },
+    {
+      "method": "maas",
+      "axis": "robustness",
+      "point": "Q",
+      "csv_rows": 60,
+      "correct": 0,
+      "accuracy": 0.0,
+      "component_accuracy": 0.0761904761904762,
+      "mean_score_0_1_2": 0.5,
+      "tokens_per_example": 75822.53333333334
+    },
+    {
+      "method": "maas",
+      "axis": "robustness",
+      "point": "E",
+      "csv_rows": 60,
+      "correct": 0,
+      "accuracy": 0.0,
+      "component_accuracy": 0.0761904761904762,
+      "mean_score_0_1_2": 0.5,
+      "tokens_per_example": 75822.53333333334
+    }
+  ],
+  "scope": "Offline byte-integrity and score verification. Preserved historical quality gate warnings remain in force; this does not rerun inference."
+}

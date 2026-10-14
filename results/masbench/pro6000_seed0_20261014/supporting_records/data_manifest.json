@@ -1,0 +1,187 @@
+{
+  "schema": "rpas_shared_data_manifest_v1",
+  "data_seed": 2026,
+  "groups": [
+    {
+      "group": "aime2025",
+      "dataset": "aime",
+      "splits": {
+        "test": {
+          "path": "data/aime/aime2025/test_30.jsonl",
+          "count": 30,
+          "raw_sha256": "779889244fb4e6c27e84bfeb0efddbc81090fbaf0ca9c371a53730414f0d49ae",
+          "id_sha256": "7c4e53bb2e25d7d04a678cfee52f8a4a2369675bf9700835730faf6d89fd807d",
+          "content_sha256": "3c08dfb46a38987c3c0a46f964cf1cc03f948d12a50d33948596ec847b6005ea"
+        }
+      }
+    },
+    {
+      "group": "aime2026",
+      "dataset": "aime",
+      "splits": {
+        "test": {
+          "path": "data/aime/aime2026/test_30.jsonl",
+          "count": 30,
+          "raw_sha256": "c61c0fcdf333e947622a5b164cda4fb67e760c271bf9939e5851467e9285e9db",
+          "id_sha256": "45155d1bb2b1c25598e20aa67b082112cc8e19e1cfbae99940a00de34bee3e6b",
+          "content_sha256": "2ee23b072be8e6921ad07a628b6044a1356d5121de83955a6c811c3c46e1e8a4"
+        }
+      }
+    },
+    {
+      "group": "aimo_validation",
+      "dataset": "aime",
+      "splits": {
+        "search": {
+          "path": "data/aime/aimo_validation/search_60.jsonl",
+          "count": 60,
+          "raw_sha256": "d5c7163a7bda435ca7d4c8045b534f061dd92cecd854a892bcfd62b0beaa4747",
+          "id_sha256": "d959dada44d41c9b44d5dba94ec5bb82e9bd70b38bbbdb849fe3e4eef86bbfd2",
+          "content_sha256": "49de747f3d4c904f5e4c2539d82c1425da8a2b7a574f17cded73402503d3babc"
+        },
+        "select": {
+          "path": "data/aime/aimo_validation/select_30.jsonl",
+          "count": 30,
+          "raw_sha256": "9439248b0527d4c3fc316a272f18d43fbe6ce990a97eb3f80fcc3b28bc5f4fb7",
+          "id_sha256": "aa2b38b2a9baa2fa868b06828c9b9d6fb119f9bca9629bbe5c5b90e5a931bf26",
+          "content_sha256": "5b065ed7d3d09af656228760fdab696bb8fa4938e653681f95aa247b548058e6"
+        }
+      }
+    },
+    {
+      "group": "breadth",
+      "dataset": "masbench",
+      "splits": {
+        "search": {
+          "path": "data/masbench/breadth/search_24.jsonl",
+          "count": 24,
+          "raw_sha256": "253a8dca543af9ffa08b7867bd050a672b4d070090df0ee8db7ec210329aecce",
+          "id_sha256": "00d4472f13d873ee37599efc356a31a0ee1de0c93fe50ca6bb14bf0c6fa924ea",
+          "content_sha256": "ff839024a47c13b41bf5df79cf6ec5c521d09716178f47d6acd49f49a1e4c34b"
+        },
+        "select": {
+          "path": "data/masbench/breadth/select_24.jsonl",
+          "count": 24,
+          "raw_sha256": "7d5aad37b6c23fab81be0bf4eaf31a90d203d26cee45888d9ccb3df5a56543ee",
+          "id_sha256": "a6e9fa2a95285a724271a29d483aa7e22099dca51f7b2de17bb45ff85b6770f1",
+          "content_sha256": "12fac86dfa6fe33fbef78e1af16b28c8a31e2392b15708012ecf706fe7ddd0d8"
+        },
+        "test": {
+          "path": "data/masbench/breadth/test_60.jsonl",
+          "count": 60,
+          "raw_sha256": "37815e82f6cb148fec7944942ad32fcdcba82701cc89accfcee2025bbe08c137",
+          "id_sha256": "78f143adb45924ce1e472aec02832ba680acc6cadc212c2b53606e70c5753420",
+          "content_sha256": "7a4840ce9020026b145e57a1438b6df32de10b1046a06ea27ae612911cf4e23a"
+        }
+      }
+    },
+    {
+      "group": "depth",
+      "dataset": "masbench",
+      "splits": {
+        "search": {
+          "path": "data/masbench/depth/search_24.jsonl",
+          "count": 24,
+          "raw_sha256": "6bd5b475ca82b101f61e77558ca4c2f4b06ba2ba28cca9e10471eac2010db081",
+          "id_sha256": "d5bcfcf1bd748c5cca199931cabc9360b7447b6a9eb603da1361276fa3629ed2",
+          "content_sha256": "99e02bea18eb76737acd3cc08d4c8f9a471d84570d092921219c1a0c76d339ab"
+        },
+        "select": {
+          "path": "data/masbench/depth/select_24.jsonl",
+          "count": 24,
+          "raw_sha256": "7e89efb10979b085bffea7d8bc636c1c740bb3a175706bed656cd6f73c6c78ab",
+          "id_sha256": "4086019b5a38d3f02c6f509fcc20b93e51a3aea19833263a5ee90e2e0b16381f",
+          "content_sha256": "9a4992b0f26506b9dbfe50872e51a19fb5d5320bb0d5830c64dccbfa9fd21ce6"
+        },
+        "test": {
+          "path": "data/masbench/depth/test_60.jsonl",
+          "count": 60,
+          "raw_sha256": "20bc5182aa4f87bbbad544f2116eb22607f7e1af1886051470a415e40df71859",
+          "id_sha256": "82de14ac0348038f8f05ef00a2cbbaf3f982948e17b0c77dcff69fe368ff6d0a",
+          "content_sha256": "e2d0636ed5b4455a6f0c0be0d1f4c288d24ef5ccaba960613089f1cdeb651b2e"
+        }
+      }
+    },
+    {
+      "group": "horizon",
+      "dataset": "masbench",
+      "splits": {
+        "search": {
+          "path": "data/masbench/horizon/search_24.jsonl",
+          "count": 24,
+          "raw_sha256": "2aad34cba271d661f324eed48719ab286006f607d839bb5cdc29cd48ccab12c1",
+          "id_sha256": "6e365a91eb40a2dfae6ddc4ed7b164d48f506178136f856d09ff5f2f53e6ed85",
+          "content_sha256": "a585bd34a4510882f00744482ec13a424079fc014424efe5385a8687fccfd5f1"
+        },
+        "select": {
+          "path": "data/masbench/horizon/select_24.jsonl",
+          "count": 24,
+          "raw_sha256": "3de4ba2d25a3d4edfb793db1bce528db97767e9367bca5635f825c32a8944fb8",
+          "id_sha256": "ed18b1ec5f34a04e2bf8d415b439049e6729773267cb864042d8daeecd319963",
+          "content_sha256": "a543e9d9e4c33698d43be77f0376e1632f92381bc99de645abb417dee58aeb62"
+        },
+        "test": {
+          "path": "data/masbench/horizon/test_60.jsonl",
+          "count": 60,
+          "raw_sha256": "38329780ac4a5be39fa92af3c00c0c1b6d467ce5beeb8f66c8234081ff69ec3b",
+          "id_sha256": "aa5169a2b9865c401db5e7c016cfaa5897336a131b7f6b4f0a72a1457a1a3471",
+          "content_sha256": "c00452ff1b27183841836487b382722a23eb8b918c00b694537ae9aac30016f2"
+        }
+      }
+    },
+    {
+      "group": "parallel",
+      "dataset": "masbench",
+      "splits": {
+        "search": {
+          "path": "data/masbench/parallel/search_24.jsonl",
+          "count": 24,
+          "raw_sha256": "d373a69a5649dcec6532fb03f7c5d1eed88bc1127cfebe317b934e9dd96a3c4f",
+          "id_sha256": "966c47bf1bd1610c19b1f0c7577d7ca73c74b9da332d0f058ca986d18c457163",
+          "content_sha256": "99711d57a0a19d4dc9de99019c57fff37177ba4f7db5ca533232d7d3ab39e214"
+        },
+        "select": {
+          "path": "data/masbench/parallel/select_24.jsonl",
+          "count": 24,
+          "raw_sha256": "8b04675b5677092f61726d2e8aba1c211f80887fe9ff81c175c95ea0f6871b40",
+          "id_sha256": "295d751b2e648a6224825f189ab00db17c5503c718f77a8b7f46081fa54d4a51",
+          "content_sha256": "0c3618be25ceedd5a73cc99a26302a9faeb1608e481dab237cfbdea0c9dfc868"
+        },
+        "test": {
+          "path": "data/masbench/parallel/test_60.jsonl",
+          "count": 60,
+          "raw_sha256": "308d4ee48fc8cf8796bf38d889300e02d7c37ee640bf9e5d9a34f95addac2fdd",
+          "id_sha256": "6856b64100cb446a92c03df0682cd52c60e7efb0ccab60c904bf72b7c86437d7",
+          "content_sha256": "4490eca398f11148d0fe6264f257160f97c04c8609a2db2e0f57cbcbd1e96c69"
+        }
+      }
+    },
+    {
+      "group": "robustness",
+      "dataset": "masbench",
+      "splits": {
+        "search": {
+          "path": "data/masbench/robustness/search_24.jsonl",
+          "count": 24,
+          "raw_sha256": "e52971f328d5ffa0ead09878a98c7aea93a2e2c938140848b6a4012660e6a99e",
+          "id_sha256": "e5b9c22fdebf8e3e3e688df05ee09df4d3155f70ba6ae3bed79d92f39264e44f",
+          "content_sha256": "1ed2df98883006a58a3354b4e2e7b6d56517cf587eefb6ef2ad5cf39531e560b"
+        },
+        "select": {
+          "path": "data/masbench/robustness/select_24.jsonl",
+          "count": 24,
+          "raw_sha256": "634fdd2735543ff73b7ca68debf4bb71e12810bd88aff11553b648c728b02115",
+          "id_sha256": "98895633cfeedb51d3bc15235c3eb04c6e7a4b4c11abbb836d257750822ca3fb",
+          "content_sha256": "5121cd77936ab7506e82fd3d5deb9529212d1a6a7a8b8c067373da5a43541128"
+        },
+        "test": {
+          "path": "data/masbench/robustness/test_60.jsonl",
+          "count": 60,
+          "raw_sha256": "082fe3bf6f61962fa0b9cf61186ae6e23cc4572d0999ab71b9f1d141b710f2c9",
+          "id_sha256": "433d31668f140a1792ad2ecc8185fb7aaca3ffea68012327cbc18e831b2983a5",
+          "content_sha256": "f71c9830272d7816f1f4a84ee367fc4091b42419de4cce0df58f45245b0533f1"
+        }
+      }
+    }
+  ]
+}

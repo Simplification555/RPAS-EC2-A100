@@ -1,0 +1,55 @@
+{
+  "status": "frozen_before_test_access",
+  "protocol_version": "masbench_external_protocol_v2_16k_shared_alignment",
+  "method": "maas",
+  "axis": "parallel",
+  "seed": 0,
+  "selection_split": "D_select",
+  "test_split": "D_test",
+  "d_test_opened": false,
+  "frozen_at_utc": "2026-10-14T06:42:08.094444+00:00",
+  "selected": {
+    "Q": {
+      "controller_checkpoint": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/maas/parallel/seed_0/maas_repo/workspace/rpas_masbench_native/parallel/seed_0/MATH/train/round_1/MATH_controller_sample1.pth",
+      "controller_checkpoint_sha256": "b6dee917e0498e335a6ee1dfd04fc6ccdbb53975c93b5b30299ce537d143cb4c"
+    }
+  },
+  "selection_details": {
+    "selection": {
+      "valid_execution_rate": 0.7916666666666666,
+      "error_example_rate": 0.20833333333333334,
+      "protocol_error_rate": 0.0,
+      "truncated_unextractable_rate": 0.20833333333333334,
+      "score": 0.125,
+      "accuracy": 0.125,
+      "correct": 3,
+      "num_examples": 24,
+      "valid_answer_rate": 0.7916666666666666,
+      "component_accuracy": 0.47297297297297297,
+      "component_correct": 35,
+      "component_total": 74,
+      "mean_score_0_1_2": 0.9166666666666666,
+      "answer_parser": "masbench_shared_scoring_alignment_v2",
+      "quality_passed": false,
+      "quality_warnings": [
+        "D_select shared validity thresholds exceeded; see recorded validity metrics"
+      ]
+    },
+    "native_selection_score": 0.9166666666666666,
+    "output_audit": {
+      "csv": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/maas/parallel/seed_0/maas_repo/workspace/rpas_masbench_native/parallel/seed_0/MATH/test/round_1/0.91667_20261014_144208.csv",
+      "csv_rows": 24,
+      "empty_predictions": 5,
+      "failure_predictions": 5,
+      "failure_fraction": 0.20833333333333334,
+      "sample_timeouts": 0,
+      "failure_markers": [
+        "<empty prediction>",
+        "<empty prediction>",
+        "<empty prediction>",
+        "<empty prediction>",
+        "<empty prediction>"
+      ]
+    }
+  }
+}
