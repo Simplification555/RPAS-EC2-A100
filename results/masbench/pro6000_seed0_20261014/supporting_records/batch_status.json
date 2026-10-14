@@ -1,0 +1,125 @@
+{
+  "status": "completed_with_failed_units",
+  "started_at": 1791908738.610852,
+  "units": [
+    {
+      "method": "aflow",
+      "axis": "breadth",
+      "started_at": 1791908765.525258,
+      "runner_exit_code": 1,
+      "status": "failed_preserved",
+      "diagnostic_tail": "/workspace/rpas_masbench_native/MATH/workflows/template/operator.py\", line 49, in run_code\n    result = global_namespace['solve']()\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 10, in solve\nNameError: name 'x' is not defined\n\n\nEvaluating MATH problems:  96%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c| 23/24 [20:56<01:37, 97.57s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [21:36<00:00, 82.46s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [21:36<00:00, 54.01s/it]\n\u001b[32m2026-10-14 01:33:47 - INFO - Maximum retries reached. Skipping this sample. Error: module 'workspace.rpas_masbench_native.MATH.workflows.round_9.prompt' has no attribute 'ExtractAndFormat'\u001b[0m\n\u001b[32m2026-10-14 01:34:27 - INFO - Results saved to /home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_9b_ctx16k_seed0_pro6000_20261013/aflow/breadth/seed_0/aflow_selection/round_9/0.00000_20261014_013427.csv\u001b[0m\n\u001b[32m2026-10-14 01:34:27 - INFO - Average score on MATH dataset: 0.00000\u001b[0m\n\u001b[32m2026-10-14 01:34:27 - INFO - Total Cost: 0.00000\u001b[0m\nTraceback (most recent call last):\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 920, in <module>\n    main()\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 896, in main\n    result = run_aflow(args, source_root, args.data_dir, run_id, rows, task_instruction, manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 527, in run_aflow\n    raise RuntimeError(\"AFlow produced no valid MASBench D_select candidates\")\nRuntimeError: AFlow produced no valid MASBench D_select candidates\n",
+      "finished_at": 1791912868.1084688
+    },
+    {
+      "method": "aflow",
+      "axis": "depth",
+      "started_at": 1791912868.1087942,
+      "runner_exit_code": 1,
+      "status": "failed_preserved",
+      "diagnostic_tail": "reached. Skipping this sample. Error: 'solutions'\u001b[0m\n\u001b[32m2026-10-14 02:03:27 - INFO - Maximum retries reached. Skipping this sample. Error: 'solutions'\u001b[0m\n\u001b[32m2026-10-14 02:03:31 - INFO - Maximum retries reached. Skipping this sample. Error: ''\u001b[0m\n\u001b[32m2026-10-14 02:03:36 - INFO - Maximum retries reached. Skipping this sample. Error: 'solutions'\u001b[0m\n\u001b[32m2026-10-14 02:03:43 - INFO - Maximum retries reached. Skipping this sample. Error: 'solutions'\u001b[0m\n\u001b[32m2026-10-14 02:03:47 - INFO - Maximum retries reached. Skipping this sample. Error: 'solutions'\u001b[0m\n\u001b[32m2026-10-14 02:03:52 - INFO - Maximum retries reached. Skipping this sample. Error: 'solutions'\u001b[0m\n\u001b[32m2026-10-14 02:03:52 - INFO - Results saved to /home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_9b_ctx16k_seed0_pro6000_20261013/aflow/depth/seed_0/aflow_selection/round_9/0.00000_20261014_020352.csv\u001b[0m\n\u001b[32m2026-10-14 02:03:52 - INFO - Average score on MATH dataset: 0.00000\u001b[0m\n\u001b[32m2026-10-14 02:03:52 - INFO - Total Cost: 0.00000\u001b[0m\nTraceback (most recent call last):\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 920, in <module>\n    main()\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 896, in main\n    result = run_aflow(args, source_root, args.data_dir, run_id, rows, task_instruction, manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 527, in run_aflow\n    raise RuntimeError(\"AFlow produced no valid MASBench D_select candidates\")\nRuntimeError: AFlow produced no valid MASBench D_select candidates\n",
+      "finished_at": 1791914633.2962928
+    },
+    {
+      "method": "aflow",
+      "axis": "horizon",
+      "started_at": 1791914633.2966003,
+      "runner_exit_code": 1,
+      "status": "failed_preserved",
+      "diagnostic_tail": "cted 2)\u001b[0m\n\u001b[32m2026-10-14 02:10:37 - INFO - Maximum retries reached. Skipping this sample. Error: too many values to unpack (expected 2)\u001b[0m\n\u001b[32m2026-10-14 02:10:37 - INFO - Maximum retries reached. Skipping this sample. Error: too many values to unpack (expected 2)\u001b[0m\n\u001b[32m2026-10-14 02:10:37 - INFO - Maximum retries reached. Skipping this sample. Error: too many values to unpack (expected 2)\u001b[0m\n\u001b[32m2026-10-14 02:10:37 - INFO - Maximum retries reached. Skipping this sample. Error: too many values to unpack (expected 2)\u001b[0m\n\u001b[32m2026-10-14 02:10:37 - INFO - Maximum retries reached. Skipping this sample. Error: too many values to unpack (expected 2)\u001b[0m\n\u001b[32m2026-10-14 02:10:37 - INFO - Results saved to /home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_9b_ctx16k_seed0_pro6000_20261013/aflow/horizon/seed_0/aflow_selection/round_9/0.00000_20261014_021037.csv\u001b[0m\n\u001b[32m2026-10-14 02:10:37 - INFO - Average score on MATH dataset: 0.00000\u001b[0m\n\u001b[32m2026-10-14 02:10:37 - INFO - Total Cost: 0.00000\u001b[0m\nTraceback (most recent call last):\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 920, in <module>\n    main()\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 896, in main\n    result = run_aflow(args, source_root, args.data_dir, run_id, rows, task_instruction, manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 527, in run_aflow\n    raise RuntimeError(\"AFlow produced no valid MASBench D_select candidates\")\nRuntimeError: AFlow produced no valid MASBench D_select candidates\n",
+      "finished_at": 1791915037.974158
+    },
+    {
+      "method": "aflow",
+      "axis": "parallel",
+      "started_at": 1791915037.9745853,
+      "runner_exit_code": 1,
+      "status": "failed_preserved",
+      "diagnostic_tail": "Evaluating MATH problems:  67%|\u2588\u2588\u2588\u2588\u2588\u2588\u258b   | 16/24 [00:29<00:12,  1.56s/it]\nEvaluating MATH problems:  71%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588   | 17/24 [00:33<00:14,  2.13s/it]\nEvaluating MATH problems:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 18/24 [00:35<00:13,  2.22s/it]\nEvaluating MATH problems:  79%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589  | 19/24 [00:46<00:24,  4.87s/it]\nEvaluating MATH problems:  83%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e | 20/24 [01:13<00:45, 11.37s/it]\nEvaluating MATH problems:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 21/24 [01:21<00:31, 10.45s/it]\nEvaluating MATH problems:  96%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c| 23/24 [01:28<00:07,  7.20s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [01:33<00:00,  6.82s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [01:33<00:00,  3.91s/it]\n\u001b[32m2026-10-14 02:48:09 - INFO - Results saved to /home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_9b_ctx16k_seed0_pro6000_20261013/aflow/parallel/seed_0/aflow_selection/round_8/0.95833_20261014_024809.csv\u001b[0m\n\u001b[32m2026-10-14 02:48:09 - INFO - Average score on MATH dataset: 0.95833\u001b[0m\n\u001b[32m2026-10-14 02:48:09 - INFO - Total Cost: 0.00000\u001b[0m\nTraceback (most recent call last):\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 920, in <module>\n    main()\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 896, in main\n    result = run_aflow(args, source_root, args.data_dir, run_id, rows, task_instruction, manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 527, in run_aflow\n    raise RuntimeError(\"AFlow produced no valid MASBench D_select candidates\")\nRuntimeError: AFlow produced no valid MASBench D_select candidates\n",
+      "finished_at": 1791917290.407272
+    },
+    {
+      "method": "aflow",
+      "axis": "robustness",
+      "started_at": 1791917290.4076357,
+      "runner_exit_code": 1,
+      "status": "failed_preserved",
+      "diagnostic_tail": "aluating MATH problems:  71%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588   | 17/24 [01:33<01:13, 10.46s/it]\nEvaluating MATH problems:  75%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c  | 18/24 [01:34<00:45,  7.64s/it]\nEvaluating MATH problems:  79%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2589  | 19/24 [01:37<00:31,  6.30s/it]\nEvaluating MATH problems:  83%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258e | 20/24 [01:38<00:19,  4.88s/it]\nEvaluating MATH problems:  88%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258a | 21/24 [01:57<00:26,  8.99s/it]\nEvaluating MATH problems:  92%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258f| 22/24 [02:25<00:29, 14.80s/it]\nEvaluating MATH problems:  96%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c| 23/24 [02:37<00:13, 13.88s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [02:51<00:00, 14.06s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [02:51<00:00,  7.16s/it]\n\u001b[32m2026-10-14 03:09:40 - INFO - Results saved to /home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_9b_ctx16k_seed0_pro6000_20261013/aflow/robustness/seed_0/aflow_selection/round_9/0.45833_20261014_030940.csv\u001b[0m\n\u001b[32m2026-10-14 03:09:40 - INFO - Average score on MATH dataset: 0.45833\u001b[0m\n\u001b[32m2026-10-14 03:09:40 - INFO - Total Cost: 0.00000\u001b[0m\nTraceback (most recent call last):\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 920, in <module>\n    main()\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 896, in main\n    result = run_aflow(args, source_root, args.data_dir, run_id, rows, task_instruction, manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 527, in run_aflow\n    raise RuntimeError(\"AFlow produced no valid MASBench D_select candidates\")\nRuntimeError: AFlow produced no valid MASBench D_select candidates\n",
+      "finished_at": 1791918581.4795353
+    },
+    {
+      "method": "maas",
+      "axis": "breadth",
+      "started_at": 1791918581.4798894,
+      "runner_exit_code": 0,
+      "gate_exit_code": 1,
+      "status": "completed_gate_failed",
+      "finished_at": 1791923038.9887025
+    },
+    {
+      "method": "maas",
+      "axis": "depth",
+      "started_at": 1791923038.989081,
+      "runner_exit_code": 1,
+      "status": "failed_preserved",
+      "diagnostic_tail": "ing MATH problems:  96%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c| 23/24 [15:11<01:38, 98.38s/it] 2026-10-14 05:12:25.430 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n2026-10-14 05:12:58.973 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n2026-10-14 05:13:30.876 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n2026-10-14 05:13:31.856 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [16:42<00:00, 96.17s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [16:42<00:00, 41.77s/it]\n2026-10-14 05:13:31.867 | INFO     | maas.ext.maas.benchmark.benchmark:save_results_to_csv:66 - Results saved to workspace/rpas_masbench_native/depth/seed_0/MATH/test/round_1/1.08333_20261014_051331.csv\n2026-10-14 05:13:31.867 | INFO     | maas.ext.maas.benchmark.benchmark:run_evaluation:205 - Average score on MATH dataset: 1.08333\nTraceback (most recent call last):\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 920, in <module>\n    main()\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 898, in main\n    result = run_maas(args, source_root, args.data_dir, run_id, rows, task_instruction, manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 677, in run_maas\n    raise RuntimeError(\nRuntimeError: MaAS D_select failures 0.0% exceed the 5.0% quality threshold; D_test will not be opened\n",
+      "finished_at": 1791926012.955468
+    },
+    {
+      "method": "maas",
+      "axis": "horizon",
+      "started_at": 1791926012.9559033,
+      "runner_exit_code": 1,
+      "status": "failed_preserved",
+      "diagnostic_tail": "ng MATH problems:  96%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c| 23/24 [14:47<01:09, 69.35s/it]2026-10-14 05:58:58.361 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n2026-10-14 06:00:09.323 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n2026-10-14 06:01:20.317 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n2026-10-14 06:01:21.465 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [17:21<00:00, 94.72s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [17:21<00:00, 43.40s/it]\n2026-10-14 06:01:21.475 | INFO     | maas.ext.maas.benchmark.benchmark:save_results_to_csv:66 - Results saved to workspace/rpas_masbench_native/horizon/seed_0/MATH/test/round_1/0.62500_20261014_060121.csv\n2026-10-14 06:01:21.475 | INFO     | maas.ext.maas.benchmark.benchmark:run_evaluation:205 - Average score on MATH dataset: 0.62500\nTraceback (most recent call last):\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 920, in <module>\n    main()\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 898, in main\n    result = run_maas(args, source_root, args.data_dir, run_id, rows, task_instruction, manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 677, in run_maas\n    raise RuntimeError(\nRuntimeError: MaAS D_select failures 0.0% exceed the 5.0% quality threshold; D_test will not be opened\n",
+      "finished_at": 1791928882.5811079
+    },
+    {
+      "method": "maas",
+      "axis": "parallel",
+      "started_at": 1791928882.5814998,
+      "runner_exit_code": 1,
+      "status": "failed_preserved",
+      "diagnostic_tail": " 06:42:01.078 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n2026-10-14 06:42:01.666 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n\nEvaluating MATH problems:  96%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u258c| 23/24 [10:27<00:46, 46.25s/it]2026-10-14 06:42:12.392 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n2026-10-14 06:42:13.417 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [10:39<00:00, 35.90s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [10:39<00:00, 26.63s/it]\n2026-10-14 06:42:13.428 | INFO     | maas.ext.maas.benchmark.benchmark:save_results_to_csv:66 - Results saved to workspace/rpas_masbench_native/parallel/seed_0/MATH/test/round_1/0.66667_20261014_064213.csv\n2026-10-14 06:42:13.428 | INFO     | maas.ext.maas.benchmark.benchmark:run_evaluation:205 - Average score on MATH dataset: 0.66667\nTraceback (most recent call last):\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 920, in <module>\n    main()\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 898, in main\n    result = run_maas(args, source_root, args.data_dir, run_id, rows, task_instruction, manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 677, in run_maas\n    raise RuntimeError(\nRuntimeError: MaAS D_select failures 0.0% exceed the 5.0% quality threshold; D_test will not be opened\n",
+      "finished_at": 1791931334.5085764
+    },
+    {
+      "method": "maas",
+      "axis": "robustness",
+      "started_at": 1791931334.5090299,
+      "runner_exit_code": 1,
+      "status": "failed_preserved",
+      "diagnostic_tail": "as_repo/maas/ext/maas/scripts/optimized/MATH/train/template/operator.py\", line 99, in run_code\n    result = global_namespace['solve']()\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<string>\", line 39, in solve\nNameError: name 'skiing_backpack_per_sb' is not defined. Did you mean: 'skiing_backpack_per_sq'?\n\n2026-10-14 07:28:10.100 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n2026-10-14 07:28:11.148 | WARNING  | maas.utils.cost_manager:update_cost:49 - Model Qwen/Qwen3.5-9B not found in TOKEN_COSTS.\n\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [14:58<00:00, 114.50s/it]\nEvaluating MATH problems: 100%|\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588| 24/24 [14:58<00:00, 37.43s/it] \n2026-10-14 07:28:11.158 | INFO     | maas.ext.maas.benchmark.benchmark:save_results_to_csv:66 - Results saved to workspace/rpas_masbench_native/robustness/seed_0/MATH/test/round_1/0.66667_20261014_072811.csv\n2026-10-14 07:28:11.158 | INFO     | maas.ext.maas.benchmark.benchmark:run_evaluation:205 - Average score on MATH dataset: 0.66667\nTraceback (most recent call last):\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 920, in <module>\n    main()\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 898, in main\n    result = run_maas(args, source_root, args.data_dir, run_id, rows, task_instruction, manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/experiments/native_masbench_external.py\", line 677, in run_maas\n    raise RuntimeError(\nRuntimeError: MaAS D_select failures 0.0% exceed the 5.0% quality threshold; D_test will not be opened\n",
+      "finished_at": 1791934092.2475326
+    }
+  ],
+  "config": {
+    "methods": [
+      "aflow",
+      "maas"
+    ],
+    "axes": [
+      "breadth",
+      "depth",
+      "horizon",
+      "parallel",
+      "robustness"
+    ],
+    "search_seed": 0,
+    "data_seed": 2026,
+    "concurrency": 16,
+    "context": 16384,
+    "max_output": 6144,
+    "thinking": false,
+    "gpu_memory_utilization": 0.85,
+    "max_num_batched_tokens": 16384,
+    "chunked_prefill": true,
+    "method_device": "cpu",
+    "hardware_profile": "RTX_PRO6000_Blackwell_96GB",
+    "temperatures": "native role defaults and overrides",
+    "scope": "new search-select-test, no reuse of 8K results"
+  },
+  "preflight_report_sha256": "d89df8f43fcdf2bcb13c9b44019af1b61450c75e12215eee8241fd5efaadf6f5",
+  "current_unit": "maas/robustness/seed_0",
+  "finished_at": 1791934092.2479997
+}

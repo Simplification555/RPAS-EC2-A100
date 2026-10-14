@@ -1,0 +1,51 @@
+{
+  "passed": false,
+  "accepted_for_completion": true,
+  "completion_policy": "relaxed",
+  "quality_warnings": [
+    "Q shared validity gate failed: protocol_error_rate=0.15",
+    "Q shared validity gate failed: truncated_unextractable_rate=0.11666666666666667",
+    "E shared validity gate failed: protocol_error_rate=0.15",
+    "E shared validity gate failed: truncated_unextractable_rate=0.11666666666666667"
+  ],
+  "integrity_errors": [],
+  "request_accounting": {
+    "ledger_requests": 120,
+    "unmetered_request_ids": [],
+    "token_cost_is_lower_bound": false,
+    "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+  },
+  "errors": [
+    "Q shared validity gate failed: protocol_error_rate=0.15",
+    "Q shared validity gate failed: truncated_unextractable_rate=0.11666666666666667",
+    "E shared validity gate failed: protocol_error_rate=0.15",
+    "E shared validity gate failed: truncated_unextractable_rate=0.11666666666666667"
+  ],
+  "run_id": "masbench:aflow:horizon:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+  "method": "aflow",
+  "axis": "horizon",
+  "seed": 0,
+  "point_summary": {
+    "Q": {
+      "accuracy": 0.15,
+      "correct": 9,
+      "tokens_per_example": 11856.7,
+      "calls": 90,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.85,
+      "component_accuracy": 0.48541666666666666,
+      "mean_score_0_1_2": 0.95
+    },
+    "E": {
+      "accuracy": 0.15,
+      "correct": 9,
+      "tokens_per_example": 11856.7,
+      "calls": 90,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.85,
+      "component_accuracy": 0.48541666666666666,
+      "mean_score_0_1_2": 0.95
+    }
+  },
+  "checked_at_utc": "2026-10-14T08:29:03.879362+00:00"
+}

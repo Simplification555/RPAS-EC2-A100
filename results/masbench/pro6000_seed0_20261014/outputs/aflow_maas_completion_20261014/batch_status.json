@@ -1,0 +1,215 @@
+{
+  "status": "completed",
+  "started_at": 1791951604.1161523,
+  "units": [
+    {
+      "method": "maas",
+      "axis": "depth",
+      "started_at": 1791951604.1162658,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: valid_execution_rate=0.4833333333333333",
+        "Q shared validity gate failed: error_example_rate=0.5166666666666667",
+        "Q shared validity gate failed: protocol_error_rate=0.016666666666666666",
+        "Q shared validity gate failed: truncated_unextractable_rate=0.5333333333333333",
+        "E shared validity gate failed: valid_execution_rate=0.4833333333333333",
+        "E shared validity gate failed: error_example_rate=0.5166666666666667",
+        "E shared validity gate failed: protocol_error_rate=0.016666666666666666",
+        "E shared validity gate failed: truncated_unextractable_rate=0.5333333333333333",
+        "Q sample failure fraction exceeds 5%",
+        "E sample failure fraction exceeds 5%",
+        "MaAS D_select failure fraction exceeds 5%",
+        "MaAS D_select shared validity thresholds exceeded"
+      ],
+      "finished_at": 1791954073.0247574
+    },
+    {
+      "method": "maas",
+      "axis": "breadth",
+      "started_at": 1791954073.025293,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: valid_execution_rate=0.75",
+        "Q shared validity gate failed: error_example_rate=0.25",
+        "Q shared validity gate failed: truncated_unextractable_rate=0.25",
+        "E shared validity gate failed: valid_execution_rate=0.75",
+        "E shared validity gate failed: error_example_rate=0.25",
+        "E shared validity gate failed: truncated_unextractable_rate=0.25",
+        "Q sample failure fraction exceeds 5%",
+        "E sample failure fraction exceeds 5%",
+        "MaAS D_select failure fraction exceeds 5%",
+        "MaAS D_select shared validity thresholds exceeded"
+      ],
+      "finished_at": 1791956536.872604
+    },
+    {
+      "method": "maas",
+      "axis": "horizon",
+      "started_at": 1791956536.8732195,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: valid_execution_rate=0.6166666666666667",
+        "Q shared validity gate failed: error_example_rate=0.38333333333333336",
+        "Q shared validity gate failed: protocol_error_rate=0.03333333333333333",
+        "Q shared validity gate failed: truncated_unextractable_rate=0.4",
+        "E shared validity gate failed: valid_execution_rate=0.6166666666666667",
+        "E shared validity gate failed: error_example_rate=0.38333333333333336",
+        "E shared validity gate failed: protocol_error_rate=0.03333333333333333",
+        "E shared validity gate failed: truncated_unextractable_rate=0.4",
+        "Q sample failure fraction exceeds 5%",
+        "E sample failure fraction exceeds 5%",
+        "MaAS D_select failure fraction exceeds 5%",
+        "MaAS D_select shared validity thresholds exceeded"
+      ],
+      "finished_at": 1791959264.6300802
+    },
+    {
+      "method": "maas",
+      "axis": "parallel",
+      "started_at": 1791959264.6306272,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: valid_execution_rate=0.8333333333333334",
+        "Q shared validity gate failed: error_example_rate=0.16666666666666666",
+        "Q shared validity gate failed: truncated_unextractable_rate=0.16666666666666666",
+        "E shared validity gate failed: valid_execution_rate=0.8333333333333334",
+        "E shared validity gate failed: error_example_rate=0.16666666666666666",
+        "E shared validity gate failed: truncated_unextractable_rate=0.16666666666666666",
+        "Q sample failure fraction exceeds 5%",
+        "E sample failure fraction exceeds 5%",
+        "MaAS D_select failure fraction exceeds 5%",
+        "MaAS D_select shared validity thresholds exceeded"
+      ],
+      "finished_at": 1791961657.7741745
+    },
+    {
+      "method": "maas",
+      "axis": "robustness",
+      "started_at": 1791961657.774944,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: valid_execution_rate=0.6833333333333333",
+        "Q shared validity gate failed: error_example_rate=0.31666666666666665",
+        "Q shared validity gate failed: protocol_error_rate=0.016666666666666666",
+        "Q shared validity gate failed: truncated_unextractable_rate=0.3333333333333333",
+        "E shared validity gate failed: valid_execution_rate=0.6833333333333333",
+        "E shared validity gate failed: error_example_rate=0.31666666666666665",
+        "E shared validity gate failed: protocol_error_rate=0.016666666666666666",
+        "E shared validity gate failed: truncated_unextractable_rate=0.3333333333333333",
+        "Q sample failure fraction exceeds 5%",
+        "E sample failure fraction exceeds 5%",
+        "MaAS D_select shared validity thresholds exceeded"
+      ],
+      "finished_at": 1791964256.3057423
+    },
+    {
+      "method": "aflow",
+      "axis": "depth",
+      "started_at": 1791964256.3064835,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: protocol_error_rate=0.016666666666666666",
+        "E shared validity gate failed: protocol_error_rate=0.016666666666666666",
+        "AFlow D_select round 1 shared validity thresholds exceeded"
+      ],
+      "finished_at": 1791965201.8266165
+    },
+    {
+      "method": "aflow",
+      "axis": "breadth",
+      "started_at": 1791965201.8272712,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: protocol_error_rate=0.08333333333333333",
+        "Q shared validity gate failed: truncated_unextractable_rate=0.08333333333333333",
+        "E shared validity gate failed: protocol_error_rate=0.08333333333333333",
+        "E shared validity gate failed: truncated_unextractable_rate=0.08333333333333333",
+        "AFlow D_select round 1 shared validity thresholds exceeded",
+        "AFlow D_select round 5 shared validity thresholds exceeded"
+      ],
+      "finished_at": 1791966026.5456996
+    },
+    {
+      "method": "aflow",
+      "axis": "horizon",
+      "started_at": 1791966026.546252,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: protocol_error_rate=0.15",
+        "Q shared validity gate failed: truncated_unextractable_rate=0.11666666666666667",
+        "E shared validity gate failed: protocol_error_rate=0.15",
+        "E shared validity gate failed: truncated_unextractable_rate=0.11666666666666667"
+      ],
+      "finished_at": 1791966543.8956957
+    },
+    {
+      "method": "aflow",
+      "axis": "parallel",
+      "started_at": 1791966543.8962493,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: protocol_error_rate=0.25",
+        "Q shared validity gate failed: truncated_unextractable_rate=0.25",
+        "E shared validity gate failed: protocol_error_rate=0.25",
+        "E shared validity gate failed: truncated_unextractable_rate=0.25",
+        "AFlow D_select round 3 shared validity thresholds exceeded",
+        "AFlow D_select round 4 shared validity thresholds exceeded",
+        "AFlow D_select round 6 shared validity thresholds exceeded",
+        "AFlow D_select round 8 shared validity thresholds exceeded"
+      ],
+      "finished_at": 1791967683.896253
+    },
+    {
+      "method": "aflow",
+      "axis": "robustness",
+      "started_at": 1791967683.8969839,
+      "runner_exit_code": 0,
+      "status": "completed",
+      "gate_exit_code": 0,
+      "strict_quality_passed": false,
+      "quality_warnings": [
+        "Q shared validity gate failed: protocol_error_rate=0.21666666666666667",
+        "Q shared validity gate failed: truncated_unextractable_rate=0.21666666666666667",
+        "E shared validity gate failed: protocol_error_rate=0.03333333333333333",
+        "AFlow D_select round 1 shared validity thresholds exceeded",
+        "AFlow D_select round 5 shared validity thresholds exceeded",
+        "AFlow D_select round 7 shared validity thresholds exceeded",
+        "AFlow D_select round 9 shared validity thresholds exceeded"
+      ],
+      "finished_at": 1791969730.4503205
+    }
+  ],
+  "completion_policy": "relaxed",
+  "answer_repair": true,
+  "scope": "exploratory_completion; reuse original searches, rerun selection and test",
+  "sample_timeout_seconds": 600,
+  "native_sample_retries": 1,
+  "finished_at": 1791969730.8159509
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "rpas_frozen_splits_v1",
+  "group": "horizon",
+  "seed": 2026,
+  "source": {
+    "dataset": "Salesforce/MASBench",
+    "axis": "horizon",
+    "files": {
+      "horizon/train-00000-of-00001.parquet": "9db6ee4cfcab8fdac73cea5296ca7c340a5884c22076b898edb5d78150a8fc42",
+      "horizon/test-00000-of-00001.parquet": "e3fd5c974f01695b813325821c45d028af62a83e8de214870b934358847dc59d"
+    }
+  },
+  "counts": {
+    "search": 24,
+    "select": 24,
+    "test": 60
+  },
+  "files": {
+    "search": "horizon/search_24.jsonl",
+    "select": "horizon/select_24.jsonl",
+    "test": "horizon/test_60.jsonl"
+  },
+  "id_sha256": {
+    "search": "6e365a91eb40a2dfae6ddc4ed7b164d48f506178136f856d09ff5f2f53e6ed85",
+    "select": "ed18b1ec5f34a04e2bf8d415b439049e6729773267cb864042d8daeecd319963",
+    "test": "aa5169a2b9865c401db5e7c016cfaa5897336a131b7f6b4f0a72a1457a1a3471"
+  },
+  "content_sha256": {
+    "search": "a585bd34a4510882f00744482ec13a424079fc014424efe5385a8687fccfd5f1",
+    "select": "a543e9d9e4c33698d43be77f0376e1632f92381bc99de645abb417dee58aeb62",
+    "test": "c00452ff1b27183841836487b382722a23eb8b918c00b694537ae9aac30016f2"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "passed": false,
+  "accepted_for_completion": true,
+  "completion_policy": "relaxed",
+  "quality_warnings": [
+    "Q shared validity gate failed: protocol_error_rate=0.21666666666666667",
+    "Q shared validity gate failed: truncated_unextractable_rate=0.21666666666666667",
+    "E shared validity gate failed: protocol_error_rate=0.03333333333333333",
+    "AFlow D_select round 1 shared validity thresholds exceeded",
+    "AFlow D_select round 5 shared validity thresholds exceeded",
+    "AFlow D_select round 7 shared validity thresholds exceeded",
+    "AFlow D_select round 9 shared validity thresholds exceeded"
+  ],
+  "integrity_errors": [],
+  "request_accounting": {
+    "ledger_requests": 1039,
+    "unmetered_request_ids": [
+      "cc2355d965b74c159a8e694b0d7bbadf",
+      "beecda4712c54c18a25071c339ee4c12",
+      "2d1cccff2c52492a9707e14856a7902e",
+      "fab89d6c06714a13825b62e5576f4e71",
+      "8c600ce2d7904e2ca9ce69e470debca1",
+      "80be3eca7a24406199f2e46a61bd75ef",
+      "355b9aea0c5348bf8cf43e7037872886",
+      "d38fe7771a0f419f827c8ad91be913c2"
+    ],
+    "token_cost_is_lower_bound": true,
+    "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+  },
+  "errors": [
+    "Q shared validity gate failed: protocol_error_rate=0.21666666666666667",
+    "Q shared validity gate failed: truncated_unextractable_rate=0.21666666666666667",
+    "E shared validity gate failed: protocol_error_rate=0.03333333333333333",
+    "AFlow D_select round 1 shared validity thresholds exceeded",
+    "AFlow D_select round 5 shared validity thresholds exceeded",
+    "AFlow D_select round 7 shared validity thresholds exceeded",
+    "AFlow D_select round 9 shared validity thresholds exceeded"
+  ],
+  "run_id": "masbench:aflow:robustness:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+  "method": "aflow",
+  "axis": "robustness",
+  "seed": 0,
+  "point_summary": {
+    "Q": {
+      "accuracy": 0.016666666666666666,
+      "correct": 1,
+      "tokens_per_example": 9487.15,
+      "calls": 101,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.7833333333333333,
+      "component_accuracy": 0.09523809523809523,
+      "mean_score_0_1_2": 0.6333333333333333
+    },
+    "E": {
+      "accuracy": 0.016666666666666666,
+      "correct": 1,
+      "tokens_per_example": 11490.6,
+      "calls": 108,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.9666666666666667,
+      "component_accuracy": 0.11904761904761904,
+      "mean_score_0_1_2": 0.7833333333333333
+    }
+  },
+  "checked_at_utc": "2026-10-14T09:22:10.417969+00:00"
+}

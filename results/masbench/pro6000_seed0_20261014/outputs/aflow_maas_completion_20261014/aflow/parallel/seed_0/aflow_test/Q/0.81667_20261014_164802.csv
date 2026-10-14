@@ -1,0 +1,1509 @@
+question,prediction,expected_output,score,cost
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Tech Backpack's Erasable Pen equals 7 more than the sum of each CyberAcademy's Stationery and each International Relations Classroom's Tool Backpack. The number of each Marketing Classroom's Tech Backpack equals each International Relations Classroom's Tool Backpack. The number of each International Relations Classroom's Tool Backpack equals 11. What is the value of Marketing Classroom's Tech Backpack?
+
+Problem 2: The number of each Tech Backpack's Erasable Pen equals 7 more than the sum of each CyberAcademy's Stationery and each International Relations Classroom's Tool Backpack. The number of each CyberScholars's International Relations Classroom equals 17. The number of each International Relations Classroom's Executive Backpack equals 0. The number of each Marketing Classroom's Tech Backpack equals each International Relations Classroom's Tool Backpack. The number of each CyberScholars's Marketing Classroom equals 2. The number of each International Relations Classroom's Tool Backpack equals 11. The number of each Tool Backpack's Brush Pen equals the difference of each International Relations Classroom's Executive Backpack and each Tech Backpack's Erasable Pen. What is the value of Tech Backpack's Stationery?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: ERROR,FINAL ANSWER: 11<<horizon>>18,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Lion's Pelvis equals each Hamstrings's Proerythroblasts. The number of each Hamstrings's Proerythroblasts equals 17 times as much as each Pelvis's Platelets. The number of each Pelvis's Platelets equals 2. What is the value of Hamstrings's Proerythroblasts?
+
+Problem 2: The number of each Hamstrings's Proerythroblasts equals 17 times as much as each Pelvis's Platelets. The number of each Pelvis's Platelets equals 2. What is the value of Pelvis's Cells?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","FINAL ANSWER: [answer1]<<horizon>>[answer2]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer2]<<horizon>>[answer1]<<horizon>>...<<horizon>>...<<horizon>>[answer1]<<horizon>>[answer2]<<horizon>>[answer1]<<horizon>>...
+",FINAL ANSWER: 11<<horizon>>2,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Swan Lake's Canary equals the sum of each Canary's Bone and each Canary's Ulnar Carpal. The number of each Canary's Proximal Phalanx equals 18 more than each Canary's Ulnar Carpal. The number of each Canary's Ulnar Carpal equals 16. The number of each Swan Lake's Owl equals the difference of each Canary's Metacarpal III and each Canary's Ulnar Carpal. The number of each Canary's Metacarpal III equals each Canary's Ulnar Carpal. What is the value of Canary's Metacarpal III?
+
+Problem 2: The number of each Swan Lake's Canary equals the sum of each Canary's Bone and each Canary's Ulnar Carpal. The number of each Canary's Proximal Phalanx equals 18 more than each Canary's Ulnar Carpal. The number of each Canary's Ulnar Carpal equals 16. The number of each Swan Lake's Owl equals the difference of each Canary's Metacarpal III and each Canary's Ulnar Carpal. The number of each Canary's Metacarpal III equals each Canary's Ulnar Carpal. What is the value of Canary's Proximal Phalanx?
+
+Problem 3: The number of each Swan Lake's Dove equals 2 times as much as each Swan Lake's Canary. The number of each Aviary's Dove equals 2 more than the sum of each Swan Lake's Canary, each Owl's Proximal Phalanx and each Aviary's Canary. The number of each Swan Lake's Canary equals the sum of each Canary's Bone and each Canary's Ulnar Carpal. The number of each Canary's Proximal Phalanx equals 18 more than each Canary's Ulnar Carpal. The number of each Canary's Ulnar Carpal equals 16. The number of each Swan Lake's Owl equals the difference of each Canary's Metacarpal III and each Canary's Ulnar Carpal. The number of each Canary's Metacarpal III equals each Canary's Ulnar Carpal. What is the value of Swan Lake's Canary?
+
+Problem 4: The number of each Aviary's Dove equals 2 more than the sum of each Swan Lake's Canary, each Owl's Proximal Phalanx and each Aviary's Canary. The number of each Aviary's Canary equals 7 times as much as each Swan Lake's Animal. What is the value of Aviary's Canary?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 16<<horizon>>11<<horizon>>16<<horizon>>0,FINAL ANSWER: 16<<horizon>>11<<horizon>>13<<horizon>>20,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Piranha Pond's Zebra equals 4. The number of each Seal Pool's Deer equals the sum of each Piranha Pond's Animal, each Piranha Pond's Deer and each Piranha Pond's Zebra. The number of each Seal Pool's Zebra equals 14 more than each Piranha Pond's Zebra. The number of each Piranha Pond's Deer equals 14 times as much as each Piranha Pond's Zebra. The number of each Piranha Pond's Hippopotamus equals 1 times as much as the difference of each Piranha Pond's Zebra and each Piranha Pond's Monkey. What is the value of Piranha Pond's Deer?
+
+Problem 2: The number of each Sealion Show Pool's Deer equals the difference of each Seal Pool's Deer and each Piranha Pond's Animal. The number of each Seal Pool's Hippopotamus equals 7 times as much as each Sealion Show Pool's Deer. What is the value of Sealion Show Pool's Deer?
+
+Problem 3: The number of each Seadragon Deep's Hippopotamus equals each Sealion Show Pool's Monkey. The number of each Seadragon Deep's Deer equals 6 times as much as the difference of each Seal Pool's Monkey and each Sealion Show Pool's Monkey. The number of each Sealion Show Pool's Monkey equals 20 times as much as each Sealion Show Pool's Zebra. What is the value of Sealion Show Pool's Monkey?
+
+Problem 4: The number of each Piranha Pond's Zebra equals 4. The number of each Seal Pool's Deer equals the sum of each Piranha Pond's Animal, each Piranha Pond's Deer and each Piranha Pond's Zebra. The number of each Seal Pool's Zebra equals 14 more than each Piranha Pond's Zebra. The number of each Piranha Pond's Deer equals 14 times as much as each Piranha Pond's Zebra. The number of each Seal Pool's Monkey equals 17 times as much as each Seal Pool's Zebra. The number of each Piranha Pond's Hippopotamus equals 1 times as much as the difference of each Piranha Pond's Zebra and each Piranha Pond's Monkey. What is the value of Seal Pool's Zebra?
+
+Problem 5: The number of each Seadragon Deep's Zebra equals each Piranha Pond's Hippopotamus. What is the value of Seadragon Deep's Zebra?
+
+Problem 6: The number of each Sealion Show Pool's Hippopotamus equals 9 more than each Seadragon Deep's Animal. What is the value of Sealion Show Pool's Hippopotamus?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 10<<horizon>>14<<horizon>>0<<horizon>>18<<horizon>>4<<horizon>>9,FINAL ANSWER: 10<<horizon>>14<<horizon>>17<<horizon>>18<<horizon>>9<<horizon>>22,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Nuts's Kiwi equals 8 more than each Arts District's Instacart. The number of each Peapod's Tortilla Chips equals 10 times as much as the sum of each Restaurant District's GrubMarket, each Arts District's Instacart and each Nuts's Kiwi. The number of each Nuts's Blueberry equals each Restaurant District's Peapod. The number of each Restaurant District's Peapod equals 3 more than each Arts District's Instacart. The number of each GrubMarket's Tortilla Chips equals each Arts District's Instacart. The number of each Nuts's Raspberry equals 5 more than each Arts District's Instacart. The number of each Arts District's Instacart equals 6. What is the value of Restaurant District's Peapod?
+
+Problem 2: The number of each Nuts's Kiwi equals 8 more than each Arts District's Instacart. The number of each Peapod's Tortilla Chips equals 10 times as much as the sum of each Restaurant District's GrubMarket, each Arts District's Instacart and each Nuts's Kiwi. The number of each Restaurant District's Peapod equals 3 more than each Arts District's Instacart. The number of each GrubMarket's Tortilla Chips equals each Arts District's Instacart. The number of each Nuts's Raspberry equals 5 more than each Arts District's Instacart. The number of each Arts District's Instacart equals 6. What is the value of Nuts's Raspberry?
+
+Problem 3: The number of each Nuts's Kiwi equals 8 more than each Arts District's Instacart. The number of each Peapod's Tortilla Chips equals 10 times as much as the sum of each Restaurant District's GrubMarket, each Arts District's Instacart and each Nuts's Kiwi. The number of each Restaurant District's Peapod equals 3 more than each Arts District's Instacart. The number of each GrubMarket's Tortilla Chips equals each Arts District's Instacart. The number of each Nuts's Raspberry equals 5 more than each Arts District's Instacart. The number of each Arts District's Instacart equals 6. The number of each Fashion District's Instacart equals the sum of each Arts District's GrubMarket, each Nuts's Kiwi and each Dried Fruit's Raspberry. What is the value of Nuts's Kiwi?
+
+Problem 4: The number of each Restaurant District's Instacart equals each Nuts's Ingredient. What is the value of Restaurant District's Instacart?
+
+Problem 5: The number of each Dried Fruit's Kiwi equals each Restaurant District's Supermarket. The number of each GrubMarket's Nuts equals 3 more than each Dried Fruit's Kiwi. What is the value of Dried Fruit's Kiwi?
+
+Problem 6: The number of each Nuts's Kiwi equals 8 more than each Arts District's Instacart. The number of each Peapod's Tortilla Chips equals 10 times as much as the sum of each Restaurant District's GrubMarket, each Arts District's Instacart and each Nuts's Kiwi. The number of each Restaurant District's Peapod equals 3 more than each Arts District's Instacart. The number of each GrubMarket's Tortilla Chips equals each Arts District's Instacart. The number of each Nuts's Raspberry equals 5 more than each Arts District's Instacart. The number of each Arts District's Instacart equals 6. What is the value of GrubMarket's Tortilla Chips?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 9<<horizon>>11<<horizon>>14<<horizon>>0<<horizon>>0<<horizon>>6,FINAL ANSWER: 9<<horizon>>11<<horizon>>14<<horizon>>11<<horizon>>6<<horizon>>6,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Shedd Aquarium's Alligator Alley equals 17 more than each Snake Den's Animal. The number of each Alligator Alley's Carp equals 5 more than the sum of each Komodo Dragon Den's Flounder and each Georgia Aquarium's Animal. The number of each Georgia Aquarium's Snake Den equals 3. The number of each Komodo Dragon Den's Flounder equals 22 more than the difference of each Georgia Aquarium's Animal and each Snake Den's Animal. What is the value of Georgia Aquarium's Animal?
+
+Problem 2: The number of each Shedd Aquarium's Komodo Dragon Den equals 7 more than each Komodo Dragon Den's Flounder. What is the value of Shedd Aquarium's Komodo Dragon Den?
+
+Problem 3: The number of each Shedd Aquarium's Alligator Alley equals 17 more than each Snake Den's Animal. The number of each Shedd Aquarium's Komodo Dragon Den equals 7 more than each Komodo Dragon Den's Flounder. The number of each Alligator Alley's Carp equals 5 more than the sum of each Komodo Dragon Den's Flounder and each Georgia Aquarium's Animal. The number of each Georgia Aquarium's Snake Den equals 3. The number of each Komodo Dragon Den's Flounder equals 22 more than the difference of each Georgia Aquarium's Animal and each Snake Den's Animal. What is the value of Alligator Alley's Animal?
+
+Problem 4: The number of each Shedd Aquarium's Alligator Alley equals 17 more than each Snake Den's Animal. The number of each Komodo Dragon Den's Flounder equals 22 more than the difference of each Georgia Aquarium's Animal and each Snake Den's Animal. What is the value of Shedd Aquarium's Alligator Alley?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 0<<horizon>>7<<horizon>>0<<horizon>>17,FINAL ANSWER: 0<<horizon>>6<<horizon>>4<<horizon>>17,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Pinnacle High's Environmental Science Lab equals the sum of each Chemistry Lab's Messenger Backpack and each Multi-Pocket Backpack's Laminating Sheets. The number of each Multi-Pocket Backpack's Correction Tape equals 15. The number of each Multi-Pocket Backpack's Laminating Sheets equals 6 more than each Chemistry Lab's Messenger Backpack. The number of each Messenger Backpack's Correction Fluid equals each Chemistry Lab's Messenger Backpack. The number of each Chemistry Lab's Messenger Backpack equals each Multi-Pocket Backpack's Correction Tape. The number of each Hillcrest High's Geology Lab equals the sum of each Student Rucksack's Correction Fluid and each Multi-Pocket Backpack's Correction Tape. What is the value of Chemistry Lab's Messenger Backpack?
+
+Problem 2: The number of each Hillcrest High's Chemistry Lab equals the difference of each Environmental Science Lab's Student Rucksack and each Harborview High's Geology Lab. The number of each Harborview High's Geology Lab equals each Multi-Pocket Backpack's Stationery. What is the value of Harborview High's Geology Lab?
+
+Problem 3: The number of each Harborview High's Environmental Science Lab equals each Multi-Pocket Backpack's Stationery. The number of each Student Rucksack's Correction Fluid equals 12 more than the sum of each Environmental Science Lab's Messenger Backpack, each Multi-Pocket Backpack's Stationery and each Harborview High's Environmental Science Lab. What is the value of Harborview High's Environmental Science Lab?
+
+Problem 4: The number of each Hillcrest High's Chemistry Lab equals the difference of each Environmental Science Lab's Student Rucksack and each Harborview High's Geology Lab. The number of each Environmental Science Lab's Messenger Backpack equals each Environmental Science Lab's Student Rucksack. The number of each Environmental Science Lab's Student Rucksack equals 22 times as much as each Harborview High's Classroom. What is the value of Environmental Science Lab's Student Rucksack?
+
+Problem 5: The number of each Multi-Pocket Backpack's Correction Tape equals 15. The number of each Chemistry Lab's Messenger Backpack equals each Multi-Pocket Backpack's Correction Tape. The number of each Hillcrest High's Geology Lab equals the sum of each Student Rucksack's Correction Fluid and each Multi-Pocket Backpack's Correction Tape. What is the value of Hillcrest High's Geology Lab?
+
+Problem 6: The number of each Student Rucksack's Laminating Sheets equals 16 times as much as the sum of each Hillcrest High's Classroom and each Hillcrest High's Environmental Science Lab. The number of each Multi-Pocket Backpack's Correction Fluid equals 8. The number of each Hillcrest High's Environmental Science Lab equals 14 times as much as each Multi-Pocket Backpack's Correction Fluid. What is the value of Hillcrest High's Environmental Science Lab?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 15<<horizon>>0<<horizon>>0<<horizon>>0<<horizon>>15<<horizon>>20,FINAL ANSWER: 15<<horizon>>21<<horizon>>21<<horizon>>22<<horizon>>22<<horizon>>20,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Lion's Pectoral Fin Rays equals 16. The number of each Panda's Fin Spines equals 7 more than the sum of each Detroit Zoo's Cricket Chorus, each Panda's Prezygapophyses and each Lion's Pectoral Fin Rays. The number of each Panda's Prezygapophyses equals 7 times as much as each Lion's Pectoral Fin Rays. The number of each Detroit Zoo's Ladybug Loft equals 8 times as much as each Panda's Prezygapophyses. The number of each Detroit Zoo's Cockroach Corner equals each Panda's Prezygapophyses. The number of each Detroit Zoo's Cricket Chorus equals each Lion's Pectoral Fin Rays. What is the value of Panda's Prezygapophyses?
+
+Problem 2: The number of each Lion's Pectoral Fin Rays equals 16. The number of each Panda's Fin Spines equals 7 more than the sum of each Detroit Zoo's Cricket Chorus, each Panda's Prezygapophyses and each Lion's Pectoral Fin Rays. The number of each London Zoo's Cockroach Corner equals each Detroit Zoo's Cricket Chorus. The number of each Panda's Prezygapophyses equals 7 times as much as each Lion's Pectoral Fin Rays. The number of each Lion's Prezygapophyses equals 11 times as much as the sum of each Panda's Fin Spines, each Detroit Zoo's Cricket Chorus and each Detroit Zoo's Cockroach Corner. The number of each Detroit Zoo's Cricket Chorus equals each Lion's Pectoral Fin Rays. What is the value of Detroit Zoo's Cricket Chorus?
+
+Problem 3: The number of each Panda's Pectoral Fin Rays equals each Detroit Zoo's Enclosure. What is the value of Panda's Pectoral Fin Rays?
+
+Problem 4: The number of each Lion's Fin Spines equals each Panda's Bone. What is the value of Lion's Fin Spines?
+
+Problem 5: The number of each London Zoo's Ladybug Loft equals each Lion's Bone. What is the value of London Zoo's Ladybug Loft?
+
+Problem 6: The number of each Cricket Chorus's Lion equals the difference of each London Zoo's Enclosure and each Lion's Bone. The number of each Cricket Chorus's Panda equals each Cricket Chorus's Lion. What is the value of Cricket Chorus's Lion?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 20<<horizon>>16<<horizon>>0<<horizon>>0<<horizon>>0<<horizon>>0,FINAL ANSWER: 20<<horizon>>16<<horizon>>12<<horizon>>22<<horizon>>2<<horizon>>5,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Sports Ball Backpack's Notepad equals 1. The number of each Ventilated Backpack's Notepad equals each Sports Ball Backpack's Notepad. The number of each Ventilated Backpack's Construction Paper equals each Sports Ball Backpack's Notepad. What is the value of Ventilated Backpack's Construction Paper?
+
+Problem 2: The number of each Sports Ball Backpack's Notepad equals 1. The number of each Ventilated Backpack's Notepad equals each Sports Ball Backpack's Notepad. The number of each Ventilated Backpack's Construction Paper equals each Sports Ball Backpack's Notepad. What is the value of Ventilated Backpack's Notepad?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 1<<horizon>>1,FINAL ANSWER: 1<<horizon>>1,2,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Hunting Backpack's Stamp Pad equals 6. The number of each Hunting Backpack's Paperweight equals each Hunting Backpack's Stamp Pad. The number of each Economics Classroom's Hunting Backpack equals each Lumbar Pack's Label Maker. The number of each Lumbar Pack's Label Maker equals 9 times as much as each Hunting Backpack's Stamp Pad. What is the value of Lumbar Pack's Label Maker?
+
+Problem 2: The number of each Hunting Backpack's Stamp Pad equals 6. The number of each Hunting Backpack's Paperweight equals each Hunting Backpack's Stamp Pad. The number of each Lumbar Pack's Label Maker equals 9 times as much as each Hunting Backpack's Stamp Pad. What is the value of Hunting Backpack's Paperweight?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 8<<horizon>>6,FINAL ANSWER: 8<<horizon>>6,2,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Primary School District's Trader Joe's equals 4 times as much as each Vocational School District's Trader Joe's. The number of each Business School Campus's New Seasons Market equals each Vocational School District's Trader Joe's. The number of each Vocational School District's Trader Joe's equals 18. What is the value of Primary School District's Trader Joe's?
+
+Problem 2: The number of each Vocational School District's The Fresh Market equals each Primary School District's Supermarket. What is the value of Vocational School District's The Fresh Market?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 3<<horizon>>0,FINAL ANSWER: 3<<horizon>>15,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Civic Center's Publix equals 10. The number of each Civic Center's Costco equals 20 times as much as each Civic Center's Publix. The number of each Civic Center's Aldi equals each Civic Center's Publix. What is the value of Civic Center's Aldi?
+
+Problem 2: The number of each Consulate District's Publix equals 21 more than each Civic Center's Costco. The number of each Civic Center's Publix equals 10. The number of each Civic Center's Costco equals 20 times as much as each Civic Center's Publix. The number of each Civic Center's Aldi equals each Civic Center's Publix. What is the value of Civic Center's Costco?
+
+Problem 3: The number of each Administrative District's Costco equals each Civic Center's Supermarket. The number of each Consulate District's Aldi equals each Administrative District's Costco. What is the value of Administrative District's Costco?
+
+Problem 4: The number of each Administrative District's Publix equals 9 times as much as each Consulate District's Supermarket. What is the value of Administrative District's Publix?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 10<<horizon>>16<<horizon>>0<<horizon>>0,FINAL ANSWER: 10<<horizon>>16<<horizon>>13<<horizon>>18,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Pons's Myoepithelial Cells equals the sum of each Occipital Lobe's Intercalated Discs and each Cranial Nerves's Myoepithelial Cells. The number of each Occipital Lobe's Intercalated Discs equals 11 more than each Cranial Nerves's Myoepithelial Cells. The number of each Cranial Nerves's Myoepithelial Cells equals 22. The number of each Cranial Nerves's Intercalated Discs equals the sum of each Cranial Nerves's Myoepithelial Cells and each Occipital Lobe's Cells. The number of each Occipital Lobe's Myoepithelial Cells equals 5 more than each Cranial Nerves's Myoepithelial Cells. What is the value of Occipital Lobe's Intercalated Discs?
+
+Problem 2: The number of each Cranial Nerves's Diaphragm Muscle Cells equals each Occipital Lobe's Cells. What is the value of Cranial Nerves's Diaphragm Muscle Cells?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 10<<horizon>>0,FINAL ANSWER: 10<<horizon>>17,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Finch's Caudal Vertebrae 2 equals 13 times as much as the difference of each Sparrow's Bone and each Sparrow's Caudal Vertebrae 10. The number of each Sparrow's Caudal Vertebrae 10 equals 18. What is the value of Sparrow's Bone?
+
+Problem 2: The number of each Finch's Caudal Vertebrae 2 equals 13 times as much as the difference of each Sparrow's Bone and each Sparrow's Caudal Vertebrae 10. The number of each Sparrow's Caudal Vertebrae 10 equals 18. What is the value of Finch's Bone?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: ERROR,FINAL ANSWER: 18<<horizon>>0,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Pike's Cannon Bone equals 20 more than the sum of each Anchovy's Cannon Bone, each Anchovy's Distal Phalanges and each Anchovy's Coffin Bone. The number of each Pike's Distal Phalanges equals the difference of each Anchovy's Bone and each Anchovy's Cannon Bone. The number of each Anchovy's Coffin Bone equals 20 more than each Anchovy's Distal Phalanges. The number of each Anchovy's Distal Phalanges equals 22. The number of each Anchovy's Cannon Bone equals 12 times as much as each Anchovy's Distal Phalanges. What is the value of Anchovy's Cannon Bone?
+
+Problem 2: The number of each Pike's Cannon Bone equals 20 more than the sum of each Anchovy's Cannon Bone, each Anchovy's Distal Phalanges and each Anchovy's Coffin Bone. The number of each Anchovy's Coffin Bone equals 20 more than each Anchovy's Distal Phalanges. The number of each Pike's Coffin Bone equals the sum of each Anchovy's Bone, each Anchovy's Coffin Bone and each Pike's Distal Phalanges. The number of each Anchovy's Distal Phalanges equals 22. The number of each Anchovy's Cannon Bone equals 12 times as much as each Anchovy's Distal Phalanges. What is the value of Anchovy's Coffin Bone?
+
+Problem 3: The number of each Flounder's Distal Phalanges equals each Pike's Bone. What is the value of Flounder's Distal Phalanges?
+
+Problem 4: The number of each Flounder's Cannon Bone equals each Pike's Coffin Bone. What is the value of Flounder's Cannon Bone?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 11<<horizon>>19<<horizon>>0<<horizon>>0,FINAL ANSWER: 11<<horizon>>19<<horizon>>18<<horizon>>20,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Gecko's Metacarpal I equals the sum of each Snake's Ulnar Carpal, each Snake's Metacarpal V and each Lion Exhibit's Frilled Lizard. The number of each Lion Exhibit's Frilled Lizard equals 6. The number of each Snake's Metacarpal V equals each Lion Exhibit's Frilled Lizard. The number of each Frilled Lizard's Metacarpal I equals the difference of each Lion Exhibit's Frilled Lizard and each Gecko's Bone. What is the value of Snake's Metacarpal V?
+
+Problem 2: The number of each Snake's Metacarpal I equals 19 times as much as each Snake's Ulnar Carpal. The number of each Gecko's Metacarpal I equals the sum of each Snake's Ulnar Carpal, each Snake's Metacarpal V and each Lion Exhibit's Frilled Lizard. The number of each Snake's Ulnar Carpal equals 2. The number of each Bat Cave's Frilled Lizard equals each Snake's Ulnar Carpal. What is the value of Snake's Metacarpal I?
+
+Problem 3: The number of each Gecko's Ulnar Carpal equals each Gecko's Metacarpal I. What is the value of Gecko's Ulnar Carpal?
+
+Problem 4: The number of each Gecko's Metacarpal I equals the sum of each Snake's Ulnar Carpal, each Snake's Metacarpal V and each Lion Exhibit's Frilled Lizard. The number of each Lion Exhibit's Frilled Lizard equals 6. The number of each Snake's Metacarpal V equals each Lion Exhibit's Frilled Lizard. The number of each Frilled Lizard's Metacarpal I equals the difference of each Lion Exhibit's Frilled Lizard and each Gecko's Bone. What is the value of Frilled Lizard's Metacarpal I?
+
+Problem 5: The number of each Snake's Metacarpal I equals 19 times as much as each Snake's Ulnar Carpal. The number of each Gecko's Metacarpal I equals the sum of each Snake's Ulnar Carpal, each Snake's Metacarpal V and each Lion Exhibit's Frilled Lizard. The number of each Snake's Ulnar Carpal equals 2. The number of each Bat Cave's Frilled Lizard equals each Snake's Ulnar Carpal. What is the value of Bat Cave's Frilled Lizard?
+
+Problem 6: The number of each Lion Exhibit's Snake equals the sum of each Frilled Lizard's Ulnar Carpal and each Lion Exhibit's Gecko. The number of each Lion Exhibit's Gecko equals each Bat Cave's Bone. The number of each Rhinoceros Pen's Frilled Lizard equals 8 more than each Lion Exhibit's Gecko. What is the value of Lion Exhibit's Gecko?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 6<<horizon>>15<<horizon>>0<<horizon>>6<<horizon>>2<<horizon>>0,FINAL ANSWER: 6<<horizon>>15<<horizon>>14<<horizon>>9<<horizon>>2<<horizon>>16,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Anaconda's Neural Spines equals each Monitor Lizard's Haemal Spines. The number of each Chameleon's Haemal Spines equals the difference of each Anaconda's Proximal Radials and each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Neural Spines equals 19. The number of each Monitor Lizard's Basal Plate equals 2 more than each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Haemal Spines equals each Monitor Lizard's Neural Spines. The number of each Anaconda's Haemal Spines equals each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Proximal Radials equals each Monitor Lizard's Neural Spines. What is the value of Monitor Lizard's Haemal Spines?
+
+Problem 2: The number of each Chameleon's Haemal Spines equals the difference of each Anaconda's Proximal Radials and each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Neural Spines equals 19. The number of each Anaconda's Proximal Radials equals the difference of each Chameleon's Basal Plate and each Monitor Lizard's Basal Plate. The number of each Monitor Lizard's Basal Plate equals 2 more than each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Haemal Spines equals each Monitor Lizard's Neural Spines. The number of each Anaconda's Haemal Spines equals each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Proximal Radials equals each Monitor Lizard's Neural Spines. What is the value of Monitor Lizard's Basal Plate?
+
+Problem 3: The number of each Chameleon's Haemal Spines equals the difference of each Anaconda's Proximal Radials and each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Neural Spines equals 19. The number of each Monitor Lizard's Basal Plate equals 2 more than each Monitor Lizard's Neural Spines. The number of each Gecko's Neural Spines equals 13 times as much as the sum of each Anaconda's Basal Plate, each Gecko's Proximal Radials and each Monitor Lizard's Proximal Radials. The number of each Monitor Lizard's Haemal Spines equals each Monitor Lizard's Neural Spines. The number of each Anaconda's Haemal Spines equals each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Proximal Radials equals each Monitor Lizard's Neural Spines. What is the value of Monitor Lizard's Proximal Radials?
+
+Problem 4: The number of each Chameleon's Haemal Spines equals the difference of each Anaconda's Proximal Radials and each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Neural Spines equals 19. The number of each Monitor Lizard's Basal Plate equals 2 more than each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Haemal Spines equals each Monitor Lizard's Neural Spines. The number of each Anaconda's Haemal Spines equals each Monitor Lizard's Neural Spines. The number of each Monitor Lizard's Proximal Radials equals each Monitor Lizard's Neural Spines. What is the value of Anaconda's Haemal Spines?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 19<<horizon>>21<<horizon>>19<<horizon>>19,FINAL ANSWER: 19<<horizon>>21<<horizon>>19<<horizon>>19,2,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each History Classroom's Insulated Backpack equals 3 more than each Crafting Backpack's Easel. The number of each Insulated Backpack's Ribbon equals 16 times as much as each Crafting Backpack's Easel. The number of each Mountainview College's History Classroom equals the sum of each Insulated Backpack's Easel and each Crafting Backpack's Easel. The number of each Crafting Backpack's Ribbon equals 21. The number of each History Classroom's Crafting Backpack equals 8 times as much as the sum of each Crafting Backpack's Easel and each History Classroom's Insulated Backpack. The number of each Crafting Backpack's Easel equals 18. What is the value of Crafting Backpack's Stationery?
+
+Problem 2: The number of each History Classroom's Insulated Backpack equals 3 more than each Crafting Backpack's Easel. The number of each Insulated Backpack's Easel equals each History Classroom's Insulated Backpack. The number of each Insulated Backpack's Ribbon equals 16 times as much as each Crafting Backpack's Easel. The number of each Mountainview College's History Classroom equals the sum of each Insulated Backpack's Easel and each Crafting Backpack's Easel. The number of each History Classroom's Crafting Backpack equals 8 times as much as the sum of each Crafting Backpack's Easel and each History Classroom's Insulated Backpack. The number of each Crafting Backpack's Easel equals 18. What is the value of History Classroom's Insulated Backpack?
+
+Problem 3: The number of each History Classroom's Insulated Backpack equals 3 more than each Crafting Backpack's Easel. The number of each Insulated Backpack's Ribbon equals 16 times as much as each Crafting Backpack's Easel. The number of each Mountainview College's History Classroom equals the sum of each Insulated Backpack's Easel and each Crafting Backpack's Easel. The number of each History Classroom's Crafting Backpack equals 8 times as much as the sum of each Crafting Backpack's Easel and each History Classroom's Insulated Backpack. The number of each Crafting Backpack's Easel equals 18. What is the value of Insulated Backpack's Ribbon?
+
+Problem 4: The number of each Midtown Community College's History Classroom equals 8 times as much as each Mountainview College's Philosophy Classroom. The number of each Mountainview College's Philosophy Classroom equals 11 more than each History Classroom's Stationery. What is the value of Mountainview College's Philosophy Classroom?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 0<<horizon>>21<<horizon>>12<<horizon>>11,FINAL ANSWER: 16<<horizon>>21<<horizon>>12<<horizon>>15,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Pretzels's Celery equals each Donuts's Mushrooms. The number of each Donuts's Peas equals 19 times as much as the difference of each Pretzels's Ingredient and each Pretzels's Peas. The number of each Pretzels's Mushrooms equals 8 times as much as the sum of each Pretzels's Peas and each Donuts's Mushrooms. The number of each Donuts's Mushrooms equals each Pretzels's Peas. The number of each Pretzels's Peas equals 10. What is the value of Donuts's Mushrooms?
+
+Problem 2: The number of each Rye Bread's Peas equals each Pretzels's Mushrooms. What is the value of Rye Bread's Peas?
+
+Problem 3: The number of each Rye Bread's Celery equals each Donuts's Ingredient. What is the value of Rye Bread's Celery?
+
+Problem 4: The number of each Rye Bread's Mushrooms equals each Donuts's Ingredient. What is the value of Rye Bread's Mushrooms?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: ERROR,FINAL ANSWER: 10<<horizon>>22<<horizon>>3<<horizon>>3,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Price Chopper's Juices equals 12 times as much as the sum of each Juices's Cabbage and each Juices's Kale. The number of each Coffee's Potato equals 11 times as much as the difference of each Price Chopper's Juices and each Juices's Cabbage. The number of each Super Saver's Almond Milk equals 10 more than the difference of each Lidl's Ingredient and each Juices's Ingredient. The number of each Juices's Cabbage equals 18. The number of each Juices's Kale equals 6. The number of each Coffee's Eggplant equals the sum of each Price Chopper's Ingredient and each Juices's Cabbage. What is the value of Juices's Ingredient?
+
+Problem 2: The number of each Lidl's Kombucha equals each Price Chopper's Juices. What is the value of Lidl's Kombucha?
+
+Problem 3: The number of each Lidl's Coffee equals 6 more than each Coffee's Potato. What is the value of Lidl's Coffee?
+
+Problem 4: The number of each Price Chopper's Juices equals 12 times as much as the sum of each Juices's Cabbage and each Juices's Kale. The number of each Coffee's Potato equals 11 times as much as the difference of each Price Chopper's Juices and each Juices's Cabbage. The number of each Super Saver's Almond Milk equals 10 more than the difference of each Lidl's Ingredient and each Juices's Ingredient. The number of each Juices's Cabbage equals 18. The number of each Juices's Kale equals 6. The number of each Lidl's Kombucha equals each Price Chopper's Juices. The number of each Lidl's Coffee equals 6 more than each Coffee's Potato. The number of each Coffee's Eggplant equals the sum of each Price Chopper's Ingredient and each Juices's Cabbage. What is the value of Super Saver's Ingredient?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","FINAL ANSWER: [answer1]<<horizon>>[answer4]<<horizon>>...<<horizon>>...<<horizon>>...<<horizon>>[answer1]<<horizon>>[answer1]
+",FINAL ANSWER: 1<<horizon>>12<<horizon>>9<<horizon>>0,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Computer Engineering Lab's Hunting Backpack equals 4 times as much as the sum of each Differential Equations Classroom's First Aid Backpack, each Algebra Classroom's Toy Backpack and each Robotics Lab's Astronomy Gear Backpack. The number of each Robotics Lab's Astronomy Gear Backpack equals 18 times as much as the difference of each Algebra Classroom's Toy Backpack and each Differential Equations Classroom's Hunting Backpack. The number of each Algebra Classroom's Toy Backpack equals 0 more than each Differential Equations Classroom's Hunting Backpack. The number of each Differential Equations Classroom's Hunting Backpack equals 16. What is the value of Algebra Classroom's Toy Backpack?
+
+Problem 2: The number of each Computer Engineering Lab's Hunting Backpack equals 4 times as much as the sum of each Differential Equations Classroom's First Aid Backpack, each Algebra Classroom's Toy Backpack and each Robotics Lab's Astronomy Gear Backpack. The number of each Robotics Lab's Hunting Backpack equals 14 more than each Differential Equations Classroom's First Aid Backpack. The number of each Differential Equations Classroom's First Aid Backpack equals each Robotics Lab's Astronomy Gear Backpack. What is the value of Differential Equations Classroom's First Aid Backpack?
+
+Problem 3: The number of each Computer Engineering Lab's First Aid Backpack equals 16 times as much as each Computer Engineering Lab's Hunting Backpack. What is the value of Computer Engineering Lab's First Aid Backpack?
+
+Problem 4: The number of each Algebra Classroom's Hunting Backpack equals each Computer Engineering Lab's Backpack. What is the value of Algebra Classroom's Hunting Backpack?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 16<<horizon>>9<<horizon>>0<<horizon>>0,FINAL ANSWER: 16<<horizon>>0<<horizon>>12<<horizon>>13,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Humerus's Transitional Epithelial Cells equals each Humerus's Mesothelial Cells. The number of each Sphinx's Humerus equals 14 more than each Humerus's Mesothelial Cells. The number of each Humerus's Mesothelial Cells equals 15. The number of each Humerus's Glandular Cells equals 4 times as much as each Humerus's Mesothelial Cells. The number of each Sphinx's Wrist Joint equals the sum of each Pegasus's Wrist Joint, each Humerus's Mesothelial Cells and each Humerus's Cells. The number of each Pegasus's Humerus equals 14 more than the sum of each Sphinx's Shoulder Joint and each Humerus's Transitional Epithelial Cells. What is the value of Humerus's Transitional Epithelial Cells?
+
+Problem 2: The number of each Humerus's Transitional Epithelial Cells equals each Humerus's Mesothelial Cells. The number of each Sphinx's Humerus equals 14 more than each Humerus's Mesothelial Cells. The number of each Humerus's Mesothelial Cells equals 15. The number of each Humerus's Glandular Cells equals 4 times as much as each Humerus's Mesothelial Cells. The number of each Pegasus's Wrist Joint equals each Humerus's Glandular Cells. The number of each Sphinx's Wrist Joint equals the sum of each Pegasus's Wrist Joint, each Humerus's Mesothelial Cells and each Humerus's Cells. What is the value of Humerus's Glandular Cells?
+
+Problem 3: The number of each Sphinx's Pelvis equals each Leprechaun's Shoulder Joint. The number of each Leprechaun's Shoulder Joint equals each Humerus's Cells. What is the value of Leprechaun's Shoulder Joint?
+
+Problem 4: The number of each Humerus's Transitional Epithelial Cells equals each Humerus's Mesothelial Cells. The number of each Sphinx's Humerus equals 14 more than each Humerus's Mesothelial Cells. The number of each Humerus's Mesothelial Cells equals 15. The number of each Humerus's Glandular Cells equals 4 times as much as each Humerus's Mesothelial Cells. The number of each Sphinx's Wrist Joint equals the sum of each Pegasus's Wrist Joint, each Humerus's Mesothelial Cells and each Humerus's Cells. What is the value of Sphinx's Humerus?
+
+Problem 5: The number of each Hydra's Pelvis equals the sum of each Pegasus's Shoulder Joint and each Sphinx's Shoulder Joint. The number of each Sphinx's Shoulder Joint equals each Humerus's Cells. The number of each Pegasus's Humerus equals 14 more than the sum of each Sphinx's Shoulder Joint and each Humerus's Transitional Epithelial Cells. What is the value of Sphinx's Shoulder Joint?
+
+Problem 6: The number of each Wrist Joint's Glandular Cells equals each Sphinx's Organs. The number of each Leprechaun's Humerus equals each Wrist Joint's Glandular Cells. The number of each Pegasus's Shoulder Joint equals each Wrist Joint's Glandular Cells. What is the value of Wrist Joint's Glandular Cells?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 15<<horizon>>14<<horizon>>0<<horizon>>6<<horizon>>0<<horizon>>0,FINAL ANSWER: 15<<horizon>>14<<horizon>>21<<horizon>>6<<horizon>>21<<horizon>>6,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Preparatory School District's No Frills equals 21 times as much as the sum of each Fiesta Foods's Cheddar Cheese and each Fiesta Foods's Goat Cheese. The number of each No Frills's Whipped Cream equals 16 times as much as each Fiesta Foods's Cheddar Cheese. The number of each Fiesta Foods's Goat Cheese equals 13 times as much as each Fiesta Foods's Cheddar Cheese. The number of each Fiesta Foods's Cheddar Cheese equals 13. What is the value of Fiesta Foods's Goat Cheese?
+
+Problem 2: The number of each Preparatory School District's No Frills equals 21 times as much as the sum of each Fiesta Foods's Cheddar Cheese and each Fiesta Foods's Goat Cheese. The number of each No Frills's Whipped Cream equals 16 times as much as each Fiesta Foods's Cheddar Cheese. The number of each Fiesta Foods's Goat Cheese equals 13 times as much as each Fiesta Foods's Cheddar Cheese. The number of each Fiesta Foods's Cheddar Cheese equals 13. What is the value of No Frills's Whipped Cream?
+
+Problem 3: The number of each Whipped Cream's Beetroot equals each Preparatory School District's Product. What is the value of Whipped Cream's Beetroot?
+
+Problem 4: The number of each Whipped Cream's Cabbage equals the difference of each Preparatory School District's Fiesta Foods and each Preparatory School District's Product. The number of each Preparatory School District's Fiesta Foods equals 16. What is the value of Whipped Cream's Cabbage?
+
+Problem 5: The number of each Cheddar Cheese's Cabbage equals 15 times as much as each Preparatory School District's Product. What is the value of Cheddar Cheese's Cabbage?
+
+Problem 6: The number of each Community College District's Family Dollar equals 16 times as much as each Medical School Campus's Fiesta Foods. The number of each Medical School Campus's Fiesta Foods equals each Preparatory School District's Ingredient. What is the value of Medical School Campus's Fiesta Foods?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 8<<horizon>>1<<horizon>>0<<horizon>>16<<horizon>>0<<horizon>>0,FINAL ANSWER: 8<<horizon>>1<<horizon>>18<<horizon>>21<<horizon>>17<<horizon>>10,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Silicon Valley's New Grand Mart equals each New Grand Mart's Trail Mix. The number of each Silicon Valley's NetCost Market equals 6 times as much as each New Grand Mart's Trail Mix. The number of each New Grand Mart's Trail Mix equals 4. The number of each Restaurant District's New Grand Mart equals the sum of each New Grand Mart's Candy Bars, each Medical District's Supermarket, each Medical District's New Grand Mart and each Medical District's Product. The number of each NetCost Market's Candy Bars equals the sum of each New Grand Mart's Candy Bars and each Silicon Valley's NetCost Market. The number of each NetCost Market's Trail Mix equals 17 times as much as each New Grand Mart's Candy Bars. The number of each New Grand Mart's Candy Bars equals 18 times as much as each New Grand Mart's Trail Mix. What is the value of New Grand Mart's Candy Bars?
+
+Problem 2: The number of each Silicon Valley's New Grand Mart equals each New Grand Mart's Trail Mix. The number of each Silicon Valley's NetCost Market equals 6 times as much as each New Grand Mart's Trail Mix. The number of each New Grand Mart's Trail Mix equals 4. The number of each NetCost Market's Candy Bars equals the sum of each New Grand Mart's Candy Bars and each Silicon Valley's NetCost Market. The number of each New Grand Mart's Candy Bars equals 18 times as much as each New Grand Mart's Trail Mix. What is the value of Silicon Valley's NetCost Market?
+
+Problem 3: The number of each Silicon Valley's New Grand Mart equals each New Grand Mart's Trail Mix. The number of each Silicon Valley's NetCost Market equals 6 times as much as each New Grand Mart's Trail Mix. The number of each New Grand Mart's Trail Mix equals 4. The number of each New Grand Mart's Candy Bars equals 18 times as much as each New Grand Mart's Trail Mix. What is the value of Silicon Valley's New Grand Mart?
+
+Problem 4: The number of each Restaurant District's New Grand Mart equals the sum of each New Grand Mart's Candy Bars, each Medical District's Supermarket, each Medical District's New Grand Mart and each Medical District's Product. The number of each Medical District's New Grand Mart equals each Silicon Valley's Product. What is the value of Medical District's New Grand Mart?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 3<<horizon>>1<<horizon>>4<<horizon>>0,FINAL ANSWER: 3<<horizon>>1<<horizon>>4<<horizon>>14,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Veldt's Jellyfish equals 5 more than the sum of each Flooded Grassland's Walrus and each Flooded Grassland's Octopus. The number of each Flooded Grassland's Octopus equals 12. The number of each Flooded Grassland's Walrus equals each Flooded Grassland's Octopus. The number of each Veldt's Walrus equals each Flooded Grassland's Octopus. What is the value of Flooded Grassland's Walrus?
+
+Problem 2: The number of each Veldt's Jellyfish equals 5 more than the sum of each Flooded Grassland's Walrus and each Flooded Grassland's Octopus. The number of each Flooded Grassland's Octopus equals 12. The number of each Flooded Grassland's Walrus equals each Flooded Grassland's Octopus. The number of each Veldt's Walrus equals each Flooded Grassland's Octopus. What is the value of Veldt's Walrus?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 12<<horizon>>12,FINAL ANSWER: 12<<horizon>>12,2,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Ileum's Myeloblasts equals each Pylorus's Monocytes. The number of each Pylorus's Monocytes equals 15. The number of each Ileum's Monocytes equals each Pylorus's Monocytes. The number of each Tropical Dry Forest's Kraken equals each Pylorus's Monocytes. The number of each Werewolf's Pylorus equals each Ileum's Myeloblasts. What is the value of Ileum's Myeloblasts?
+
+Problem 2: The number of each Ileum's Myeloblasts equals each Pylorus's Monocytes. The number of each Pylorus's Monocytes equals 15. The number of each Werewolf's Ileum equals the difference of each Ileum's Monocytes and each Werewolf's Pylorus. The number of each Ileum's Monocytes equals each Pylorus's Monocytes. The number of each Tropical Dry Forest's Kraken equals each Pylorus's Monocytes. What is the value of Ileum's Monocytes?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 15<<horizon>>15,FINAL ANSWER: 15<<horizon>>15,2,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Arts District's Sam's Club equals each Tech Park's Supermarket. The number of each Arts District's Costco equals 7 more than each Tech Park's Sam's Club. The number of each Tech Park's Costco equals 1. The number of each Tech Park's Sam's Club equals 19. What is the value of Tech Park's Supermarket?
+
+Problem 2: The number of each Arts District's Costco equals 7 more than each Tech Park's Sam's Club. The number of each Tech Park's Sam's Club equals 19. What is the value of Arts District's Costco?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","FINAL ANSWER: [answer1]<<horizon>>[answer2]<<horizon>>[answer1]<<horizon>>[answer2]<<horizon>>0<<horizon>>3<<horizon>>[answer1]<<horizon>>[answer2]<<horizon>>0<<horizon>>3<<horizon>>0<<horizon>>3<<horizon>>[answer1]<<horizon>>[answer2]<<horizon>>...<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer2]
+",FINAL ANSWER: 20<<horizon>>3,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Sea Turtle's Endothelium equals 16. The number of each Highland Grassland's Sea Turtle equals each Sea Turtle's Endothelium. The number of each Manta Ray's Endothelium equals each Highland Grassland's Sea Turtle. The number of each Subtropical Grassland's Walrus equals 6 more than the sum of each Highland Grassland's Sea Turtle and each Sea Turtle's Endothelium. What is the value of Highland Grassland's Sea Turtle?
+
+Problem 2: The number of each Manta Ray's Arterioles equals the difference of each Highland Grassland's Manta Ray and each Subtropical Grassland's Manta Ray. The number of each Highland Grassland's Manta Ray equals 5 more than each Subtropical Grassland's Walrus. What is the value of Highland Grassland's Manta Ray?
+
+Problem 3: The number of each Highland Grassland's Walrus equals 1. The number of each Manta Ray's Arterioles equals the difference of each Highland Grassland's Manta Ray and each Subtropical Grassland's Manta Ray. The number of each Subtropical Grassland's Manta Ray equals each Highland Grassland's Walrus. The number of each Manta Ray's Capillaries equals each Subtropical Grassland's Manta Ray. What is the value of Subtropical Grassland's Manta Ray?
+
+Problem 4: The number of each Walrus's Capillaries equals 15 times as much as each Walrus's Arterioles. The number of each Walrus's Arterioles equals 9 times as much as each Manta Ray's Organs. What is the value of Walrus's Arterioles?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 16<<horizon>>5<<horizon>>1<<horizon>>0,FINAL ANSWER: 16<<horizon>>20<<horizon>>1<<horizon>>2,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Padded Backpack's Watercolor Paint equals 13 times as much as each Computer Engineering Lab's Organizer Backpack. The number of each Computer Engineering Lab's Organizer Backpack equals 1. What is the value of Padded Backpack's Watercolor Paint?
+
+Problem 2: The number of each Computer Engineering Lab's Padded Backpack equals 16 times as much as each Organizer Backpack's Stationery. The number of each Padded Backpack's Stamp equals each Organizer Backpack's Stationery. What is the value of Padded Backpack's Stamp?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 13<<horizon>>1,FINAL ANSWER: 13<<horizon>>0,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Vulture Valley's Glass Frog equals the difference of each Oklahoma City Zoo and Botanical Garden's Vulture Valley and each Lotherton Hall Bird Garden's Hawk Haven. The number of each Vulture Valley's Salamander equals each Hawk Haven's Glass Frog. The number of each Lotherton Hall Bird Garden's Hawk Haven equals each Hawk Haven's Glass Frog. The number of each Hawk Haven's Glass Frog equals 16. The number of each Lotherton Hall Bird Garden's Vulture Valley equals 1 times as much as each Hawk Haven's Glass Frog. What is the value of Lotherton Hall Bird Garden's Hawk Haven?
+
+Problem 2: The number of each Vulture Valley's Salamander equals each Hawk Haven's Glass Frog. The number of each Lotherton Hall Bird Garden's Hawk Haven equals each Hawk Haven's Glass Frog. The number of each Hawk Haven's Glass Frog equals 16. The number of each Lotherton Hall Bird Garden's Vulture Valley equals 1 times as much as each Hawk Haven's Glass Frog. What is the value of Lotherton Hall Bird Garden's Vulture Valley?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 16<<horizon>>16,FINAL ANSWER: 16<<horizon>>16,2,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Oropharynx's Mesenchymal Cells equals 0. The number of each Oropharynx's Fibroblasts equals 22 times as much as each Oropharynx's Mesenchymal Cells. The number of each Epiglottis's Mesenchymal Cells equals the difference of each Oropharynx's Fibroblasts and each Oropharynx's Cells. The number of each Oropharynx's Osteocytes equals each Oropharynx's Mesenchymal Cells. The number of each Carina's Keratinocytes equals 5 more than each Oropharynx's Mesenchymal Cells. The number of each Vocal Cords's Fibroblasts equals 10 more than each Oropharynx's Mesenchymal Cells. What is the value of Oropharynx's Fibroblasts?
+
+Problem 2: The number of each Oropharynx's Mesenchymal Cells equals 0. The number of each Oropharynx's Fibroblasts equals 22 times as much as each Oropharynx's Mesenchymal Cells. The number of each Carina's Osteocytes equals each Carina's Keratinocytes. The number of each Oropharynx's Osteocytes equals each Oropharynx's Mesenchymal Cells. The number of each Carina's Keratinocytes equals 5 more than each Oropharynx's Mesenchymal Cells. The number of each Vocal Cords's Fibroblasts equals 10 more than each Oropharynx's Mesenchymal Cells. What is the value of Carina's Keratinocytes?
+
+Problem 3: The number of each Oropharynx's Mesenchymal Cells equals 0. The number of each Oropharynx's Fibroblasts equals 22 times as much as each Oropharynx's Mesenchymal Cells. The number of each Oropharynx's Osteocytes equals each Oropharynx's Mesenchymal Cells. The number of each Carina's Keratinocytes equals 5 more than each Oropharynx's Mesenchymal Cells. The number of each Vocal Cords's Fibroblasts equals 10 more than each Oropharynx's Mesenchymal Cells. What is the value of Oropharynx's Osteocytes?
+
+Problem 4: The number of each Oropharynx's Mesenchymal Cells equals 0. The number of each Oropharynx's Fibroblasts equals 22 times as much as each Oropharynx's Mesenchymal Cells. The number of each Oropharynx's Osteocytes equals each Oropharynx's Mesenchymal Cells. The number of each Carina's Keratinocytes equals 5 more than each Oropharynx's Mesenchymal Cells. The number of each Carina's Mesenchymal Cells equals 8 times as much as each Vocal Cords's Fibroblasts. The number of each Vocal Cords's Fibroblasts equals 10 more than each Oropharynx's Mesenchymal Cells. What is the value of Vocal Cords's Fibroblasts?
+
+Problem 5: The number of each Epiglottis's Keratinocytes equals each Vocal Cords's Mesenchymal Cells. What is the value of Epiglottis's Keratinocytes?
+
+Problem 6: The number of each Vocal Cords's Keratinocytes equals each Epiglottis's Cells. The number of each Carina's Fibroblasts equals the sum of each Vocal Cords's Keratinocytes and each Epiglottis's Fibroblasts. What is the value of Vocal Cords's Keratinocytes?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: ERROR,FINAL ANSWER: 0<<horizon>>5<<horizon>>0<<horizon>>10<<horizon>>9<<horizon>>7,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Energy Drinks's Pork equals each Energy Drinks's Pork Chop. The number of each Energy Drinks's Lamb Chop equals each Energy Drinks's Pork Chop. The number of each Carrefour's Oat Milk equals each Energy Drinks's Pork Chop. The number of each Sam's Club's Energy Drinks equals 21 more than the sum of each Meijer's Energy Drinks and each Energy Drinks's Pork Chop. The number of each Energy Drinks's Pork Chop equals 18. The number of each Carrefour's Rice Milk equals 8 times as much as the difference of each Oat Milk's Pork and each Energy Drinks's Pork Chop. What is the value of Energy Drinks's Pork?
+
+Problem 2: The number of each Energy Drinks's Pork equals each Energy Drinks's Pork Chop. The number of each Energy Drinks's Lamb Chop equals each Energy Drinks's Pork Chop. The number of each Carrefour's Oat Milk equals each Energy Drinks's Pork Chop. The number of each Sam's Club's Energy Drinks equals 21 more than the sum of each Meijer's Energy Drinks and each Energy Drinks's Pork Chop. The number of each Energy Drinks's Pork Chop equals 18. The number of each Carrefour's Rice Milk equals 8 times as much as the difference of each Oat Milk's Pork and each Energy Drinks's Pork Chop. What is the value of Energy Drinks's Lamb Chop?
+
+Problem 3: The number of each Rice Milk's Pork equals each Energy Drinks's Ingredient. The number of each International School District's Carrefour equals 14 more than the sum of each Rice Milk's Pork and each Energy Drinks's Ingredient. The number of each Rice Milk's Pork Chop equals 16 times as much as the sum of each Meijer's Energy Drinks and each Sam's Club's Energy Drinks. What is the value of Rice Milk's Pork?
+
+Problem 4: The number of each Rice Milk's Lamb Chop equals 3 more than each International School District's Carrefour. The number of each Sam's Club's Oat Milk equals the sum of each Carrefour's Oat Milk, each Rice Milk's Lamb Chop and each Carrefour's Energy Drinks. The number of each Oat Milk's Pork equals each Rice Milk's Lamb Chop. What is the value of Rice Milk's Lamb Chop?
+
+Problem 5: The number of each Energy Drinks's Pork equals each Energy Drinks's Pork Chop. The number of each Energy Drinks's Lamb Chop equals each Energy Drinks's Pork Chop. The number of each Sam's Club's Oat Milk equals the sum of each Carrefour's Oat Milk, each Rice Milk's Lamb Chop and each Carrefour's Energy Drinks. The number of each Carrefour's Oat Milk equals each Energy Drinks's Pork Chop. The number of each Sam's Club's Energy Drinks equals 21 more than the sum of each Meijer's Energy Drinks and each Energy Drinks's Pork Chop. The number of each Energy Drinks's Pork Chop equals 18. The number of each Carrefour's Rice Milk equals 8 times as much as the difference of each Oat Milk's Pork and each Energy Drinks's Pork Chop. The number of each Sam's Club's Rice Milk equals 4 more than the sum of each Carrefour's Oat Milk and each Carrefour's Energy Drinks. What is the value of Carrefour's Oat Milk?
+
+Problem 6: The number of each Meijer's Energy Drinks equals each Carrefour's Product. The number of each Rice Milk's Pork Chop equals 16 times as much as the sum of each Meijer's Energy Drinks and each Sam's Club's Energy Drinks. The number of each Sam's Club's Energy Drinks equals 21 more than the sum of each Meijer's Energy Drinks and each Energy Drinks's Pork Chop. What is the value of Meijer's Energy Drinks?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}","FINAL ANSWER: [answer1]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer2]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer1]
+",FINAL ANSWER: 18<<horizon>>18<<horizon>>8<<horizon>>10<<horizon>>18<<horizon>>3,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Public Administration Classroom's Briefcase Backpack equals 16 times as much as the sum of each Marketing Classroom's Backpack and each Marketing Classroom's Presentation Backpack. The number of each Marketing Classroom's Presentation Backpack equals 3. The number of each Public Administration Classroom's Office Backpack equals each Marketing Classroom's Presentation Backpack. The number of each Criminology Classroom's Office Backpack equals 10 times as much as the sum of each Public Administration Classroom's Backpack, each Marketing Classroom's Backpack and each Public Administration Classroom's Briefcase Backpack. The number of each Public Administration Classroom's Presentation Backpack equals 19 times as much as the sum of each Public Administration Classroom's Office Backpack and each Marketing Classroom's Backpack. What is the value of Marketing Classroom's Backpack?
+
+Problem 2: The number of each Public Administration Classroom's Briefcase Backpack equals 16 times as much as the sum of each Marketing Classroom's Backpack and each Marketing Classroom's Presentation Backpack. The number of each Marketing Classroom's Presentation Backpack equals 3. The number of each Public Administration Classroom's Office Backpack equals each Marketing Classroom's Presentation Backpack. The number of each Public Administration Classroom's Presentation Backpack equals 19 times as much as the sum of each Public Administration Classroom's Office Backpack and each Marketing Classroom's Backpack. What is the value of Public Administration Classroom's Office Backpack?
+
+Problem 3: The number of each Human Development Classroom's Business Daypack equals 0 more than the sum of each Criminology Classroom's Backpack, each Public Administration Classroom's Briefcase Backpack and each Public Administration Classroom's Presentation Backpack. What is the value of Criminology Classroom's Backpack?
+
+Problem 4: The number of each Public Administration Classroom's Briefcase Backpack equals 16 times as much as the sum of each Marketing Classroom's Backpack and each Marketing Classroom's Presentation Backpack. The number of each Marketing Classroom's Presentation Backpack equals 3. The number of each Public Administration Classroom's Office Backpack equals each Marketing Classroom's Presentation Backpack. The number of each Human Development Classroom's Business Daypack equals 0 more than the sum of each Criminology Classroom's Backpack, each Public Administration Classroom's Briefcase Backpack and each Public Administration Classroom's Presentation Backpack. The number of each Criminology Classroom's Office Backpack equals 10 times as much as the sum of each Public Administration Classroom's Backpack, each Marketing Classroom's Backpack and each Public Administration Classroom's Briefcase Backpack. The number of each Public Administration Classroom's Presentation Backpack equals 19 times as much as the sum of each Public Administration Classroom's Office Backpack and each Marketing Classroom's Backpack. What is the value of Human Development Classroom's Backpack?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","FINAL ANSWER: [answer1]<<horizon>>[answer2]<<horizon>>[answer3]<<horizon>>[answer4]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>[answer2]<<horizon>>[answer1]
+",FINAL ANSWER: 3<<horizon>>3<<horizon>>15<<horizon>>18,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Capitol District's Google Express equals 21. The number of each Administrative District's Instacart equals 22 more than the sum of each Instacart's Pretzels and each Capitol District's Google Express. The number of each Instacart's Pretzels equals each Capitol District's Google Express. What is the value of Instacart's Pretzels?
+
+Problem 2: The number of each Google Express's Pretzels equals 22 more than each Administrative District's Instacart. What is the value of Google Express's Pretzels?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 21<<horizon>>18,FINAL ANSWER: 21<<horizon>>17,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Freshwater Lake's Bat equals each Duodenum's Mesothelial Cells. The number of each Cardia's Mucous Cells equals each Bat's Duodenum. The number of each Bat's Anus equals 22 times as much as each Duodenum's Mesothelial Cells. The number of each Vulture's Cardia equals each Duodenum's Mesothelial Cells. The number of each Arctic Ocean's Bat equals the sum of each Bat's Duodenum and each Cardia's Mucous Cells. The number of each Bat's Duodenum equals 21 times as much as each Duodenum's Mesothelial Cells. The number of each Anus's Mucous Cells equals the sum of each Duodenum's Mesothelial Cells and each Arctic Ocean's Bat. The number of each Duodenum's Mesothelial Cells equals 4. The number of each Duodenum's Serous Cells equals each Duodenum's Mesothelial Cells. What is the value of Bat's Duodenum?
+
+Problem 2: The number of each Cardia's Mesothelial Cells equals the difference of each Freshwater Lake's Bat and each Bat's Anus. The number of each Freshwater Lake's Bat equals each Duodenum's Mesothelial Cells. The number of each Bat's Anus equals 22 times as much as each Duodenum's Mesothelial Cells. The number of each Vulture's Cardia equals each Duodenum's Mesothelial Cells. The number of each Bat's Duodenum equals 21 times as much as each Duodenum's Mesothelial Cells. The number of each Anus's Mucous Cells equals the sum of each Duodenum's Mesothelial Cells and each Arctic Ocean's Bat. The number of each Duodenum's Mesothelial Cells equals 4. The number of each Duodenum's Serous Cells equals each Duodenum's Mesothelial Cells. The number of each Freshwater Lake's Vulture equals the sum of each Bat's Anus, each Anus's Mucous Cells and each Arctic Ocean's Bat. What is the value of Bat's Anus?
+
+Problem 3: The number of each Freshwater Lake's Bat equals each Duodenum's Mesothelial Cells. The number of each Bat's Anus equals 22 times as much as each Duodenum's Mesothelial Cells. The number of each Vulture's Cardia equals each Duodenum's Mesothelial Cells. The number of each Bat's Duodenum equals 21 times as much as each Duodenum's Mesothelial Cells. The number of each Bat's Cardia equals the sum of each Anus's Mesothelial Cells and each Duodenum's Serous Cells. The number of each Anus's Mucous Cells equals the sum of each Duodenum's Mesothelial Cells and each Arctic Ocean's Bat. The number of each Duodenum's Mesothelial Cells equals 4. The number of each Duodenum's Serous Cells equals each Duodenum's Mesothelial Cells. What is the value of Duodenum's Serous Cells?
+
+Problem 4: The number of each Cardia's Mesothelial Cells equals the difference of each Freshwater Lake's Bat and each Bat's Anus. The number of each Freshwater Lake's Bat equals each Duodenum's Mesothelial Cells. The number of each Bat's Anus equals 22 times as much as each Duodenum's Mesothelial Cells. The number of each Vulture's Cardia equals each Duodenum's Mesothelial Cells. The number of each Bat's Duodenum equals 21 times as much as each Duodenum's Mesothelial Cells. The number of each Anus's Mucous Cells equals the sum of each Duodenum's Mesothelial Cells and each Arctic Ocean's Bat. The number of each Duodenum's Mesothelial Cells equals 4. The number of each Duodenum's Serous Cells equals each Duodenum's Mesothelial Cells. What is the value of Freshwater Lake's Bat?
+
+Problem 5: The number of each Anus's Mesothelial Cells equals each Freshwater Lake's Vulture. The number of each Bat's Cardia equals the sum of each Anus's Mesothelial Cells and each Duodenum's Serous Cells. What is the value of Anus's Mesothelial Cells?
+
+Problem 6: The number of each Freshwater Lake's Bat equals each Duodenum's Mesothelial Cells. The number of each Bat's Anus equals 22 times as much as each Duodenum's Mesothelial Cells. The number of each Vulture's Cardia equals each Duodenum's Mesothelial Cells. The number of each Arctic Ocean's Vulture equals 21 times as much as each Vulture's Cardia. The number of each Bat's Duodenum equals 21 times as much as each Duodenum's Mesothelial Cells. The number of each Anus's Mucous Cells equals the sum of each Duodenum's Mesothelial Cells and each Arctic Ocean's Bat. The number of each Duodenum's Mesothelial Cells equals 4. The number of each Duodenum's Serous Cells equals each Duodenum's Mesothelial Cells. What is the value of Vulture's Cardia?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}","FINAL ANSWER: [answer1]<<horizon>>[answer1]<<horizon>>[answer2]<<horizon>>...<<horizon>>...<<horizon>>[answer1]<<horizon>>[answer2]<<horizon>>...<<horizon>>[answer1]
+",FINAL ANSWER: 15<<horizon>>19<<horizon>>4<<horizon>>4<<horizon>>14<<horizon>>4,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Peacock Garden's Frog equals 22 times as much as the difference of each Peacock Garden's Toad and each Peacock Garden's Glass Frog. The number of each Macaw Island's Glass Frog equals the difference of each Pheasant Pen's Toad and each Peacock Garden's Glass Frog. The number of each Penguin Exhibit's Hellbender equals 11 more than the sum of each Peacock Garden's Toad and each Peacock Garden's Hellbender. The number of each Peacock Garden's Toad equals 2 more than each Peacock Garden's Glass Frog. The number of each Peacock Garden's Glass Frog equals 4. The number of each Penguin Exhibit's Frog equals the sum of each Peacock Garden's Animal, each Peacock Garden's Glass Frog and each Peacock Garden's Frog. The number of each Peacock Garden's Hellbender equals each Peacock Garden's Toad. What is the value of Peacock Garden's Toad?
+
+Problem 2: The number of each Pheasant Pen's Glass Frog equals each Penguin Exhibit's Animal. What is the value of Pheasant Pen's Glass Frog?
+
+Problem 3: The number of each Macaw Island's Glass Frog equals the difference of each Pheasant Pen's Toad and each Peacock Garden's Glass Frog. The number of each Pheasant Pen's Hellbender equals each Pheasant Pen's Toad. The number of each Pheasant Pen's Toad equals 1 more than each Penguin Exhibit's Animal. What is the value of Pheasant Pen's Toad?
+
+Problem 4: The number of each Penguin Exhibit's Glass Frog equals 9. The number of each Pheasant Pen's Frog equals the sum of each Penguin Exhibit's Glass Frog and each Peacock Garden's Animal. What is the value of Pheasant Pen's Frog?
+
+Problem 5: The number of each Macaw Island's Toad equals each Macaw Island's Hellbender. The number of each Macaw Island's Hellbender equals each Pheasant Pen's Animal. What is the value of Macaw Island's Hellbender?
+
+Problem 6: The number of each Macaw Island's Frog equals each Penguin Exhibit's Hellbender. What is the value of Macaw Island's Frog?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 6<<horizon>>0<<horizon>>1<<horizon>>9<<horizon>>0<<horizon>>0,FINAL ANSWER: 6<<horizon>>2<<horizon>>3<<horizon>>0<<horizon>>8<<horizon>>0,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Basilisk's Cardia equals 7 more than each Basilisk's Sigmoid Colon. The number of each Chimera's Cardia equals the sum of each Mermaid's Appendix, each Basilisk's Organs and each Basilisk's Sigmoid Colon. The number of each Basilisk's Sigmoid Colon equals 15. The number of each Hydra's Jejunum equals 22 more than each Basilisk's Sigmoid Colon. What is the value of Basilisk's Cardia?
+
+Problem 2: The number of each Chimera's Cardia equals the sum of each Mermaid's Appendix, each Basilisk's Organs and each Basilisk's Sigmoid Colon. The number of each Mermaid's Appendix equals each Basilisk's Organs. What is the value of Mermaid's Appendix?
+
+Problem 3: The number of each Mermaid's Sigmoid Colon equals 8 times as much as each Chimera's Cardia. The number of each Hydra's Appendix equals each Mermaid's Sigmoid Colon. What is the value of Mermaid's Sigmoid Colon?
+
+Problem 4: The number of each Basilisk's Cardia equals 7 more than each Basilisk's Sigmoid Colon. The number of each Chimera's Cardia equals the sum of each Mermaid's Appendix, each Basilisk's Organs and each Basilisk's Sigmoid Colon. The number of each Basilisk's Sigmoid Colon equals 15. The number of each Hydra's Jejunum equals 22 more than each Basilisk's Sigmoid Colon. What is the value of Hydra's Jejunum?
+
+Problem 5: The number of each Hydra's Sigmoid Colon equals each Chimera's Appendix. What is the value of Hydra's Sigmoid Colon?
+
+Problem 6: The number of each Mermaid's Jejunum equals each Chimera's Jejunum. What is the value of Mermaid's Jejunum?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 22<<horizon>>0<<horizon>>0<<horizon>>14<<horizon>>0<<horizon>>0,FINAL ANSWER: 22<<horizon>>17<<horizon>>1<<horizon>>14<<horizon>>7<<horizon>>2,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Trout's Primary Feathers equals 4. The number of each Trout's Humerus equals 0. The number of each Bass's Primary Feathers equals 1 times as much as the sum of each Trout's Bone, each Trout's Primary Feathers and each Trout's Humerus. What is the value of Trout's Bone?
+
+Problem 2: The number of each Trout's Primary Feathers equals 4. The number of each Trout's Humerus equals 0. The number of each Bass's Primary Feathers equals 1 times as much as the sum of each Trout's Bone, each Trout's Primary Feathers and each Trout's Humerus. What is the value of Bass's Bone?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 19<<horizon>>0,FINAL ANSWER: 4<<horizon>>8,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Meadowbrook Primary's Criminology Classroom equals 0. The number of each Meadowbrook Primary's Economics Classroom equals 17. The number of each River Valley Elementary's Economics Classroom equals 9 more than the sum of each Meadowbrook Primary's Classroom, each Meadowbrook Primary's Criminology Classroom and each Meadowbrook Primary's Economics Classroom. The number of each River Valley Elementary's Criminology Classroom equals 22 times as much as the sum of each Meadowbrook Primary's Economics Classroom, each Meadowbrook Primary's Classroom and each Meadowbrook Primary's Criminology Classroom. What is the value of Meadowbrook Primary's Classroom?
+
+Problem 2: The number of each Meadowbrook Primary's Criminology Classroom equals 0. The number of each Meadowbrook Primary's Economics Classroom equals 17. The number of each River Valley Elementary's Economics Classroom equals 9 more than the sum of each Meadowbrook Primary's Classroom, each Meadowbrook Primary's Criminology Classroom and each Meadowbrook Primary's Economics Classroom. The number of each River Valley Elementary's Criminology Classroom equals 22 times as much as the sum of each Meadowbrook Primary's Economics Classroom, each Meadowbrook Primary's Classroom and each Meadowbrook Primary's Criminology Classroom. What is the value of River Valley Elementary's Classroom?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: ERROR,FINAL ANSWER: 17<<horizon>>9,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Armadillo's Humerus equals 6 more than each Wolf's Humerus. The number of each Central Park in New York City's Grizzly Bear equals 0. The number of each Armadillo's Deltoid equals 2 times as much as each Central Park in New York City's Grizzly Bear. The number of each Wolf's Humerus equals 4 times as much as each Central Park in New York City's Grizzly Bear. The number of each Ibirapuera Park in São Paulo's Grizzly Bear equals 10 times as much as the sum of each Armadillo's Deltoid and each Wolf's Humerus. What is the value of Wolf's Humerus?
+
+Problem 2: The number of each Central Park in New York City's Grizzly Bear equals 0. The number of each Armadillo's Deltoid equals 2 times as much as each Central Park in New York City's Grizzly Bear. The number of each Wolf's Humerus equals 4 times as much as each Central Park in New York City's Grizzly Bear. The number of each Ibirapuera Park in São Paulo's Grizzly Bear equals 10 times as much as the sum of each Armadillo's Deltoid and each Wolf's Humerus. What is the value of Armadillo's Deltoid?
+
+Problem 3: The number of each Grizzly Bear's Deltoid equals 15. The number of each Wolf's Deltoid equals the sum of each Ibirapuera Park in São Paulo's Grizzly Bear and each Grizzly Bear's Organs. What is the value of Grizzly Bear's Organs?
+
+Problem 4: The number of each Central Park in New York City's Wolf equals each Wolf's Knee Joint. The number of each Wolf's Knee Joint equals 4 more than each Ibirapuera Park in São Paulo's Organs. What is the value of Wolf's Knee Joint?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 0<<horizon>>0<<horizon>>0<<horizon>>4,FINAL ANSWER: 0<<horizon>>0<<horizon>>15<<horizon>>20,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Shoe Compartment Backpack's Binder Paper equals 2 times as much as the difference of each Golf Backpack's Stationery and each Golf Backpack's Journal. The number of each Surfing Backpack's Diary equals 13 times as much as the difference of each Shoe Compartment Backpack's Stationery and each Golf Backpack's Journal. The number of each Golf Backpack's Journal equals 16. The number of each Hydration Backpack's Journal equals 22 more than the sum of each Surfing Backpack's Stationery, each Shoe Compartment Backpack's Binder Paper and each Golf Backpack's Journal. What is the value of Golf Backpack's Stationery?
+
+Problem 2: The number of each Surfing Backpack's Diary equals 13 times as much as the difference of each Shoe Compartment Backpack's Stationery and each Golf Backpack's Journal. What is the value of Shoe Compartment Backpack's Stationery?
+
+Problem 3: The number of each Hydration Backpack's Journal equals 22 more than the sum of each Surfing Backpack's Stationery, each Shoe Compartment Backpack's Binder Paper and each Golf Backpack's Journal. What is the value of Surfing Backpack's Stationery?
+
+Problem 4: The number of each Shoe Compartment Backpack's Binder Paper equals 2 times as much as the difference of each Golf Backpack's Stationery and each Golf Backpack's Journal. The number of each Surfing Backpack's Diary equals 13 times as much as the difference of each Shoe Compartment Backpack's Stationery and each Golf Backpack's Journal. The number of each Golf Backpack's Journal equals 16. The number of each Hydration Backpack's Journal equals 22 more than the sum of each Surfing Backpack's Stationery, each Shoe Compartment Backpack's Binder Paper and each Golf Backpack's Journal. What is the value of Hydration Backpack's Stationery?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: ERROR,FINAL ANSWER: 16<<horizon>>0<<horizon>>22<<horizon>>14,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Kangaroo's Cardiac Muscle equals 2 more than each Armadillo's Pulmonary Arteries. The number of each Rhinoceros's Cardiac Muscle equals 9 times as much as the sum of each Kangaroo's Cardiac Muscle and each Armadillo's Pulmonary Arteries. The number of each Cardiac Muscle's Basal Cells equals 17 more than the sum of each Kangaroo's Pulmonary Arteries, each Kangaroo's Cardiac Muscle and each Rhinoceros's Cardiac Muscle. The number of each Armadillo's Pulmonary Arteries equals 18. The number of each Grizzly Bear's Heart equals the difference of each Cardiac Muscle's Basal Cells and each Armadillo's Pulmonary Arteries. What is the value of Kangaroo's Cardiac Muscle?
+
+Problem 2: The number of each Kangaroo's Pulmonary Arteries equals each Rhinoceros's Cardiac Muscle. The number of each Cardiac Muscle's Basal Cells equals 17 more than the sum of each Kangaroo's Pulmonary Arteries, each Kangaroo's Cardiac Muscle and each Rhinoceros's Cardiac Muscle. What is the value of Kangaroo's Pulmonary Arteries?
+
+Problem 3: The number of each Heart's Basal Cells equals the sum of each Pulmonary Arteries's Cells, each Pulmonary Arteries's Basal Cells and each Rhinoceros's Cardiac Muscle. The number of each Pulmonary Arteries's Basal Cells equals each Cardiac Muscle's Basal Cells. What is the value of Pulmonary Arteries's Basal Cells?
+
+Problem 4: The number of each Grizzly Bear's Cardiac Muscle equals the sum of each Heart's Cells, each Pulmonary Arteries's Cells and each Cardiac Muscle's Basal Cells. What is the value of Heart's Cells?
+
+Problem 5: The number of each Kangaroo's Cardiac Muscle equals 2 more than each Armadillo's Pulmonary Arteries. The number of each Rhinoceros's Cardiac Muscle equals 9 times as much as the sum of each Kangaroo's Cardiac Muscle and each Armadillo's Pulmonary Arteries. The number of each Armadillo's Pulmonary Arteries equals 18. The number of each Grizzly Bear's Heart equals the difference of each Cardiac Muscle's Basal Cells and each Armadillo's Pulmonary Arteries. What is the value of Grizzly Bear's Heart?
+
+Problem 6: The number of each Cardiac Muscle's Mesothelial Cells equals each Grizzly Bear's Organs. What is the value of Cardiac Muscle's Mesothelial Cells?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 20<<horizon>>0<<horizon>>0<<horizon>>0<<horizon>>16<<horizon>>0,FINAL ANSWER: 20<<horizon>>20<<horizon>>8<<horizon>>4<<horizon>>13<<horizon>>17,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each WebEd Institute's Chemistry Lab equals 12 more than the difference of each NetLearn Institute's Astronomy Lab and each Astronomy Lab's Sweat-Resistant Backpack. The number of each NetLearn Institute's Astronomy Lab equals each NetLearn Institute's Earth Science Lab. The number of each NetLearn Institute's Earth Science Lab equals 16. The number of each Climbing Backpack's Loose Leaf Paper equals each NetLearn Institute's Earth Science Lab. The number of each Astronomy Lab's Climbing Backpack equals 8 more than the sum of each NetLearn Institute's Astronomy Lab and each NetLearn Institute's Earth Science Lab. The number of each Sweat-Resistant Backpack's Loose Leaf Paper equals 2 more than the sum of each Astronomy Lab's Sweat-Resistant Backpack and each NetLearn Institute's Earth Science Lab. What is the value of NetLearn Institute's Astronomy Lab?
+
+Problem 2: The number of each WebEd Institute's Chemistry Lab equals 12 more than the difference of each NetLearn Institute's Astronomy Lab and each Astronomy Lab's Sweat-Resistant Backpack. The number of each Astronomy Lab's Sweat-Resistant Backpack equals 11 more than each Astronomy Lab's Climbing Backpack. The number of each Sweat-Resistant Backpack's Loose Leaf Paper equals 2 more than the sum of each Astronomy Lab's Sweat-Resistant Backpack and each NetLearn Institute's Earth Science Lab. What is the value of Astronomy Lab's Sweat-Resistant Backpack?
+
+Problem 3: The number of each Chemistry Lab's Climbing Backpack equals 17 more than the sum of each Shoe Compartment Backpack's Stationery and each Shoe Compartment Backpack's Craft Paper. The number of each Shoe Compartment Backpack's Craft Paper equals each Sweat-Resistant Backpack's Loose Leaf Paper. The number of each WebEd Institute's Earth Science Lab equals the sum of each Chemistry Lab's Backpack, each Shoe Compartment Backpack's Craft Paper and each Astronomy Lab's Climbing Backpack. What is the value of Shoe Compartment Backpack's Craft Paper?
+
+Problem 4: The number of each NetLearn Institute's Astronomy Lab equals each NetLearn Institute's Earth Science Lab. The number of each NetLearn Institute's Earth Science Lab equals 16. The number of each Climbing Backpack's Loose Leaf Paper equals each NetLearn Institute's Earth Science Lab. The number of each Astronomy Lab's Climbing Backpack equals 8 more than the sum of each NetLearn Institute's Astronomy Lab and each NetLearn Institute's Earth Science Lab. The number of each Sweat-Resistant Backpack's Loose Leaf Paper equals 2 more than the sum of each Astronomy Lab's Sweat-Resistant Backpack and each NetLearn Institute's Earth Science Lab. What is the value of Climbing Backpack's Loose Leaf Paper?
+
+Problem 5: The number of each Climbing Backpack's Binder Paper equals each Earth Science Lab's Shoe Compartment Backpack. The number of each Earth Science Lab's Shoe Compartment Backpack equals 11. What is the value of Climbing Backpack's Binder Paper?
+
+Problem 6: The number of each Sweat-Resistant Backpack's Craft Paper equals each WebEd Institute's Classroom. What is the value of Sweat-Resistant Backpack's Craft Paper?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}","FINAL ANSWER: [answer1]<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>16<<horizon>>11<<horizon>>0<<horizon>>16<<horizon>>11<<horizon>>0<<horizon>>[answer1]<<horizon>>[answer1]<<horizon>>...<<horizon>>16<<horizon>>11<<horizon>>[answer1]<<horizon>>16<<horizon>>11
+",FINAL ANSWER: 16<<horizon>>5<<horizon>>0<<horizon>>16<<horizon>>11<<horizon>>10,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Tree Frog's Carpometacarpus equals 5 more than each Zoo Zürich's Cricket Chorus. The number of each Calgary Zoo's Snail Shellter equals 6 more than each Zoo Zürich's Cricket Chorus. The number of each Newt's Carpometacarpus equals 0 more than the sum of each Calgary Zoo's Snail Shellter and each Zoo Zürich's Cricket Chorus. The number of each Zoo Zürich's Cricket Chorus equals 9. The number of each Zoo Miami's Snail Shellter equals 2 times as much as the sum of each Newt's Carpometacarpus and each Calgary Zoo's Snail Shellter. The number of each Newt's Metacarpals equals the sum of each Tree Frog's Carpometacarpus, each Newt's Carpometacarpus and each Calgary Zoo's Snail Shellter. What is the value of Calgary Zoo's Snail Shellter?
+
+Problem 2: The number of each Snail Shellter's Fire Salamander equals each Zoo Miami's Snail Shellter. What is the value of Snail Shellter's Fire Salamander?
+
+Problem 3: The number of each Tree Frog's Carpometacarpus equals 5 more than each Zoo Zürich's Cricket Chorus. The number of each Calgary Zoo's Snail Shellter equals 6 more than each Zoo Zürich's Cricket Chorus. The number of each Newt's Carpometacarpus equals 0 more than the sum of each Calgary Zoo's Snail Shellter and each Zoo Zürich's Cricket Chorus. The number of each Zoo Zürich's Cricket Chorus equals 9. The number of each Newt's Metacarpals equals the sum of each Tree Frog's Carpometacarpus, each Newt's Carpometacarpus and each Calgary Zoo's Snail Shellter. What is the value of Tree Frog's Carpometacarpus?
+
+Problem 4: The number of each Snail Shellter's Newt equals each Fire Salamander's Radius. The number of each Fire Salamander's Radius equals each Newt's Metacarpals. The number of each Fire Salamander's Carpometacarpus equals 11 more than each Fire Salamander's Radius. What is the value of Fire Salamander's Radius?
+
+Problem 5: The number of each Zoo Zürich's Snail Shellter equals 12. The number of each Fire Salamander's Primary Feathers equals 15 more than each Zoo Zürich's Snail Shellter. What is the value of Fire Salamander's Primary Feathers?
+
+Problem 6: The number of each Stick Insect Forest's Tree Frog equals each Stick Insect Forest's Newt. The number of each Stick Insect Forest's Newt equals 9 more than each Zoo Zürich's Bone. What is the value of Stick Insect Forest's Newt?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 15<<horizon>>9<<horizon>>14<<horizon>>7<<horizon>>4<<horizon>>9,FINAL ANSWER: 15<<horizon>>9<<horizon>>14<<horizon>>7<<horizon>>4<<horizon>>21,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Warehouse District's Whole Foods Market equals the sum of each Business District's Supermarket, each Automotive District's Trader Joe's and each Business District's Trader Joe's. The number of each Business District's Whole Foods Market equals 7 more than the difference of each Business District's Fresh Thyme Market and each Business District's Trader Joe's. The number of each Business District's Fresh Thyme Market equals 14. The number of each Business District's Trader Joe's equals each Business District's Fresh Thyme Market. The number of each Automotive District's Whole Foods Market equals 4 times as much as each Business District's Fresh Thyme Market. What is the value of Business District's Trader Joe's?
+
+Problem 2: The number of each Warehouse District's Whole Foods Market equals the sum of each Business District's Supermarket, each Automotive District's Trader Joe's and each Business District's Trader Joe's. The number of each Automotive District's Trader Joe's equals 12 times as much as each Business District's Supermarket. The number of each Warehouse District's Fresh Thyme Market equals 5 more than the sum of each Automotive District's Supermarket and each Automotive District's Trader Joe's. What is the value of Automotive District's Trader Joe's?
+
+Problem 3: The number of each Automotive District's Fresh Thyme Market equals 11 times as much as each Business District's Whole Foods Market. What is the value of Automotive District's Fresh Thyme Market?
+
+Problem 4: The number of each Warehouse District's Trader Joe's equals 1 times as much as each Automotive District's Whole Foods Market. The number of each Business District's Whole Foods Market equals 7 more than the difference of each Business District's Fresh Thyme Market and each Business District's Trader Joe's. The number of each Business District's Fresh Thyme Market equals 14. The number of each Business District's Trader Joe's equals each Business District's Fresh Thyme Market. The number of each Automotive District's Whole Foods Market equals 4 times as much as each Business District's Fresh Thyme Market. What is the value of Automotive District's Whole Foods Market?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: ERROR,FINAL ANSWER: 14<<horizon>>6<<horizon>>8<<horizon>>10,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Diaphragm's Ciliated Epithelial Cells equals 16 times as much as the sum of each Panda's Organs and each Panda's Diaphragm. The number of each Patagonian Desert's Panda equals 13 more than each Panda's Diaphragm. The number of each Panda's Diaphragm equals 12. What is the value of Panda's Organs?
+
+Problem 2: The number of each Pleura's Alveolar Epithelial Cells equals each Diaphragm's Ciliated Epithelial Cells. What is the value of Pleura's Alveolar Epithelial Cells?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","FINAL ANSWER: [answer1]<<horizon>>[answer2]
+",FINAL ANSWER: 12<<horizon>>16,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Starfish's Jejunum equals each Blue Whale's Sigmoid Colon. The number of each Subtropical Grassland's Great White Shark equals 22 times as much as each Blue Whale's Sigmoid Colon. The number of each Blue Whale's Sigmoid Colon equals 9. The number of each Alpine Grassland's Great White Shark equals each Blue Whale's Sigmoid Colon. The number of each Starfish's Sigmoid Colon equals 7 more than each Subtropical Grassland's Great White Shark. What is the value of Subtropical Grassland's Great White Shark?
+
+Problem 2: The number of each Starfish's Jejunum equals each Blue Whale's Sigmoid Colon. The number of each Subtropical Grassland's Great White Shark equals 22 times as much as each Blue Whale's Sigmoid Colon. The number of each Blue Whale's Sigmoid Colon equals 9. The number of each Alpine Grassland's Great White Shark equals each Blue Whale's Sigmoid Colon. What is the value of Alpine Grassland's Great White Shark?
+
+Problem 3: The number of each Starfish's Jejunum equals each Blue Whale's Sigmoid Colon. The number of each Subtropical Grassland's Great White Shark equals 22 times as much as each Blue Whale's Sigmoid Colon. The number of each Alpine Grassland's Blue Whale equals each Starfish's Jejunum. The number of each Blue Whale's Sigmoid Colon equals 9. The number of each Alpine Grassland's Great White Shark equals each Blue Whale's Sigmoid Colon. What is the value of Starfish's Jejunum?
+
+Problem 4: The number of each Great White Shark's Jejunum equals 3 more than each Alpine Grassland's Creatures. What is the value of Great White Shark's Jejunum?
+
+Problem 5: The number of each Meadow's Blue Whale equals 17 times as much as each Alpine Grassland's Creatures. What is the value of Meadow's Blue Whale?
+
+Problem 6: The number of each Starfish's Salivary Glands equals 2 times as much as each Meadow's Creatures. What is the value of Starfish's Salivary Glands?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 14<<horizon>>9<<horizon>>9<<horizon>>3<<horizon>>0<<horizon>>0,FINAL ANSWER: 14<<horizon>>9<<horizon>>9<<horizon>>6<<horizon>>5<<horizon>>21,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Mackerel's Fetlock equals 18 times as much as each Niagara Falls Aviary's Bone. The number of each Bird Paradise Wildlife Park's Ladybug Loft equals each Mackerel's Fetlock. What is the value of Mackerel's Fetlock?
+
+Problem 2: The number of each Bird Paradise Wildlife Park's Scorpion Den equals each Scorpion Den's Animal. What is the value of Bird Paradise Wildlife Park's Scorpion Den?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 18<<horizon>>18,FINAL ANSWER: 0<<horizon>>0,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Organizer Backpack's Legal Pad equals 11 times as much as each Sunrise College's Number Theory Room. The number of each Rolling Backpack's Notepad equals the difference of each Thermodynamics Lab's Backpack and each Sunrise College's Mechanical Engineering Lab. The number of each Sunrise College's Mechanical Engineering Lab equals 16. The number of each Sunrise College's Number Theory Room equals 3 times as much as each Sunrise College's Mechanical Engineering Lab. The number of each Thermodynamics Lab's Organizer Backpack equals 7 more than each Sunrise College's Mechanical Engineering Lab. What is the value of Sunrise College's Number Theory Room?
+
+Problem 2: The number of each Thermodynamics Lab's Rolling Backpack equals 17 more than each Riverdale Community College's Mechanical Engineering Lab. The number of each Riverdale Community College's Mechanical Engineering Lab equals each Sunrise College's Classroom. The number of each Rolling Backpack's Craft Paper equals the difference of each Riverdale Community College's Mechanical Engineering Lab and each Sunrise College's Classroom. What is the value of Riverdale Community College's Mechanical Engineering Lab?
+
+Problem 3: The number of each Sunrise College's Thermodynamics Lab equals 9. The number of each Thermodynamics Lab's Bookbag equals 18 more than each Sunrise College's Thermodynamics Lab. What is the value of Thermodynamics Lab's Bookbag?
+
+Problem 4: The number of each Rolling Backpack's Notepad equals the difference of each Thermodynamics Lab's Backpack and each Sunrise College's Mechanical Engineering Lab. The number of each Sunrise College's Mechanical Engineering Lab equals 16. The number of each Sunrise College's Number Theory Room equals 3 times as much as each Sunrise College's Mechanical Engineering Lab. The number of each Thermodynamics Lab's Organizer Backpack equals 7 more than each Sunrise College's Mechanical Engineering Lab. What is the value of Thermodynamics Lab's Organizer Backpack?
+
+Problem 5: The number of each Rolling Backpack's Notepad equals the difference of each Thermodynamics Lab's Backpack and each Sunrise College's Mechanical Engineering Lab. The number of each Sunrise College's Mechanical Engineering Lab equals 16. The number of each Sunrise College's Number Theory Room equals 3 times as much as each Sunrise College's Mechanical Engineering Lab. The number of each Thermodynamics Lab's Organizer Backpack equals 7 more than each Sunrise College's Mechanical Engineering Lab. What is the value of Rolling Backpack's Notepad?
+
+Problem 6: The number of each Number Theory Room's Rolling Backpack equals each Mechanical Engineering Lab's Rolling Backpack. The number of each Mechanical Engineering Lab's Rolling Backpack equals each Rolling Backpack's Stationery. What is the value of Mechanical Engineering Lab's Rolling Backpack?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 2<<horizon>>0<<horizon>>4<<horizon>>0<<horizon>>7<<horizon>>0,FINAL ANSWER: 2<<horizon>>4<<horizon>>4<<horizon>>0<<horizon>>9<<horizon>>5,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Amygdala's Platelets equals the sum of each Amygdala's B Cells and each Hippocampus's B Cells. The number of each Autonomic Nerves's Red Blood Cells equals 1 times as much as each Hippocampus's B Cells. The number of each Hippocampus's Plasma Cells equals 21 more than the difference of each Amygdala's Plasma Cells and each Amygdala's B Cells. The number of each Autonomic Nerves's Platelets equals each Hippocampus's B Cells. The number of each Hippocampus's B Cells equals 3. The number of each Autonomic Nerves's Plasma Cells equals the sum of each Hippocampus's Plasma Cells, each Amygdala's B Cells and each Hippocampus's B Cells. The number of each Amygdala's Plasma Cells equals the difference of each Hippocampus's Platelets and each Amygdala's B Cells. The number of each Amygdala's B Cells equals 19 times as much as each Hippocampus's B Cells. What is the value of Amygdala's B Cells?
+
+Problem 2: The number of each Autonomic Nerves's B Cells equals 6 times as much as each Hippocampus's Plasma Cells. What is the value of Autonomic Nerves's B Cells?
+
+Problem 3: The number of each Amygdala's Platelets equals the sum of each Amygdala's B Cells and each Hippocampus's B Cells. The number of each Autonomic Nerves's Red Blood Cells equals 1 times as much as each Hippocampus's B Cells. The number of each Autonomic Nerves's Platelets equals each Hippocampus's B Cells. The number of each Hippocampus's B Cells equals 3. The number of each Autonomic Nerves's Plasma Cells equals the sum of each Hippocampus's Plasma Cells, each Amygdala's B Cells and each Hippocampus's B Cells. The number of each Amygdala's B Cells equals 19 times as much as each Hippocampus's B Cells. What is the value of Autonomic Nerves's Platelets?
+
+Problem 4: The number of each Amygdala's Platelets equals the sum of each Amygdala's B Cells and each Hippocampus's B Cells. The number of each Cranial Nerves's Plasma Cells equals 2 more than each Autonomic Nerves's Red Blood Cells. The number of each Autonomic Nerves's Red Blood Cells equals 1 times as much as each Hippocampus's B Cells. The number of each Autonomic Nerves's Platelets equals each Hippocampus's B Cells. The number of each Hippocampus's B Cells equals 3. The number of each Autonomic Nerves's Plasma Cells equals the sum of each Hippocampus's Plasma Cells, each Amygdala's B Cells and each Hippocampus's B Cells. The number of each Amygdala's B Cells equals 19 times as much as each Hippocampus's B Cells. What is the value of Autonomic Nerves's Red Blood Cells?
+
+Problem 5: The number of each Amygdala's Red Blood Cells equals 6 times as much as each Autonomic Nerves's Cells. The number of each Cranial Nerves's Platelets equals each Amygdala's Red Blood Cells. What is the value of Amygdala's Red Blood Cells?
+
+Problem 6: The number of each Hippocampus's Red Blood Cells equals 1 more than each Cranial Nerves's Cells. What is the value of Hippocampus's Red Blood Cells?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 11<<horizon>>0<<horizon>>3<<horizon>>3<<horizon>>0<<horizon>>1,FINAL ANSWER: 11<<horizon>>9<<horizon>>3<<horizon>>3<<horizon>>22<<horizon>>2,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Beetle Bungalow's Leopard equals the sum of each Butterfly Garden's Kangaroo, each Leopard's Anal Fin Rays and each Butterfly Garden's Deer. The number of each Squirrel's Distal Radials equals 4 times as much as the sum of each Beetle Bungalow's Leopard and each Leopard's Anal Fin Rays. The number of each Spider Web Exhibit's Kangaroo equals the sum of each Squirrel's Anal Fin Rays, each Butterfly Garden's Deer and each Squirrel's Bone. The number of each Squirrel's Anal Fin Rays equals 2 times as much as each Butterfly Garden's Deer. The number of each Leopard's Anal Fin Rays equals each Butterfly Garden's Deer. The number of each Butterfly Garden's Kangaroo equals the sum of each Leopard's Anal Fin Rays and each Butterfly Garden's Deer. The number of each Leopard's Distal Radials equals the sum of each Spider Web Exhibit's Squirrel, each Butterfly Garden's Kangaroo and each Leopard's Anal Fin Rays. The number of each Butterfly Garden's Deer equals 13. The number of each Kangaroo's Anal Fin Rays equals 8 times as much as the sum of each Leopard's Anal Fin Rays and each Butterfly Garden's Kangaroo. What is the value of Leopard's Anal Fin Rays?
+
+Problem 2: The number of each Beetle Bungalow's Leopard equals the sum of each Butterfly Garden's Kangaroo, each Leopard's Anal Fin Rays and each Butterfly Garden's Deer. The number of each Spider Web Exhibit's Kangaroo equals the sum of each Squirrel's Anal Fin Rays, each Butterfly Garden's Deer and each Squirrel's Bone. The number of each Squirrel's Anal Fin Rays equals 2 times as much as each Butterfly Garden's Deer. The number of each Leopard's Anal Fin Rays equals each Butterfly Garden's Deer. The number of each Butterfly Garden's Kangaroo equals the sum of each Leopard's Anal Fin Rays and each Butterfly Garden's Deer. The number of each Butterfly Garden's Deer equals 13. What is the value of Squirrel's Anal Fin Rays?
+
+Problem 3: The number of each Leopard's Distal Radials equals the sum of each Spider Web Exhibit's Squirrel, each Butterfly Garden's Kangaroo and each Leopard's Anal Fin Rays. The number of each Spider Web Exhibit's Squirrel equals each Beetle Bungalow's Leopard. What is the value of Spider Web Exhibit's Squirrel?
+
+Problem 4: The number of each Insect House's Deer equals the sum of each Kangaroo's Bone, each Squirrel's Distal Radials, each Spider Web Exhibit's Kangaroo and each Beetle Bungalow's Leopard. What is the value of Kangaroo's Bone?
+
+Problem 5: The number of each Deer's Pelvic Fin Rays equals 22 times as much as each Spider Web Exhibit's Bone. What is the value of Deer's Pelvic Fin Rays?
+
+Problem 6: The number of each Butterfly Garden's Squirrel equals each Insect House's Bone. What is the value of Butterfly Garden's Squirrel?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 13<<horizon>>3<<horizon>>0<<horizon>>0<<horizon>>0<<horizon>>0,FINAL ANSWER: 13<<horizon>>3<<horizon>>6<<horizon>>13<<horizon>>16<<horizon>>2,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Eagle Eyrie's Mahi Mahi equals 21 times as much as the difference of each Macaw Island's Animal and each Macaw Island's Pike. The number of each Macaw Island's Pike equals 2. What is the value of Macaw Island's Animal?
+
+Problem 2: The number of each Eagle Eyrie's Mahi Mahi equals 21 times as much as the difference of each Macaw Island's Animal and each Macaw Island's Pike. The number of each Macaw Island's Pike equals 2. What is the value of Eagle Eyrie's Animal?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 21<<horizon>>21,FINAL ANSWER: 2<<horizon>>0,0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Python's Scapula equals each Python's Tertials. The number of each Anaconda Exhibit's Anole equals 16 times as much as the sum of each Georgia Aquarium's Anaconda Exhibit and each Python's Tertials. The number of each Georgia Aquarium's Anaconda Exhibit equals 10. The number of each Python's Tertials equals 7 more than each Georgia Aquarium's Anaconda Exhibit. The number of each Gecko Greenhouse's Python equals the difference of each The Deep's Gecko Greenhouse and each Georgia Aquarium's Anaconda Exhibit. The number of each The Deep's Anaconda Exhibit equals each Georgia Aquarium's Anaconda Exhibit. The number of each Anaconda Exhibit's Python equals each Georgia Aquarium's Anaconda Exhibit. The number of each Anole's Scapula equals each Python's Tertials. What is the value of Python's Tertials?
+
+Problem 2: The number of each Anaconda Exhibit's Anole equals 16 times as much as the sum of each Georgia Aquarium's Anaconda Exhibit and each Python's Tertials. The number of each Georgia Aquarium's Anaconda Exhibit equals 10. The number of each Tortoise's Tertials equals 2 more than each Anaconda Exhibit's Python. The number of each Python's Tertials equals 7 more than each Georgia Aquarium's Anaconda Exhibit. The number of each Gecko Greenhouse's Python equals the difference of each The Deep's Gecko Greenhouse and each Georgia Aquarium's Anaconda Exhibit. The number of each The Deep's Anaconda Exhibit equals each Georgia Aquarium's Anaconda Exhibit. The number of each Anaconda Exhibit's Python equals each Georgia Aquarium's Anaconda Exhibit. What is the value of Anaconda Exhibit's Python?
+
+Problem 3: The number of each Anaconda Exhibit's Tortoise equals 12 times as much as each Anaconda Exhibit's Anole. The number of each Gecko Greenhouse's Anole equals 15 more than each Anaconda Exhibit's Tortoise. What is the value of Anaconda Exhibit's Tortoise?
+
+Problem 4: The number of each Anaconda Exhibit's Anole equals 16 times as much as the sum of each Georgia Aquarium's Anaconda Exhibit and each Python's Tertials. The number of each Georgia Aquarium's Anaconda Exhibit equals 10. The number of each Python's Tertials equals 7 more than each Georgia Aquarium's Anaconda Exhibit. The number of each Gecko Greenhouse's Python equals the difference of each The Deep's Gecko Greenhouse and each Georgia Aquarium's Anaconda Exhibit. The number of each The Deep's Anaconda Exhibit equals each Georgia Aquarium's Anaconda Exhibit. The number of each Anaconda Exhibit's Python equals each Georgia Aquarium's Anaconda Exhibit. What is the value of The Deep's Anaconda Exhibit?
+
+Problem 5: The number of each Tortoise's Coracoid equals each The Deep's Animal. What is the value of Tortoise's Coracoid?
+
+Problem 6: The number of each Anole's Coracoid equals each Tortoise's Bone. What is the value of Anole's Coracoid?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}",FINAL ANSWER: 17<<horizon>>10<<horizon>>0<<horizon>>10<<horizon>>0<<horizon>>0,FINAL ANSWER: 17<<horizon>>10<<horizon>>9<<horizon>>10<<horizon>>9<<horizon>>7,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Liquor's Barley equals each Liquor's Popcorn. The number of each Tea's Teff equals 0 more than each Liquor's Barley. The number of each Hot Chocolate's Popcorn equals 19 times as much as each Liquor's Popcorn. The number of each Tea's Wheat equals 15 times as much as each Liquor's Popcorn. The number of each Liquor's Popcorn equals 8. The number of each Tea's Popcorn equals each Liquor's Popcorn. What is the value of Liquor's Barley?
+
+Problem 2: The number of each Liquor's Barley equals each Liquor's Popcorn. The number of each Liquor's Wheat equals the difference of each Hot Chocolate's Teff and each Hot Chocolate's Popcorn. The number of each Hot Chocolate's Popcorn equals 19 times as much as each Liquor's Popcorn. The number of each Tea's Wheat equals 15 times as much as each Liquor's Popcorn. The number of each Hot Chocolate's Teff equals the difference of each Hot Chocolate's Popcorn and each Tea's Barley. The number of each Liquor's Popcorn equals 8. The number of each Tea's Popcorn equals each Liquor's Popcorn. What is the value of Hot Chocolate's Popcorn?
+
+Problem 3: The number of each Liquor's Barley equals each Liquor's Popcorn. The number of each Hot Chocolate's Popcorn equals 19 times as much as each Liquor's Popcorn. The number of each Tea's Wheat equals 15 times as much as each Liquor's Popcorn. The number of each Liquor's Popcorn equals 8. The number of each Tea's Popcorn equals each Liquor's Popcorn. What is the value of Tea's Popcorn?
+
+Problem 4: The number of each Beer's Popcorn equals 13 times as much as each Hot Chocolate's Ingredient. The number of each Beer's Barley equals 19 more than each Beer's Popcorn. What is the value of Beer's Popcorn?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 8<<horizon>>14<<horizon>>8<<horizon>>0,FINAL ANSWER: 8<<horizon>>14<<horizon>>8<<horizon>>22,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Zoology Lab's Modular Backpack equals each Laptop Professional Backpack's Permanent Marker. The number of each Laptop Professional Backpack's Permanent Marker equals 17. The number of each Zoology Lab's Laptop Professional Backpack equals 3 more than each Laptop Professional Backpack's Permanent Marker. The number of each Anatomy Lab's Laptop Professional Backpack equals 5 more than each Laptop Professional Backpack's Permanent Marker. The number of each WorldWide Web University's Ecology Lab equals 12 times as much as the difference of each Anatomy Lab's Laptop Professional Backpack and each Modular Backpack's Permanent Marker. The number of each Camera Backpack's Rollerball Pen equals 20 times as much as each Modular Backpack's Permanent Marker. The number of each Modular Backpack's Permanent Marker equals 14 times as much as each Laptop Professional Backpack's Permanent Marker. What is the value of Modular Backpack's Permanent Marker?
+
+Problem 2: The number of each Zoology Lab's Modular Backpack equals each Laptop Professional Backpack's Permanent Marker. The number of each Laptop Professional Backpack's Permanent Marker equals 17. The number of each Zoology Lab's Laptop Professional Backpack equals 3 more than each Laptop Professional Backpack's Permanent Marker. The number of each Anatomy Lab's Laptop Professional Backpack equals 5 more than each Laptop Professional Backpack's Permanent Marker. The number of each WorldWide Web University's Ecology Lab equals 12 times as much as the difference of each Anatomy Lab's Laptop Professional Backpack and each Modular Backpack's Permanent Marker. The number of each Ecology Lab's Modular Backpack equals 3 times as much as each Anatomy Lab's Laptop Professional Backpack. The number of each Modular Backpack's Permanent Marker equals 14 times as much as each Laptop Professional Backpack's Permanent Marker. What is the value of Anatomy Lab's Laptop Professional Backpack?
+
+Problem 3: The number of each Zoology Lab's Modular Backpack equals each Laptop Professional Backpack's Permanent Marker. The number of each Laptop Professional Backpack's Permanent Marker equals 17. The number of each Zoology Lab's Laptop Professional Backpack equals 3 more than each Laptop Professional Backpack's Permanent Marker. The number of each Anatomy Lab's Laptop Professional Backpack equals 5 more than each Laptop Professional Backpack's Permanent Marker. The number of each Modular Backpack's Permanent Marker equals 14 times as much as each Laptop Professional Backpack's Permanent Marker. What is the value of Zoology Lab's Modular Backpack?
+
+Problem 4: The number of each Ecology Lab's Camera Backpack equals 21 times as much as each Anatomy Lab's Stationery. What is the value of Ecology Lab's Camera Backpack?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 8<<horizon>>22<<horizon>>17<<horizon>>0,FINAL ANSWER: 8<<horizon>>22<<horizon>>17<<horizon>>5,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Liver's Squamous Epithelial Cells equals each Liver's Serous Cells. The number of each Ileum's Intestinal Absorptive Cells equals 14 more than each Liver's Serous Cells. The number of each Pylorus's Intestinal Absorptive Cells equals 1 times as much as the difference of each Liver's Intestinal Absorptive Cells and each Liver's Squamous Epithelial Cells. The number of each Liver's Intestinal Absorptive Cells equals each Liver's Serous Cells. The number of each Liver's Serous Cells equals 10. The number of each Ileum's Squamous Epithelial Cells equals 20 times as much as the difference of each Liver's Cells and each Liver's Serous Cells. What is the value of Liver's Intestinal Absorptive Cells?
+
+Problem 2: The number of each Pylorus's Squamous Epithelial Cells equals the sum of each Ileum's Cells, each Ileum's Squamous Epithelial Cells and each Liver's Squamous Epithelial Cells. The number of each Liver's Squamous Epithelial Cells equals each Liver's Serous Cells. The number of each Ileum's Intestinal Absorptive Cells equals 14 more than each Liver's Serous Cells. The number of each Pylorus's Intestinal Absorptive Cells equals 1 times as much as the difference of each Liver's Intestinal Absorptive Cells and each Liver's Squamous Epithelial Cells. The number of each Liver's Intestinal Absorptive Cells equals each Liver's Serous Cells. The number of each Pylorus's Serous Cells equals 5 times as much as the difference of each Liver's Squamous Epithelial Cells and each Liver's Cells. The number of each Liver's Serous Cells equals 10. The number of each Ileum's Squamous Epithelial Cells equals 20 times as much as the difference of each Liver's Cells and each Liver's Serous Cells. What is the value of Liver's Squamous Epithelial Cells?
+
+Problem 3: The number of each Liver's Squamous Epithelial Cells equals each Liver's Serous Cells. The number of each Ileum's Intestinal Absorptive Cells equals 14 more than each Liver's Serous Cells. The number of each Liver's Intestinal Absorptive Cells equals each Liver's Serous Cells. The number of each Liver's Serous Cells equals 10. The number of each Ileum's Squamous Epithelial Cells equals 20 times as much as the difference of each Liver's Cells and each Liver's Serous Cells. What is the value of Ileum's Intestinal Absorptive Cells?
+
+Problem 4: The number of each Ileum's Serous Cells equals 17 times as much as each Ileum's Squamous Epithelial Cells. What is the value of Ileum's Serous Cells?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 10<<horizon>>10<<horizon>>1<<horizon>>0,FINAL ANSWER: 10<<horizon>>10<<horizon>>1<<horizon>>15,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Montane Grassland's Butterfly equals 10. The number of each Montane Grassland's Flamingo equals 7 times as much as each Montane Grassland's Butterfly. The number of each Montane Grassland's Peacock equals each Montane Grassland's Butterfly. What is the value of Montane Grassland's Peacock?
+
+Problem 2: The number of each Montane Grassland's Butterfly equals 10. The number of each Montane Grassland's Flamingo equals 7 times as much as each Montane Grassland's Butterfly. The number of each Montane Grassland's Peacock equals each Montane Grassland's Butterfly. What is the value of Montane Grassland's Flamingo?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 10<<horizon>>1,FINAL ANSWER: 10<<horizon>>1,2,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Flamingo Gardens's Aviary equals each Oklahoma City Zoo and Botanical Garden's Falcon Aviary. The number of each Bird Paradise Wildlife Park's Falcon Aviary equals the sum of each Oklahoma City Zoo and Botanical Garden's Aviary, each Oklahoma City Zoo and Botanical Garden's Enclosure, each Flamingo Gardens's Aviary and each Oklahoma City Zoo and Botanical Garden's Falcon Aviary. The number of each Flamingo Gardens's Falcon Aviary equals 9 more than the sum of each Oklahoma City Zoo and Botanical Garden's Duck Pond and each Oklahoma City Zoo and Botanical Garden's Falcon Aviary. The number of each Oklahoma City Zoo and Botanical Garden's Duck Pond equals 18 more than each Oklahoma City Zoo and Botanical Garden's Aviary. The number of each Oklahoma City Zoo and Botanical Garden's Falcon Aviary equals 12. The number of each Oklahoma City Zoo and Botanical Garden's Aviary equals 18 more than each Oklahoma City Zoo and Botanical Garden's Falcon Aviary. What is the value of Oklahoma City Zoo and Botanical Garden's Aviary?
+
+Problem 2: The number of each Bird Paradise Wildlife Park's Aviary equals 17 more than each Oklahoma City Zoo and Botanical Garden's Enclosure. What is the value of Bird Paradise Wildlife Park's Aviary?
+
+Problem 3: The number of each Flamingo Gardens's Aviary equals each Oklahoma City Zoo and Botanical Garden's Falcon Aviary. The number of each Bird Paradise Wildlife Park's Falcon Aviary equals the sum of each Oklahoma City Zoo and Botanical Garden's Aviary, each Oklahoma City Zoo and Botanical Garden's Enclosure, each Flamingo Gardens's Aviary and each Oklahoma City Zoo and Botanical Garden's Falcon Aviary. The number of each Flamingo Gardens's Falcon Aviary equals 9 more than the sum of each Oklahoma City Zoo and Botanical Garden's Duck Pond and each Oklahoma City Zoo and Botanical Garden's Falcon Aviary. The number of each Oklahoma City Zoo and Botanical Garden's Falcon Aviary equals 12. The number of each Oklahoma City Zoo and Botanical Garden's Aviary equals 18 more than each Oklahoma City Zoo and Botanical Garden's Falcon Aviary. What is the value of Flamingo Gardens's Aviary?
+
+Problem 4: The number of each Flamingo Gardens's Duck Pond equals each Bird Paradise Wildlife Park's Enclosure. What is the value of Flamingo Gardens's Duck Pond?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 7<<horizon>>17<<horizon>>12<<horizon>>0,FINAL ANSWER: 7<<horizon>>15<<horizon>>12<<horizon>>21,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Moremi Game Reserve's Small Mammal House equals 5 more than each Moremi Game Reserve's Camel Yard. The number of each Masai Mara's Bat Cave equals 19 more than each Moremi Game Reserve's Camel Yard. The number of each Masai Mara's Camel Yard equals each Moremi Game Reserve's Small Mammal House. The number of each Moremi Game Reserve's Cheetah Run equals 10 times as much as each Moremi Game Reserve's Camel Yard. The number of each Moremi Game Reserve's Camel Yard equals 19. The number of each Moremi Game Reserve's Bat Cave equals 8 times as much as each Moremi Game Reserve's Camel Yard. What is the value of Moremi Game Reserve's Small Mammal House?
+
+Problem 2: The number of each Moremi Game Reserve's Small Mammal House equals 5 more than each Moremi Game Reserve's Camel Yard. The number of each Masai Mara's Bat Cave equals 19 more than each Moremi Game Reserve's Camel Yard. The number of each Moremi Game Reserve's Cheetah Run equals 10 times as much as each Moremi Game Reserve's Camel Yard. The number of each Moremi Game Reserve's Camel Yard equals 19. The number of each Moremi Game Reserve's Bat Cave equals 8 times as much as each Moremi Game Reserve's Camel Yard. What is the value of Moremi Game Reserve's Bat Cave?
+
+Problem 3: The number of each Masai Mara's Small Mammal House equals the difference of each Pilanesberg National Park's Small Mammal House and each Moremi Game Reserve's Cheetah Run. The number of each Pilanesberg National Park's Small Mammal House equals each Moremi Game Reserve's Enclosure. What is the value of Pilanesberg National Park's Small Mammal House?
+
+Problem 4: The number of each Pilanesberg National Park's Cheetah Run equals each Masai Mara's Enclosure. What is the value of Pilanesberg National Park's Cheetah Run?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}",FINAL ANSWER: 1<<horizon>>14<<horizon>>0<<horizon>>0,FINAL ANSWER: 1<<horizon>>14<<horizon>>17<<horizon>>7,1,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Expedition Pack's Carbon Paper equals 21. The number of each Expedition Pack's Colored Paper equals 22 times as much as the difference of each Weekender Backpack's Carbon Paper and each Expedition Pack's Carbon Paper. The number of each Weekender Backpack's Carbon Paper equals each Expedition Pack's Carbon Paper. What is the value of Weekender Backpack's Carbon Paper?
+
+Problem 2: The number of each Expedition Pack's Carbon Paper equals 21. The number of each Expedition Pack's Colored Paper equals 22 times as much as the difference of each Weekender Backpack's Carbon Paper and each Expedition Pack's Carbon Paper. The number of each Weekender Backpack's Carbon Paper equals each Expedition Pack's Carbon Paper. What is the value of Expedition Pack's Stationery?
+
+Note: In this problem set:
+- Each problem is INDEPENDENT and can be solved in parallel.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}",FINAL ANSWER: 21<<horizon>>0,FINAL ANSWER: 21<<horizon>>21,1,0.0

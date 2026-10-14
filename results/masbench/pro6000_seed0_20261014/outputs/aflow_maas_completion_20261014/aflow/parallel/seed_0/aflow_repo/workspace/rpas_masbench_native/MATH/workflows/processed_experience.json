@@ -1,0 +1,40 @@
+{
+    "4": {
+        "score": 0.7083333333333334,
+        "success": {
+            "8": {
+                "modification": "Modify the extraction logic to handle the `<<horizon>>` delimiter and the specific output format documented in the logs (`Problem 1 Answer: <value>`), rather than relying solely on `\\boxed`. Integrate the `Programmer` operator to rigorously verify the modulo-23 arithmetic for each extracted answer before concatenation.",
+                "score": 0.9166666666666666
+            }
+        },
+        "failure": {
+            "6": {
+                "modification": "Replaced the direct parallel extraction of all subproblems immediately with a robust parsing step followed by a temperature-reduced verification pass using the 'Programmer' operator to ensure arithmetic accuracy in Z_23 before joining.",
+                "score": 0.0
+            }
+        }
+    },
+    "1": {
+        "score": 0.6666666666666666,
+        "success": {
+            "4": {
+                "modification": "Added a wait step to allow parallel independent problem solving, then used a loop to identify the target question for each problem and invoke the Custom operator sequentially to prevent hallucination from reading unrelated text. Modified the Custom instruction to strictly enforce `Z_23` arithmetic, `<<horizon>>` separation, and an independent `FINAL ANSWER` line per problem to match the required aggregation format.",
+                "score": 0.7083333333333334
+            }
+        },
+        "failure": {
+            "3": {
+                "modification": "Add `ScEnsemble` to form multiple independent reasoning paths by iterating over the problem list `PROBLEMS` (since the input is concatenated as \"Problem 1: ...\\nProblem 2: ...\"), solve each path individually without premature global state reliance, and then aggregate the specific answers for each problem index to enforce strict formatting (`<<horizon>>` separation) and handle undefined variables correctly.",
+                "score": 0.0
+            },
+            "7": {
+                "modification": "Added a sequential loop to solve problems one by one to handle undefined variables via modular arithmetic (resolving NaN/None by treating them as 0) and strict formatting per problem before aggregating, replacing the single-pass approach that failed to isolate dependencies correctly. Also added a self-correction step using the `ScEnsemble` operator if multiple independent derivations are possible, but primarily ensures the Custom prompt enforces `Z_23` and `<<horizon>>` separation strictly.",
+                "score": 0.0
+            },
+            "2": {
+                "modification": "Add `ScEnsemble` operator before the custom extraction step to aggregate multiple derivation paths and enforce the strict `FINAL ANSWER: X<<horizon>>Y...` format, reducing hallucination and handling ambiguity in undefined variable scenarios.",
+                "score": 0.0
+            }
+        }
+    }
+}

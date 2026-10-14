@@ -1,0 +1,585 @@
+question,prediction,expected_output,score,cost
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Graphic Design Studio's Packable Travel Backpack equals each Visual Arts Studio's Packable Travel Backpack. The number of each Visual Arts Studio's Packable Travel Backpack equals 22. The number of each Graphic Design Studio's Multi-Day Pack equals 14 times as much as the sum of each Graphic Design Studio's Packable Travel Backpack and each Lakefront Community College's Graphic Design Studio. The number of each Riverdale Community College's Visual Arts Studio equals 18 more than the difference of each Riverdale Community College's Graphic Design Studio and each Visual Arts Studio's Packable Travel Backpack. The number of each Lakefront Community College's Graphic Design Studio equals 5 more than the difference of each Visual Arts Studio's Packable Travel Backpack and each Graphic Design Studio's Packable Travel Backpack. What is the value of Graphic Design Studio's Packable Travel Backpack?
+
+Problem 2: The number of each [answer1] equals each Visual Arts Studio's Packable Travel Backpack. The number of each Visual Arts Studio's Packable Travel Backpack equals 22. The number of each Graphic Design Studio's Multi-Day Pack equals 14 times as much as the sum of each [answer1] and each Lakefront Community College's Graphic Design Studio. The number of each Riverdale Community College's Visual Arts Studio equals 18 more than the difference of each Riverdale Community College's Graphic Design Studio and each Visual Arts Studio's Packable Travel Backpack. The number of each Lakefront Community College's Graphic Design Studio equals 5 more than the difference of each Visual Arts Studio's Packable Travel Backpack and each [answer1]. Using the result [answer1] from the previous calculation, [variable2] = [answer1] + c. What is Graphic Design Studio's Backpack?
+
+Problem 3: The number of each [answer1] equals each Visual Arts Studio's Packable Travel Backpack. The number of each Visual Arts Studio's Packable Travel Backpack equals 22. The number of each Riverdale Community College's Graphic Design Studio equals 11 times as much as each Lakefront Community College's Backpack. The number of each Graphic Design Studio's Multi-Day Pack equals 14 times as much as the sum of each [answer1] and each Lakefront Community College's Graphic Design Studio. The number of each Riverdale Community College's Visual Arts Studio equals 18 more than the difference of each Riverdale Community College's Graphic Design Studio and each Visual Arts Studio's Packable Travel Backpack. The number of each Lakefront Community College's Graphic Design Studio equals 5 more than the difference of each Visual Arts Studio's Packable Travel Backpack and each [answer1]. Using the result [answer2] from the previous calculation, [variable3] = q * [answer2]. What is Lakefront Community College's Backpack?
+
+Problem 4: The number of each [answer1] equals each Visual Arts Studio's Packable Travel Backpack. The number of each Visual Arts Studio's Packable Travel Backpack equals 22. The number of each Riverdale Community College's Graphic Design Studio equals 11 times as much as each [answer3]. The number of each Graphic Design Studio's Multi-Day Pack equals 14 times as much as the sum of each [answer1] and each Lakefront Community College's Graphic Design Studio. The number of each Riverdale Community College's Visual Arts Studio equals 18 more than the difference of each Riverdale Community College's Graphic Design Studio and each Visual Arts Studio's Packable Travel Backpack. The number of each Lakefront Community College's Graphic Design Studio equals 5 more than the difference of each Visual Arts Studio's Packable Travel Backpack and each [answer1]. Using the result [answer3] from the previous calculation, [variable4] = 11 * [answer3]. What is Riverdale Community College's Graphic Design Studio?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 22<<horizon>>9<<horizon>>22<<horizon>>12,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Giant Eagle's Monterey Jack Cheese equals the sum of each Tesco's Cottage Cheese, each Publix's Provolone Cheese, each Cottage Community's Tesco and each Mountain Homes's Tesco. The number of each Mountain Homes's Tesco equals 18 times as much as each Giant Eagle's Provolone Cheese. The number of each Publix's Cottage Cheese equals the sum of each Mountain Homes's Tesco and each Giant Eagle's Provolone Cheese. The number of each Giant Eagle's Provolone Cheese equals 21. What is the value of Mountain Homes's Tesco?
+
+Problem 2: The number of each Giant Eagle's Monterey Jack Cheese equals the sum of each Tesco's Cottage Cheese, each Publix's Provolone Cheese, each Cottage Community's Tesco and each [answer1]. The number of each [answer1] equals 18 times as much as each Giant Eagle's Provolone Cheese. The number of each Publix's Cottage Cheese equals the sum of each [answer1] and each Giant Eagle's Provolone Cheese. The number of each Kroger's Provolone Cheese equals each Tesco's Cottage Cheese. The number of each Publix's Provolone Cheese equals each Publix's Cottage Cheese. The number of each Tesco's Cottage Cheese equals the sum of each Publix's Provolone Cheese and each Publix's Cottage Cheese. The number of each Giant Eagle's Provolone Cheese equals 21. Using the result [answer1] from the previous calculation, [variable2] = [answer1]. What is Kroger's Provolone Cheese?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","string indices must be integers, not 'str'",FINAL ANSWER: 10<<horizon>>16,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Whole Foods Market's Rolls equals 6 more than each Sprouts Farmers Market's White Bread. The number of each Whole Foods Market's Croissants equals each Sprouts Farmers Market's White Bread. The number of each Sprouts Farmers Market's White Bread equals 16. The number of each Whole Foods Market's White Bread equals 17 more than each Sprouts Farmers Market's White Bread. What is the value of Whole Foods Market's White Bread?
+
+Problem 2: The number of each Natural Grocers's White Bread equals 21 times as much as each Whole Foods Market's Rolls. The number of each Whole Foods Market's Rolls equals 6 more than each Sprouts Farmers Market's White Bread. The number of each Whole Foods Market's Croissants equals each Sprouts Farmers Market's White Bread. The number of each Sprouts Farmers Market's White Bread equals 16. The number of each [answer1] equals 17 more than each Sprouts Farmers Market's White Bread. What is the value of Whole Foods Market's Rolls?
+
+Problem 3: The number of each [answer2] equals 6 more than each Sprouts Farmers Market's White Bread. The number of each Whole Foods Market's Croissants equals each Sprouts Farmers Market's White Bread. The number of each Sprouts Farmers Market's White Bread equals 16. The number of each Natural Grocers's Croissants equals the difference of each Whole Foods Market's Product and each Whole Foods Market's Croissants. The number of each [answer1] equals 17 more than each Sprouts Farmers Market's White Bread. The number of each White Bread's Cumin equals the difference of each Whole Foods Market's Croissants and each Croissants's Chili Powder. The number of each Croissants's Chili Powder equals each Natural Grocers's Croissants. What is the value of Natural Grocers's Croissants?
+
+Problem 4: The number of each [answer2] equals 6 more than each Sprouts Farmers Market's White Bread. The number of each Whole Foods Market's Croissants equals each Sprouts Farmers Market's White Bread. The number of each Sprouts Farmers Market's White Bread equals 16. The number of each [answer3] equals the difference of each Whole Foods Market's Product and each Whole Foods Market's Croissants. The number of each Rolls's Chili Powder equals each Rolls's Cloves. The number of each [answer1] equals 17 more than each Sprouts Farmers Market's White Bread. The number of each Rolls's Cloves equals each Croissants's Chili Powder. The number of each White Bread's Cumin equals the difference of each Whole Foods Market's Croissants and each Croissants's Chili Powder. The number of each Croissants's Chili Powder equals each [answer3]. Using the result [answer3] from the previous calculation, [variable4] = [answer3]. What is Rolls's Cloves?
+
+Problem 5: The number of each [answer2] equals 6 more than each Sprouts Farmers Market's White Bread. The number of each Whole Foods Market's Croissants equals each Sprouts Farmers Market's White Bread. The number of each Rolls's Cumin equals each Rolls's Chili Powder. The number of each Croissants's Cumin equals each Rolls's Cumin. The number of each Sprouts Farmers Market's White Bread equals 16. The number of each [answer3] equals the difference of each Whole Foods Market's Product and each Whole Foods Market's Croissants. The number of each Rolls's Chili Powder equals each [answer4]. The number of each [answer1] equals 17 more than each Sprouts Farmers Market's White Bread. The number of each [answer4] equals each Croissants's Chili Powder. The number of each White Bread's Cumin equals the difference of each Whole Foods Market's Croissants and each Croissants's Chili Powder. The number of each Croissants's Chili Powder equals each [answer3]. Using the result [answer4] from the previous calculation, [variable5] = [answer4]. What is Rolls's Cumin?
+
+Problem 6: The number of each White Bread's Cloves equals each Croissants's Cumin. The number of each [answer2] equals 6 more than each Sprouts Farmers Market's White Bread. The number of each Whole Foods Market's Croissants equals each Sprouts Farmers Market's White Bread. The number of each [answer5] equals each Rolls's Chili Powder. The number of each Croissants's Cumin equals each [answer5]. The number of each Sprouts Farmers Market's White Bread equals 16. The number of each [answer3] equals the difference of each Whole Foods Market's Product and each Whole Foods Market's Croissants. The number of each Rolls's Chili Powder equals each [answer4]. The number of each [answer1] equals 17 more than each Sprouts Farmers Market's White Bread. The number of each [answer4] equals each Croissants's Chili Powder. The number of each White Bread's Cumin equals the difference of each Whole Foods Market's Croissants and each Croissants's Chili Powder. The number of each Croissants's Chili Powder equals each [answer3]. Using the result [answer5] from the previous calculation, [variable6] = [answer5]. What is White Bread's Cloves?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}","string indices must be integers, not 'str'",FINAL ANSWER: 10<<horizon>>22<<horizon>>9<<horizon>>9<<horizon>>9<<horizon>>9,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Wolf's Ileum equals each Anteater's Ileum. The number of each Wolf's Stomach equals each Anteater's Ileum. The number of each Anteater's Ileum equals 9. The number of each Anteater's Stomach equals each Anteater's Ileum. The number of each Wolf's Pancreas equals each Wolf's Pharynx. The number of each African Elephant's Ileum equals 1 more than each Anteater's Ileum. The number of each Wolf's Pharynx equals each Anteater's Ileum. What is the value of Wolf's Pharynx?
+
+Problem 2: The number of each Wolf's Ileum equals each Anteater's Ileum. The number of each Wolf's Stomach equals each Anteater's Ileum. The number of each Anteater's Ileum equals 9. The number of each Ileum's Keratinocytes equals each Wolf's Ileum. The number of each Anteater's Stomach equals each Anteater's Ileum. The number of each African Elephant's Ileum equals 1 more than each Anteater's Ileum. The number of each [answer1] equals each Anteater's Ileum. What is the value of Wolf's Ileum?
+
+Problem 3: The number of each [answer2] equals each Anteater's Ileum. The number of each Wolf's Stomach equals each Anteater's Ileum. The number of each Anteater's Ileum equals 9. The number of each Anteater's Stomach equals each Anteater's Ileum. The number of each African Elephant's Ileum equals 1 more than each Anteater's Ileum. The number of each [answer1] equals each Anteater's Ileum. What is the value of Anteater's Stomach?
+
+Problem 4: The number of each Ileum's Adipocytes equals each Anteater's Organs. What is the value of Ileum's Adipocytes?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 9<<horizon>>9<<horizon>>9<<horizon>>18,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Sour Cream's Coriander equals 13 more than the sum of each Cheddar Cheese's Ingredient and each Suburb's Family Dollar. The number of each Suburb's Smart & Final equals each Suburb's Family Dollar. The number of each Suburb's Family Dollar equals 6. The number of each Smart & Final's Sour Cream equals the sum of each Suburb's Supermarket and each Suburb's Smart & Final. What is the value of Suburb's Smart & Final?
+
+Problem 2: The number of each Sour Cream's Coriander equals 13 more than the sum of each Cheddar Cheese's Ingredient and each Suburb's Family Dollar. The number of each [answer1] equals each Suburb's Family Dollar. The number of each Suburb's Family Dollar equals 6. The number of each Smart & Final's Sour Cream equals the sum of each Suburb's Supermarket and each [answer1]. Using the result [answer1] from the previous calculation, [variable2] = 6 + [answer1]. What is Suburb's Supermarket?
+
+Problem 3: The number of each Sour Cream's Coriander equals 13 more than the sum of each Cheddar Cheese's Ingredient and each Suburb's Family Dollar. The number of each [answer1] equals each Suburb's Family Dollar. The number of each Suburb's Family Dollar equals 6. The number of each Cheddar Cheese's Rosemary equals the difference of each Smart & Final's Product and each Smart & Final's Sour Cream. The number of each Smart & Final's Sour Cream equals the sum of each [answer2] and each [answer1]. Using the result [answer1], [answer2] from the previous calculation, [variable3] = 18. What is Smart & Final's Product?
+
+Problem 4: The number of each Sour Cream's Coriander equals 13 more than the sum of each Cheddar Cheese's Ingredient and each Suburb's Family Dollar. The number of each [answer1] equals each Suburb's Family Dollar. The number of each Suburb's Family Dollar equals 6. The number of each Cheddar Cheese's Rosemary equals the difference of each [answer3] and each Smart & Final's Sour Cream. The number of each Smart & Final's Sour Cream equals the sum of each [answer2] and each [answer1]. Using the result [answer1], [answer2], [answer3] from the previous calculation, [variable4] = 0. What is Cheddar Cheese's Ingredient?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 6<<horizon>>12<<horizon>>18<<horizon>>0,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Cottage Community's Marc's equals 1. The number of each Marc's's Rice Milk equals each Cottage Community's Marc's. The number of each Super Saver's Wine equals 7 times as much as the difference of each Marc's's Rice Milk and each Marc's's Coffee. The number of each Marc's's Wine equals 22 more than each Cottage Community's Marc's. The number of each Townhouse Development's Super Saver equals the difference of each Marc's's Coffee and each Marc's's Rice Milk. The number of each Marc's's Coffee equals 11 times as much as each Cottage Community's Marc's. What is the value of Marc's's Coffee?
+
+Problem 2: The number of each Cottage Community's Marc's equals 1. The number of each Marc's's Rice Milk equals each Cottage Community's Marc's. The number of each Smart & Final's Wine equals 5 more than the difference of each Single-Family Homes's Smart & Final and each Marc's's Wine. The number of each Marc's's Wine equals 22 more than each Cottage Community's Marc's. The number of each Single-Family Homes's Marc's equals each Marc's's Wine. The number of each [answer1] equals 11 times as much as each Cottage Community's Marc's. What is the value of Marc's's Wine?
+
+Problem 3: The number of each Super Saver's Coffee equals each Marc's's Product. What is the value of Super Saver's Coffee?
+
+Problem 4: The number of each Smart & Final's Wine equals 5 more than the difference of each Single-Family Homes's Smart & Final and each [answer2]. The number of each Single-Family Homes's Smart & Final equals each Townhouse Development's Product. What is the value of Single-Family Homes's Smart & Final?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 11<<horizon>>0<<horizon>>12<<horizon>>22,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Toad Abode's Pike equals 1 times as much as each Pike's Radius. The number of each Pike's Radius equals 1. The number of each Pike's Secondary Feathers equals 5 more than the sum of each Toad Abode's Pike and each Pike's Radius. What is the value of Toad Abode's Pike?
+
+Problem 2: The number of each [answer1] equals 1 times as much as each Pike's Radius. The number of each Reptile House's Bass equals 6 more than the difference of each Newt Nook's Bone and each Toad Abode's Bone. The number of each Pike's Radius equals 1. The number of each Pike's Secondary Feathers equals 5 more than the sum of each [answer1] and each Pike's Radius. Using the result [answer1] from the previous calculation, [variable2] = [answer1] * 8. What is Toad Abode's Bone?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","string indices must be integers, not 'str'",FINAL ANSWER: 1<<horizon>>8,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Summit Secondary's Calculus Classroom equals 11. The number of each Sturdy Backpack's Clip Board equals 21 more than the sum of each Summit Secondary's Calculus Classroom, each Pinnacle High's Classroom and each Summit Secondary's Trigonometry Room. The number of each Pinnacle High's Trigonometry Room equals each Summit Secondary's Calculus Classroom. The number of each Padded Backpack's Ring Binder equals the sum of each Summit Secondary's Trigonometry Room, each Pinnacle High's Calculus Classroom and each Padded Backpack's Clip Board. The number of each Pinnacle High's Calculus Classroom equals the sum of each Summit Secondary's Classroom and each Summit Secondary's Calculus Classroom. The number of each Summit Secondary's Trigonometry Room equals each Summit Secondary's Calculus Classroom. What is the value of Summit Secondary's Trigonometry Room?
+
+Problem 2: The number of each Summit Secondary's Calculus Classroom equals 11. The number of each Sturdy Backpack's Clip Board equals 21 more than the sum of each Summit Secondary's Calculus Classroom, each Pinnacle High's Classroom and each [answer1]. The number of each Pinnacle High's Trigonometry Room equals each Summit Secondary's Calculus Classroom. The number of each Padded Backpack's Ring Binder equals the sum of each [answer1], each Pinnacle High's Calculus Classroom and each Padded Backpack's Clip Board. The number of each Pinnacle High's Calculus Classroom equals the sum of each Summit Secondary's Classroom and each Summit Secondary's Calculus Classroom. The number of each Trigonometry Room's Sturdy Backpack equals 13 times as much as each Pinnacle High's Calculus Classroom. The number of each [answer1] equals each Summit Secondary's Calculus Classroom. Using the result [answer1] from the previous calculation, [variable2] = [answer1] + 11. What is Pinnacle High's Calculus Classroom?
+
+Problem 3: The number of each Summit Secondary's Calculus Classroom equals 11. The number of each Sturdy Backpack's Clip Board equals 21 more than the sum of each Summit Secondary's Calculus Classroom, each Pinnacle High's Classroom and each [answer1]. The number of each Pinnacle High's Trigonometry Room equals each Summit Secondary's Calculus Classroom. The number of each Padded Backpack's Ring Binder equals the sum of each [answer1], each [answer2] and each Padded Backpack's Clip Board. The number of each [answer2] equals the sum of each Summit Secondary's Classroom and each Summit Secondary's Calculus Classroom. The number of each Trigonometry Room's Sturdy Backpack equals 13 times as much as each [answer2]. The number of each Padded Backpack's Clip Board equals the difference of each Pinnacle High's Classroom and each Pinnacle High's Trigonometry Room. The number of each [answer1] equals each Summit Secondary's Calculus Classroom. Using the result [answer2] from the previous calculation, [variable3] = [answer2] + 11. What is Pinnacle High's Classroom?
+
+Problem 4: The number of each Summit Secondary's Calculus Classroom equals 11. The number of each Sturdy Backpack's Clip Board equals 21 more than the sum of each Summit Secondary's Calculus Classroom, each [answer3] and each [answer1]. The number of each Pinnacle High's Trigonometry Room equals each Summit Secondary's Calculus Classroom. The number of each Padded Backpack's Ring Binder equals the sum of each [answer1], each [answer2] and each Padded Backpack's Clip Board. The number of each [answer2] equals the sum of each Summit Secondary's Classroom and each Summit Secondary's Calculus Classroom. The number of each Trigonometry Room's Sturdy Backpack equals 13 times as much as each [answer2]. The number of each Padded Backpack's Clip Board equals the difference of each [answer3] and each Pinnacle High's Trigonometry Room. The number of each [answer1] equals each Summit Secondary's Calculus Classroom. Using the result [answer3] from the previous calculation, [variable4] = X + [answer3]. What is Padded Backpack's Stationery?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 11<<horizon>>10<<horizon>>21<<horizon>>18,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Patel Brothers's Dried Fruit equals 14. The number of each Dried Fruit's Garlic equals 20 times as much as the difference of each Patel Brothers's Dried Fruit and each Archaeological District's Buford Highway Farmers Market. The number of each Patel Brothers's Fruit Snacks equals 20 more than each Patel Brothers's Dried Fruit. The number of each Colonial District's Buford Highway Farmers Market equals the difference of each Patel Brothers's Fruit Snacks and each Patel Brothers's Product. The number of each Old Fortress's Buford Highway Farmers Market equals the sum of each Patel Brothers's Product and each Patel Brothers's Dried Fruit. The number of each Archaeological District's Buford Highway Farmers Market equals 4 times as much as the difference of each Patel Brothers's Product and each Patel Brothers's Dried Fruit. The number of each Buford Highway Farmers Market's Dried Fruit equals the sum of each Colonial District's Buford Highway Farmers Market, each Patel Brothers's Fruit Snacks and each Fiesta Mart's Dried Fruit. What is the value of Patel Brothers's Fruit Snacks?
+
+Problem 2: The number of each Patel Brothers's Dried Fruit equals 14. The number of each Dried Fruit's Garlic equals 20 times as much as the difference of each Patel Brothers's Dried Fruit and each Archaeological District's Buford Highway Farmers Market. The number of each [answer1] equals 20 more than each Patel Brothers's Dried Fruit. The number of each Colonial District's Buford Highway Farmers Market equals the difference of each [answer1] and each Patel Brothers's Product. The number of each Old Fortress's Buford Highway Farmers Market equals the sum of each Patel Brothers's Product and each Patel Brothers's Dried Fruit. The number of each Archaeological District's Buford Highway Farmers Market equals 4 times as much as the difference of each Patel Brothers's Product and each Patel Brothers's Dried Fruit. The number of each Buford Highway Farmers Market's Dried Fruit equals the sum of each Colonial District's Buford Highway Farmers Market, each [answer1] and each Fiesta Mart's Dried Fruit. Using the result [answer1] from the previous calculation, [variable2] = 14 + [answer1]. What is Patel Brothers's Product?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","string indices must be integers, not 'str'",FINAL ANSWER: 11<<horizon>>2,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Counseling Room's Sturdy Backpack equals each Counseling Room's Messenger Backpack. The number of each Counseling Room's Messenger Backpack equals 15 times as much as each Counseling Room's Padded Backpack. The number of each Counseling Room's Padded Backpack equals 1. What is the value of Counseling Room's Messenger Backpack?
+
+Problem 2: The number of each Business Management Room's Sturdy Backpack equals 16 times as much as each Counseling Room's Backpack. The number of each Business Management Room's Padded Backpack equals each Business Management Room's Sturdy Backpack. What is the value of Business Management Room's Sturdy Backpack?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","string indices must be integers, not 'str'",FINAL ANSWER: 15<<horizon>>13,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Jellyfish Gallery's Newt equals each Sealion Show Pool's Tiger Salamander. The number of each Jellyfish Gallery's Tiger Salamander equals 6 times as much as each Jellyfish Gallery's Newt. The number of each Jellyfish Gallery's Caecilian equals each Jellyfish Gallery's Newt. The number of each Jellyfish Gallery's Hellbender equals 11 more than each Sealion Show Pool's Tiger Salamander. The number of each Sealion Show Pool's Tiger Salamander equals 22. What is the value of Jellyfish Gallery's Newt?
+
+Problem 2: The number of each [answer1] equals each Sealion Show Pool's Tiger Salamander. The number of each Jellyfish Gallery's Tiger Salamander equals 6 times as much as each [answer1]. The number of each Jellyfish Gallery's Caecilian equals each [answer1]. The number of each Jellyfish Gallery's Hellbender equals 11 more than each Sealion Show Pool's Tiger Salamander. The number of each Sealion Show Pool's Tiger Salamander equals 22. Using the result [answer1] from the previous calculation, [variable2] = 6 * [answer1]. What is Jellyfish Gallery's Tiger Salamander?
+
+Problem 3: The number of each [answer1] equals each Sealion Show Pool's Tiger Salamander. The number of each Jellyfish Gallery's Hellbender equals 11 more than each Sealion Show Pool's Tiger Salamander. The number of each Sealion Show Pool's Tiger Salamander equals 22. The number of each Ray Pool's Newt equals the sum of each Tropical Fish Tanks's Hellbender, each Jellyfish Gallery's Hellbender and each Sealion Show Pool's Newt. What is the value of Jellyfish Gallery's Hellbender?
+
+Problem 4: The number of each Tropical Fish Tanks's Newt equals each Sealion Show Pool's Newt. The number of each Sealion Show Pool's Newt equals each Ray Pool's Caecilian. The number of each Ray Pool's Newt equals the sum of each Tropical Fish Tanks's Hellbender, each [answer3] and each Sealion Show Pool's Newt. What is the value of Sealion Show Pool's Newt?
+
+Problem 5: The number of each Tropical Fish Tanks's Newt equals each [answer4]. The number of each Ray Pool's Hellbender equals each Tropical Fish Tanks's Newt. The number of each Tropical Fish Tanks's Hellbender equals the difference of each Ray Pool's Hellbender and each Tropical Fish Tanks's Newt. The number of each [answer4] equals each Ray Pool's Caecilian. The number of each Ray Pool's Newt equals the sum of each Tropical Fish Tanks's Hellbender, each [answer3] and each [answer4]. Using the result [answer4] from the previous calculation, [variable5] = [answer4]. What is Tropical Fish Tanks's Newt?
+
+Problem 6: The number of each [answer5] equals each [answer4]. The number of each Ray Pool's Hellbender equals each [answer5]. The number of each Tropical Fish Tanks's Hellbender equals the difference of each Ray Pool's Hellbender and each [answer5]. The number of each [answer4] equals each Ray Pool's Caecilian. The number of each Ray Pool's Newt equals the sum of each Tropical Fish Tanks's Hellbender, each [answer3] and each [answer4]. Using the result [answer5] from the previous calculation, [variable6] = [answer5] - [answer5]. What is Tropical Fish Tanks's Hellbender?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}","string indices must be integers, not 'str'",FINAL ANSWER: 22<<horizon>>17<<horizon>>10<<horizon>>19<<horizon>>19<<horizon>>0,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Detroit Insectarium's Caiman Creek equals each Detroit Insectarium's Frog Bog. The number of each Detroit Insectarium's Frog Bog equals 20. The number of each Detroit Insectarium's Monitor Lizard Habitat equals 19 times as much as each Detroit Insectarium's Frog Bog. The number of each San Francisco Insectarium's Frog Bog equals 7 more than each Detroit Insectarium's Frog Bog. The number of each San Francisco Insectarium's Caiman Creek equals the sum of each Insectarium of Denver's Enclosure and each Detroit Insectarium's Frog Bog. What is the value of Detroit Insectarium's Monitor Lizard Habitat?
+
+Problem 2: The number of each Detroit Insectarium's Caiman Creek equals each Detroit Insectarium's Frog Bog. The number of each Detroit Insectarium's Frog Bog equals 20. The number of each [answer1] equals 19 times as much as each Detroit Insectarium's Frog Bog. The number of each San Francisco Insectarium's Frog Bog equals 7 more than each Detroit Insectarium's Frog Bog. The number of each San Francisco Insectarium's Caiman Creek equals the sum of each Insectarium of Denver's Enclosure and each Detroit Insectarium's Frog Bog. What is the value of Detroit Insectarium's Caiman Creek?
+
+Problem 3: The number of each Insectarium of Denver's Caiman Creek equals 1 times as much as each Detroit Insectarium's Enclosure. The number of each Insectarium of Denver's Frog Bog equals 8 more than each Insectarium of Denver's Caiman Creek. What is the value of Insectarium of Denver's Caiman Creek?
+
+Problem 4: The number of each Insectarium of Denver's Monitor Lizard Habitat equals each Insectarium of Denver's Frog Bog. The number of each [answer3] equals 1 times as much as each Detroit Insectarium's Enclosure. The number of each Insectarium of Denver's Frog Bog equals 8 more than each [answer3]. Using the result [answer3] from the previous calculation, [variable4] = [answer3]. What is Insectarium of Denver's Monitor Lizard Habitat?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 12<<horizon>>20<<horizon>>6<<horizon>>14,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Kelp Forest's Daphnia equals each Open Ocean's Yeast. The number of each Open Ocean's Radiolarian equals 16. The number of each Radiolarian's Ankle Joint equals the sum of each Open Ocean's Radiolarian and each Radiolarian's Elbow Joint. The number of each Yeast's Elbow Joint equals 5 times as much as the sum of each Open Ocean's Yeast, each Kelp Forest's Yeast and each Radiolarian's Elbow Joint. The number of each Open Ocean's Yeast equals each Open Ocean's Radiolarian. The number of each Daphnia's Elbow Joint equals the sum of each Radiolarian's Ankle Joint, each Daphnia's Wrist Joint and each Open Ocean's Yeast. The number of each Radiolarian's Wrist Joint equals 6 times as much as each Open Ocean's Yeast. What is the value of Open Ocean's Yeast?
+
+Problem 2: The number of each Kelp Forest's Daphnia equals each [answer1]. The number of each Open Ocean's Radiolarian equals 16. The number of each Radiolarian's Ankle Joint equals the sum of each Open Ocean's Radiolarian and each Radiolarian's Elbow Joint. The number of each Yeast's Elbow Joint equals 5 times as much as the sum of each [answer1], each Kelp Forest's Yeast and each Radiolarian's Elbow Joint. The number of each Radiolarian's Elbow Joint equals 13 times as much as each Radiolarian's Wrist Joint. The number of each [answer1] equals each Open Ocean's Radiolarian. The number of each Arctic Ocean's Radiolarian equals each Radiolarian's Wrist Joint. The number of each Daphnia's Elbow Joint equals the sum of each Radiolarian's Ankle Joint, each Daphnia's Wrist Joint and each [answer1]. The number of each Radiolarian's Wrist Joint equals 6 times as much as each [answer1]. Using the result [answer1] from the previous calculation, [variable2] = 6 * [answer1]. What is Radiolarian's Wrist Joint?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","string indices must be integers, not 'str'",FINAL ANSWER: 16<<horizon>>4,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Saphenous Vein's Cardiac Muscle Cells equals 4 more than the sum of each Bald Eagle's Saphenous Vein, each Saphenous Vein's Sphincter Muscle Cells and each Bald Eagle's Tricuspid Valve. The number of each Bald Eagle's Tricuspid Valve equals 21. The number of each Tricuspid Valve's Cardiac Muscle Cells equals each Bald Eagle's Tricuspid Valve. The number of each Bald Eagle's Saphenous Vein equals 8 times as much as the sum of each Saphenous Vein's Sphincter Muscle Cells, each Tricuspid Valve's Cells and each Tricuspid Valve's Cardiac Muscle Cells. The number of each Saphenous Vein's Sphincter Muscle Cells equals 5 times as much as the sum of each Tricuspid Valve's Cells, each Bald Eagle's Tricuspid Valve and each Tricuspid Valve's Cardiac Muscle Cells. What is the value of Tricuspid Valve's Cardiac Muscle Cells?
+
+Problem 2: The number of each Saphenous Vein's Cardiac Muscle Cells equals 4 more than the sum of each Bald Eagle's Saphenous Vein, each Saphenous Vein's Sphincter Muscle Cells and each Bald Eagle's Tricuspid Valve. The number of each Bald Eagle's Tricuspid Valve equals 21. The number of each [answer1] equals each Bald Eagle's Tricuspid Valve. The number of each Bald Eagle's Saphenous Vein equals 8 times as much as the sum of each Saphenous Vein's Sphincter Muscle Cells, each Tricuspid Valve's Cells and each [answer1]. The number of each Saphenous Vein's Sphincter Muscle Cells equals 5 times as much as the sum of each Tricuspid Valve's Cells, each Bald Eagle's Tricuspid Valve and each [answer1]. Using the result [answer1] from the previous calculation, [variable2] = [answer1]. What is Tricuspid Valve's Cells?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","string indices must be integers, not 'str'",FINAL ANSWER: 21<<horizon>>21,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Butter's Rye equals 15 times as much as each Golf Course Community's WinCo Foods. The number of each Retirement Community's Wegmans equals the sum of each Cheese's Sorghum, each Mountain Homes's Supermarket and each Golf Course Community's WinCo Foods. The number of each Mountain Homes's Kroger equals 2 more than each Mountain Homes's Wegmans. The number of each Mountain Homes's Wegmans equals each Golf Course Community's WinCo Foods. The number of each Golf Course Community's WinCo Foods equals 22. What is the value of Mountain Homes's Wegmans?
+
+Problem 2: The number of each Butter's Rye equals 15 times as much as each Golf Course Community's WinCo Foods. The number of each Kroger's Provolone Cheese equals 0 more than the sum of each Mountain Homes's Supermarket, each WinCo Foods's Ingredient and each Provolone Cheese's Ingredient. The number of each Retirement Community's Wegmans equals the sum of each Cheese's Sorghum, each Mountain Homes's Supermarket and each Golf Course Community's WinCo Foods. The number of each Mountain Homes's Kroger equals 2 more than each [answer1]. The number of each [answer1] equals each Golf Course Community's WinCo Foods. The number of each Golf Course Community's WinCo Foods equals 22. Using the result [answer1] from the previous calculation, [variable2] = [answer1] + [answer1]. What is Mountain Homes's Supermarket?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","string indices must be integers, not 'str'",FINAL ANSWER: 22<<horizon>>0,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each African Elephant's Diaphragm equals each Old-growth Forest's Wolf. The number of each Wolf's Vocal Cords equals 4 more than the sum of each African Elephant's Diaphragm and each Old-growth Forest's Wolf. The number of each Old-growth Forest's Wolf equals 20. The number of each Tropical Rainforest's Wolf equals 21 more than the sum of each Wolf's Vocal Cords, each Old-growth Forest's Wolf and each African Elephant's Diaphragm. What is the value of African Elephant's Diaphragm?
+
+Problem 2: The number of each Cloud Forest's Wolf equals the sum of each African Elephant's Lungs and each Tropical Rainforest's Creatures. What is the value of Tropical Rainforest's Creatures?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}","string indices must be integers, not 'str'",FINAL ANSWER: 20<<horizon>>13,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Basilisk's Patella equals the sum of each Basilisk's Triceps, each Werewolf's Rotator Cuff and each Minotaur's Patella. The number of each Gorgon's Triceps equals 0. The number of each Minotaur's Patella equals 3 times as much as each Gorgon's Triceps. The number of each Werewolf's Rotator Cuff equals 13 times as much as each Minotaur's Patella. The number of each Werewolf's Patella equals the difference of each Minotaur's Cartilage and each Minotaur's Patella. What is the value of Minotaur's Patella?
+
+Problem 2: The number of each Basilisk's Patella equals the sum of each Basilisk's Triceps, each Werewolf's Rotator Cuff and each [answer1]. The number of each Gorgon's Triceps equals 0. The number of each [answer1] equals 3 times as much as each Gorgon's Triceps. The number of each Werewolf's Rotator Cuff equals 13 times as much as each [answer1]. The number of each Basilisk's Triceps equals each Werewolf's Rotator Cuff. The number of each Werewolf's Patella equals the difference of each Minotaur's Cartilage and each [answer1]. Using the result [answer1] from the previous calculation, [variable2] = 13 * [answer1]. What is Werewolf's Rotator Cuff?
+
+Problem 3: The number of each Minotaur's Cartilage equals 20 times as much as each Gorgon's Rotator Cuff. The number of each Werewolf's Cartilage equals the difference of each Gorgon's Rotator Cuff and each Basilisk's Rotator Cuff. The number of each Gorgon's Rotator Cuff equals 12 more than each Basilisk's Patella. What is the value of Gorgon's Rotator Cuff?
+
+Problem 4: The number of each Basilisk's Patella equals the sum of each Basilisk's Triceps, each [answer2] and each [answer1]. The number of each Gorgon's Triceps equals 0. The number of each [answer1] equals 3 times as much as each Gorgon's Triceps. The number of each Minotaur's Cartilage equals 20 times as much as each [answer3]. The number of each [answer2] equals 13 times as much as each [answer1]. The number of each Werewolf's Cartilage equals the difference of each [answer3] and each Basilisk's Rotator Cuff. The number of each [answer3] equals 12 more than each Basilisk's Patella. The number of each Werewolf's Patella equals the difference of each Minotaur's Cartilage and each [answer1]. Using the result [answer1], [answer3] from the previous calculation, [variable4] = [answer3] - [answer1]. What is Werewolf's Patella?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 0<<horizon>>0<<horizon>>12<<horizon>>10,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Giant Eagle's Kombucha equals 8 times as much as each Kombucha's Ingredient. The number of each Art Deco District's Giant Eagle equals 19 more than the difference of each Kombucha's Ingredient and each Kombucha's Duck Confit. The number of each Kombucha's Duck Confit equals 3. What is the value of Kombucha's Ingredient?
+
+Problem 2: The number of each Giant Eagle's Kombucha equals 8 times as much as each [answer1]. The number of each Art Deco District's Giant Eagle equals 19 more than the difference of each [answer1] and each Kombucha's Duck Confit. The number of each Kombucha's Duck Confit equals 3. Using the result [answer1] from the previous calculation, [variable2] = [answer1] * [answer1]. What is Giant Eagle's Ingredient?
+
+Problem 3: The number of each Giant Eagle's Kombucha equals 8 times as much as each [answer1]. The number of each BJ's Wholesale Club's Bottled Water equals each Art Deco District's Ingredient. The number of each Art Deco District's Giant Eagle equals 19 more than the difference of each [answer1] and each Kombucha's Duck Confit. The number of each Kombucha's Duck Confit equals 3. Using the result [answer2] from the previous calculation, [variable3] = [answer2]. What is BJ's Wholesale Club's Bottled Water?
+
+Problem 4: The number of each Giant Eagle's Kombucha equals 8 times as much as each [answer1]. The number of each Bottled Water's Turkey Breast equals 17. The number of each Colonial District's BJ's Wholesale Club equals 11. The number of each [answer3] equals each Art Deco District's Ingredient. The number of each Art Deco District's Giant Eagle equals 19 more than the difference of each [answer1] and each Kombucha's Duck Confit. The number of each Bottled Water's Duck Confit equals 11. The number of each Kombucha's Duck Confit equals 3. Using the result [answer3] from the previous calculation, [variable4] = 11 * [answer3]. What is Colonial District's Ingredient?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 3<<horizon>>3<<horizon>>11<<horizon>>7,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Ladybug Loft's Monkey equals each Lake Nakuru National Park's Mantis Habitat. The number of each Ladybug Loft's Deer equals 8. The number of each Lake Nakuru National Park's Mantis Habitat equals 8 more than each Ladybug Loft's Deer. What is the value of Lake Nakuru National Park's Mantis Habitat?
+
+Problem 2: The number of each Ladybug Loft's Monkey equals each [answer1]. The number of each Ladybug Loft's Deer equals 8. The number of each Lake Nakuru National Park's Ladybug Loft equals the sum of each Ladybug Loft's Monkey and each Monkey's Haemal Spines. The number of each [answer1] equals 8 more than each Ladybug Loft's Deer. Using the result [answer1] from the previous calculation, [variable2] = [answer1]. What is Ladybug Loft's Monkey?
+
+Problem 3: The number of each [answer2] equals each [answer1]. The number of each Ladybug Loft's Deer equals 8. The number of each Kgalagadi Transfrontier Park's Ladybug Loft equals 1 more than each Ladybug Loft's Animal. The number of each Lake Nakuru National Park's Ladybug Loft equals the sum of each [answer2] and each Monkey's Haemal Spines. The number of each [answer1] equals 8 more than each Ladybug Loft's Deer. The number of each Monkey's Haemal Spines equals each Ladybug Loft's Animal. The number of each Monkey's Epicentrals equals each Ladybug Loft's Animal. Using the result [answer2] from the previous calculation, [variable3] = [answer2]. What is Monkey's Epicentrals?
+
+Problem 4: The number of each [answer2] equals each [answer1]. The number of each Ladybug Loft's Deer equals 8. The number of each Kgalagadi Transfrontier Park's Ladybug Loft equals 1 more than each Ladybug Loft's Animal. The number of each Lake Nakuru National Park's Ladybug Loft equals the sum of each [answer2] and each Monkey's Haemal Spines. The number of each Mantis Habitat's Deer equals the sum of each Mikumi National Park's Ladybug Loft and each Monkey's Bone. The number of each [answer1] equals 8 more than each Ladybug Loft's Deer. The number of each Monkey's Haemal Spines equals each Ladybug Loft's Animal. The number of each [answer3] equals each Ladybug Loft's Animal. Using the result [answer2], [answer3] from the previous calculation, [variable4] = [answer3] + [answer2]. What is Monkey's Bone?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 16<<horizon>>16<<horizon>>1<<horizon>>2,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Old Town's Superior Grocers equals each Old Town's H Mart. The number of each Old Harbor's Superior Grocers equals 13 more than each Old Town's H Mart. The number of each Old Town's H Mart equals 15. The number of each Monument Zone's H Mart equals 11 times as much as each Old Town's La Michoacana Meat Market. The number of each Old Town's La Michoacana Meat Market equals each Old Town's H Mart. What is the value of Old Town's La Michoacana Meat Market?
+
+Problem 2: The number of each Old Town's Superior Grocers equals each Old Town's H Mart. The number of each Old Harbor's Superior Grocers equals 13 more than each Old Town's H Mart. The number of each Old Town's H Mart equals 15. The number of each Old Harbor's H Mart equals 20 times as much as each Old Harbor's Superior Grocers. The number of each [answer1] equals each Old Town's H Mart. What is the value of Old Harbor's Superior Grocers?
+
+Problem 3: The number of each Old Town's Superior Grocers equals each Old Town's H Mart. The number of each [answer2] equals 13 more than each Old Town's H Mart. The number of each Old Town's H Mart equals 15. The number of each Monument Zone's La Michoacana Meat Market equals 20 more than each Old Harbor's H Mart. The number of each Old Harbor's H Mart equals 20 times as much as each [answer2]. The number of each [answer1] equals each Old Town's H Mart. Using the result [answer2] from the previous calculation, [variable3] = 20 * [answer2]. What is Old Harbor's H Mart?
+
+Problem 4: The number of each Monument Zone's Superior Grocers equals 17 more than the difference of each H Mart's Product and each Old Harbor's La Michoacana Meat Market. The number of each Old Harbor's La Michoacana Meat Market equals 17 times as much as each Old Town's Supermarket. What is the value of Old Harbor's La Michoacana Meat Market?
+
+Problem 5: The number of each Old Town's Superior Grocers equals each Old Town's H Mart. The number of each [answer2] equals 13 more than each Old Town's H Mart. The number of each Old Town's H Mart equals 15. The number of each H Mart's Salsa equals the difference of each Old Town's Supermarket and each Old Town's Superior Grocers. The number of each [answer1] equals each Old Town's H Mart. What is the value of H Mart's Salsa?
+
+Problem 6: The number of each Old Town's Superior Grocers equals each Old Town's H Mart. The number of each [answer2] equals 13 more than each Old Town's H Mart. The number of each Old Town's H Mart equals 15. The number of each Monument Zone's H Mart equals 11 times as much as each [answer1]. The number of each [answer1] equals each Old Town's H Mart. Using the result [answer1] from the previous calculation, [variable6] = 11 * [answer1]. What is Monument Zone's H Mart?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}","string indices must be integers, not 'str'",FINAL ANSWER: 15<<horizon>>5<<horizon>>8<<horizon>>6<<horizon>>7<<horizon>>4,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Wolf's Autonomic Nerves equals the sum of each Atacama Desert's African Elephant, each African Elephant's Autonomic Nerves and each Bengal Tiger's Hippocampus. The number of each Bengal Tiger's Autonomic Nerves equals 2 times as much as the sum of each Atacama Desert's Wolf and each Atacama Desert's African Elephant. The number of each Atacama Desert's Wolf equals 17. The number of each Great Victoria Desert's African Elephant equals the difference of each Thar Desert's African Elephant and each Atacama Desert's Wolf. The number of each Atacama Desert's African Elephant equals each Atacama Desert's Wolf. What is the value of Atacama Desert's African Elephant?
+
+Problem 2: The number of each Wolf's Autonomic Nerves equals the sum of each [answer1], each African Elephant's Autonomic Nerves and each Bengal Tiger's Hippocampus. The number of each Bengal Tiger's Hippocampus equals each Atacama Desert's Creatures. The number of each Bengal Tiger's Autonomic Nerves equals 2 times as much as the sum of each Atacama Desert's Wolf and each [answer1]. The number of each Atacama Desert's Wolf equals 17. The number of each Great Victoria Desert's African Elephant equals the difference of each Thar Desert's African Elephant and each Atacama Desert's Wolf. The number of each [answer1] equals each Atacama Desert's Wolf. Using the result [answer1] from the previous calculation, [variable2] = 17 + [answer1]. What is Atacama Desert's Creatures?
+
+Problem 3: The number of each Wolf's Autonomic Nerves equals the sum of each [answer1], each African Elephant's Autonomic Nerves and each Bengal Tiger's Hippocampus. The number of each Patagonian Desert's Cheetah equals 9 times as much as the sum of each African Elephant's Autonomic Nerves and each Bengal Tiger's Hippocampus. The number of each Bengal Tiger's Hippocampus equals each [answer2]. The number of each Bengal Tiger's Autonomic Nerves equals 2 times as much as the sum of each Atacama Desert's Wolf and each [answer1]. The number of each Atacama Desert's Wolf equals 17. The number of each Great Victoria Desert's African Elephant equals the difference of each Thar Desert's African Elephant and each Atacama Desert's Wolf. The number of each [answer1] equals each Atacama Desert's Wolf. Using the result [answer2] from the previous calculation, [variable3] = [answer2]. What is Bengal Tiger's Hippocampus?
+
+Problem 4: The number of each Wolf's Autonomic Nerves equals the sum of each [answer1], each African Elephant's Autonomic Nerves and each [answer3]. The number of each Patagonian Desert's Cheetah equals 9 times as much as the sum of each African Elephant's Autonomic Nerves and each [answer3]. The number of each [answer3] equals each [answer2]. The number of each Bengal Tiger's Autonomic Nerves equals 2 times as much as the sum of each Atacama Desert's Wolf and each [answer1]. The number of each African Elephant's Autonomic Nerves equals 15 more than each Bengal Tiger's Organs. The number of each Atacama Desert's Wolf equals 17. The number of each Great Victoria Desert's African Elephant equals the difference of each Thar Desert's African Elephant and each Atacama Desert's Wolf. The number of each [answer1] equals each Atacama Desert's Wolf. Using the result [answer3] from the previous calculation, [variable4] = [answer3] + S. What is Bengal Tiger's Organs?
+
+Problem 5: The number of each Wolf's Autonomic Nerves equals the sum of each [answer1], each African Elephant's Autonomic Nerves and each [answer3]. The number of each Patagonian Desert's Cheetah equals 9 times as much as the sum of each African Elephant's Autonomic Nerves and each [answer3]. The number of each [answer3] equals each [answer2]. The number of each Bengal Tiger's Autonomic Nerves equals 2 times as much as the sum of each Atacama Desert's Wolf and each [answer1]. The number of each African Elephant's Autonomic Nerves equals 15 more than each [answer4]. The number of each Atacama Desert's Wolf equals 17. The number of each Great Victoria Desert's African Elephant equals the difference of each Thar Desert's African Elephant and each Atacama Desert's Wolf. The number of each [answer1] equals each Atacama Desert's Wolf. Using the result [answer4] from the previous calculation, [variable5] = 15 + [answer4]. What is African Elephant's Autonomic Nerves?
+
+Problem 6: The number of each Wolf's Autonomic Nerves equals the sum of each [answer1], each [answer5] and each [answer3]. The number of each Patagonian Desert's Cheetah equals 9 times as much as the sum of each [answer5] and each [answer3]. The number of each [answer3] equals each [answer2]. The number of each Bengal Tiger's Autonomic Nerves equals 2 times as much as the sum of each Atacama Desert's Wolf and each [answer1]. The number of each [answer5] equals 15 more than each [answer4]. The number of each Atacama Desert's Wolf equals 17. The number of each Great Victoria Desert's African Elephant equals the difference of each Thar Desert's African Elephant and each Atacama Desert's Wolf. The number of each [answer1] equals each Atacama Desert's Wolf. Using the result [answer5] from the previous calculation, [variable6] = [answer5]. What is African Elephant's Organs?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}","string indices must be integers, not 'str'",FINAL ANSWER: 17<<horizon>>11<<horizon>>11<<horizon>>10<<horizon>>2<<horizon>>2,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Tech Park's Aldi equals 19 more than each Aldi's Sour Cream. The number of each Media District's Costco equals the sum of each Costco's Sour Cream, each Lidl's Product, each Aldi's Sour Cream and each Lidl's Cheddar Cheese. The number of each Lidl's Cheddar Cheese equals 4 more than the sum of each Tech Park's Lidl, each Costco's Sour Cream and each Tech Park's Aldi. The number of each Aldi's Sour Cream equals 5 more than each Tech Park's Lidl. The number of each Costco's Mozzarella Cheese equals 6 times as much as each Tech Park's Lidl. The number of each Tech Park's Lidl equals 11. What is the value of Aldi's Sour Cream?
+
+Problem 2: The number of each Tech Park's Aldi equals 19 more than each [answer1]. The number of each Media District's Costco equals the sum of each Costco's Sour Cream, each Lidl's Product, each [answer1] and each Lidl's Cheddar Cheese. The number of each Lidl's Cheddar Cheese equals 4 more than the sum of each Tech Park's Lidl, each Costco's Sour Cream and each Tech Park's Aldi. The number of each Costco's Cheddar Cheese equals each Tech Park's Aldi. The number of each Lidl's Sour Cream equals each Tech Park's Aldi. The number of each [answer1] equals 5 more than each Tech Park's Lidl. The number of each Costco's Mozzarella Cheese equals 6 times as much as each Tech Park's Lidl. The number of each Tech Park's Lidl equals 11. Using the result [answer1] from the previous calculation, [variable2] = 19 + [answer1]. What is Tech Park's Aldi?
+
+Problem 3: The number of each [answer2] equals 19 more than each [answer1]. The number of each Media District's Costco equals the sum of each Costco's Sour Cream, each Lidl's Product, each [answer1] and each Lidl's Cheddar Cheese. The number of each Lidl's Cheddar Cheese equals 4 more than the sum of each Tech Park's Lidl, each Costco's Sour Cream and each [answer2]. The number of each Costco's Cheddar Cheese equals each [answer2]. The number of each Lidl's Sour Cream equals each [answer2]. The number of each [answer1] equals 5 more than each Tech Park's Lidl. The number of each Costco's Mozzarella Cheese equals 6 times as much as each Tech Park's Lidl. The number of each Costco's Sour Cream equals 9 more than each Lidl's Sour Cream. The number of each Tech Park's Lidl equals 11. Using the result [answer2] from the previous calculation, [variable3] = [answer2]. What is Lidl's Sour Cream?
+
+Problem 4: The number of each Lidl's Cheddar Cheese equals 4 more than the sum of each Tech Park's Lidl, each Costco's Sour Cream and each [answer2]. The number of each [answer1] equals 5 more than each Tech Park's Lidl. The number of each Costco's Mozzarella Cheese equals 6 times as much as each Tech Park's Lidl. The number of each Tech Park's Costco equals the sum of each Media District's Product, each Costco's Mozzarella Cheese and each Costco's Cheddar Cheese. The number of each Tech Park's Lidl equals 11. What is the value of Costco's Mozzarella Cheese?
+
+Problem 5: The number of each [answer2] equals 19 more than each [answer1]. The number of each Media District's Lidl equals 16 more than the difference of each Costco's Sour Cream and each Costco's Cheddar Cheese. The number of each Media District's Costco equals the sum of each Costco's Sour Cream, each Lidl's Product, each [answer1] and each Lidl's Cheddar Cheese. The number of each Lidl's Cheddar Cheese equals 4 more than the sum of each Tech Park's Lidl, each Costco's Sour Cream and each [answer2]. The number of each Costco's Cheddar Cheese equals each [answer2]. The number of each [answer3] equals each [answer2]. The number of each [answer1] equals 5 more than each Tech Park's Lidl. The number of each [answer4] equals 6 times as much as each Tech Park's Lidl. The number of each Tech Park's Costco equals the sum of each Media District's Product, each [answer4] and each Costco's Cheddar Cheese. The number of each Tech Park's Lidl equals 11. Using the result [answer2] from the previous calculation, [variable5] = [answe[answer3]2]. What is Costco's Cheddar Cheese?
+
+Problem 6: The number of each [answer2] equals 19 more than each [answer1]. The number of each Media District's Costco equals the sum of each Costco's Sour Cream, each Lidl's Product, each [answer1] and each Lidl's Cheddar Cheese. The number of each Lidl's Cheddar Cheese equals 4 more than the sum of each Tech Park's Lidl, each Costco's Sour Cream and each [answer2]. The number of each [answer5] equals each [answer2]. The number of each [answer3] equals each [answer2]. The number of each [answer1] equals 5 more than each Tech Park's Lidl. The number of each [answer4] equals 6 times as much as each Tech Park's Lidl. The number of each Costco's Sour Cream equals 9 more than each [answer3]. The number of each Tech Park's Lidl equals 11. Using the result [answer3] from the previous calculation, [variable6] = S + [answer3]. What is Lidl's Product?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}","string indices must be integers, not 'str'",FINAL ANSWER: 16<<horizon>>12<<horizon>>12<<horizon>>20<<horizon>>12<<horizon>>14,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Nasopharynx's Ganglion Cells equals 22 more than each Larynx's Photoreceptor Cells. The number of each Daphnia's Nasopharynx equals the sum of each Nasopharynx's Ganglion Cells, each Larynx's Cells and each Larynx's Photoreceptor Cells. The number of each Daphnia's Larynx equals 12 times as much as each Larynx's Photoreceptor Cells. The number of each Larynx's Photoreceptor Cells equals 0. The number of each Larynx's Ganglion Cells equals each Nasopharynx's Ganglion Cells. The number of each Chapultepec Park in Mexico City's Gonium equals the difference of each Larynx's Photoreceptor Cells and each Golden Gate Park in San Francisco's Gonium. What is the value of Nasopharynx's Ganglion Cells?
+
+Problem 2: The number of each [answer1] equals 22 more than each Larynx's Photoreceptor Cells. The number of each Daphnia's Nasopharynx equals the sum of each [answer1], each Larynx's Cells and each Larynx's Photoreceptor Cells. The number of each Daphnia's Larynx equals 12 times as much as each Larynx's Photoreceptor Cells. The number of each Larynx's Photoreceptor Cells equals 0. The number of each Larynx's Ganglion Cells equals each [answer1]. The number of each Chapultepec Park in Mexico City's Gonium equals the difference of each Larynx's Photoreceptor Cells and each Golden Gate Park in San Francisco's Gonium. Using the result [answer1] from the previous calculation, [variable2] = [answer1]. What is Larynx's Ganglion Cells?
+
+Problem 3: The number of each Nasopharynx's Photoreceptor Cells equals 7 times as much as each Gonium's Nasopharynx. The number of each Gonium's Nasopharynx equals 1. What is the value of Nasopharynx's Photoreceptor Cells?
+
+Problem 4: The number of each Golden Gate Park in San Francisco's Gonium equals 21 times as much as each Daphnia's Cells. The number of each Chapultepec Park in Mexico City's Gonium equals the difference of each Larynx's Photoreceptor Cells and each Golden Gate Park in San Francisco's Gonium. What is the value of Golden Gate Park in San Francisco's Gonium?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}","string indices must be integers, not 'str'",FINAL ANSWER: 22<<horizon>>22<<horizon>>7<<horizon>>1,0.0,0.0
+"Solve every subproblem in the MASBench task carefully and preserve the requested answer order. Follow only the dependency paths needed for the requested quantities; do not restate every fact or repeatedly speculate about missing definitions. For iGSM arithmetic, every quantity is in Z_23: reduce additions, subtractions, multiplications, and intermediate results modulo 23 to an integer from 0 through 22. A plural category or abstract total denotes the modulo-23 sum of its direct listed members. If there are multiple answers, join them using exactly `<<horizon>>` with no omitted items or reordering. End with one separate line `FINAL ANSWER: ANSWER`; ANSWER must contain only the single answer or the ordered separator-delimited answer sequence.
+
+Problem 1: The number of each Skyview University's Botany Lab equals each Skyview University's Environmental Science Lab. The number of each Eastwood University's Environmental Science Lab equals the sum of each Skyview University's Classroom and each Botany Lab's Athletic Backpack. The number of each Botany Lab's Athletic Backpack equals 9. The number of each Eastwood University's Ecology Lab equals the difference of each Skyview University's Botany Lab and each Botany Lab's Athletic Backpack. The number of each Skyview University's Environmental Science Lab equals 7 times as much as each Botany Lab's Athletic Backpack. The number of each Environmental Science Lab's Athletic Backpack equals each Skyview University's Environmental Science Lab. What is the value of Skyview University's Environmental Science Lab?
+
+Problem 2: The number of each Skyview University's Ecology Lab equals each Skyview University's Botany Lab. The number of each Skyview University's Botany Lab equals each [answer1]. The number of each Eastwood University's Environmental Science Lab equals the sum of each Skyview University's Classroom and each Botany Lab's Athletic Backpack. The number of each Botany Lab's Athletic Backpack equals 9. The number of each Eastwood University's Ecology Lab equals the difference of each Skyview University's Botany Lab and each Botany Lab's Athletic Backpack. The number of each [answer1] equals 7 times as much as each Botany Lab's Athletic Backpack. The number of each Environmental Science Lab's Athletic Backpack equals each [answer1]. Using the result [answer1] from the previous calculation, [variable2] = [answer1]. What is Skyview University's Botany Lab?
+
+Problem 3: The number of each Skyview University's Ecology Lab equals each [answer2]. The number of each [answer2] equals each [answer1]. The number of each Eastwood University's Environmental Science Lab equals the sum of each Skyview University's Classroom and each Botany Lab's Athletic Backpack. The number of each Botany Lab's Athletic Backpack equals 9. The number of each Eastwood University's Ecology Lab equals the difference of each [answer2] and each Botany Lab's Athletic Backpack. The number of each [answer1] equals 7 times as much as each Botany Lab's Athletic Backpack. The number of each Environmental Science Lab's Athletic Backpack equals each [answer1]. Using the result [answer2] from the previous calculation, [variable3] = [answer2]. What is Skyview University's Ecology Lab?
+
+Problem 4: The number of each Ecology Lab's Rolling Backpack equals 9 times as much as each Eastwood University's Environmental Science Lab. The number of each Eastwood University's Environmental Science Lab equals the sum of each Skyview University's Classroom and each Botany Lab's Athletic Backpack. The number of each Botany Lab's Athletic Backpack equals 9. The number of each Eastwood University's Botany Lab equals each Eastwood University's Environmental Science Lab. The number of each Eastwood University's Ecology Lab equals the difference of each [answer2] and each Botany Lab's Athletic Backpack. The number of each [answer1] equals 7 times as much as each Botany Lab's Athletic Backpack. What is the value of Eastwood University's Environmental Science Lab?
+
+Problem 5: The number of each Ecology Lab's Rolling Backpack equals 9 times as much as each [answer4]. The number of each [answer4] equals the sum of each Skyview University's Classroom and each Botany Lab's Athletic Backpack. The number of each Botany Lab's Athletic Backpack equals 9. The number of each Rosewood University's Environmental Science Lab equals 4 times as much as the sum of each Eastwood University's Backpack, each Skyview University's Classroom and each Eastwood University's Botany Lab. The number of each Eastwood University's Botany Lab equals each [answer4]. The number of each Eastwood University's Ecology Lab equals the difference of each [answer2] and each Botany Lab's Athletic Backpack. The number of each [answer1] equals 7 times as much as each Botany Lab's Athletic Backpack. Using the result [answer4] from the previous calculation, [variable5] = [answer4]. What is Eastwood University's Botany Lab?
+
+Problem 6: The number of each [answer3] equals each [answer2]. The number of each [answer2] equals each [answer1]. The number of each [answer4] equals the sum of each Skyview University's Classroom and each Botany Lab's Athletic Backpack. The number of each Botany Lab's Athletic Backpack equals 9. The number of each Eastwood University's Ecology Lab equals the difference of each [answer2] and each Botany Lab's Athletic Backpack. The number of each [answer1] equals 7 times as much as each Botany Lab's Athletic Backpack. The number of each Environmental Science Lab's Athletic Backpack equals each [answer1]. Using the result [answer2] from the previous calculation, [variable6] = [answer2] - 9. What is Eastwood University's Ecology Lab?
+
+Note: In this problem set:
+- [variablek] represents the calculated variable needed to solve problem k.
+- [answerk] represents the answer to problem k.
+
+Solve all problems step by step and provide the answers for all problems in the following format:
+
+### Final Answers
+
+Problem 1: \boxed{[answer1]}
+
+Problem 2: \boxed{[answer2]}
+
+Problem 3: \boxed{[answer3]}
+
+Problem 4: \boxed{[answer4]}
+
+Problem 5: \boxed{[answer5]}
+
+Problem 6: \boxed{[answer6]}","string indices must be integers, not 'str'",FINAL ANSWER: 17<<horizon>>17<<horizon>>17<<horizon>>14<<horizon>>14<<horizon>>8,0.0,0.0

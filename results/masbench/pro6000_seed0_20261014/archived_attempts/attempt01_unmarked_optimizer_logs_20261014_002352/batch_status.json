@@ -1,0 +1,33 @@
+{
+  "status": "running",
+  "started_at": 1791908132.8897476,
+  "units": [],
+  "config": {
+    "methods": [
+      "aflow",
+      "maas"
+    ],
+    "axes": [
+      "breadth",
+      "depth",
+      "horizon",
+      "parallel",
+      "robustness"
+    ],
+    "search_seed": 0,
+    "data_seed": 2026,
+    "concurrency": 16,
+    "context": 16384,
+    "max_output": 6144,
+    "thinking": false,
+    "gpu_memory_utilization": 0.85,
+    "max_num_batched_tokens": 16384,
+    "chunked_prefill": true,
+    "method_device": "cpu",
+    "hardware_profile": "RTX_PRO6000_Blackwell_96GB",
+    "temperatures": "native role defaults and overrides",
+    "scope": "new search-select-test, no reuse of 8K results"
+  },
+  "preflight_report_sha256": "002c0bd04d2b3cde9c6eb34e49d12508ae05d7610e8b09df9ee40c615838a6d9",
+  "current_unit": "aflow/breadth/seed_0"
+}

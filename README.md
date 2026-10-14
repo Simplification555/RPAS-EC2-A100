@@ -36,6 +36,8 @@ This working tree also contains the RPAS multi-agent architecture-search researc
 
 The reproducible external-comparison code, frozen protocols, and machine-transfer instructions are documented in [TRANSFER_README_zh.md](TRANSFER_README_zh.md), [docs/TRANSFER_TO_ANOTHER_MACHINE.md](docs/TRANSFER_TO_ANOTHER_MACHINE.md), and the detailed [continuation runbook](docs/CONTINUATION_RUNBOOK_zh.md). The public bundle includes only the reviewed EC-1 and EC-3 fixed fixtures with provenance manifests, plus the compact MaAS seed-0 recovery controller; foundation-model weights, credentials, logs, outputs, third-party checkouts, MMLU data, and any private data remain excluded.
 
+The separately published [RTX PRO 6000 MASBench seed-0 result archive](results/masbench/pro6000_seed0_20261014/README.md) includes the completed exploratory AFlow/MaAS batch, preceding failed attempts, raw evaluation/audit evidence and offline verification. Its relaxed-gate results retain all quality warnings and are not A100 measurements or strictly passing formal runs.
+
 ---
 
 ## What is GEPA?

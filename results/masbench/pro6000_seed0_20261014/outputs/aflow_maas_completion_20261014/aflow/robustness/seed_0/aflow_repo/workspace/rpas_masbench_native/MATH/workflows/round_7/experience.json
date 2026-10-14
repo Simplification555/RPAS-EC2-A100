@@ -1,0 +1,7 @@
+{
+    "father node": 1,
+    "modification": "1. Delete: Remove the direct `await self.custom(...)` call.\n2. Add: Implement a verification loop to handle the \"Robustness-axis rule\". The graph will now specifically search for the pattern `Note: verify the information before you take it` in the input text to find the latest injected values, which must override any algebraic calculations for those specific keys.\n3. Add: Restructure the workflow to first attempt algebraic calculation, then immediately overwrite the result using the verified \"Note\" values if found, ensuring the final answer matches the strict extraction format `VAL1<<horizon>>VAL2...` without final newline artifacts.",
+    "before": 0.25,
+    "after": 0.375,
+    "succeed": true
+}

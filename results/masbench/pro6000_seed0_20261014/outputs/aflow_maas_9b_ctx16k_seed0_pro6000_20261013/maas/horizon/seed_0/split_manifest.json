@@ -1,0 +1,111 @@
+{
+  "protocol_version": "masbench_external_protocol_v2_16k_shared_alignment",
+  "run_id": "masbench:maas:horizon:seed_0:masbench_external_protocol_v2_16k_shared_alignment",
+  "method": "maas",
+  "dataset": "Salesforce/MASBench",
+  "axis": "horizon",
+  "seed": 0,
+  "data_seed": 2026,
+  "split_counts": {
+    "search": 24,
+    "select": 24
+  },
+  "pre_test_split_audit": {
+    "split_ids": {
+      "search": [
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:165:content:05f617a00b4c21f8",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:539:content:b5cdb99bbb61ebc9",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:577:content:5b366846066826d4",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:730:content:c36c87300f16ba8a",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:987:content:fc462414d68293d8",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:175:content:c5821b9e462fa69b",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:922:content:14177b17bde0dd3a",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:61:content:d0d237575e4fdf25",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:990:content:24d1829a0a9be98c",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:427:content:4374217237861287",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:684:content:6e39aec612ec45bf",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:471:content:36a602606341dae0",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:557:content:a293548744dc27b6",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:924:content:f4c705ec7e2b8ff7",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:16:content:f69814a06b9922fe",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:288:content:516e4a0802fedd5c",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:716:content:1e435551209d8474",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:908:content:19ef6c5e1378e0af",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:870:content:952944a74fcf7cab",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:361:content:a4606a03c185d0a3",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:761:content:f77ad5d08b064883",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:889:content:44fac9b1ace80006",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:993:content:c7dc51c925b1c859",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:871:content:cd82279a5b42587f"
+      ],
+      "select": [
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:965:content:46e697b9835334ff",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:860:content:360beb7155602b34",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:609:content:869e316fd3b43e1f",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:695:content:d12f67d88edb0334",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:686:content:70963227363ea6a8",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:53:content:f9a01751c2ea6a74",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:731:content:2e7d705971013b1e",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:839:content:8a3d320470e90c46",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:424:content:973d3a623021d022",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:944:content:93415d56117f44e4",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:65:content:32d91d4d5470416f",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:850:content:35e8be016b0ecaa4",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:468:content:548b40f4d0b41e3d",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:123:content:58984b98794948a7",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:6:content:e0e20b84b8b4be90",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:237:content:e2e3425ff6af259a",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:388:content:3b7c95098877ee6c",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:902:content:1283a1f9063d28ed",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:954:content:472641e1f6789f4c",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:23:content:c9c630e65fe85b26",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:352:content:946c4e2bd2ef7803",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:651:content:0fb82ce4276670c1",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:58:content:74f6e9c8d5a4dea0",
+        "masbench:horizon:train:masbench:horizon:train:2,4,6:725:content:75330234f1070b4f"
+      ]
+    },
+    "axis_value_counts": {
+      "search": {
+        "2,4,6": 24
+      },
+      "select": {
+        "2,4,6": 24
+      }
+    },
+    "search_select_disjoint": true
+  },
+  "search_select_disjoint": true,
+  "data_sha256": {
+    "horizon/search_24.jsonl": "2aad34cba271d661f324eed48719ab286006f607d839bb5cdc29cd48ccab12c1",
+    "horizon/select_24.jsonl": "3de4ba2d25a3d4edfb793db1bce528db97767e9367bca5635f825c32a8944fb8",
+    "manifest_search_select.json": "27335b968c6b70a60e3fd5eba54221a9d45085568b6f602c9cd3fd4ed95a9a62"
+  },
+  "task_contract_sha256": "20c7c846c1643c4d76b8888b81a2c018b53f714e690b1e0d7c5c7603e4f2e4ce",
+  "task_instruction_sha256": "48e201243b9c8381223e884288600241a33abc02f9f15386454442d7f575d233",
+  "task_protocol_exception": null,
+  "answer_parser": "masbench_shared_scoring_alignment_v2",
+  "answer_parser_sha256": "549883357b584793de55f0aff4a5604c8df47d1ad7ae6592a762026bba9138d4",
+  "runner_sha256": "14d830851e7aaf4f13e6d936595fe0f6315f9eba08e993823f667d58f72e61f1",
+  "base_runner_sha256": "c6afa5c5fc9d10255fee7be6ea1677b1d978ea7b4a606520a072408995cfbe7f",
+  "model": "Qwen/Qwen3.5-9B",
+  "context_limit": 16384,
+  "output_limit": 6144,
+  "selection_split": "D_select",
+  "test_split": "D_test",
+  "d_test_opened": false,
+  "selection_lock_required_before_test": true,
+  "baseline_source_sha256": {
+    "maas/ext/maas/scripts/optimizer.py": "900ad89d227e7f60eb44e7c4c61cba646b02b9d151fbb6fc3400dcd0f9273f2c",
+    "maas/ext/maas/scripts/evaluator.py": "95a75eff03948da3a1b46f907f40dae34403d930ed9757f860307f6a7465107b",
+    "maas/ext/maas/scripts/optimizer_utils/evaluation_utils.py": "39255a2b8c6b5ef506f2b8b0c7305a7272b33d6db42c4db825aafa401698fa13",
+    "maas/ext/maas/scripts/optimizer_utils/graph_utils.py": "3c1c41c24a0a71f04d1bedf0ed482910a94b8231f8b0ca24d4f1da8e80f1b124",
+    "maas/ext/maas/benchmark/benchmark.py": "ece22e41719e2e45f21a3f033f6524f76eb6f97d238ea4c762d4e708befe0a20",
+    "maas/ext/maas/benchmark/math.py": "a26e652d0f83a3ec59c74326aefafe4b08da40ecdd5d0ce3bc831c7c4fb58e33"
+  },
+  "baseline_git_commit": "987f3c1bc9a96e844fe090db3791446e3ef0f5c7",
+  "official_baseline_source": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/external_baselines/MaAS",
+  "rpas_root": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo",
+  "status": "running",
+  "started_at_utc": "2026-10-13T21:13:33.406203+00:00"
+}

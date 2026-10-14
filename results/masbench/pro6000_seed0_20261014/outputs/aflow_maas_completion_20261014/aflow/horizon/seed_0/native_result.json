@@ -1,0 +1,471 @@
+{
+  "method": "aflow",
+  "search_entrypoint": "AFlow native MCTS Optimizer.optimize(Graph)",
+  "native_method_config": {
+    "dataset": "MATH",
+    "question_type": "math",
+    "operators": [
+      "Custom",
+      "ScEnsemble",
+      "Programmer"
+    ],
+    "sample": 4,
+    "check_convergence": false,
+    "initial_round": 1,
+    "max_rounds": 8,
+    "validation_rounds": 1,
+    "mutation_generation_retry_cap": 8
+  },
+  "search_rounds": [
+    1,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9
+  ],
+  "selection_rows": [
+    {
+      "round": 1,
+      "status": "evaluated",
+      "candidate_id": "round_1",
+      "native_score": 1.2083333333333333,
+      "score": 0.25,
+      "shared_metrics": {
+        "valid_execution_rate": 1.0,
+        "error_example_rate": 0.0,
+        "protocol_error_rate": 0.0,
+        "truncated_unextractable_rate": 0.0,
+        "score": 0.25,
+        "accuracy": 0.25,
+        "correct": 6,
+        "num_examples": 24,
+        "valid_answer_rate": 1.0,
+        "component_accuracy": 0.5869565217391305,
+        "component_correct": 54,
+        "component_total": 92,
+        "mean_score_0_1_2": 1.2083333333333333,
+        "answer_parser": "masbench_shared_scoring_alignment_v2"
+      },
+      "valid": true,
+      "quality_passed": true,
+      "completion_policy": "relaxed",
+      "total_calls": 30,
+      "total_tokens": 172687,
+      "avg_cost": 7195.291666666667,
+      "total_cost": 172687,
+      "cost_unit": "model_tokens",
+      "native_avg_cost": 0.0,
+      "native_total_cost": 0.0,
+      "output_audit": {
+        "csv": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/aflow/horizon/seed_0/aflow_selection/round_1/1.20833_20261014_162239.csv",
+        "csv_rows": 24,
+        "empty_predictions": 0,
+        "failure_predictions": 0,
+        "failure_fraction": 0.0,
+        "sample_timeouts": 0,
+        "failure_markers": []
+      }
+    },
+    {
+      "round": 3,
+      "status": "invalid",
+      "errors": [
+        "syntax error: unexpected indent at line 29",
+        "workflow parse failed: unexpected indent (<unknown>, line 29)"
+      ]
+    },
+    {
+      "round": 4,
+      "status": "invalid",
+      "errors": [
+        "syntax error: f-string: valid expression required before '}' at line 35",
+        "workflow parse failed: f-string: valid expression required before '}' (<unknown>, line 35)"
+      ]
+    },
+    {
+      "round": 5,
+      "status": "invalid",
+      "errors": [
+        "custom result has no key 'output'",
+        "missing operator: sc_ensemble"
+      ]
+    },
+    {
+      "round": 7,
+      "status": "invalid",
+      "errors": [
+        "missing Workflow class"
+      ]
+    },
+    {
+      "round": 8,
+      "status": "invalid",
+      "candidate_id": "round_8",
+      "native_score": 0.0,
+      "score": 0.0,
+      "shared_metrics": {
+        "valid_execution_rate": 0.0,
+        "error_example_rate": 1.0,
+        "protocol_error_rate": 0.0,
+        "truncated_unextractable_rate": 0.0,
+        "score": 0.0,
+        "accuracy": 0.0,
+        "correct": 0,
+        "num_examples": 24,
+        "valid_answer_rate": 0.0,
+        "component_accuracy": 0.0,
+        "component_correct": 0,
+        "component_total": 92,
+        "mean_score_0_1_2": 0.0,
+        "answer_parser": "masbench_shared_scoring_alignment_v2"
+      },
+      "valid": false,
+      "quality_passed": false,
+      "completion_policy": "relaxed",
+      "total_calls": 0,
+      "total_tokens": 0,
+      "avg_cost": 0.0,
+      "total_cost": 0,
+      "cost_unit": "model_tokens",
+      "native_avg_cost": 0.0,
+      "native_total_cost": 0.0,
+      "output_audit": {
+        "csv": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/aflow/horizon/seed_0/aflow_selection/round_8/0.00000_20261014_162247.csv",
+        "csv_rows": 24,
+        "empty_predictions": 0,
+        "failure_predictions": 0,
+        "failure_fraction": 0.0,
+        "sample_timeouts": 0,
+        "failure_markers": []
+      },
+      "errors": [
+        "shared validity gate failed: valid_execution_rate=0.0%, error_example_rate=100.0%, protocol_error_rate=0.0%, truncated_unextractable_rate=0.0%"
+      ]
+    },
+    {
+      "round": 9,
+      "status": "invalid",
+      "candidate_id": "round_9",
+      "native_score": 0.0,
+      "score": 0.0,
+      "shared_metrics": {
+        "valid_execution_rate": 0.0,
+        "error_example_rate": 1.0,
+        "protocol_error_rate": 0.0,
+        "truncated_unextractable_rate": 0.0,
+        "score": 0.0,
+        "accuracy": 0.0,
+        "correct": 0,
+        "num_examples": 24,
+        "valid_answer_rate": 0.0,
+        "component_accuracy": 0.0,
+        "component_correct": 0,
+        "component_total": 92,
+        "mean_score_0_1_2": 0.0,
+        "answer_parser": "masbench_shared_scoring_alignment_v2"
+      },
+      "valid": false,
+      "quality_passed": false,
+      "completion_policy": "relaxed",
+      "total_calls": 0,
+      "total_tokens": 0,
+      "avg_cost": 0.0,
+      "total_cost": 0,
+      "cost_unit": "model_tokens",
+      "native_avg_cost": 0.0,
+      "native_total_cost": 0.0,
+      "output_audit": {
+        "csv": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/aflow/horizon/seed_0/aflow_selection/round_9/0.00000_20261014_162247.csv",
+        "csv_rows": 24,
+        "empty_predictions": 0,
+        "failure_predictions": 0,
+        "failure_fraction": 0.0,
+        "sample_timeouts": 0,
+        "failure_markers": []
+      },
+      "errors": [
+        "shared validity gate failed: valid_execution_rate=0.0%, error_example_rate=100.0%, protocol_error_rate=0.0%, truncated_unextractable_rate=0.0%"
+      ]
+    }
+  ],
+  "selected_round": {
+    "round": 1,
+    "status": "evaluated",
+    "candidate_id": "round_1",
+    "native_score": 1.2083333333333333,
+    "score": 0.25,
+    "shared_metrics": {
+      "valid_execution_rate": 1.0,
+      "error_example_rate": 0.0,
+      "protocol_error_rate": 0.0,
+      "truncated_unextractable_rate": 0.0,
+      "score": 0.25,
+      "accuracy": 0.25,
+      "correct": 6,
+      "num_examples": 24,
+      "valid_answer_rate": 1.0,
+      "component_accuracy": 0.5869565217391305,
+      "component_correct": 54,
+      "component_total": 92,
+      "mean_score_0_1_2": 1.2083333333333333,
+      "answer_parser": "masbench_shared_scoring_alignment_v2"
+    },
+    "valid": true,
+    "quality_passed": true,
+    "completion_policy": "relaxed",
+    "total_calls": 30,
+    "total_tokens": 172687,
+    "avg_cost": 7195.291666666667,
+    "total_cost": 172687,
+    "cost_unit": "model_tokens",
+    "native_avg_cost": 0.0,
+    "native_total_cost": 0.0,
+    "output_audit": {
+      "csv": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/aflow/horizon/seed_0/aflow_selection/round_1/1.20833_20261014_162239.csv",
+      "csv_rows": 24,
+      "empty_predictions": 0,
+      "failure_predictions": 0,
+      "failure_fraction": 0.0,
+      "sample_timeouts": 0,
+      "failure_markers": []
+    }
+  },
+  "selected_efficiency_round": {
+    "round": 1,
+    "status": "evaluated",
+    "candidate_id": "round_1",
+    "native_score": 1.2083333333333333,
+    "score": 0.25,
+    "shared_metrics": {
+      "valid_execution_rate": 1.0,
+      "error_example_rate": 0.0,
+      "protocol_error_rate": 0.0,
+      "truncated_unextractable_rate": 0.0,
+      "score": 0.25,
+      "accuracy": 0.25,
+      "correct": 6,
+      "num_examples": 24,
+      "valid_answer_rate": 1.0,
+      "component_accuracy": 0.5869565217391305,
+      "component_correct": 54,
+      "component_total": 92,
+      "mean_score_0_1_2": 1.2083333333333333,
+      "answer_parser": "masbench_shared_scoring_alignment_v2"
+    },
+    "valid": true,
+    "quality_passed": true,
+    "completion_policy": "relaxed",
+    "total_calls": 30,
+    "total_tokens": 172687,
+    "avg_cost": 7195.291666666667,
+    "total_cost": 172687,
+    "cost_unit": "model_tokens",
+    "native_avg_cost": 0.0,
+    "native_total_cost": 0.0,
+    "output_audit": {
+      "csv": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/aflow/horizon/seed_0/aflow_selection/round_1/1.20833_20261014_162239.csv",
+      "csv_rows": 24,
+      "empty_predictions": 0,
+      "failure_predictions": 0,
+      "failure_fraction": 0.0,
+      "sample_timeouts": 0,
+      "failure_markers": []
+    }
+  },
+  "selection_lock": {
+    "path": "selection_frozen.json",
+    "sha256": "ff8fa6dcebe0e9777eded3a6afb2f119d1050f333e976f496860e5c1e22f385e"
+  },
+  "test": {
+    "Q": {
+      "valid_execution_rate": 1.0,
+      "error_example_rate": 0.0,
+      "protocol_error_rate": 0.15,
+      "truncated_unextractable_rate": 0.11666666666666667,
+      "score": 0.15,
+      "accuracy": 0.15,
+      "correct": 9,
+      "num_examples": 60,
+      "valid_answer_rate": 0.85,
+      "component_accuracy": 0.48541666666666666,
+      "component_correct": 233,
+      "component_total": 480,
+      "mean_score_0_1_2": 0.95,
+      "answer_parser": "masbench_shared_scoring_alignment_v2",
+      "native_score": 0.95,
+      "avg_cost": 11856.7,
+      "total_cost": 711402,
+      "cost_unit": "model_tokens",
+      "native_avg_cost": 0.0,
+      "native_total_cost": 0.0,
+      "resource_usage": {
+        "calls": 90,
+        "prompt_tokens": 382496,
+        "completion_tokens": 328906,
+        "total_tokens": 711402,
+        "failed_calls": 0
+      },
+      "calls": 90,
+      "prompt_tokens": 382496,
+      "completion_tokens": 328906,
+      "total_tokens": 711402,
+      "failed_calls": 0,
+      "output_audit": {
+        "csv": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/aflow/horizon/seed_0/aflow_test/Q/0.95000_20261014_162902.csv",
+        "csv_rows": 60,
+        "empty_predictions": 0,
+        "failure_predictions": 0,
+        "failure_fraction": 0.0,
+        "sample_timeouts": 0,
+        "failure_markers": []
+      },
+      "selected_round": 1,
+      "operating_point": "Q"
+    },
+    "E": {
+      "valid_execution_rate": 1.0,
+      "error_example_rate": 0.0,
+      "protocol_error_rate": 0.15,
+      "truncated_unextractable_rate": 0.11666666666666667,
+      "score": 0.15,
+      "accuracy": 0.15,
+      "correct": 9,
+      "num_examples": 60,
+      "valid_answer_rate": 0.85,
+      "component_accuracy": 0.48541666666666666,
+      "component_correct": 233,
+      "component_total": 480,
+      "mean_score_0_1_2": 0.95,
+      "answer_parser": "masbench_shared_scoring_alignment_v2",
+      "native_score": 0.95,
+      "avg_cost": 11856.7,
+      "total_cost": 711402,
+      "cost_unit": "model_tokens",
+      "native_avg_cost": 0.0,
+      "native_total_cost": 0.0,
+      "resource_usage": {
+        "calls": 90,
+        "prompt_tokens": 382496,
+        "completion_tokens": 328906,
+        "total_tokens": 711402,
+        "failed_calls": 0
+      },
+      "calls": 90,
+      "prompt_tokens": 382496,
+      "completion_tokens": 328906,
+      "total_tokens": 711402,
+      "failed_calls": 0,
+      "output_audit": {
+        "csv": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/outputs/aflow_maas_completion_20261014/aflow/horizon/seed_0/aflow_test/Q/0.95000_20261014_162902.csv",
+        "csv_rows": 60,
+        "empty_predictions": 0,
+        "failure_predictions": 0,
+        "failure_fraction": 0.0,
+        "sample_timeouts": 0,
+        "failure_markers": []
+      },
+      "selected_round": 1,
+      "operating_point": "E",
+      "same_candidate_as": "Q"
+    }
+  },
+  "telemetry": {
+    "calls": 152,
+    "prompt_tokens": 563775,
+    "completion_tokens": 537553,
+    "total_tokens": 1101328,
+    "failed_calls": 0,
+    "sample_timeouts": 0,
+    "phase_totals": {
+      "search": {
+        "calls": 32,
+        "prompt_tokens": 115074,
+        "completion_tokens": 102165,
+        "total_tokens": 217239,
+        "failed_calls": 0
+      },
+      "select": {
+        "calls": 30,
+        "prompt_tokens": 66205,
+        "completion_tokens": 106482,
+        "total_tokens": 172687,
+        "failed_calls": 0
+      },
+      "test:aime_2025": {
+        "calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "failed_calls": 0
+      },
+      "test:aime_2026": {
+        "calls": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "failed_calls": 0
+      },
+      "test:horizon:Q": {
+        "calls": 90,
+        "prompt_tokens": 382496,
+        "completion_tokens": 328906,
+        "total_tokens": 711402,
+        "failed_calls": 0
+      }
+    },
+    "finish_reason_counts": {
+      "stop": 43,
+      "length": 41
+    },
+    "completion_truncated": 41,
+    "phase_wall_seconds": {
+      "search": 0.02229294879361987,
+      "select": 136.13679020665586,
+      "test:horizon:Q": 375.81459411699325
+    },
+    "context_guard": {
+      "version": "shared_task_context_masbench_v3",
+      "policy": {
+        "version": "task_context_masbench_v3",
+        "limit": 16384,
+        "margin": 64,
+        "min_output": 512
+      },
+      "context_limit": 16384,
+      "calls_seen": 120,
+      "count_source": "serving_tokenizer",
+      "early_4096_compaction": false,
+      "compressed_calls": 0
+    },
+    "wall_time_seconds": 516.015415430069
+  },
+  "controls": {
+    "model": "Qwen/Qwen3.5-9B",
+    "endpoint": "http://127.0.0.1:18001/v1",
+    "temperature_policy": "native role configs: AFlow default 1.0, MaAS default 0.0; role overrides preserved",
+    "top_p": 1.0,
+    "max_tokens": 6144,
+    "thinking": false,
+    "concurrency": 16,
+    "max_model_len": 16384,
+    "max_num_seqs": 16,
+    "tensor_parallel_size": 1,
+    "data_seed": 2026,
+    "search_seed": 0,
+    "search_size": 24,
+    "selection_size": 24,
+    "test_size": 60,
+    "native_search_round_limit": 8,
+    "native_search_mutation_retry_cap": 8,
+    "maas_samples": null,
+    "maas_batch_size": null,
+    "gold_protocol": "masbench_shared_scoring_alignment_v2; exact match + component accuracy + 0/1/2 ordinal score",
+    "selection_split": "D_select",
+    "test_split": "D_test",
+    "completion_policy": "relaxed",
+    "answer_repair": true
+  },
+  "run_id": "masbench:aflow:horizon:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True"
+}

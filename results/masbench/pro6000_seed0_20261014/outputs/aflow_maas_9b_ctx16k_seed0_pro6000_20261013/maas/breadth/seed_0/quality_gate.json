@@ -1,0 +1,34 @@
+{
+  "passed": false,
+  "errors": [
+    "Q shared validity gate failed: protocol_error_rate=0.05",
+    "E shared validity gate failed: protocol_error_rate=0.05"
+  ],
+  "run_id": "masbench:maas:breadth:seed_0:masbench_external_protocol_v2_16k_shared_alignment",
+  "method": "maas",
+  "axis": "breadth",
+  "seed": 0,
+  "point_summary": {
+    "Q": {
+      "accuracy": 0.38333333333333336,
+      "correct": 23,
+      "tokens_per_example": 51773.73333333333,
+      "calls": 590,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.95,
+      "component_accuracy": 0.38333333333333336,
+      "mean_score_0_1_2": 0.7666666666666667
+    },
+    "E": {
+      "accuracy": 0.38333333333333336,
+      "correct": 23,
+      "tokens_per_example": 51773.73333333333,
+      "calls": 590,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.95,
+      "component_accuracy": 0.38333333333333336,
+      "mean_score_0_1_2": 0.7666666666666667
+    }
+  },
+  "checked_at_utc": "2026-10-13T20:23:58.983629+00:00"
+}

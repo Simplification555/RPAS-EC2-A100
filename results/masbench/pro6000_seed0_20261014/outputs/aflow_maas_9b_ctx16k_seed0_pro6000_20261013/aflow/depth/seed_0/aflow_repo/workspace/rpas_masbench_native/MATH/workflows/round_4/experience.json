@@ -1,0 +1,7 @@
+{
+    "father node": 1,
+    "modification": "Added a verification step: Instead of directly using the Custom operator to solve the problem, the graph first extracts the raw answer using a `custom` call with a specific extraction prompt. Then, a second `custom` call (using a reasoning prompt) attempts to solve the problem. If the extracted answer matches the reasoning result, it is returned. If not, the model generates a revised reasoning attempt. This addresses the issue where models often fail to output the 'FINAL ANSWER tag or get cut off during complex derivations.",
+    "before": 1.0833333333333333,
+    "after": 0.8333333333333334,
+    "succeed": false
+}

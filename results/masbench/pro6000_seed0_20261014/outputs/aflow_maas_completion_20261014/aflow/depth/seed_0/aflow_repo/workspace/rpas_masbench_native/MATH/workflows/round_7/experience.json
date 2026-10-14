@@ -1,0 +1,7 @@
+{
+    "father node": 1,
+    "modification": "Added a self-consistency verification step (ScEnsemble) and a strict extraction directive. The original graph failed because models often hallucinated \"0\" for undefined variables or missed the target due to complex dependency chains. By forcing the model to solve the problem 3 times and selecting the most common result, we mitigate reasoning errors. Additionally, the instruction now mandates that if a variable appears in the dependency chain but lacks a definition, it must be explicitly treated as 0 before proceeding, preventing indefinite looping or logic collapse. This ensures the Final Answer matches the expected format exactly.",
+    "before": 1.0833333333333333,
+    "after": 0.0,
+    "succeed": false
+}

@@ -1,0 +1,1 @@
+No prompt changes required. The optimization relies on modifying the `instruction` string passed to `self.custom` dynamically within the `__call__` method to inject the results from `Programmer` (code execution). The `prompt_custom` section is left empty as the logic is fully controlled by the modified graph workflow and dynamic string concatenation in the code.

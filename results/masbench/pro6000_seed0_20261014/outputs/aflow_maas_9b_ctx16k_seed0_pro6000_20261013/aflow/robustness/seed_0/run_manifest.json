@@ -1,0 +1,111 @@
+{
+  "protocol_version": "masbench_external_protocol_v2_16k_shared_alignment",
+  "run_id": "masbench:aflow:robustness:seed_0:masbench_external_protocol_v2_16k_shared_alignment",
+  "method": "aflow",
+  "dataset": "Salesforce/MASBench",
+  "axis": "robustness",
+  "seed": 0,
+  "data_seed": 2026,
+  "split_counts": {
+    "search": 24,
+    "select": 24
+  },
+  "pre_test_split_audit": {
+    "split_ids": {
+      "search": [
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1321:content:6a1fb82eb0609aee",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:491:content:fe847dbe2e483625",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1884:content:27eab4e7724bab25",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2099:content:2dc15555e45f88bc",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1958:content:d4548a69646fdb18",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1021:content:97a1c64c9d693f37",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1610:content:91178204b7d9eeaf",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:7:content:ede76388dc371c0c",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2743:content:0b7a119a6c66fcce",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2382:content:7499b7d01404417e",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2643:content:b5bc93b027d1e554",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2320:content:0bc1fa11c2f2706e",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:397:content:4cc2cbd871c3db6c",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2440:content:2c4d7c2e359a072b",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1515:content:aef51268fcc5c2f5",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2093:content:d84524e6e21ae0ac",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1824:content:510c3159bb030284",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:467:content:00161ada88080182",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2641:content:a32cab3cffd72553",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1676:content:9bfad09613299666",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1473:content:185bec2cbb801f43",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:245:content:a3114c4df4e1de06",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2537:content:5752bbeba20dccaa",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2038:content:bca0bb0a838b7347"
+      ],
+      "select": [
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1151:content:62634117e9bd8f63",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1061:content:0c52938b40931bbf",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:988:content:7d68e1191a7ee772",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:49:content:961bfc50475db453",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2640:content:fc5444420d48a43f",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1444:content:d5555ddbc329384b",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:828:content:e91f9a54a63ddd6a",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1665:content:efbfdba8ae034022",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2259:content:25f9abacfeca1ed2",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:25:content:e071d3393634f6cb",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1561:content:5ba0f81ae3a1a63a",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:758:content:80b579b5dac4521d",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:548:content:afc1419bc2ba8cd0",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2760:content:97a4bc6c6774fbe0",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:249:content:61e71fa5ea26fe8b",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:553:content:728f02cf931a8d3d",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:968:content:b131936085ddea3a",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1703:content:46cf548d7299a5d5",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2860:content:40c915bed44f395a",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2031:content:0147ef61b886cdd4",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:282:content:6a72ab0b8ab66921",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1903:content:bb8b17a55010af5c",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:1816:content:f64d3dff3a058f37",
+        "masbench:robustness:train:masbench:robustness:train:2,4,6:2521:content:e944d48bb1dd1790"
+      ]
+    },
+    "axis_value_counts": {
+      "search": {
+        "2,4,6": 24
+      },
+      "select": {
+        "2,4,6": 24
+      }
+    },
+    "search_select_disjoint": true
+  },
+  "search_select_disjoint": true,
+  "data_sha256": {
+    "robustness/search_24.jsonl": "e52971f328d5ffa0ead09878a98c7aea93a2e2c938140848b6a4012660e6a99e",
+    "robustness/select_24.jsonl": "634fdd2735543ff73b7ca68debf4bb71e12810bd88aff11553b648c728b02115",
+    "manifest_search_select.json": "27335b968c6b70a60e3fd5eba54221a9d45085568b6f602c9cd3fd4ed95a9a62"
+  },
+  "task_contract_sha256": "20c7c846c1643c4d76b8888b81a2c018b53f714e690b1e0d7c5c7603e4f2e4ce",
+  "task_instruction_sha256": "eac39c8bca0c65bfb9401b93b3d5e7e23aa9859e14fd0e59b639960bfcd0c791",
+  "task_protocol_exception": "robustness preserves explicitly requested injected fact/magic-number values verbatim; algebraic values remain Z_23",
+  "answer_parser": "masbench_shared_scoring_alignment_v2",
+  "answer_parser_sha256": "549883357b584793de55f0aff4a5604c8df47d1ad7ae6592a762026bba9138d4",
+  "runner_sha256": "14d830851e7aaf4f13e6d936595fe0f6315f9eba08e993823f667d58f72e61f1",
+  "base_runner_sha256": "c6afa5c5fc9d10255fee7be6ea1677b1d978ea7b4a606520a072408995cfbe7f",
+  "model": "Qwen/Qwen3.5-9B",
+  "context_limit": 16384,
+  "output_limit": 6144,
+  "selection_split": "D_select",
+  "test_split": "D_test",
+  "d_test_opened": false,
+  "selection_lock_required_before_test": true,
+  "baseline_source_sha256": {
+    "scripts/optimizer.py": "26cc9ac8f99177ed670c75fd6a265294c1dbaf1518e41f383eaf1d980b3968e5",
+    "scripts/evaluator.py": "5d115ac921b69f9d5055300cf52969c5e0b4474ab2f5daad13b8af988218616e",
+    "scripts/optimizer_utils/evaluation_utils.py": "de5807e97e9a6a6203ee1a94c754d18c580af2546340129ad4f681ca1d8b0048",
+    "scripts/optimizer_utils/graph_utils.py": "8155699387123b1655712300bdb741c6a534401ddb37d2ca927e422107b7178d",
+    "benchmarks/math.py": "8ee72470b04f1ca91e450cdbd2cde64defb6b8fba03e6bd9f175bcd04be8185c"
+  },
+  "baseline_git_commit": "3f457218fc716093fe53f6df8a5d5e6379d66346",
+  "official_baseline_source": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo/external_baselines/AFlow",
+  "rpas_root": "/home/ld666/xinbo/RTX_PRO6000_96GB_MASBench_seed0/repo",
+  "status": "failed",
+  "started_at_utc": "2026-10-13T18:48:10.857995+00:00",
+  "failure": "RuntimeError: AFlow produced no valid MASBench D_select candidates"
+}

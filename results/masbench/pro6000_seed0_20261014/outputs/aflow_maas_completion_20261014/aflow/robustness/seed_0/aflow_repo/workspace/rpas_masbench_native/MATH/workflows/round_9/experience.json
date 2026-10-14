@@ -1,0 +1,7 @@
+{
+    "father node": 1,
+    "modification": "Add a `sc_ensemble` (Self-Consistency Ensemble) step after the `custom` call and before returning the result. This generates multiple solutions (e.g., 3 seeds), selects the most frequent valid answer string, and ensures the output format strictly matches `VAL1<<horizon>>VAL2...` to align with the global system constraints for multi-answer problems, overriding the specific `\\\\boxed{}` or `\\\\n\\\\n` variations seen in the logs while preventing extraction failures.",
+    "before": 0.25,
+    "after": 0.2916666666666667,
+    "succeed": true
+}

@@ -1,0 +1,7 @@
+{
+    "father node": 1,
+    "modification": "Added a wait step to allow parallel independent problem solving, then used a loop to identify the target question for each problem and invoke the Custom operator sequentially to prevent hallucination from reading unrelated text. Modified the Custom instruction to strictly enforce `Z_23` arithmetic, `<<horizon>>` separation, and an independent `FINAL ANSWER` line per problem to match the required aggregation format.",
+    "before": 0.6666666666666666,
+    "after": 0.7083333333333334,
+    "succeed": true
+}

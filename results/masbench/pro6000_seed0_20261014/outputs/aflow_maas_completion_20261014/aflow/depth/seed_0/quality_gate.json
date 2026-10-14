@@ -1,0 +1,49 @@
+{
+  "passed": false,
+  "accepted_for_completion": true,
+  "completion_policy": "relaxed",
+  "quality_warnings": [
+    "Q shared validity gate failed: protocol_error_rate=0.016666666666666666",
+    "E shared validity gate failed: protocol_error_rate=0.016666666666666666",
+    "AFlow D_select round 1 shared validity thresholds exceeded"
+  ],
+  "integrity_errors": [],
+  "request_accounting": {
+    "ledger_requests": 411,
+    "unmetered_request_ids": [],
+    "token_cost_is_lower_bound": false,
+    "note": "Completed request usage is measured; cancelled/failed dispatched requests without returned usage have unknown cost."
+  },
+  "errors": [
+    "Q shared validity gate failed: protocol_error_rate=0.016666666666666666",
+    "E shared validity gate failed: protocol_error_rate=0.016666666666666666",
+    "AFlow D_select round 1 shared validity thresholds exceeded"
+  ],
+  "run_id": "masbench:aflow:depth:seed_0:masbench_external_protocol_v2_16k_shared_alignment:aflow_maas_completion_20261014:relaxed:repair_True",
+  "method": "aflow",
+  "axis": "depth",
+  "seed": 0,
+  "point_summary": {
+    "Q": {
+      "accuracy": 0.3,
+      "correct": 18,
+      "tokens_per_example": 7986.016666666666,
+      "calls": 89,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.9833333333333333,
+      "component_accuracy": 0.3,
+      "mean_score_0_1_2": 0.6
+    },
+    "E": {
+      "accuracy": 0.3,
+      "correct": 18,
+      "tokens_per_example": 7986.016666666666,
+      "calls": 89,
+      "failure_fraction": 0.0,
+      "parser_valid_rate": 0.9833333333333333,
+      "component_accuracy": 0.3,
+      "mean_score_0_1_2": 0.6
+    }
+  },
+  "checked_at_utc": "2026-10-14T08:06:41.770397+00:00"
+}
